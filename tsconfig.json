@@ -1,0 +1,37 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "moduleResolution": "Node",
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "*"
+      ],
+      "@/assets": [
+        "assets/"
+      ],
+      "@/ts": [
+        "ts/"
+      ],
+      "@/styles": [
+        "styles/"
+      ]
+    }
+  },
+  "files": [
+    "src/index.tsx"
+  ],
+  "include": [
+    "src",
+    "src/**/*.ts",
+    ".eslintrc.json",
+  ],
+}

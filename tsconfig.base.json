@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "useDefineForClassFields": true,
+    "allowJs": true,
+    "strict": true,
+  },
+}
