@@ -8,15 +8,12 @@ import defaultTheme from '@/styles/theme';
 
 import Header from '@/Header';
 import Footer from './components/Footer/Footer';
-import Button from './components/Button/Button';
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Global />
       <Header />
-      <Button title={'hello'} />
-
       <Routes>
         <Route path="/" element={<p>Home</p>} />
         <Route path="/book" element={<p>Book</p>} />

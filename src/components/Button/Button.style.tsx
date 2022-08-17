@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 const ButtonElement = styled.button`
-  position: relative;
-  width: 8rem;
+  min-width: 8rem;
   height: 3rem;
-  font-family: ${(props) => props.theme.fonts.text};
+  padding: 0.3rem;
   font-size: ${(props) => props.theme.fontSizes.h5};
   color: ${(props) => props.theme.colors.textButton};
   font-weight: 700;
