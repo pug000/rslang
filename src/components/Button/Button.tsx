@@ -1,10 +1,12 @@
 import React from 'react';
+import ButtonElement from './Button.style';
 
 interface ButtonProps {
   title: string;
 }
+
 function Button({ title }: ButtonProps) {
-  return <button type="button">{title}</button>;
+  return <ButtonElement type="button">{title}</ButtonElement>;
 }
 
 export default Button;
