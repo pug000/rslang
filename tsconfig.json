@@ -23,6 +23,9 @@
       ],
       "@/styles": [
         "styles/"
+      ],
+      "@/Header": [
+        "components/Header/Header"
       ]
     }
   },
