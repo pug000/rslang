@@ -9,6 +9,7 @@ const Global = createGlobalStyle`
   margin: 0;
   padding: 0;
   font-weight: 400;
+  transition: all 0.2s ease-out;
 }
 
 body {
@@ -28,6 +29,10 @@ h6 {
 
 #root {
   color: ${defaultTheme.colors.grey};
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 `;
 

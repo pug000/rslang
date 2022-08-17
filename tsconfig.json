@@ -27,6 +27,9 @@
       "@/Header": [
         "components/Header/Header"
       ],
+      "@/Footer": [
+        "components/Footer/Footer"
+      ],
       "@/Button": [
         "./components/Button/Button"
       ]
