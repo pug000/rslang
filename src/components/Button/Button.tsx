@@ -7,7 +7,11 @@ export interface ButtonProps {
 }
 
 function Button({ title, disabled }: ButtonProps) {
-  return <ButtonElement type="button" disabled={disabled}>{title}</ButtonElement>;
+  const handlerClickButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    console.log(e.target);
+  };
+
+  return <ButtonElement type="button" disabled={disabled} onClick={handlerClickButton}>{title}</ButtonElement>;
 }
 
 Button.defaultProps = {
