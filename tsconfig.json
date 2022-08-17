@@ -29,6 +29,9 @@
       ],
       "@/Footer": [
         "components/Footer/Footer"
+      ],
+      "@/Button": [
+        "./components/Button/Button"
       ]
     }
   },
