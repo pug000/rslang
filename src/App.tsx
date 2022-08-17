@@ -7,7 +7,7 @@ import Global from '@/styles/Global';
 import defaultTheme from '@/styles/theme';
 
 import Header from '@/Header';
-import Footer from './components/Footer/Footer';
+import Footer from '@/Footer';
 
 function App() {
   return (
