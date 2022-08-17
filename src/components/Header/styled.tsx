@@ -1,10 +1,7 @@
 import defaultTheme from '@/styles/theme';
 import styled from 'styled-components';
 
-export const StyledHeader = styled.header`
-`;
-
-export const HeaderContainer = styled.div`
+export const HeaderContainer = styled.header`
   height: 60px;
   background-color: ${defaultTheme.colors.bgWhite};
   display: flex;
@@ -33,6 +30,7 @@ export const HeaderLogoTitle = styled.div`
 
 export const iconStyles = {
   color: `${defaultTheme.colors.pink}`,
+  transition: 'all 0.2s ease-out',
   '&:hover': {
     opacity: '65%',
   }
