@@ -44,7 +44,7 @@ const defaultTheme: DefaultTheme = {
     bgWhite: '#ffffff',
     bgBeige: '#fbf1e6',
     bgPink: '#fddbe2',
-    bgPurple: '#9093d1',
+    bgPurple: '#d3d4ed',
     beige: '#ffdbb4',
     blue: '#9fd8e5',
     grey: '#404756',

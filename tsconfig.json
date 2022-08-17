@@ -26,6 +26,9 @@
       ],
       "@/Header": [
         "components/Header/Header"
+      ],
+      "@/Footer": [
+        "components/Footer/Footer"
       ]
     }
   },
