@@ -12,10 +12,14 @@ export const HeaderContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 25px 0 25px;
+  gap: 10px;
 `;
 
-export const HeaderNavBtn = styled.button`
-
+export const HeaderBtn = styled.button`
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  user-select: none;
 `;
 
 export const HeaderLogoTitle = styled.div`
@@ -23,8 +27,13 @@ export const HeaderLogoTitle = styled.div`
   font-size: ${defaultTheme.fontSizes.h3};
   font-weight: 700;
   color: ${defaultTheme.colors.pink};
+  cursor: pointer;
+  user-select: none;
 `;
 
-export const HeaderAuthBtn = styled.button`
-
-`;
+export const iconStyles = {
+  color: `${defaultTheme.colors.pink}`,
+  '&:hover': {
+    opacity: '65%',
+  }
+};
