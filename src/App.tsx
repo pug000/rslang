@@ -1,11 +1,18 @@
 import React from 'react';
+
 import { Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from 'styled-components';
+
+import Global from '@/styles/Global';
+import defaultTheme from '@/styles/theme';
+
 import Footer from './components/Footer/Footer';
 import Header from './components/Header/Header';
 
 function App() {
   return (
-    <>
+    <ThemeProvider theme={defaultTheme}>
+      <Global />
       <Header />
       <Routes>
         <Route path="/" element={<p>Home</p>} />
@@ -19,7 +26,7 @@ function App() {
       </Routes>
       <div>RsLang</div>
       <Footer />
-    </>
+    </ThemeProvider>
   );
 }
 

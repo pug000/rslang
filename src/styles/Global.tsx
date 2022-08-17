@@ -10,11 +10,11 @@ const Global = createGlobalStyle`
 }
 
 body {
-  background-color: #dad1d1;
+  background-color: #ffffff;
 }
 
 #root {
-  color: #000;
+  color: #404756;
 }
 `;
 
