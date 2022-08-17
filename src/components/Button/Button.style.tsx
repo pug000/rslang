@@ -20,6 +20,12 @@ const ButtonElement = styled.button`
       opacity: 0.65;
       box-shadow: 0px 10px 13px rgba(0, 0, 0, 0.1);
     }  
+    &:disabled{
+      background-color: ${(props) => props.theme.colors.grey};
+      color: ${(props) => props.theme.colors.textButton};
+      opacity: 0.5;
+      cursor: auto;
+    }
     &:active{
       opacity: 1.0;
     }
