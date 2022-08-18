@@ -3,7 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {
-  HeaderContainer, HeaderBtn, iconStyles, HeaderLogo
+  HeaderContainer, HeaderBtn, iconStyles, HeaderLink
 } from './styled';
 import LogoSvg from './LogoSvg';
 
@@ -13,9 +13,7 @@ function Header() {
       <HeaderBtn>
         <MenuIcon sx={iconStyles} />
       </HeaderBtn>
-      <HeaderLogo>
-        <LogoSvg />
-      </HeaderLogo>
+      <HeaderLink to="/"><LogoSvg /></HeaderLink>
       <HeaderBtn>
         <LoginIcon sx={iconStyles} />
       </HeaderBtn>

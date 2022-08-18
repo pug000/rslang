@@ -1,4 +1,5 @@
 import defaultTheme from '@/styles/theme';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
 export const HeaderContainer = styled.header`
@@ -19,7 +20,7 @@ export const HeaderBtn = styled.button`
   user-select: none;
 `;
 
-export const HeaderLogo = styled.div`
+export const HeaderLink = styled(NavLink)`
   svg {
     cursor: pointer;
     color: ${defaultTheme.colors.pink};
