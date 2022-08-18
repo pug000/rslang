@@ -17,6 +17,7 @@ export const HeaderBtn = styled.button`
   background-color: transparent;
   cursor: pointer;
   user-select: none;
+  z-index: 20;
 `;
 
 export const HeaderLogoTitle = styled.div`

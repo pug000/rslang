@@ -33,9 +33,12 @@
       "@/Button": [
         "./components/Button/Button"
       ],
+      "@/NavMenu": [
+        "./components/Header/NavMenu/NavMenu"
+      ],
       "@/Input": [
         "./components/Input/Input"
-      ]
+      ],
     }
   },
   "files": [
