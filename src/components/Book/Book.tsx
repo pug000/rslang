@@ -1,16 +1,25 @@
-import { GroupBtn } from '@/ts/interfaces';
-import React from 'react';
+import { baseUrl, getWords } from '@/api';
+import defaultTheme from '@/styles/theme';
+import { GroupBtn, WordData } from '@/ts/interfaces';
+import React, { useEffect, useState } from 'react';
 import {
   BookContainer,
   BookGroup,
   BookGroupBtn,
   BookGroupTitle,
+  BookItem,
+  BookItemImg,
   BookItemsContainer,
   BookTitle,
   BookWrapper,
+  BookItemTitle,
+  BookItemInfoContainer,
+  BookItemText,
+  BookItemInfoWrapper,
 } from './styled';
 
 function Book() {
+  const [words, setWords] = useState<WordData[]>([]);
   const groupBtns: GroupBtn[] = [
     { id: 1, text: '1' },
     { id: 2, text: '2' },
@@ -20,17 +29,51 @@ function Book() {
     { id: 6, text: '6' }
   ];
 
+  useEffect(() => {
+    getWords().then((data) => setWords(data));
+  }, []);
+
   return (
     <BookContainer>
       <BookTitle>Учебник</BookTitle>
       <BookWrapper>
-        <BookItemsContainer />
-        <BookGroup>
-          <BookGroupTitle>Раздел</BookGroupTitle>
-          {groupBtns.map(({ id, text }) => (
-            <BookGroupBtn key={id}>{text}</BookGroupBtn>
+        <BookItemsContainer>
+          {words.map((item) => (
+            <BookItem key={item.id}>
+              <BookItemImg src={`${baseUrl}/${item.image}`} alt="word-img" />
+              <BookItemInfoContainer>
+                <BookItemInfoWrapper>
+                  <BookItemTitle>
+                    {`${item.word} - ${item.transcription}`}
+                  </BookItemTitle>
+                  <BookItemText>{`${item.wordTranslate}`}</BookItemText>
+                </BookItemInfoWrapper>
+                <BookItemInfoWrapper>
+                  <BookItemText
+                    dangerouslySetInnerHTML={{ __html: item.textMeaning }}
+                    color={defaultTheme.colors.textBold}
+                  />
+                  <BookItemText dangerouslySetInnerHTML={{ __html: item.textMeaningTranslate }} />
+                </BookItemInfoWrapper>
+                <BookItemInfoWrapper>
+                  <BookItemText
+                    dangerouslySetInnerHTML={{ __html: item.textExample }}
+                    color={defaultTheme.colors.textBold}
+                  />
+                  <BookItemText dangerouslySetInnerHTML={{ __html: item.textExampleTranslate }} />
+                </BookItemInfoWrapper>
+              </BookItemInfoContainer>
+            </BookItem>
           ))}
-        </BookGroup>
+        </BookItemsContainer>
+        <div>
+          <BookGroup>
+            <BookGroupTitle>Раздел</BookGroupTitle>
+            {groupBtns.map(({ id, text }) => (
+              <BookGroupBtn key={id}>{text}</BookGroupBtn>
+            ))}
+          </BookGroup>
+        </div>
       </BookWrapper>
     </BookContainer>
   );

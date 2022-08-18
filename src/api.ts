@@ -16,3 +16,17 @@ const methods = {
   put: 'PUT',
   delete: 'DELETE',
 };
+
+const getWords = async () => {
+  try {
+    const res = await fetch(`${baseUrl}/${endpoints.words}`, {
+      method: methods.get,
+    });
+    const data = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(`${err}`);
+  }
+};
+
+export { baseUrl, getWords };
