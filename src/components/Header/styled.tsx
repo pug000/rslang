@@ -19,13 +19,15 @@ export const HeaderBtn = styled.button`
   user-select: none;
 `;
 
-export const HeaderLogoTitle = styled.div`
-  font-family: ${defaultTheme.fonts.title};
-  font-size: ${defaultTheme.fontSizes.h3};
-  font-weight: 700;
-  color: ${defaultTheme.colors.pink};
-  cursor: pointer;
-  user-select: none;
+export const HeaderLogo = styled.div`
+  svg {
+    cursor: pointer;
+    color: ${defaultTheme.colors.pink};
+    height: 100%;
+    max-width: 150px;
+    width: 100%;
+    user-select: none;
+  }
 `;
 
 export const iconStyles = {
