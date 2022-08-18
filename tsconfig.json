@@ -32,6 +32,9 @@
       ],
       "@/Button": [
         "./components/Button/Button"
+      ],
+      "@/NavMenu": [
+        "./components/Header/NavMenu/NavMenu"
       ]
     }
   },
