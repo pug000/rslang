@@ -8,9 +8,9 @@ import defaultTheme from '@/styles/theme';
 
 import Header from '@/Header';
 import Footer from '@/Footer';
+import GameContainer from '@/GamesContainer';
 import Protected from './pages/DifficultWords/Protected';
 import DifficultWords from './pages/DifficultWords/DifficultWords';
-
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean | null>(true)
@@ -22,22 +22,23 @@ function App() {
         isLoggedIn={isLoggedIn}
         setIsLoggedIn={setIsLoggedIn}
       />
-      <Routes>
-        <Route path="/" element={<p>Home</p>} />
-        <Route path="/book" element={<p>Book</p>} />
-        <Route path="/difficult-words" element={
-          <Protected isLoggedIn={isLoggedIn}>
-            <DifficultWords isLoggedIn={isLoggedIn} />
-          </Protected>}
-        />
-        <Route path="/games" element={<p>Games</p>} />
-        <Route path="/games/sprint" element={<p>Sprint</p>} />
-        <Route path="/games/audio" element={<p>Audio</p>} />
-        <Route path="/statistics" element={<p>Statistics</p>} />
-        <Route path="/about-project" element={<p>About Project</p>} />
-        <Route path="/about-team" element={<p>About Team</p>} />
-      </Routes>
-      <div>RsLang</div>
+      <main>
+        <Routes>
+          <Route path="/" element={<p>Home</p>} />
+          <Route path="/book" element={<p>Book</p>} />
+          <Route path="/difficult-words" element={
+            <Protected isLoggedIn={isLoggedIn}>
+              <DifficultWords isLoggedIn={isLoggedIn} />
+            </Protected>}
+          />
+          <Route path="/games" element={<GameContainer />} />
+          <Route path="/games/sprint" element={<p>Sprint</p>} />
+          <Route path="/games/audio" element={<p>Audio</p>} />
+          <Route path="/statistics" element={<p>Statistics</p>} />
+          <Route path="/about-project" element={<p>About Project</p>} />
+          <Route path="/about-team" element={<p>About Team</p>} />
+        </Routes>
+      </main>
       <Footer />
     </ThemeProvider>
   );

@@ -35,6 +35,12 @@
       ],
       "@/NavMenu": [
         "./components/Header/NavMenu/NavMenu"
+      ],
+      "@/GamesContainer": [
+        "./components/GamesContainer/GamesContainer"
+      ],
+      "@/Input": [
+        "./components/Input/Input"
       ]
     }
   },
