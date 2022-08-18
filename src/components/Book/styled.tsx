@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 
 interface BookItemTextProps {
   color: string,
@@ -99,6 +100,9 @@ const BookItemInfoWrapper = styled.div`
 `;
 
 const BookItemTitle = styled.h2`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: ${({ theme }) => theme.fontSizes.text};
   color: ${({ theme }) => theme.colors.title};
   font-weight: 500;
@@ -108,6 +112,15 @@ const BookItemText = styled.div<BookItemTextProps>`
   color: ${({ color }) => color};
   font-size: ${({ fontSize }) => fontSize};
   opacity: ${({ opacity }) => opacity ?? '1'};
+`;
+
+const BookItemPlay = styled(PlayCircleOutlineIcon)`
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.purple};
+
+  &:hover {
+    opacity: ${({ theme }) => theme.effects.hoverOpacity};
+  }
 `;
 
 export {
@@ -124,4 +137,5 @@ export {
   BookItemTitle,
   BookItemText,
   BookItemInfoWrapper,
+  BookItemPlay,
 };

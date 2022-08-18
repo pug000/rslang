@@ -17,6 +17,7 @@ import {
   BookItemInfoContainer,
   BookItemText,
   BookItemInfoWrapper,
+  BookItemPlay,
 } from './styled';
 
 function Book() {
@@ -46,6 +47,7 @@ function Book() {
                 <BookItemInfoWrapper>
                   <BookItemTitle>
                     {`${item.word} - ${item.transcription}`}
+                    <BookItemPlay />
                   </BookItemTitle>
                   <BookItemText
                     color={defaultTheme.colors.text}
