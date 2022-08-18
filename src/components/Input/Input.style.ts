@@ -16,14 +16,14 @@ const InputField = styled.input`
   border: solid 0.2rem ${(props) => props.theme.colors.grey};
   opacity: 0.9;
   outline: none;
-  transition: all 0.2s ease-out;
+  transition: ${(props) => props.theme.effects.transition};
 
   ::placeholder{
     font-size: calc(${(props) => props.theme.fontSizes.h5} * 0.8);
   }
   &:focus, &:hover{
-    opacity: 0.65;
-    border: solid 0.2rem ${(props) => props.theme.colors.pink};
+    opacity: ${(props) => props.theme.effects.hoverOpacity};
+    border: solid 0.2rem ${(props) => props.theme.colors.primaryColor};
     box-shadow: 0px 10px 13px rgba(0, 0, 0, 0.07);
   }
 `;

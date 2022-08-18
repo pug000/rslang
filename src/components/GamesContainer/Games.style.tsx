@@ -40,21 +40,21 @@ const GameContainer = styled.div`
   border: solid 0.2rem ${(props) => props.theme.colors.grey};
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.2s ease-out;
+  transition: ${(props) => props.theme.effects.transition};
 
   &:hover{
-    border: solid 0.2rem ${(props) => props.theme.colors.pink};
+    border: solid 0.2rem ${(props) => props.theme.colors.primaryColor};
     box-shadow: 0px 20px 35px rgba(0, 0, 0, 0.06);
     transform: scale(1.05);
   }
   &:hover h3{
-    color: ${(props) => props.theme.colors.pink};
+    color: ${(props) => props.theme.colors.primaryColor};
   }
 `;
 const TitleGame = styled.h3`
   font-size: ${(props) => props.theme.fontSizes.h3};
   text-decoration: none;
-  transition: all 0.2s ease-out;
+  transition: ${(props) => props.theme.effects.transition};
 `;
 
 export {

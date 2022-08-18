@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
-import LogoutIcon from '@mui/icons-material/Logout';
+// import LogoutIcon from '@mui/icons-material/Logout'; //раскомментируйте, когда понадобится
 import NavMenu from '@/NavMenu';
 import {
   HeaderContainer, HeaderBtn, iconStyles, HeaderLink
