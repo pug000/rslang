@@ -26,6 +26,10 @@ h6 {
   font-family: ${defaultTheme.fonts.title};
 }
 
+b {
+  font-weight: 700;
+}
+
 #root {
   color: ${defaultTheme.colors.grey};
   min-height: 100vh;
