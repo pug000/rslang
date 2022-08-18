@@ -2,7 +2,7 @@ import defaultTheme from '@/styles/theme';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const HeaderContainer = styled.header`
+const HeaderContainer = styled.header`
   height: 60px;
   background-color: ${defaultTheme.colors.bgWhite};
   display: flex;
@@ -13,14 +13,14 @@ export const HeaderContainer = styled.header`
   gap: 10px;
 `;
 
-export const HeaderBtn = styled.button`
+const HeaderBtn = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
   user-select: none;
 `;
 
-export const HeaderLink = styled(NavLink)`
+const HeaderLink = styled(NavLink)`
   svg {
     cursor: pointer;
     color: ${defaultTheme.colors.pink};
@@ -31,10 +31,14 @@ export const HeaderLink = styled(NavLink)`
   }
 `;
 
-export const iconStyles = {
+const iconStyles = {
   color: `${defaultTheme.colors.pink}`,
   transition: 'all 0.2s ease-out',
   '&:hover': {
     opacity: '65%',
   }
+};
+
+export {
+  HeaderContainer, HeaderBtn, HeaderLink, iconStyles
 };
