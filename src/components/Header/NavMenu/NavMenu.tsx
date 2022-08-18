@@ -2,7 +2,15 @@ import { NavItem } from '@/ts/interfaces';
 import React from 'react';
 import { Li, Link, Ul } from './NavMenu.style';
 
-function NavMenu() {
+interface NavMenuProps {
+  isNavMenuOpen: boolean,
+}
+
+function NavMenu(
+  {
+    isNavMenuOpen,
+  }: NavMenuProps
+) {
   const navItems: NavItem[] = [
     { id: 1, value: 'Главная', link: '/' },
     { id: 2, value: 'Учебник', link: '/book' },
@@ -13,7 +21,7 @@ function NavMenu() {
   ];
 
   return (
-    <Ul>
+    <Ul isOpen={isNavMenuOpen}>
       {navItems.map(({ id, value, link }) => (
         <Li key={id}>
           <Link to={link}>{value}</Link>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -8,16 +8,18 @@ import {
 } from './styled';
 
 function Header() {
+  const [isNavMenuOpen, setNavMenuOpen] = useState(false);
+
   return (
     <HeaderContainer>
-      <HeaderBtn>
+      <HeaderBtn onClick={() => setNavMenuOpen(!isNavMenuOpen)}>
         <MenuIcon sx={iconStyles} />
       </HeaderBtn>
       <HeaderLogoTitle>RSLang</HeaderLogoTitle>
       <HeaderBtn>
         <LoginIcon sx={iconStyles} />
       </HeaderBtn>
-      <NavMenu />
+      <NavMenu isNavMenuOpen={isNavMenuOpen} />
     </HeaderContainer>
   );
 }

@@ -2,12 +2,17 @@ import defaultTheme from '@/styles/theme';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const Ul = styled.ul`
+interface UlProps {
+  isOpen: boolean,
+}
+
+export const Ul = styled.ul<UlProps>`
   list-style: none;
   display: flex;
   flex-direction: column;
   flex-wrap: nowrap;
   position: fixed;
+  transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
   top: 0;
   left: 0;
   height: 100vh;
