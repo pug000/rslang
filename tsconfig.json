@@ -35,6 +35,9 @@
       ],
       "@/NavMenu": [
         "./components/Header/NavMenu/NavMenu"
+      ],
+      "@/Book": [
+        "./components/Book/Book"
       ]
     }
   },
