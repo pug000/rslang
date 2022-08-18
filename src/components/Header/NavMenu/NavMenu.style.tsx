@@ -34,6 +34,10 @@ export const Link = styled(NavLink)`
   font-size: ${defaultTheme.fontSizes.h4};
   text-decoration: none;
 
+  &:hover {
+    color: ${defaultTheme.colors.pink}
+  }
+
   &:focus, &:hover, &:visited, &:link, &:active {
     text-decoration: none;
   }
