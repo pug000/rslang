@@ -1,6 +1,7 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import GameElement from './GameElement';
 
 const LinkGame = styled(NavLink)`
   &:visited, &:link, &:active, &:hover, &:focus{
@@ -14,12 +15,12 @@ const GamesContainer = () => {
       <h2>Игры</h2>
       <div>
         <LinkGame to="/sprint">
-          <div
+          <GameElement
             title='Спринт'
           />
         </LinkGame>
         <LinkGame to="/audio" >
-          <div
+          <GameElement
             title='Аудиовызов'
           />
         </LinkGame>
