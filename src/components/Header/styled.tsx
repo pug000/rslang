@@ -1,18 +1,19 @@
 import defaultTheme from '@/styles/theme';
+import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 
-export const HeaderContainer = styled.header`
+const HeaderContainer = styled.header`
   height: 60px;
   background-color: ${defaultTheme.colors.bgWhite};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 0 25px 0 25px;
+  padding: 20px 25px 5px;
   gap: 10px;
 `;
 
-export const HeaderBtn = styled.button`
+const HeaderBtn = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -20,19 +21,25 @@ export const HeaderBtn = styled.button`
   z-index: 20;
 `;
 
-export const HeaderLogoTitle = styled.div`
-  font-family: ${defaultTheme.fonts.title};
-  font-size: ${defaultTheme.fontSizes.h3};
-  font-weight: 700;
-  color: ${defaultTheme.colors.pink};
-  cursor: pointer;
-  user-select: none;
+const HeaderLink = styled(NavLink)`
+  svg {
+    cursor: pointer;
+    color: ${defaultTheme.colors.pink};
+    height: 100%;
+    max-width: 150px;
+    width: 100%;
+    user-select: none;
+  }
 `;
 
-export const iconStyles = {
+const iconStyles = {
   color: `${defaultTheme.colors.pink}`,
   transition: 'all 0.2s ease-out',
   '&:hover': {
     opacity: '65%',
   }
+};
+
+export {
+  HeaderContainer, HeaderBtn, HeaderLink, iconStyles
 };

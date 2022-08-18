@@ -4,8 +4,9 @@ import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NavMenu from '@/NavMenu';
 import {
-  HeaderContainer, HeaderBtn, HeaderLogoTitle, iconStyles
+  HeaderContainer, HeaderBtn, iconStyles, HeaderLink
 } from './styled';
+import LogoSvg from './LogoSvg';
 
 function Header() {
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
@@ -15,7 +16,7 @@ function Header() {
       <HeaderBtn onClick={() => setNavMenuOpen(!isNavMenuOpen)}>
         <MenuIcon sx={iconStyles} />
       </HeaderBtn>
-      <HeaderLogoTitle>RSLang</HeaderLogoTitle>
+      <HeaderLink to="/"><LogoSvg /></HeaderLink>
       <HeaderBtn>
         <LoginIcon sx={iconStyles} />
       </HeaderBtn>

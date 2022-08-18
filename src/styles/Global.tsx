@@ -9,7 +9,6 @@ const Global = createGlobalStyle`
   margin: 0;
   padding: 0;
   font-weight: 400;
-  transition: all 0.2s ease-out;
 }
 
 body {
