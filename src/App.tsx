@@ -8,18 +8,17 @@ import defaultTheme from '@/styles/theme';
 
 import Header from '@/Header';
 import Footer from '@/Footer';
-import GameContainer from './components/GameContainer/GameContainer';
+import GameContainer from '@/GamesContainer';
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Global />
       <Header />
-      <GameContainer />
       <Routes>
         <Route path="/" element={<p>Home</p>} />
         <Route path="/book" element={<p>Book</p>} />
-        <Route path="/games" element={<p>Games</p>} />
+        <Route path="/games" element={<GameContainer />} />
         <Route path="/games/sprint" element={<p>Sprint</p>} />
         <Route path="/games/audio" element={<p>Audio</p>} />
         <Route path="/statistics" element={<p>Statistics</p>} />
