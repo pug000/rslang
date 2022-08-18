@@ -1,5 +1,11 @@
 import styled from 'styled-components';
 
+interface BookItemTextProps {
+  color?: string,
+  fontSize?: string,
+  opacity?: string
+}
+
 const BookContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,7 +18,7 @@ const BookContainer = styled.div`
 const BookTitle = styled.h1`
   font-family: ${(props) => props.theme.fonts.title};
   font-size: ${(props) => props.theme.fontSizes.h3};
-  color: ${(props) => props.theme.colors.pink};
+  color: ${(props) => props.theme.colors.purple};
 `;
 
 const BookWrapper = styled.div`
@@ -39,7 +45,7 @@ const BookGroup = styled.div`
 `;
 
 const BookGroupTitle = styled.h4`
-  color: ${(props) => props.theme.colors.pink};
+  color: ${(props) => props.theme.colors.purple};
   font-size: ${(props) => props.theme.fontSizes.text};
 `;
 
@@ -49,12 +55,12 @@ const BookGroupBtn = styled.button`
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: 0.3s;
-  background-color: ${(props) => props.theme.colors.bgPink};
+  transition: ${(props) => props.theme.effects.transition};
+  background-color: ${(props) => props.theme.colors.purple};
   color: ${(props) => props.theme.colors.bgWhite};
 
   &:hover {
-    color: ${(props) => props.theme.colors.text};
+    opacity: ${(props) => props.theme.effects.hoverOpacity};
   }
 `;
 
@@ -98,8 +104,10 @@ const BookItemTitle = styled.h2`
   font-weight: 500;
 `;
 
-const BookItemText = styled.div`
+const BookItemText = styled.div<BookItemTextProps>`
   color: ${(props) => props.color ?? props.theme.colors.text};
+  font-size: ${(props) => props.fontSize ?? props.theme.fontSizes.smallText};
+  opacity: ${(props) => props.opacity ?? '1'};
 `;
 
 export {

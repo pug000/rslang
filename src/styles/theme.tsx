@@ -31,6 +31,7 @@ declare module 'styled-components' {
       h4: string,
       h5: string,
       text: string,
+      smallText: string,
     }
     effects: {
       transition: string,
@@ -68,7 +69,8 @@ const defaultTheme: DefaultTheme = {
     h3: '36px',
     h4: '24px',
     h5: '18px',
-    text: '18px'
+    text: '18px',
+    smallText: '14px',
   },
   effects: {
     transition: 'all 0.2s ease-out',

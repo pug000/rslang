@@ -46,21 +46,33 @@ function Book() {
                   <BookItemTitle>
                     {`${item.word} - ${item.transcription}`}
                   </BookItemTitle>
-                  <BookItemText>{`${item.wordTranslate}`}</BookItemText>
+                  <BookItemText
+                    opacity={defaultTheme.effects.hoverOpacity}
+                  >
+                    {`${item.wordTranslate}`}
+                  </BookItemText>
                 </BookItemInfoWrapper>
                 <BookItemInfoWrapper>
                   <BookItemText
                     dangerouslySetInnerHTML={{ __html: item.textMeaning }}
                     color={defaultTheme.colors.textBold}
                   />
-                  <BookItemText dangerouslySetInnerHTML={{ __html: item.textMeaningTranslate }} />
+                  <BookItemText
+                    dangerouslySetInnerHTML={{ __html: item.textMeaningTranslate }}
+                    fontSize={defaultTheme.fontSizes.smallText}
+                    opacity={defaultTheme.effects.hoverOpacity}
+                  />
                 </BookItemInfoWrapper>
                 <BookItemInfoWrapper>
                   <BookItemText
                     dangerouslySetInnerHTML={{ __html: item.textExample }}
                     color={defaultTheme.colors.textBold}
                   />
-                  <BookItemText dangerouslySetInnerHTML={{ __html: item.textExampleTranslate }} />
+                  <BookItemText
+                    dangerouslySetInnerHTML={{ __html: item.textExampleTranslate }}
+                    fontSize={defaultTheme.fontSizes.smallText}
+                    opacity={defaultTheme.effects.hoverOpacity}
+                  />
                 </BookItemInfoWrapper>
               </BookItemInfoContainer>
             </BookItem>
