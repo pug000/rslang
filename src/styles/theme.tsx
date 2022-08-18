@@ -18,6 +18,7 @@ declare module 'styled-components' {
       orange: string,
       pink: string,
       purple: string,
+      primaryColor: string
     }
     fonts: {
       title: string,
@@ -30,6 +31,10 @@ declare module 'styled-components' {
       h4: string,
       h5: string,
       text: string,
+    }
+    effects: {
+      transition: string,
+      hoverOpacity: string
     }
   }
 }
@@ -50,7 +55,8 @@ const defaultTheme: DefaultTheme = {
     grey: '#404756',
     orange: '#ff8961',
     pink: '#f7859c',
-    purple: '#9093d1'
+    purple: '#888bce',
+    primaryColor: '#888bce'
   },
   fonts: {
     title: 'Montserrat, sans-serif',
@@ -63,6 +69,10 @@ const defaultTheme: DefaultTheme = {
     h4: '24px',
     h5: '18px',
     text: '18px'
+  },
+  effects: {
+    transition: 'all 0.2s ease-out',
+    hoverOpacity: '0.6'
   }
 };
 
