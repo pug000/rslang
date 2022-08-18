@@ -7,14 +7,14 @@ import {
 } from './Input.style';
 
 interface InputProps {
-  titleLabel: string;
+  title: string;
   id: string;
   placeholder: string;
   name: string;
 }
 
 function Input({
-  titleLabel,
+  title,
   id,
   placeholder,
   name,
@@ -22,7 +22,7 @@ function Input({
   return (
     <InputWrapper>
       <Label htmlFor={name}>
-        <TitleLabel>{titleLabel}</TitleLabel>
+        <TitleLabel>{title}</TitleLabel>
         <InputField
           type="text"
           id={id}
