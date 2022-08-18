@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 interface BookItemTextProps {
-  color?: string,
-  fontSize?: string,
+  color: string,
+  fontSize: string,
   opacity?: string
 }
 
@@ -16,9 +16,9 @@ const BookContainer = styled.div`
 `;
 
 const BookTitle = styled.h1`
-  font-family: ${(props) => props.theme.fonts.title};
-  font-size: ${(props) => props.theme.fontSizes.h3};
-  color: ${(props) => props.theme.colors.purple};
+  font-family: ${({ theme }) => theme.fonts.title};
+  font-size: ${({ theme }) => theme.fontSizes.h3};
+  color: ${({ theme }) => theme.colors.purple};
 `;
 
 const BookWrapper = styled.div`
@@ -45,8 +45,8 @@ const BookGroup = styled.div`
 `;
 
 const BookGroupTitle = styled.h4`
-  color: ${(props) => props.theme.colors.purple};
-  font-size: ${(props) => props.theme.fontSizes.text};
+  color: ${({ theme }) => theme.colors.purple};
+  font-size: ${({ theme }) => theme.fontSizes.text};
 `;
 
 const BookGroupBtn = styled.button`
@@ -99,15 +99,15 @@ const BookItemInfoWrapper = styled.div`
 `;
 
 const BookItemTitle = styled.h2`
-  font-size: ${(props) => props.theme.fontSizes.text};
-  color: ${(props) => props.theme.colors.title};
+  font-size: ${({ theme }) => theme.fontSizes.text};
+  color: ${({ theme }) => theme.colors.title};
   font-weight: 500;
 `;
 
 const BookItemText = styled.div<BookItemTextProps>`
-  color: ${(props) => props.color ?? props.theme.colors.text};
-  font-size: ${(props) => props.fontSize ?? props.theme.fontSizes.smallText};
-  opacity: ${(props) => props.opacity ?? '1'};
+  color: ${({ color }) => color};
+  font-size: ${({ fontSize }) => fontSize};
+  opacity: ${({ opacity }) => opacity ?? '1'};
 `;
 
 export {

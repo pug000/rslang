@@ -48,6 +48,8 @@ function Book() {
                     {`${item.word} - ${item.transcription}`}
                   </BookItemTitle>
                   <BookItemText
+                    color={defaultTheme.colors.text}
+                    fontSize={defaultTheme.fontSizes.smallText}
                     opacity={defaultTheme.effects.hoverOpacity}
                   >
                     {`${item.wordTranslate}`}
@@ -61,6 +63,7 @@ function Book() {
                       }
                     }
                     color={defaultTheme.colors.textBold}
+                    fontSize={defaultTheme.fontSizes.smallText}
                   />
                   <BookItemText
                     dangerouslySetInnerHTML={
@@ -68,6 +71,7 @@ function Book() {
                         __html: DOMPurify.sanitize(item.textMeaningTranslate)
                       }
                     }
+                    color={defaultTheme.colors.text}
                     fontSize={defaultTheme.fontSizes.smallText}
                     opacity={defaultTheme.effects.hoverOpacity}
                   />
@@ -80,6 +84,7 @@ function Book() {
                       }
                     }
                     color={defaultTheme.colors.textBold}
+                    fontSize={defaultTheme.fontSizes.smallText}
                   />
                   <BookItemText
                     dangerouslySetInnerHTML={
@@ -87,6 +92,7 @@ function Book() {
                         __html: DOMPurify.sanitize(item.textExampleTranslate)
                       }
                     }
+                    color={defaultTheme.colors.text}
                     fontSize={defaultTheme.fontSizes.smallText}
                     opacity={defaultTheme.effects.hoverOpacity}
                   />
