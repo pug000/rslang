@@ -3,7 +3,6 @@ interface NavItem {
   value: string,
   link: string,
 }
-
 interface GroupBtn {
   id: number,
   text: string,

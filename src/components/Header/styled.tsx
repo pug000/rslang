@@ -1,6 +1,6 @@
-import defaultTheme from '@/styles/theme';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 const HeaderContainer = styled.header`
   height: 60px;
@@ -24,7 +24,7 @@ const HeaderBtn = styled.button`
 const HeaderLink = styled(NavLink)`
   svg {
     cursor: pointer;
-    color: ${defaultTheme.colors.pink};
+    color: ${defaultTheme.colors.primaryColor};
     height: 100%;
     max-width: 150px;
     width: 100%;
@@ -33,10 +33,10 @@ const HeaderLink = styled(NavLink)`
 `;
 
 const iconStyles = {
-  color: `${defaultTheme.colors.pink}`,
-  transition: 'all 0.2s ease-out',
+  color: `${defaultTheme.colors.primaryColor}`,
+  transition: `${defaultTheme.effects.transition}`,
   '&:hover': {
-    opacity: '65%',
+    opacity: `${defaultTheme.effects.hoverOpacity}`,
   }
 };
 

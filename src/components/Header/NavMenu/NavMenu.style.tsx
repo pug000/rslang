@@ -35,7 +35,7 @@ export const Link = styled(NavLink)`
   text-decoration: none;
 
   &:hover {
-    color: ${defaultTheme.colors.pink}
+    color: ${defaultTheme.colors.primaryColor}
   }
 
   &:focus, &:hover, &:visited, &:link, &:active {

@@ -7,7 +7,6 @@ const FooterWrapper = styled.div`
 
 const FooterBorder = styled.div`
   height: 100px;
-  width: 100vw;
   background: url(../../assets/icon/footer-bg.svg);
   background-size: cover;
 `;
@@ -55,12 +54,13 @@ const Author = styled.a`
   display: inline-block;
   text-decoration: none;
   color: ${defaultTheme.colors.text};
+  transition: ${defaultTheme.effects.transition};
   &:not(:last-child) {
     border-right: 1px solid grey;
     padding-right: 5px;
   }
   &:hover {
-    opacity: 0.65;
+    opacity: ${defaultTheme.effects.hoverOpacity};
   }
 `;
 
