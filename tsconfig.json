@@ -32,6 +32,9 @@
       ],
       "@/Button": [
         "./components/Button/Button"
+      ],
+      "@/Input": [
+        "./components/Input/Input"
       ]
     }
   },
