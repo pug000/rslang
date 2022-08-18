@@ -2,6 +2,7 @@ import { baseUrl, getWords } from '@/api';
 import defaultTheme from '@/styles/theme';
 import { GroupBtn, WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
+import DOMPurify from 'dompurify';
 import {
   BookContainer,
   BookGroup,
@@ -54,22 +55,38 @@ function Book() {
                 </BookItemInfoWrapper>
                 <BookItemInfoWrapper>
                   <BookItemText
-                    dangerouslySetInnerHTML={{ __html: item.textMeaning }}
+                    dangerouslySetInnerHTML={
+                      {
+                        __html: DOMPurify.sanitize(item.textMeaning)
+                      }
+                    }
                     color={defaultTheme.colors.textBold}
                   />
                   <BookItemText
-                    dangerouslySetInnerHTML={{ __html: item.textMeaningTranslate }}
+                    dangerouslySetInnerHTML={
+                      {
+                        __html: DOMPurify.sanitize(item.textMeaningTranslate)
+                      }
+                    }
                     fontSize={defaultTheme.fontSizes.smallText}
                     opacity={defaultTheme.effects.hoverOpacity}
                   />
                 </BookItemInfoWrapper>
                 <BookItemInfoWrapper>
                   <BookItemText
-                    dangerouslySetInnerHTML={{ __html: item.textExample }}
+                    dangerouslySetInnerHTML={
+                      {
+                        __html: DOMPurify.sanitize(item.textExample)
+                      }
+                    }
                     color={defaultTheme.colors.textBold}
                   />
                   <BookItemText
-                    dangerouslySetInnerHTML={{ __html: item.textExampleTranslate }}
+                    dangerouslySetInnerHTML={
+                      {
+                        __html: DOMPurify.sanitize(item.textExampleTranslate)
+                      }
+                    }
                     fontSize={defaultTheme.fontSizes.smallText}
                     opacity={defaultTheme.effects.hoverOpacity}
                   />
