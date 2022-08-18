@@ -8,8 +8,20 @@ import {
 } from './styled';
 import LogoSvg from './LogoSvg';
 
-function Header() {
+interface HeaderProps {
+  isLoggedIn: boolean | null,
+  setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean | null>>,
+}
+
+function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
+
+  const logIn = () => {
+    setIsLoggedIn(true);
+  };
+  const logOut = () => {
+    setIsLoggedIn(false);
+  };
 
   return (
     <HeaderContainer>
@@ -17,9 +29,16 @@ function Header() {
         <MenuIcon sx={iconStyles} />
       </HeaderBtn>
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
-      <HeaderBtn>
-        <LoginIcon sx={iconStyles} />
-      </HeaderBtn>
+      {
+        isLoggedIn
+          ? <HeaderBtn onClick={logOut}>
+            <LogoutIcon sx={iconStyles} />
+          </HeaderBtn>
+          : <HeaderBtn onClick={logIn}>
+            <LoginIcon sx={iconStyles} />
+          </HeaderBtn>
+      }
+
       <NavMenu isNavMenuOpen={isNavMenuOpen} />
     </HeaderContainer>
   );
