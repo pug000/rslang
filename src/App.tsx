@@ -8,12 +8,14 @@ import defaultTheme from '@/styles/theme';
 
 import Header from '@/Header';
 import Footer from '@/Footer';
+import GameContainer from './components/GameContainer/GameContainer';
 
 function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Global />
       <Header />
+      <GameContainer />
       <Routes>
         <Route path="/" element={<p>Home</p>} />
         <Route path="/book" element={<p>Book</p>} />
