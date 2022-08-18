@@ -7,16 +7,16 @@ const ButtonElement = styled.button`
   font-size: ${(props) => props.theme.fontSizes.h5};
   color: ${(props) => props.theme.colors.textButton};
   font-weight: 700;
-  background-color: ${(props) => props.theme.colors.pink};
+  background-color: ${(props) => props.theme.colors.primaryColor};
   border: none;
   border-radius: 0.6rem;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.2s ease-out;
+  transition: ${(props) => props.theme.effects.transition};
   overflow: hidden;
 
     &:hover{
-      opacity: 0.65;
+      opacity: ${(props) => props.theme.effects.hoverOpacity};
       box-shadow: 0px 10px 13px rgba(0, 0, 0, 0.1);
     }  
     &:disabled{
