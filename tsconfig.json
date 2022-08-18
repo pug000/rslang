@@ -38,7 +38,7 @@
       ],
       "@/Input": [
         "./components/Input/Input"
-      ],
+      ]
     }
   },
   "files": [
