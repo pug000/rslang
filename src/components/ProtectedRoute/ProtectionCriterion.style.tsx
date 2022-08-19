@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const ProtectedContainer = styled.div`
+const Container = styled.div`
   padding: 20px 25px 10px;
   min-height: 60vh;
   margin: 0 auto;
@@ -17,5 +17,5 @@ const ProtectedTitle = styled.h3`
 `;
 
 export {
-  ProtectedContainer, ProtectedTitle
+  Container, ProtectedTitle
 };

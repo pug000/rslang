@@ -9,10 +9,10 @@ import defaultTheme from '@/styles/theme';
 import Header from '@/Header';
 import Footer from '@/Footer';
 import GameContainer from '@/GamesContainer';
-import Protected from './components/Protected/Protected';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import DifficultWords from './components/DifficultWords/DifficultWords';
 
-const isLoggedInFromLocalStorage = JSON.parse(localStorage.getItem('isLoggedIn') || "null")
+const isLoggedInFromLocalStorage = JSON.parse(localStorage.getItem('isLoggedIn') || "false")
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState<boolean | null>(isLoggedInFromLocalStorage)
@@ -29,15 +29,15 @@ function App() {
           <Route path="/" element={<p>Home</p>} />
           <Route path="/book" element={<p>Book</p>} />
           <Route path="/difficult-words" element={
-            <Protected conditionValue={isLoggedIn}>
+            <ProtectedRoute conditionValue={isLoggedIn}>
               <DifficultWords isLoggedIn={isLoggedIn} />
-            </Protected>} />
+            </ProtectedRoute>} />
           <Route path="/games" element={<GameContainer />} />
           <Route path="/games/sprint" element={<p>Sprint</p>} />
           <Route path="/games/audio" element={<p>Audio</p>} />
           <Route path="/statistics" element={
-            <Protected conditionValue={isLoggedIn}><p>Statistics</p>
-            </Protected>} />
+            <ProtectedRoute conditionValue={isLoggedIn}><p>Statistics</p>
+            </ProtectedRoute>} />
           <Route path="/about-project" element={<p>About Project</p>} />
           <Route path="/about-team" element={<p>About Team</p>} />
         </Routes>

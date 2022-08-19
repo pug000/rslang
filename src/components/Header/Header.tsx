@@ -18,12 +18,11 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
   const [modalActive, setModalActive] = useState(false);
 
-  const handleLoggedChange = () => {
-    if (!isLoggedIn) {
-      localStorage.setItem('isLoggedIn', 'true');
-    } else {
-      localStorage.removeItem('isLoggedIn');
-    }
+  const changeLoggedInState = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    !isLoggedIn
+      ? localStorage.setItem('isLoggedIn', 'true')
+      : localStorage.removeItem('isLoggedIn');
     setIsLoggedIn(!isLoggedIn);
   };
 
@@ -35,12 +34,12 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
       <HeaderBtn>
         {isLoggedIn
-          ? <LogoutIcon sx={iconStyles} onClick={handleLoggedChange} />
+          ? <LogoutIcon sx={iconStyles} onClick={changeLoggedInState} />
           : <LoginBtn onClick={() => setModalActive(!modalActive)} />}
       </HeaderBtn>
       <NavMenu isNavMenuOpen={isNavMenuOpen} />
       <SignInModal
-        handleLoggedChange={handleLoggedChange}
+        changeLoggedInState={changeLoggedInState}
         active={modalActive}
         setActive={setModalActive}
       />

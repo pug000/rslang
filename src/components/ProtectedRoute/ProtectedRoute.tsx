@@ -1,22 +1,22 @@
 import React from 'react';
-import { ProtectedContainer, ProtectedTitle } from './Protected.style';
+import { Container, ProtectedTitle } from './ProtectionCriterion.style';
 
 interface ProtectedProps {
   conditionValue: boolean | null,
   children: JSX.Element,
 }
 
-function Protected({ conditionValue, children }: ProtectedProps) {
+function ProtectedRoute({ conditionValue, children }: ProtectedProps) {
   if (!conditionValue) {
     return (
-      <ProtectedContainer>
+      <Container>
         <ProtectedTitle>
           Вам необходимо зайти под вашей учетной записью или зарегистрироваться
         </ProtectedTitle>
-      </ProtectedContainer>
+      </Container>
     );
   }
   return children;
 }
 
-export default Protected;
+export default ProtectedRoute;
