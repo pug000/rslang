@@ -8,6 +8,7 @@ import {
 
 interface InputProps {
   title: string;
+  type: string;
   id: string;
   placeholder: string;
   name: string;
@@ -15,6 +16,7 @@ interface InputProps {
 
 function Input({
   title,
+  type,
   id,
   placeholder,
   name,
@@ -24,7 +26,7 @@ function Input({
       <Label htmlFor={name}>
         <TitleLabel>{title}</TitleLabel>
         <InputField
-          type="text"
+          type={type}
           id={id}
           placeholder={placeholder}
           name={name}
