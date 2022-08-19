@@ -9,11 +9,13 @@ import defaultTheme from '@/styles/theme';
 import Header from '@/Header';
 import Footer from '@/Footer';
 import GameContainer from '@/GamesContainer';
-import Protected from './pages/DifficultWords/Protected';
-import DifficultWords from './pages/DifficultWords/DifficultWords';
+import Protected from './components/Protected/Protected';
+import DifficultWords from './components/DifficultWords/DifficultWords';
+
+const isLoggedInFromLocalStorage = JSON.parse(localStorage.getItem('isLoggedIn') || "null")
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean | null>(true)
+  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean | null>(isLoggedInFromLocalStorage)
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -27,10 +29,9 @@ function App() {
           <Route path="/" element={<p>Home</p>} />
           <Route path="/book" element={<p>Book</p>} />
           <Route path="/difficult-words" element={
-            <Protected isLoggedIn={isLoggedIn}>
+            <Protected conditionValue={isLoggedIn}>
               <DifficultWords isLoggedIn={isLoggedIn} />
-            </Protected>}
-          />
+            </Protected>} />
           <Route path="/games" element={<GameContainer />} />
           <Route path="/games/sprint" element={<p>Sprint</p>} />
           <Route path="/games/audio" element={<p>Audio</p>} />

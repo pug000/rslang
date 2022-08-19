@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
-// import LogoutIcon from '@mui/icons-material/Logout'; //раскомментируйте, когда понадобится
+import LogoutIcon from '@mui/icons-material/Logout';
 import NavMenu from '@/NavMenu';
 import {
   HeaderContainer, HeaderBtn, iconStyles, HeaderLink
@@ -16,12 +16,15 @@ interface HeaderProps {
 function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
 
-  const logIn = () => {
-    setIsLoggedIn(true);
-  };
-  const logOut = () => {
-    setIsLoggedIn(false);
-  };
+  const handleLoggedChange = () => {
+    if (!isLoggedIn) {
+      setIsLoggedIn(true);
+      localStorage.setItem("isLoggedIn", "true")
+    } else {
+      setIsLoggedIn(false);
+      localStorage.removeItem("isLoggedIn")
+    }
+  }
 
   return (
     <HeaderContainer>
@@ -29,16 +32,9 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
         <MenuIcon sx={iconStyles} />
       </HeaderBtn>
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
-      {
-        isLoggedIn
-          ? <HeaderBtn onClick={logOut}>
-            <LogoutIcon sx={iconStyles} />
-          </HeaderBtn>
-          : <HeaderBtn onClick={logIn}>
-            <LoginIcon sx={iconStyles} />
-          </HeaderBtn>
-      }
-
+      <HeaderBtn onClick={handleLoggedChange}>
+        {isLoggedIn ? <LogoutIcon sx={iconStyles} /> : <LoginIcon sx={iconStyles} />}
+      </HeaderBtn>
       <NavMenu isNavMenuOpen={isNavMenuOpen} />
     </HeaderContainer>
   );
