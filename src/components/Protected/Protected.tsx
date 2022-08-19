@@ -1,5 +1,5 @@
 import React from 'react'
-import { Navigate } from "react-router-dom";
+import { ProtectedContainer, ProtectedTitle } from './Protected.style'
 
 interface ProtectedProps {
   conditionValue: boolean | null,
@@ -7,7 +7,13 @@ interface ProtectedProps {
 }
 
 const Protected = ({ conditionValue, children }: ProtectedProps) => {
-  if (!conditionValue) return <p>Вам необходимо зайти под вашей учетной записью или зарегистрироваться</p>
+  if (!conditionValue) {
+    return (
+      <ProtectedContainer>
+        <ProtectedTitle>Вам необходимо зайти под вашей учетной записью или зарегистрироваться</ProtectedTitle>
+      </ProtectedContainer>
+    )
+  }
   return children;
 }
 
