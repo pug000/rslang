@@ -32,13 +32,13 @@ const BookContainer = styled.div`
   margin-bottom: 40px;
 `;
 
-const BookTitle = styled.h1`
+const Title = styled.h1`
   font-family: ${({ theme }) => theme.fonts.title};
   font-size: ${({ theme }) => theme.fontSizes.h3};
   color: ${({ theme }) => theme.colors.purple};
 `;
 
-const BookWrapper = styled.div`
+const Wrapper = styled.div`
   width: 100%;
   gap: 30px;
   max-width: 1100px;
@@ -48,7 +48,7 @@ const BookWrapper = styled.div`
   grid-template-areas: "words group" "pagination pagination";
 `;
 
-const BookPaginationWrapper = styled.div`
+const PaginationWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -57,7 +57,7 @@ const BookPaginationWrapper = styled.div`
   flex-wrap: wrap;
 `;
 
-const BookPaginationPrev = styled(NavigateBeforeIcon).attrs({
+const PaginationPrev = styled(NavigateBeforeIcon).attrs({
   style: {
     ...stylesBtn,
     width: '35px',
@@ -67,7 +67,7 @@ const BookPaginationPrev = styled(NavigateBeforeIcon).attrs({
 
 `;
 
-const BookPaginationNext = styled(NavigateNextIcon).attrs({
+const PaginationNext = styled(NavigateNextIcon).attrs({
   style: {
     ...stylesBtn,
     width: '35px',
@@ -76,7 +76,7 @@ const BookPaginationNext = styled(NavigateNextIcon).attrs({
 })`
 `;
 
-const BookPaginationPageBtn = styled.button<ColorsProps>`
+const PaginationPageBtn = styled.button<ColorsProps>`
   width: 30px;
   height: 30px;
   display: flex;
@@ -95,7 +95,7 @@ const BookPaginationPageBtn = styled.button<ColorsProps>`
   }
 `;
 
-const BookGroup = styled.div`
+const Group = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -111,12 +111,12 @@ const BookGroup = styled.div`
   grid-area: group;
 `;
 
-const BookGroupTitle = styled.h4`
+const GroupTitle = styled.h4`
   color: ${({ theme }) => theme.colors.purple};
   font-size: ${({ theme }) => theme.fontSizes.text};
 `;
 
-const BookGroupBtn = styled.button`
+const GroupBtn = styled.button`
   width: 55px;
   height: 55px;
   border: none;
@@ -131,7 +131,7 @@ const BookGroupBtn = styled.button`
   }
 `;
 
-const BookItemsContainer = styled.div`
+const WordsContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -143,7 +143,7 @@ const BookItemsContainer = styled.div`
   }
 `;
 
-const BookItem = styled.div`
+const Word = styled.div`
   display: flex;
   flex-direction: row;
   box-shadow: rgb(0 0 0 / 15%) 0px 0px 10px;
@@ -159,7 +159,7 @@ const BookItem = styled.div`
   }
 `;
 
-const BookItemImg = styled.img`
+const WordImg = styled.img`
   max-width: 250px;
   width: 100%;
   min-height: 200px;
@@ -171,21 +171,21 @@ const BookItemImg = styled.img`
   }
 `;
 
-const BookItemInfoContainer = styled.div`
+const WordInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 0 30px;
   width: 100%;
 `;
 
-const BookItemInfoWrapper = styled.div`
+const WordInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 7px;
   margin-bottom: 15px;
 `;
 
-const BookItemTitle = styled.h2`
+const WordTitle = styled.h2`
   display: flex;
   align-items: center;
   gap: 10px;
@@ -194,13 +194,13 @@ const BookItemTitle = styled.h2`
   font-weight: 500;
 `;
 
-const BookItemText = styled.div<BookItemTextProps>`
+const WordText = styled.div<BookItemTextProps>`
   color: ${({ color }) => color};
   font-size: ${({ fontSize }) => fontSize};
   opacity: ${({ opacity }) => opacity ?? '1'};
 `;
 
-const BookItemPlay = styled(PlayCircleOutlineIcon).attrs({
+const WordPlay = styled(PlayCircleOutlineIcon).attrs({
   style: stylesBtn,
 })`
   color: ${({ theme }) => theme.colors.purple};
@@ -210,7 +210,7 @@ const BookItemPlay = styled(PlayCircleOutlineIcon).attrs({
   }
 `;
 
-const BookItemBtnContainer = styled.div`
+const WordBtnContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -253,25 +253,25 @@ const LearnedWordBtn = styled(MenuBookIcon).attrs({
 
 export {
   BookContainer,
-  BookTitle,
-  BookWrapper,
-  BookGroup,
-  BookItemsContainer,
-  BookItem,
-  BookItemImg,
-  BookGroupBtn,
-  BookGroupTitle,
-  BookItemInfoContainer,
-  BookItemBtnContainer,
-  BookItemTitle,
-  BookItemText,
-  BookItemInfoWrapper,
-  BookItemPlay,
+  Title,
+  Wrapper,
+  Group,
+  WordsContainer,
+  Word,
+  WordImg,
+  GroupBtn,
+  GroupTitle,
+  WordInfoContainer,
+  WordBtnContainer,
+  WordTitle,
+  WordText,
+  WordInfoWrapper,
+  WordPlay,
   DifficultWordBtn,
   DifficultWordBtnActive,
   LearnedWordBtn,
-  BookPaginationWrapper,
-  BookPaginationPrev,
-  BookPaginationNext,
-  BookPaginationPageBtn,
+  PaginationWrapper,
+  PaginationPrev,
+  PaginationNext,
+  PaginationPageBtn,
 };

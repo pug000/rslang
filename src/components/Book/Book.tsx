@@ -1,40 +1,40 @@
 import { baseUrl, getWords } from '@/api';
 import defaultTheme from '@/styles/theme';
-import { Btn, Word } from '@/ts/interfaces';
+import { Btn, WordData } from '@/ts/interfaces';
 import React, { useEffect, useMemo, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { SetState } from '@/ts/types';
 import getPages from '@/utils';
 import {
   BookContainer,
-  BookGroup,
-  BookGroupBtn,
-  BookGroupTitle,
-  BookItem,
-  BookItemImg,
-  BookItemsContainer,
-  BookTitle,
-  BookWrapper,
-  BookItemTitle,
-  BookItemInfoContainer,
-  BookItemText,
-  BookItemInfoWrapper,
-  BookItemPlay,
-  BookItemBtnContainer,
+  Group,
+  GroupBtn,
+  GroupTitle,
+  Word,
+  WordImg,
+  WordsContainer,
+  Title,
+  Wrapper,
+  WordTitle,
+  WordInfoContainer,
+  WordText,
+  WordInfoWrapper,
+  WordPlay,
+  WordBtnContainer,
   DifficultWordBtn,
   LearnedWordBtn,
   DifficultWordBtnActive,
-  BookPaginationWrapper,
-  BookPaginationPrev,
-  BookPaginationNext,
-  BookPaginationPageBtn,
+  PaginationWrapper,
+  PaginationPrev,
+  PaginationNext,
+  PaginationPageBtn,
 } from './Book.style';
 
 interface BookProps {
-  difficultWords: Word[],
-  learnedWords: Word[],
-  setDifficultWords: SetState<Word[]>,
-  setLearnedWords: SetState<Word[]>,
+  difficultWords: WordData[],
+  learnedWords: WordData[],
+  setDifficultWords: SetState<WordData[]>,
+  setLearnedWords: SetState<WordData[]>,
 }
 
 function Book(
@@ -45,7 +45,7 @@ function Book(
     setLearnedWords,
   }: BookProps
 ) {
-  const [words, setWords] = useState<Word[]>([]);
+  const [words, setWords] = useState<WordData[]>([]);
   const [groupCount, setGroupCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
   const [pages, setPages] = useState<Btn[]>([]);
@@ -63,19 +63,19 @@ function Book(
     setPages(getPages(totalCountPages));
   }, [totalCountPages]);
 
-  const toggleActive = (arr: Word[], word: Word) => (
+  const toggleActive = (arr: WordData[], word: WordData) => (
     arr.some((el) => el.id === word.id)
   );
 
-  const addActiveWord = (word: Word, setState: SetState<Word[]>) => (
+  const addActiveWord = (word: WordData, setState: SetState<WordData[]>) => (
     setState((prev) => [...prev, word])
   );
 
-  const removeActiveWord = (word: Word, setState: SetState<Word[]>) => (
+  const removeActiveWord = (word: WordData, setState: SetState<WordData[]>) => (
     setState((prev) => prev.filter((item) => item.id !== word.id))
   );
 
-  const handleClick = (arr: Word[], word: Word, setState: SetState<Word[]>) => (
+  const handleClick = (arr: WordData[], word: WordData, setState: SetState<WordData[]>) => (
     toggleActive(arr, word)
       ? removeActiveWord(word, setState)
       : addActiveWord(word, setState)
@@ -90,29 +90,29 @@ function Book(
 
   return (
     <BookContainer>
-      <BookTitle>Учебник</BookTitle>
-      <BookWrapper>
-        <BookItemsContainer>
+      <Title>Учебник</Title>
+      <Wrapper>
+        <WordsContainer>
           {words.map((item) => (
-            <BookItem key={item.id}>
-              <BookItemImg src={`${baseUrl}/${item.image}`} alt="word-img" />
-              <BookItemInfoContainer>
+            <Word key={item.id}>
+              <WordImg src={`${baseUrl}/${item.image}`} alt="word-img" />
+              <WordInfoContainer>
                 <div>
-                  <BookItemInfoWrapper>
-                    <BookItemTitle>
+                  <WordInfoWrapper>
+                    <WordTitle>
                       {`${item.word} - ${item.transcription}`}
-                      <BookItemPlay />
-                    </BookItemTitle>
-                    <BookItemText
+                      <WordPlay />
+                    </WordTitle>
+                    <WordText
                       color={defaultTheme.colors.text}
                       fontSize={defaultTheme.fontSizes.smallText}
                       opacity={defaultTheme.effects.hoverOpacity}
                     >
                       {`${item.wordTranslate}`}
-                    </BookItemText>
-                  </BookItemInfoWrapper>
-                  <BookItemInfoWrapper>
-                    <BookItemText
+                    </WordText>
+                  </WordInfoWrapper>
+                  <WordInfoWrapper>
+                    <WordText
                       dangerouslySetInnerHTML={
                         {
                           __html: DOMPurify.sanitize(item.textMeaning)
@@ -121,7 +121,7 @@ function Book(
                       color={defaultTheme.colors.textBold}
                       fontSize={defaultTheme.fontSizes.smallText}
                     />
-                    <BookItemText
+                    <WordText
                       dangerouslySetInnerHTML={
                         {
                           __html: DOMPurify.sanitize(item.textMeaningTranslate)
@@ -131,9 +131,9 @@ function Book(
                       fontSize={defaultTheme.fontSizes.smallText}
                       opacity={defaultTheme.effects.hoverOpacity}
                     />
-                  </BookItemInfoWrapper>
-                  <BookItemInfoWrapper>
-                    <BookItemText
+                  </WordInfoWrapper>
+                  <WordInfoWrapper>
+                    <WordText
                       dangerouslySetInnerHTML={
                         {
                           __html: DOMPurify.sanitize(item.textExample)
@@ -142,7 +142,7 @@ function Book(
                       color={defaultTheme.colors.textBold}
                       fontSize={defaultTheme.fontSizes.smallText}
                     />
-                    <BookItemText
+                    <WordText
                       dangerouslySetInnerHTML={
                         {
                           __html: DOMPurify.sanitize(item.textExampleTranslate)
@@ -152,10 +152,10 @@ function Book(
                       fontSize={defaultTheme.fontSizes.smallText}
                       opacity={defaultTheme.effects.hoverOpacity}
                     />
-                  </BookItemInfoWrapper>
+                  </WordInfoWrapper>
                 </div>
-              </BookItemInfoContainer>
-              <BookItemBtnContainer>
+              </WordInfoContainer>
+              <WordBtnContainer>
                 <LearnedWordBtn
                   colors={
                     toggleActive(learnedWords, item)
@@ -177,26 +177,26 @@ function Book(
                       />
                     )
                 }
-              </BookItemBtnContainer>
-            </BookItem>
+              </WordBtnContainer>
+            </Word>
           ))}
-        </BookItemsContainer>
+        </WordsContainer>
         <div>
-          <BookGroup>
-            <BookGroupTitle>Раздел</BookGroupTitle>
+          <Group>
+            <GroupTitle>Раздел</GroupTitle>
             {groupBtns.map(({ id, value }) => (
-              <BookGroupBtn key={id} onClick={() => setGroupCount(value - 1)}>{value}</BookGroupBtn>
+              <GroupBtn key={id} onClick={() => setGroupCount(value - 1)}>{value}</GroupBtn>
             ))}
-          </BookGroup>
+          </Group>
         </div>
-        <BookPaginationWrapper>
-          <BookPaginationPrev
+        <PaginationWrapper>
+          <PaginationPrev
             onClick={() => (currentPage < 1
               ? ''
               : setCurrentPage(currentPage - 1))}
           />
           {pages.map(({ id, value }) => (
-            <BookPaginationPageBtn
+            <PaginationPageBtn
               key={id}
               onClick={() => setCurrentPage(value)}
               colors={
@@ -206,14 +206,14 @@ function Book(
               }
             >
               {value + 1}
-            </BookPaginationPageBtn>
+            </PaginationPageBtn>
           ))}
-          <BookPaginationNext onClick={() => (currentPage === totalCountPages - 1
+          <PaginationNext onClick={() => (currentPage === totalCountPages - 1
             ? ''
             : setCurrentPage(currentPage + 1))}
           />
-        </BookPaginationWrapper>
-      </BookWrapper>
+        </PaginationWrapper>
+      </Wrapper>
     </BookContainer>
   );
 }

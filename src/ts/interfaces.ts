@@ -9,11 +9,11 @@ interface Btn {
 }
 
 interface ResponseWord {
-  data: Word[],
+  data: WordData[],
   count: number,
 }
 
-interface Word {
+interface WordData {
   id: string;
   group: number,
   page: number,
@@ -31,5 +31,5 @@ interface Word {
 }
 
 export {
-  Btn, NavItem, Word, ResponseWord
+  Btn, NavItem, WordData, ResponseWord
 };

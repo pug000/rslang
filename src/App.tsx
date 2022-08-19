@@ -10,11 +10,11 @@ import Header from '@/Header';
 import Footer from '@/Footer';
 import Book from '@/Book';
 import GameContainer from '@/GamesContainer';
-import { Word } from '@/ts/interfaces';
+import { WordData } from '@/ts/interfaces';
 
 function App() {
-  const [difficultWords, setDifficultWords] = useState<Word[]>([]);
-  const [learnedWords, setLearnedWords] = useState<Word[]>([]);
+  const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
+  const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
