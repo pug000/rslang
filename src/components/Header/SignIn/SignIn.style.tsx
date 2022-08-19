@@ -21,10 +21,27 @@ const Modal = styled.div`
   border-radius: 0.6rem;
   background-color: ${defaultTheme.colors.bgWhite};
   width: 400px;
-  height: 500px;
+  height: 450px;
   margin-top: -8%;
   transform: scale(0.5);
   transition: ${defaultTheme.effects.transition};
+  position: relative;
+  
+  Input {
+    width: 280px;
+    margin-left: 40px;
+  }
+
+  Button {
+    width: 280px;
+    margin: 8px 40px;
+  }
+
+  Button#signUp {
+    color: ${defaultTheme.colors.primaryColor};
+    background-color: ${defaultTheme.colors.bgWhite};
+    border: solid 0.2rem ${defaultTheme.colors.primaryColor};
+  }
 `;
 
 const SignInContainer = styled.div`
@@ -38,4 +55,31 @@ const SignInContainer = styled.div`
   }
 `;
 
-export { SignInContainer, Shadow, Modal };
+const SignInTitle = styled.h3`
+  text-align: center;
+  font-size: ${defaultTheme.fontSizes.h3};
+  color: ${defaultTheme.colors.title};
+  padding: 20px
+`;
+
+const CloseBtn = styled.button`
+  border: none;
+  background-color: transparent;
+  user-select: none;
+  position: absolute;
+  top: -40px;
+`;
+
+const iconStyles = {
+  color: `${defaultTheme.colors.primaryColor}`,
+  cursor: 'pointer',
+  transition: `${defaultTheme.effects.transition}`,
+  '&:hover': {
+    opacity: `${defaultTheme.effects.hoverOpacity}`,
+    transform: 'rotate(180deg)'
+  }
+};
+
+export {
+  SignInContainer, Shadow, Modal, SignInTitle, CloseBtn, iconStyles
+};
