@@ -1,1 +1,3 @@
-export type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
+
+export default SetState;

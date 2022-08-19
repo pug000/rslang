@@ -20,6 +20,8 @@ const HeaderBtn = styled.button`
   cursor: pointer;
   user-select: none;
   z-index: 20;
+  width: 60px;
+  height: 60px;
 `;
 
 const HeaderLink = styled(NavLink)`
@@ -41,6 +43,21 @@ const iconStyles = {
   }
 };
 
+const LoginBtn = styled.button`
+  width: 60px;
+  height: 60px;
+  background-color: transparent;
+  background-image: url(../assets/icon/signin.svg);
+  background-size: cover;
+  transform: scale(-1, 1);
+  border: none;
+  cursor: pointer;
+  &:hover {
+    transform: scale(-1.1, 1.1);
+    transition: ${defaultTheme.effects.transition};
+  }
+`;
+
 export {
-  HeaderContainer, HeaderBtn, HeaderLink, iconStyles
+  HeaderContainer, HeaderBtn, HeaderLink, iconStyles, LoginBtn
 };

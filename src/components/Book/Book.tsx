@@ -3,7 +3,7 @@ import defaultTheme from '@/styles/theme';
 import { Btn, WordData } from '@/ts/interfaces';
 import React, { useEffect, useMemo, useState } from 'react';
 import DOMPurify from 'dompurify';
-import { SetState } from '@/ts/types';
+import SetState from '@/ts/types';
 import getPages from '@/utils';
 import {
   BookContainer,

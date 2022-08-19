@@ -39,6 +39,9 @@
       "@/Book": [
         "./components/Book/Book"
       ],
+      "@/SignIn": [
+        "./components/Header/SignIn/SignIn"
+      ],
       "@/GamesContainer": [
         "./components/GamesContainer/GamesContainer"
       ],
