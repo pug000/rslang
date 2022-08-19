@@ -4,6 +4,8 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import defaultTheme from '@/styles/theme';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 
 interface BookItemTextProps {
   color: string,
@@ -11,7 +13,7 @@ interface BookItemTextProps {
   opacity?: string
 }
 
-interface LearnedWordBtnProps {
+interface ColorsProps {
   colors: string,
 }
 
@@ -38,10 +40,59 @@ const BookTitle = styled.h1`
 
 const BookWrapper = styled.div`
   width: 100%;
-  display: flex;
   gap: 30px;
-  max-width: 1000px;
+  max-width: 1100px;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 77px;
+  grid-template-areas: "words group" "pagination pagination";
+`;
+
+const BookPaginationWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-area: pagination;
+  gap: 3px;
+  flex-wrap: wrap;
+`;
+
+const BookPaginationPrev = styled(NavigateBeforeIcon).attrs({
+  style: {
+    ...stylesBtn,
+    width: '35px',
+    height: '35px',
+  }
+})`
+
+`;
+
+const BookPaginationNext = styled(NavigateNextIcon).attrs({
+  style: {
+    ...stylesBtn,
+    width: '35px',
+    height: '35px',
+  }
+})`
+`;
+
+const BookPaginationPageBtn = styled.button<ColorsProps>`
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  color: ${({ theme }) => theme.colors.bgWhite};
+  transition: ${({ theme }) => theme.effects.transition};
+  background-color: ${({ colors }) => colors};
+
+  &:hover {
+    opacity: ${({ theme }) => theme.effects.hoverOpacity};
+    background-color: ${({ theme }) => theme.colors.primaryColor};
+  }
 `;
 
 const BookGroup = styled.div`
@@ -57,6 +108,7 @@ const BookGroup = styled.div`
   box-shadow: 0px 3px 3px 0px rgb(0 0 0 / 20%),
   0px 3px 4px 0px rgb(0 0 0 / 14%),
   0px 1px 8px 0px rgb(0 0 0 / 12%);
+  grid-area: group;
 `;
 
 const BookGroupTitle = styled.h4`
@@ -84,6 +136,7 @@ const BookItemsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+  grid-area: words;
 
   @media (max-width: 950px) {
     align-items: center;
@@ -190,7 +243,7 @@ const DifficultWordBtnActive = styled(StarIcon).attrs({
 
 const LearnedWordBtn = styled(MenuBookIcon).attrs({
   style: stylesBtn,
-}) <LearnedWordBtnProps>`
+}) <ColorsProps>`
   color: ${({ colors }) => colors};
 
   &:hover {
@@ -217,4 +270,8 @@ export {
   DifficultWordBtn,
   DifficultWordBtnActive,
   LearnedWordBtn,
+  BookPaginationWrapper,
+  BookPaginationPrev,
+  BookPaginationNext,
+  BookPaginationPageBtn,
 };

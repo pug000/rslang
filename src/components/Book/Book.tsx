@@ -1,9 +1,10 @@
 import { baseUrl, getWords } from '@/api';
 import defaultTheme from '@/styles/theme';
-import { GroupBtn, Word } from '@/ts/interfaces';
-import React, { useEffect, useState } from 'react';
+import { Btn, Word } from '@/ts/interfaces';
+import React, { useEffect, useMemo, useState } from 'react';
 import DOMPurify from 'dompurify';
 import { SetState } from '@/ts/types';
+import getPages from '@/utils';
 import {
   BookContainer,
   BookGroup,
@@ -23,6 +24,10 @@ import {
   DifficultWordBtn,
   LearnedWordBtn,
   DifficultWordBtnActive,
+  BookPaginationWrapper,
+  BookPaginationPrev,
+  BookPaginationNext,
+  BookPaginationPageBtn,
 } from './Book.style';
 
 interface BookProps {
@@ -42,7 +47,10 @@ function Book(
 ) {
   const [words, setWords] = useState<Word[]>([]);
   const [groupCount, setGroupCount] = useState(0);
-  const groupBtns: GroupBtn[] = [
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pages, setPages] = useState<Btn[]>([]);
+  const totalCountPages = 30;
+  const groupBtns: Btn[] = [
     { id: 1, value: 1 },
     { id: 2, value: 2 },
     { id: 3, value: 3 },
@@ -50,6 +58,10 @@ function Book(
     { id: 5, value: 5 },
     { id: 6, value: 6 }
   ];
+
+  useMemo(() => {
+    setPages(getPages(totalCountPages));
+  }, [totalCountPages]);
 
   const toggleActive = (arr: Word[], word: Word) => (
     arr.some((el) => el.id === word.id)
@@ -71,10 +83,10 @@ function Book(
 
   useEffect(() => {
     (async () => {
-      const res = await getWords(groupCount);
+      const res = await getWords(groupCount, currentPage);
       setWords(res.data);
     })();
-  }, [groupCount]);
+  }, [groupCount, currentPage]);
 
   return (
     <BookContainer>
@@ -177,6 +189,30 @@ function Book(
             ))}
           </BookGroup>
         </div>
+        <BookPaginationWrapper>
+          <BookPaginationPrev
+            onClick={() => (currentPage < 1
+              ? ''
+              : setCurrentPage(currentPage - 1))}
+          />
+          {pages.map(({ id, value }) => (
+            <BookPaginationPageBtn
+              key={id}
+              onClick={() => setCurrentPage(value)}
+              colors={
+                currentPage === value
+                  ? defaultTheme.colors.primaryColor
+                  : defaultTheme.colors.grey
+              }
+            >
+              {value + 1}
+            </BookPaginationPageBtn>
+          ))}
+          <BookPaginationNext onClick={() => (currentPage === totalCountPages - 1
+            ? ''
+            : setCurrentPage(currentPage + 1))}
+          />
+        </BookPaginationWrapper>
       </BookWrapper>
     </BookContainer>
   );

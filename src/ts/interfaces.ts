@@ -3,7 +3,7 @@ interface NavItem {
   value: string,
   link: string,
 }
-interface GroupBtn {
+interface Btn {
   id: number,
   value: number,
 }
@@ -31,5 +31,5 @@ interface Word {
 }
 
 export {
-  GroupBtn, NavItem, Word, ResponseWord
+  Btn, NavItem, Word, ResponseWord
 };
