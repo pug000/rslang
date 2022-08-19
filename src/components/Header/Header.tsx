@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import LoginIcon from '@mui/icons-material/Login';
+// import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NavMenu from '@/NavMenu';
 import SignInModal from '@/SignIn';
@@ -20,12 +20,12 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
 
   const handleLoggedChange = () => {
     if (!isLoggedIn) {
-      localStorage.setItem("isLoggedIn", "true")
+      localStorage.setItem('isLoggedIn', 'true');
     } else {
-      localStorage.removeItem("isLoggedIn")
+      localStorage.removeItem('isLoggedIn');
     }
     setIsLoggedIn(!isLoggedIn);
-  }
+  };
 
   return (
     <HeaderContainer>
@@ -42,7 +42,8 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
       <SignInModal
         handleLoggedChange={handleLoggedChange}
         active={modalActive}
-        setActive={setModalActive} />
+        setActive={setModalActive}
+      />
     </HeaderContainer>
   );
 }
