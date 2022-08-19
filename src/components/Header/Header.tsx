@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import LoginIcon from '@mui/icons-material/Login';
-// import LogoutIcon from '@mui/icons-material/Logout'; //раскомментируйте, когда понадобится
+// import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
 import NavMenu from '@/NavMenu';
 import SignInModal from '@/SignIn';
 import {
-  HeaderContainer, HeaderBtn, iconStyles, HeaderLink
+  HeaderContainer, HeaderBtn, iconStyles, HeaderLink, LoginBtn
 } from './styled';
 import LogoSvg from './LogoSvg';
 
 function Header() {
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
   const [modalActive, setModalActive] = useState(false);
+  const [isSignedIn, setSignIn] = useState(true);
 
   return (
     <>
@@ -20,8 +21,11 @@ function Header() {
           <MenuIcon sx={iconStyles} />
         </HeaderBtn>
         <HeaderLink to="/"><LogoSvg /></HeaderLink>
-        <HeaderBtn onClick={() => setModalActive(!modalActive)}>
-          <LoginIcon sx={iconStyles} />
+        <HeaderBtn>
+          {isSignedIn
+            ? <LogoutIcon sx={iconStyles} onClick={() => setSignIn(false)} />
+            : (
+              <LoginBtn onClick={() => setModalActive(!modalActive)} />)}
         </HeaderBtn>
         <NavMenu isNavMenuOpen={isNavMenuOpen} />
       </HeaderContainer>
