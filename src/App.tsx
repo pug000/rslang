@@ -9,8 +9,8 @@ import defaultTheme from '@/styles/theme';
 import Header from '@/Header';
 import Footer from '@/Footer';
 import GameContainer from '@/GamesContainer';
-import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
-import DifficultWords from './components/DifficultWords/DifficultWords';
+import ProtectedRoute from '@/ProtectedRoute';
+import DifficultWords from '@/DifficultWords';
 
 const isLoggedInFromLocalStorage = JSON.parse(localStorage.getItem('isLoggedIn') || "false")
 

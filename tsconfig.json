@@ -44,6 +44,12 @@
       ],
       "@/Input": [
         "./components/Input/Input"
+      ],
+      "@/ProtectedRoute": [
+        "./components/ProtectedRoute/ProtectedRoute"
+      ],
+      "@/DifficultWords": [
+        "./components/DifficultWords/DifficultWords"
       ]
     }
   },
