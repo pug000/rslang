@@ -6,6 +6,7 @@ import StarIcon from '@mui/icons-material/Star';
 import defaultTheme from '@/styles/theme';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import { NavLink } from 'react-router-dom';
 
 interface BookItemTextProps {
   color: string,
@@ -30,6 +31,8 @@ const BookContainer = styled.div`
   gap: 25px;
   padding: 0 25px;
   margin-bottom: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
 `;
 
 const Title = styled.h1`
@@ -41,11 +44,38 @@ const Title = styled.h1`
 const Wrapper = styled.div`
   width: 100%;
   gap: 30px;
-  max-width: 1100px;
-  margin: 0 auto;
   display: grid;
   grid-template-columns: 1fr 77px;
   grid-template-areas: "words group" "pagination pagination";
+`;
+
+const GamesWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-evenly;
+  padding: 20px;
+  gap: 20px;
+`;
+
+const GameLink = styled(NavLink)`
+  max-width: 200px;
+  width: 100%;
+  padding: 15px 10px;
+  display: flex;
+  justify-content: center;
+  background-color: ${({ theme }) => theme.colors.primaryColor};
+  color: ${({ theme }) => theme.colors.bgWhite};
+  border-radius: 10px;
+  font-size: ${({ theme }) => theme.fontSizes.h4};
+  transition: ${({ theme }) => theme.effects.transition};
+
+  &:link{
+    text-decoration: none;
+  }
+
+  &:hover {
+    opacity: ${({ theme }) => theme.effects.hoverOpacity};
+  }
 `;
 
 const PaginationWrapper = styled.div`
@@ -255,6 +285,8 @@ export {
   BookContainer,
   Title,
   Wrapper,
+  GamesWrapper,
+  GameLink,
   Group,
   WordsContainer,
   Word,

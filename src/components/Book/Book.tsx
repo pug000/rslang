@@ -28,6 +28,8 @@ import {
   PaginationPrev,
   PaginationNext,
   PaginationPageBtn,
+  GamesWrapper,
+  GameLink,
 } from './Book.style';
 
 interface BookProps {
@@ -91,6 +93,10 @@ function Book(
   return (
     <BookContainer>
       <Title>Учебник</Title>
+      <GamesWrapper>
+        <GameLink to="/games/sprint">Спринт</GameLink>
+        <GameLink to="/games/audio">Аудиовызов</GameLink>
+      </GamesWrapper>
       <Wrapper>
         <WordsContainer>
           {words.map((item) => (
