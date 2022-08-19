@@ -27,6 +27,7 @@ const BookContainer = styled.div`
   align-items: center;
   gap: 25px;
   padding: 0 25px;
+  margin-bottom: 40px;
 `;
 
 const BookTitle = styled.h1`
