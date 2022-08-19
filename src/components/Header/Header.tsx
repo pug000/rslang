@@ -3,8 +3,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import NavMenu from '@/NavMenu';
+import SignInModal from '@/SignIn';
 import {
-  HeaderContainer, HeaderBtn, iconStyles, HeaderLink
+  HeaderContainer, HeaderBtn, iconStyles, HeaderLink, LoginBtn
 } from './styled';
 import LogoSvg from './LogoSvg';
 
@@ -15,27 +16,33 @@ interface HeaderProps {
 
 function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
+  const [modalActive, setModalActive] = useState(false);
 
   const handleLoggedChange = () => {
     if (!isLoggedIn) {
-      setIsLoggedIn(true);
       localStorage.setItem("isLoggedIn", "true")
     } else {
-      setIsLoggedIn(false);
       localStorage.removeItem("isLoggedIn")
     }
+    setIsLoggedIn(!isLoggedIn);
   }
 
   return (
     <HeaderContainer>
-      <HeaderBtn onClick={() => setNavMenuOpen(!isNavMenuOpen)}>
+      <HeaderBtn onClick={() => setNavMenuOpen(modalActive ? false : !isNavMenuOpen)}>
         <MenuIcon sx={iconStyles} />
       </HeaderBtn>
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
-      <HeaderBtn onClick={handleLoggedChange}>
-        {isLoggedIn ? <LogoutIcon sx={iconStyles} /> : <LoginIcon sx={iconStyles} />}
+      <HeaderBtn>
+        {isLoggedIn
+          ? <LogoutIcon sx={iconStyles} onClick={handleLoggedChange} />
+          : <LoginBtn onClick={() => setModalActive(!modalActive)} />}
       </HeaderBtn>
       <NavMenu isNavMenuOpen={isNavMenuOpen} />
+      <SignInModal
+        handleLoggedChange={handleLoggedChange}
+        active={modalActive}
+        setActive={setModalActive} />
     </HeaderContainer>
   );
 }
