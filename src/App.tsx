@@ -35,7 +35,9 @@ function App() {
           <Route path="/games" element={<GameContainer />} />
           <Route path="/games/sprint" element={<p>Sprint</p>} />
           <Route path="/games/audio" element={<p>Audio</p>} />
-          <Route path="/statistics" element={<p>Statistics</p>} />
+          <Route path="/statistics" element={
+            <Protected conditionValue={isLoggedIn}><p>Statistics</p>
+            </Protected>} />
           <Route path="/about-project" element={<p>About Project</p>} />
           <Route path="/about-team" element={<p>About Team</p>} />
         </Routes>
