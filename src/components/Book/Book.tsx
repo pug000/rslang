@@ -18,6 +18,9 @@ import {
   BookItemText,
   BookItemInfoWrapper,
   BookItemPlay,
+  BookItemBtnContainer,
+  DifficultWordBtn,
+  LearnedWordBtn,
 } from './styled';
 
 function Book() {
@@ -100,6 +103,10 @@ function Book() {
                   />
                 </BookItemInfoWrapper>
               </BookItemInfoContainer>
+              <BookItemBtnContainer>
+                <LearnedWordBtn colors={defaultTheme.colors.grey} />
+                <DifficultWordBtn />
+              </BookItemBtnContainer>
             </BookItem>
           ))}
         </BookItemsContainer>

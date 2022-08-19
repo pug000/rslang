@@ -1,11 +1,24 @@
 import styled from 'styled-components';
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
+import defaultTheme from '@/styles/theme';
 
 interface BookItemTextProps {
   color: string,
   fontSize: string,
   opacity?: string
 }
+
+interface LearnedWordBtnProps {
+  colors: string,
+}
+
+const stylesBtn = {
+  cursor: 'pointer',
+  transition: `${defaultTheme.effects.transition}`,
+};
 
 const BookContainer = styled.div`
   display: flex;
@@ -101,8 +114,8 @@ const BookItemInfoWrapper = styled.div`
 
 const BookItemTitle = styled.h2`
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  gap: 10px;
   font-size: ${({ theme }) => theme.fontSizes.text};
   color: ${({ theme }) => theme.colors.title};
   font-weight: 500;
@@ -123,6 +136,43 @@ const BookItemPlay = styled(PlayCircleOutlineIcon)`
   }
 `;
 
+const BookItemBtnContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+  justify-content: space-around;
+`;
+
+const DifficultWordBtn = styled(StarBorderIcon).attrs({
+  style: stylesBtn,
+})`
+  color: ${({ theme }) => theme.colors.grey};
+
+  &:hover {
+    opacity: ${({ theme }) => theme.effects.hoverOpacity};
+  }
+`;
+
+const DifficultWordBtnActive = styled(StarIcon).attrs({
+  style: stylesBtn,
+})`
+  color: ${({ theme }) => theme.colors.primaryColor};
+
+  &:hover {
+    opacity: ${({ theme }) => theme.effects.hoverOpacity};
+  }
+`;
+
+const LearnedWordBtn = styled(MenuBookIcon).attrs({
+  style: stylesBtn,
+}) <LearnedWordBtnProps>`
+  color: ${({ colors }) => colors};
+
+  &:hover {
+    opacity: ${({ theme }) => theme.effects.hoverOpacity};
+  }
+`;
+
 export {
   BookContainer,
   BookTitle,
@@ -134,8 +184,12 @@ export {
   BookGroupBtn,
   BookGroupTitle,
   BookItemInfoContainer,
+  BookItemBtnContainer,
   BookItemTitle,
   BookItemText,
   BookItemInfoWrapper,
   BookItemPlay,
+  DifficultWordBtn,
+  DifficultWordBtnActive,
+  LearnedWordBtn,
 };
