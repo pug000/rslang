@@ -44,16 +44,14 @@ const Modal = styled.div`
   }
 `;
 
-const SignInContainer = styled.div`
-  .shadow_active {
-    opacity: 0.9;
-    pointer-events: all;
-  }
+const shadowActive = {
+  opacity: '0.9',
+  'pointer-events': 'all'
+};
 
-  .modal_active {
-    transform: scale(1);
-  }
-`;
+const modalActive = {
+  transform: 'scale(1)'
+};
 
 const SignInTitle = styled.h3`
   text-align: center;
@@ -81,5 +79,5 @@ const iconStyles = {
 };
 
 export {
-  SignInContainer, Shadow, Modal, SignInTitle, CloseBtn, iconStyles
+  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, shadowActive, modalActive
 };
