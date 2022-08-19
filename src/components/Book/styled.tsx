@@ -83,6 +83,10 @@ const BookItemsContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
+
+  @media (max-width: 950px) {
+    align-items: center;
+  }
 `;
 
 const BookItem = styled.div`
@@ -90,26 +94,41 @@ const BookItem = styled.div`
   flex-direction: row;
   box-shadow: rgb(0 0 0 / 15%) 0px 0px 10px;
   border-radius: 10px;
-  padding: 15px;
+  padding: 25px;
+
+  @media (max-width: 950px) {
+    flex-direction: column;
+    align-items: center;
+    max-width: 400px;
+    gap: 15px;
+    padding: 20px;
+  }
 `;
 
 const BookItemImg = styled.img`
-  width: 300px;
+  max-width: 250px;
+  width: 100%;
+  min-height: 200px;
   object-fit: cover;
+
+  @media (max-width: 950px) {
+    max-width: fit-content;
+    min-height: auto;
+  }
 `;
 
 const BookItemInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
+  padding: 0 30px;
   width: 100%;
-  padding-left: 30px;
-  gap: 25px;
 `;
 
 const BookItemInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 7px;
+  margin-bottom: 15px;
 `;
 
 const BookItemTitle = styled.h2`
@@ -139,8 +158,12 @@ const BookItemPlay = styled(PlayCircleOutlineIcon)`
 const BookItemBtnContainer = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 20px 0;
   justify-content: space-around;
+
+  @media (max-width: 950px) {
+    flex-direction: row;
+    width: 100%;
+  }
 `;
 
 const DifficultWordBtn = styled(StarBorderIcon).attrs({

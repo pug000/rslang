@@ -47,61 +47,63 @@ function Book() {
             <BookItem key={item.id}>
               <BookItemImg src={`${baseUrl}/${item.image}`} alt="word-img" />
               <BookItemInfoContainer>
-                <BookItemInfoWrapper>
-                  <BookItemTitle>
-                    {`${item.word} - ${item.transcription}`}
-                    <BookItemPlay />
-                  </BookItemTitle>
-                  <BookItemText
-                    color={defaultTheme.colors.text}
-                    fontSize={defaultTheme.fontSizes.smallText}
-                    opacity={defaultTheme.effects.hoverOpacity}
-                  >
-                    {`${item.wordTranslate}`}
-                  </BookItemText>
-                </BookItemInfoWrapper>
-                <BookItemInfoWrapper>
-                  <BookItemText
-                    dangerouslySetInnerHTML={
-                      {
-                        __html: DOMPurify.sanitize(item.textMeaning)
+                <div>
+                  <BookItemInfoWrapper>
+                    <BookItemTitle>
+                      {`${item.word} - ${item.transcription}`}
+                      <BookItemPlay />
+                    </BookItemTitle>
+                    <BookItemText
+                      color={defaultTheme.colors.text}
+                      fontSize={defaultTheme.fontSizes.smallText}
+                      opacity={defaultTheme.effects.hoverOpacity}
+                    >
+                      {`${item.wordTranslate}`}
+                    </BookItemText>
+                  </BookItemInfoWrapper>
+                  <BookItemInfoWrapper>
+                    <BookItemText
+                      dangerouslySetInnerHTML={
+                        {
+                          __html: DOMPurify.sanitize(item.textMeaning)
+                        }
                       }
-                    }
-                    color={defaultTheme.colors.textBold}
-                    fontSize={defaultTheme.fontSizes.smallText}
-                  />
-                  <BookItemText
-                    dangerouslySetInnerHTML={
-                      {
-                        __html: DOMPurify.sanitize(item.textMeaningTranslate)
+                      color={defaultTheme.colors.textBold}
+                      fontSize={defaultTheme.fontSizes.smallText}
+                    />
+                    <BookItemText
+                      dangerouslySetInnerHTML={
+                        {
+                          __html: DOMPurify.sanitize(item.textMeaningTranslate)
+                        }
                       }
-                    }
-                    color={defaultTheme.colors.text}
-                    fontSize={defaultTheme.fontSizes.smallText}
-                    opacity={defaultTheme.effects.hoverOpacity}
-                  />
-                </BookItemInfoWrapper>
-                <BookItemInfoWrapper>
-                  <BookItemText
-                    dangerouslySetInnerHTML={
-                      {
-                        __html: DOMPurify.sanitize(item.textExample)
+                      color={defaultTheme.colors.text}
+                      fontSize={defaultTheme.fontSizes.smallText}
+                      opacity={defaultTheme.effects.hoverOpacity}
+                    />
+                  </BookItemInfoWrapper>
+                  <BookItemInfoWrapper>
+                    <BookItemText
+                      dangerouslySetInnerHTML={
+                        {
+                          __html: DOMPurify.sanitize(item.textExample)
+                        }
                       }
-                    }
-                    color={defaultTheme.colors.textBold}
-                    fontSize={defaultTheme.fontSizes.smallText}
-                  />
-                  <BookItemText
-                    dangerouslySetInnerHTML={
-                      {
-                        __html: DOMPurify.sanitize(item.textExampleTranslate)
+                      color={defaultTheme.colors.textBold}
+                      fontSize={defaultTheme.fontSizes.smallText}
+                    />
+                    <BookItemText
+                      dangerouslySetInnerHTML={
+                        {
+                          __html: DOMPurify.sanitize(item.textExampleTranslate)
+                        }
                       }
-                    }
-                    color={defaultTheme.colors.text}
-                    fontSize={defaultTheme.fontSizes.smallText}
-                    opacity={defaultTheme.effects.hoverOpacity}
-                  />
-                </BookItemInfoWrapper>
+                      color={defaultTheme.colors.text}
+                      fontSize={defaultTheme.fontSizes.smallText}
+                      opacity={defaultTheme.effects.hoverOpacity}
+                    />
+                  </BookItemInfoWrapper>
+                </div>
               </BookItemInfoContainer>
               <BookItemBtnContainer>
                 <LearnedWordBtn colors={defaultTheme.colors.grey} />
