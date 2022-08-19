@@ -8,7 +8,7 @@ interface GroupBtn {
   text: string,
 }
 
-interface WordData {
+interface Word {
   id: string;
   group: number,
   page: number,
@@ -25,4 +25,4 @@ interface WordData {
   textExampleTranslate: string
 }
 
-export { GroupBtn, NavItem, WordData };
+export { GroupBtn, NavItem, Word };

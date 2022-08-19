@@ -1,8 +1,9 @@
 import { baseUrl, getWords } from '@/api';
 import defaultTheme from '@/styles/theme';
-import { GroupBtn, WordData } from '@/ts/interfaces';
+import { GroupBtn, Word } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import DOMPurify from 'dompurify';
+import { SetState } from '@/ts/types';
 import {
   BookContainer,
   BookGroup,
@@ -21,10 +22,25 @@ import {
   BookItemBtnContainer,
   DifficultWordBtn,
   LearnedWordBtn,
+  DifficultWordBtnActive,
 } from './styled';
 
-function Book() {
-  const [words, setWords] = useState<WordData[]>([]);
+interface BookProps {
+  difficultWords: Word[],
+  learnedWords: Word[],
+  setDifficultWords: SetState<Word[]>,
+  setLearnedWords: SetState<Word[]>,
+}
+
+function Book(
+  {
+    difficultWords,
+    learnedWords,
+    setDifficultWords,
+    setLearnedWords,
+  }: BookProps
+) {
+  const [words, setWords] = useState<Word[]>([]);
   const groupBtns: GroupBtn[] = [
     { id: 1, text: '1' },
     { id: 2, text: '2' },
@@ -33,6 +49,24 @@ function Book() {
     { id: 5, text: '5' },
     { id: 6, text: '6' }
   ];
+
+  const toggleActive = (arr: Word[], word: Word) => (
+    arr.some((el) => el.id === word.id)
+  );
+
+  const addActiveWord = (word: Word, setState: SetState<Word[]>) => (
+    setState((prev) => [...prev, word])
+  );
+
+  const removeActiveWord = (word: Word, setState: SetState<Word[]>) => (
+    setState((prev) => prev.filter((item) => item.id !== word.id))
+  );
+
+  const handleClick = (arr: Word[], word: Word, setState: SetState<Word[]>) => (
+    toggleActive(arr, word)
+      ? removeActiveWord(word, setState)
+      : addActiveWord(word, setState)
+  );
 
   useEffect(() => {
     getWords().then((data) => setWords(data));
@@ -106,8 +140,27 @@ function Book() {
                 </div>
               </BookItemInfoContainer>
               <BookItemBtnContainer>
-                <LearnedWordBtn colors={defaultTheme.colors.grey} />
-                <DifficultWordBtn />
+                <LearnedWordBtn
+                  colors={
+                    toggleActive(learnedWords, item)
+                      ? defaultTheme.colors.primaryColor
+                      : defaultTheme.colors.grey
+                  }
+                  onClick={() => handleClick(learnedWords, item, setLearnedWords)}
+                />
+                {
+                  toggleActive(difficultWords, item)
+                    ? (
+                      <DifficultWordBtnActive
+                        onClick={() => handleClick(difficultWords, item, setDifficultWords)}
+                      />
+                    )
+                    : (
+                      <DifficultWordBtn
+                        onClick={() => handleClick(difficultWords, item, setDifficultWords)}
+                      />
+                    )
+                }
               </BookItemBtnContainer>
             </BookItem>
           ))}

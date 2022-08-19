@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -10,8 +10,12 @@ import Header from '@/Header';
 import Footer from '@/Footer';
 import Book from '@/Book';
 import GameContainer from '@/GamesContainer';
+import { Word } from '@/ts/interfaces';
 
 function App() {
+  const [difficultWords, setDifficultWords] = useState<Word[]>([]);
+  const [learnedWords, setLearnedWords] = useState<Word[]>([]);
+
   return (
     <ThemeProvider theme={defaultTheme}>
       <Global />
@@ -19,7 +23,17 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<p>Home</p>} />
-          <Route path="/book" element={<Book />} />
+          <Route
+            path="/book"
+            element={(
+              <Book
+                difficultWords={difficultWords}
+                learnedWords={learnedWords}
+                setDifficultWords={setDifficultWords}
+                setLearnedWords={setLearnedWords}
+              />
+            )}
+          />
           <Route path="/games" element={<GameContainer />} />
           <Route path="/games/sprint" element={<p>Sprint</p>} />
           <Route path="/games/audio" element={<p>Audio</p>} />
