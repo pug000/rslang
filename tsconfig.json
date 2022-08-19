@@ -36,6 +36,9 @@
       "@/NavMenu": [
         "./components/Header/NavMenu/NavMenu"
       ],
+      "@/SignIn": [
+        "./components/Header/SignIn/SignIn"
+      ],
       "@/GamesContainer": [
         "./components/GamesContainer/GamesContainer"
       ],
