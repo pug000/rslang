@@ -23,7 +23,7 @@ import {
   DifficultWordBtn,
   LearnedWordBtn,
   DifficultWordBtnActive,
-} from './styled';
+} from './Book.style';
 
 interface BookProps {
   difficultWords: Word[],
