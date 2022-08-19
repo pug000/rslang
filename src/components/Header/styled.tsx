@@ -51,6 +51,10 @@ const LoginBtn = styled.button`
   transform: scale(-1, 1);
   border: none;
   cursor: pointer;
+  &:hover {
+    transform: scale(-1.1, 1.1);
+    transition: ${defaultTheme.effects.transition};
+  }
 `;
 
 export {
