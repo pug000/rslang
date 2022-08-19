@@ -146,8 +146,9 @@ const BookItemText = styled.div<BookItemTextProps>`
   opacity: ${({ opacity }) => opacity ?? '1'};
 `;
 
-const BookItemPlay = styled(PlayCircleOutlineIcon)`
-  cursor: pointer;
+const BookItemPlay = styled(PlayCircleOutlineIcon).attrs({
+  style: stylesBtn,
+})`
   color: ${({ theme }) => theme.colors.purple};
 
   &:hover {
