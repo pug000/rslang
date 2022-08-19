@@ -3,11 +3,14 @@ import ButtonElement from './Button.style';
 
 interface ButtonProps {
   title: string;
+  id: string;
   callback: () => void;
   disabled?: boolean;
 }
 
-function Button({ title, disabled, callback }: ButtonProps) {
+function Button({
+  title, id, disabled, callback
+}: ButtonProps) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handlerClickButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     callback();
@@ -16,6 +19,7 @@ function Button({ title, disabled, callback }: ButtonProps) {
   return (
     <ButtonElement
       type="button"
+      id={id}
       disabled={disabled}
       onClick={handlerClickButton}
     >

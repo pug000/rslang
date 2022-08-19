@@ -36,4 +36,6 @@ function Input({
   );
 }
 
+Input.Styled = InputWrapper;
+
 export default Input;
