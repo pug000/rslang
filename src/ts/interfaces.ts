@@ -5,7 +5,12 @@ interface NavItem {
 }
 interface GroupBtn {
   id: number,
-  text: string,
+  value: number,
+}
+
+interface ResponseWord {
+  data: Word[],
+  count: number,
 }
 
 interface Word {
@@ -25,4 +30,6 @@ interface Word {
   textExampleTranslate: string
 }
 
-export { GroupBtn, NavItem, Word };
+export {
+  GroupBtn, NavItem, Word, ResponseWord
+};

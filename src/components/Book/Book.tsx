@@ -41,13 +41,14 @@ function Book(
   }: BookProps
 ) {
   const [words, setWords] = useState<Word[]>([]);
+  const [groupCount, setGroupCount] = useState(0);
   const groupBtns: GroupBtn[] = [
-    { id: 1, text: '1' },
-    { id: 2, text: '2' },
-    { id: 3, text: '3' },
-    { id: 4, text: '4' },
-    { id: 5, text: '5' },
-    { id: 6, text: '6' }
+    { id: 1, value: 1 },
+    { id: 2, value: 2 },
+    { id: 3, value: 3 },
+    { id: 4, value: 4 },
+    { id: 5, value: 5 },
+    { id: 6, value: 6 }
   ];
 
   const toggleActive = (arr: Word[], word: Word) => (
@@ -69,8 +70,11 @@ function Book(
   );
 
   useEffect(() => {
-    getWords().then((data) => setWords(data));
-  }, []);
+    (async () => {
+      const res = await getWords(groupCount);
+      setWords(res.data);
+    })();
+  }, [groupCount]);
 
   return (
     <BookContainer>
@@ -168,8 +172,8 @@ function Book(
         <div>
           <BookGroup>
             <BookGroupTitle>Раздел</BookGroupTitle>
-            {groupBtns.map(({ id, text }) => (
-              <BookGroupBtn key={id}>{text}</BookGroupBtn>
+            {groupBtns.map(({ id, value }) => (
+              <BookGroupBtn key={id} onClick={() => setGroupCount(value - 1)}>{value}</BookGroupBtn>
             ))}
           </BookGroup>
         </div>
