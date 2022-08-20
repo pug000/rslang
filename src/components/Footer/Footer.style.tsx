@@ -12,7 +12,7 @@ const FooterBorder = styled.div`
 `;
 
 const FooterContainer = styled.div`
-  height: 200px;
+  height: 170px;
   width: 100%;
   background-color: ${defaultTheme.colors.bgPurple};
 `;

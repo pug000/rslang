@@ -2,7 +2,7 @@ import React from 'react';
 import {
   FooterWrapper, FooterBorder, FooterContainer, FooterTitleDiv, FooterTitle, SchoolLogo,
   Copyright, Authors, Author
-} from './styled';
+} from './Footer.style';
 
 function Footer() {
   return (
