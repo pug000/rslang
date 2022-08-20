@@ -136,18 +136,18 @@ const GroupTitle = styled.h4`
   font-size: ${({ theme }) => theme.fontSizes.text};
 `;
 
-const GroupBtn = styled.button`
+const GroupBtn = styled.button<ColorsProps>`
   width: 55px;
   height: 55px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
-  transition: ${(props) => props.theme.effects.transition};
-  background-color: ${(props) => props.theme.colors.purple};
-  color: ${(props) => props.theme.colors.bgWhite};
+  transition: ${({ theme }) => theme.effects.transition};
+  background-color: ${({ colors }) => colors};
+  color: ${({ theme }) => theme.colors.bgWhite};
 
   &:hover {
-    opacity: ${(props) => props.theme.effects.hoverOpacity};
+    opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
 `;
 

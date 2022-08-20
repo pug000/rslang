@@ -48,7 +48,17 @@ function Book() {
           <Group>
             <GroupTitle>Раздел</GroupTitle>
             {groupBtns.map(({ id, value }) => (
-              <GroupBtn key={id} onClick={() => setGroupCount(value - 1)}>{value}</GroupBtn>
+              <GroupBtn
+                key={id}
+                colors={
+                  groupCount === value - 1
+                    ? defaultTheme.colors.primaryColor
+                    : defaultTheme.colors.grey
+                }
+                onClick={() => setGroupCount(value - 1)}
+              >
+                {value}
+              </GroupBtn>
             ))}
           </Group>
         </div>
