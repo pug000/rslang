@@ -14,6 +14,7 @@ import { WordData } from '@/ts/interfaces';
 import WordListContext from '@/contexts/WordListContext';
 import ProtectedRoute from '@/ProtectedRoute';
 import DifficultWords from '@/DifficultWords';
+import Home from './components/Home/Home';
 
 const isLoggedInFromLocalStorage = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
 
@@ -46,7 +47,7 @@ function App() {
       />
       <main>
         <Routes>
-          <Route path="/" element={<p>Home</p>} />
+          <Route path="/" element={<Home />} />
           <Route
             path="/book"
             element={(
