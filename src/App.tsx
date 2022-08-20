@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -11,10 +11,20 @@ import Footer from '@/Footer';
 import Book from '@/Book';
 import GameContainer from '@/GamesContainer';
 import { WordData } from '@/ts/interfaces';
+import WordListContext from '@/contexts/WordListContext';
 
 function App() {
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
+
+  const wordsListValue = useMemo(() => (
+    {
+      difficultWords,
+      learnedWords,
+      setDifficultWords,
+      setLearnedWords,
+    }
+  ), [difficultWords, learnedWords]);
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -26,12 +36,9 @@ function App() {
           <Route
             path="/book"
             element={(
-              <Book
-                difficultWords={difficultWords}
-                learnedWords={learnedWords}
-                setDifficultWords={setDifficultWords}
-                setLearnedWords={setLearnedWords}
-              />
+              <WordListContext.Provider value={wordsListValue}>
+                <Book />
+              </WordListContext.Provider>
             )}
           />
           <Route path="/games" element={<GameContainer />} />

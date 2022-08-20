@@ -1,52 +1,15 @@
-import { baseUrl, getWords } from '@/api';
+import { getWords } from '@/api';
 import defaultTheme from '@/styles/theme';
 import { Btn, WordData } from '@/ts/interfaces';
 import React, { useEffect, useMemo, useState } from 'react';
-import DOMPurify from 'dompurify';
-import SetState from '@/ts/types';
 import getPages from '@/utils';
+import WordList from '@/WordList';
 import {
-  BookContainer,
-  Group,
-  GroupBtn,
-  GroupTitle,
-  Word,
-  WordImg,
-  WordsContainer,
-  Title,
-  Wrapper,
-  WordTitle,
-  WordInfoContainer,
-  WordText,
-  WordInfoWrapper,
-  WordPlay,
-  WordBtnContainer,
-  DifficultWordBtn,
-  LearnedWordBtn,
-  DifficultWordBtnActive,
-  PaginationWrapper,
-  PaginationPrev,
-  PaginationNext,
-  PaginationPageBtn,
-  GamesWrapper,
-  GameLink,
+  BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, PaginationWrapper, PaginationPrev,
+  PaginationNext, PaginationPageBtn, GamesWrapper, GameLink,
 } from './Book.style';
 
-interface BookProps {
-  difficultWords: WordData[],
-  learnedWords: WordData[],
-  setDifficultWords: SetState<WordData[]>,
-  setLearnedWords: SetState<WordData[]>,
-}
-
-function Book(
-  {
-    difficultWords,
-    learnedWords,
-    setDifficultWords,
-    setLearnedWords,
-  }: BookProps
-) {
+function Book() {
   const [words, setWords] = useState<WordData[]>([]);
   const [groupCount, setGroupCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(0);
@@ -65,24 +28,6 @@ function Book(
     setPages(getPages(totalCountPages));
   }, [totalCountPages]);
 
-  const toggleActive = (arr: WordData[], word: WordData) => (
-    arr.some((el) => el.id === word.id)
-  );
-
-  const addActiveWord = (word: WordData, setState: SetState<WordData[]>) => (
-    setState((prev) => [...prev, word])
-  );
-
-  const removeActiveWord = (word: WordData, setState: SetState<WordData[]>) => (
-    setState((prev) => prev.filter((item) => item.id !== word.id))
-  );
-
-  const handleClick = (arr: WordData[], word: WordData, setState: SetState<WordData[]>) => (
-    toggleActive(arr, word)
-      ? removeActiveWord(word, setState)
-      : addActiveWord(word, setState)
-  );
-
   useEffect(() => {
     (async () => {
       const res = await getWords(groupCount, currentPage);
@@ -98,95 +43,7 @@ function Book(
         <GameLink to="/games/audio">Аудиовызов</GameLink>
       </GamesWrapper>
       <Wrapper>
-        <WordsContainer>
-          {words.map((item) => (
-            <Word key={item.id}>
-              <WordImg src={`${baseUrl}/${item.image}`} alt="word-img" />
-              <WordInfoContainer>
-                <div>
-                  <WordInfoWrapper>
-                    <WordTitle>
-                      {`${item.word} - ${item.transcription}`}
-                      <WordPlay />
-                    </WordTitle>
-                    <WordText
-                      color={defaultTheme.colors.text}
-                      fontSize={defaultTheme.fontSizes.smallText}
-                      opacity={defaultTheme.effects.hoverOpacity}
-                    >
-                      {`${item.wordTranslate}`}
-                    </WordText>
-                  </WordInfoWrapper>
-                  <WordInfoWrapper>
-                    <WordText
-                      dangerouslySetInnerHTML={
-                        {
-                          __html: DOMPurify.sanitize(item.textMeaning)
-                        }
-                      }
-                      color={defaultTheme.colors.textBold}
-                      fontSize={defaultTheme.fontSizes.smallText}
-                    />
-                    <WordText
-                      dangerouslySetInnerHTML={
-                        {
-                          __html: DOMPurify.sanitize(item.textMeaningTranslate)
-                        }
-                      }
-                      color={defaultTheme.colors.text}
-                      fontSize={defaultTheme.fontSizes.smallText}
-                      opacity={defaultTheme.effects.hoverOpacity}
-                    />
-                  </WordInfoWrapper>
-                  <WordInfoWrapper>
-                    <WordText
-                      dangerouslySetInnerHTML={
-                        {
-                          __html: DOMPurify.sanitize(item.textExample)
-                        }
-                      }
-                      color={defaultTheme.colors.textBold}
-                      fontSize={defaultTheme.fontSizes.smallText}
-                    />
-                    <WordText
-                      dangerouslySetInnerHTML={
-                        {
-                          __html: DOMPurify.sanitize(item.textExampleTranslate)
-                        }
-                      }
-                      color={defaultTheme.colors.text}
-                      fontSize={defaultTheme.fontSizes.smallText}
-                      opacity={defaultTheme.effects.hoverOpacity}
-                    />
-                  </WordInfoWrapper>
-                </div>
-              </WordInfoContainer>
-              <WordBtnContainer>
-                <LearnedWordBtn
-                  colors={
-                    toggleActive(learnedWords, item)
-                      ? defaultTheme.colors.primaryColor
-                      : defaultTheme.colors.grey
-                  }
-                  onClick={() => handleClick(learnedWords, item, setLearnedWords)}
-                />
-                {
-                  toggleActive(difficultWords, item)
-                    ? (
-                      <DifficultWordBtnActive
-                        onClick={() => handleClick(difficultWords, item, setDifficultWords)}
-                      />
-                    )
-                    : (
-                      <DifficultWordBtn
-                        onClick={() => handleClick(difficultWords, item, setDifficultWords)}
-                      />
-                    )
-                }
-              </WordBtnContainer>
-            </Word>
-          ))}
-        </WordsContainer>
+        <WordList words={words} />
         <div>
           <Group>
             <GroupTitle>Раздел</GroupTitle>
