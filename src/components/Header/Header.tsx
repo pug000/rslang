@@ -6,6 +6,7 @@ import {
   HeaderContainer, HeaderBtn, LogoutBtn, HeaderLink, LoginBtn, Menu
 } from './Header.style';
 import LogoSvg from './LogoSvg';
+import LogInIcon from './LogInIcon';
 
 interface HeaderProps {
   isLoggedIn: boolean,
@@ -27,7 +28,7 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
       <HeaderBtn>
         {isLoggedIn
           ? <LogoutBtn onClick={changeLoggedInState} />
-          : <LoginBtn onClick={() => setModalActive(!modalActive)} />}
+          : <LoginBtn onClick={() => setModalActive(!modalActive)}><LogInIcon /></LoginBtn>}
       </HeaderBtn>
       <NavMenu isNavMenuOpen={isNavMenuOpen} />
       <SignInModal

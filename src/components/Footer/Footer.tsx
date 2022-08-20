@@ -1,13 +1,16 @@
 import React from 'react';
 import {
-  FooterWrapper, FooterBorder, FooterContainer, FooterTitleDiv, FooterTitle, SchoolLogo,
+  FooterWrapper, FooterContainer, FooterBorderWrap, FooterTitleDiv, FooterTitle, SchoolLogo,
   Copyright, Authors, Author
 } from './Footer.style';
+import FooterBorder from './FooterBorder';
 
 function Footer() {
   return (
     <FooterWrapper>
-      <FooterBorder />
+      <FooterBorderWrap>
+        <FooterBorder />
+      </FooterBorderWrap>
       <FooterContainer>
         <FooterTitleDiv>
           <FooterTitle>Наша команда на GitHub</FooterTitle>
@@ -15,9 +18,9 @@ function Footer() {
         </FooterTitleDiv>
         <Copyright>
           <Authors>
-            <Author href="https://github.com/pug000" title="RS school" target="_blank">Роман Трошин</Author>
-            <Author href="https://github.com/saachko" title="RS school" target="_blank">Анастасия Сачко</Author>
-            <Author href="https://github.com/aArt13" title="RS school" target="_blank">Артем Харитончик</Author>
+            <Author href="https://github.com/pug000" title="Roman on GitHub" target="_blank">Роман Трошин</Author>
+            <Author href="https://github.com/saachko" title="Anastasiya on GitHub" target="_blank">Анастасия Сачко</Author>
+            <Author href="https://github.com/aArt13" title="Artsiom on GitHub" target="_blank">Артем Харитончик</Author>
           </Authors>
           <p>2022</p>
         </Copyright>
