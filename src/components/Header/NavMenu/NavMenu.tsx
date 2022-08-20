@@ -14,10 +14,11 @@ function NavMenu(
   const navItems: NavItem[] = [
     { id: 1, value: 'Главная', link: '/' },
     { id: 2, value: 'Учебник', link: '/book' },
-    { id: 3, value: 'Игры', link: '/games' },
-    { id: 4, value: 'Статистика', link: '/statistics' },
-    { id: 5, value: 'О проекте', link: '/about-project' },
-    { id: 6, value: 'О команде', link: '/about-team' },
+    { id: 3, value: 'Сложные слова', link: '/difficult-words' },
+    { id: 4, value: 'Игры', link: '/games' },
+    { id: 5, value: 'Статистика', link: '/statistics' },
+    { id: 6, value: 'О проекте', link: '/about-project' },
+    { id: 7, value: 'О команде', link: '/about-team' },
   ];
 
   return (

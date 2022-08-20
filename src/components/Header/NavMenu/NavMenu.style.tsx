@@ -12,6 +12,7 @@ export const Ul = styled.ul<UlProps>`
   flex-direction: column;
   flex-wrap: nowrap;
   position: fixed;
+  transition: ${({ theme }) => theme.effects.transition};
   transform: ${({ isOpen }) => (isOpen ? 'translateX(0)' : 'translateX(-100%)')};
   top: 0;
   left: 0;

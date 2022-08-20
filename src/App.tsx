@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Route, Routes } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
@@ -12,10 +12,21 @@ import Book from '@/Book';
 import GameContainer from '@/GamesContainer';
 import { WordData } from '@/ts/interfaces';
 import WordListContext from '@/contexts/WordListContext';
+import ProtectedRoute from '@/ProtectedRoute';
+import DifficultWords from '@/DifficultWords';
+
+const isLoggedInFromLocalStorage = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(isLoggedInFromLocalStorage);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
+
+  useEffect(() => (
+    isLoggedIn
+      ? localStorage.setItem('isLoggedIn', 'true')
+      : localStorage.setItem('isLoggedIn', 'false')
+  ), [isLoggedIn]);
 
   const wordsListValue = useMemo(() => (
     {
@@ -29,7 +40,10 @@ function App() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Global />
-      <Header />
+      <Header
+        isLoggedIn={isLoggedIn}
+        setIsLoggedIn={setIsLoggedIn}
+      />
       <main>
         <Routes>
           <Route path="/" element={<p>Home</p>} />
@@ -41,10 +55,25 @@ function App() {
               </WordListContext.Provider>
             )}
           />
+          <Route
+            path="/difficult-words"
+            element={(
+              <ProtectedRoute conditionValue={isLoggedIn}>
+                <DifficultWords isLoggedIn={isLoggedIn} />
+              </ProtectedRoute>
+            )}
+          />
           <Route path="/games" element={<GameContainer />} />
           <Route path="/games/sprint" element={<p>Sprint</p>} />
           <Route path="/games/audio" element={<p>Audio</p>} />
-          <Route path="/statistics" element={<p>Statistics</p>} />
+          <Route
+            path="/statistics"
+            element={(
+              <ProtectedRoute conditionValue={isLoggedIn}>
+                <p>Statistics</p>
+              </ProtectedRoute>
+            )}
+          />
           <Route path="/about-project" element={<p>About Project</p>} />
           <Route path="/about-team" element={<p>About Team</p>} />
         </Routes>

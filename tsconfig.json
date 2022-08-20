@@ -54,6 +54,12 @@
       "@/WordList": [
         "./components/Book/WordList/WordList"
       ],
+      "@/ProtectedRoute": [
+        "./components/ProtectedRoute/ProtectedRoute"
+      ],
+      "@/DifficultWords": [
+        "./components/DifficultWords/DifficultWords"
+      ]
     }
   },
   "files": [

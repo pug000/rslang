@@ -1,7 +1,11 @@
 import defaultTheme from '@/styles/theme';
 import styled from 'styled-components';
 
-const Shadow = styled.div`
+interface ModalProps {
+  active: boolean,
+}
+
+const Shadow = styled.div<ModalProps>`
   height: 100vh;
   width: 100vw;
   background-color: ${defaultTheme.colors.grey};
@@ -13,19 +17,28 @@ const Shadow = styled.div`
   pointer-events: none;
   display: flex;
   justify-content: center;
-  align-items: center; 
+  align-items: center;
+  z-index: 25;
+
+  ${({ active }) => active && `
+    pointer-events: all;
+    opacity: 0.9;
+  `}
 `;
 
-const Modal = styled.div`
+const Modal = styled.div<ModalProps>`
   padding: 20px;
   border-radius: 0.6rem;
   background-color: ${defaultTheme.colors.bgWhite};
   width: 400px;
   height: 450px;
   margin-top: -8%;
-  transform: scale(0.5);
   transition: ${defaultTheme.effects.transition};
   position: relative;
+
+  ${({ active }) => active && `
+    transform: 'scale(1)';
+  `}
   
   Input {
     width: 280px;
@@ -44,20 +57,11 @@ const Modal = styled.div`
   }
 `;
 
-const shadowActive = {
-  opacity: '0.9',
-  'pointer-events': 'all'
-};
-
-const modalActive = {
-  transform: 'scale(1)'
-};
-
 const SignInTitle = styled.h3`
   text-align: center;
   font-size: ${defaultTheme.fontSizes.h3};
   color: ${defaultTheme.colors.title};
-  padding: 20px
+  padding: 20px;
 `;
 
 const CloseBtn = styled.button`
@@ -74,10 +78,10 @@ const iconStyles = {
   transition: `${defaultTheme.effects.transition}`,
   '&:hover': {
     opacity: `${defaultTheme.effects.hoverOpacity}`,
-    transform: 'rotate(180deg)'
+    transform: 'rotate(180deg)',
   }
 };
 
 export {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, shadowActive, modalActive
+  Shadow, Modal, SignInTitle, CloseBtn, iconStyles
 };

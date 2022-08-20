@@ -11,10 +11,7 @@ interface ButtonProps {
 function Button({
   title, id, disabled, callback
 }: ButtonProps) {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handlerClickButton = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
-    callback();
-  };
+  const handlerClickButton = () => callback();
 
   return (
     <ButtonElement
