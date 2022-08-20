@@ -24,6 +24,9 @@
       "@/styles": [
         "styles/"
       ],
+      "@/contexts": [
+        "contexts/"
+      ],
       "@/Header": [
         "components/Header/Header"
       ],
@@ -36,6 +39,9 @@
       "@/NavMenu": [
         "./components/Header/NavMenu/NavMenu"
       ],
+      "@/Book": [
+        "./components/Book/Book"
+      ],
       "@/SignIn": [
         "./components/Header/SignIn/SignIn"
       ],
@@ -44,6 +50,9 @@
       ],
       "@/Input": [
         "./components/Input/Input"
+      ],
+      "@/WordList": [
+        "./components/Book/WordList/WordList"
       ],
       "@/ProtectedRoute": [
         "./components/ProtectedRoute/ProtectedRoute"

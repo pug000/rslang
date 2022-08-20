@@ -1,4 +1,4 @@
-import NavItem from '@/ts/interfaces';
+import { NavItem } from '@/ts/interfaces';
 import React from 'react';
 import { Li, Link, Ul } from './NavMenu.style';
 

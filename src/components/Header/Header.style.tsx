@@ -1,6 +1,8 @@
-import defaultTheme from '@/styles/theme';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import defaultTheme from '@/styles/theme';
+import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
 
 const HeaderContainer = styled.header`
   height: 60px;
@@ -11,6 +13,7 @@ const HeaderContainer = styled.header`
   align-items: center;
   padding: 20px 25px 5px;
   gap: 10px;
+  margin-bottom: 40px;
 `;
 
 const HeaderBtn = styled.button`
@@ -42,7 +45,15 @@ const iconStyles = {
   }
 };
 
-const LoginBtn = styled.button`
+const Menu = styled(MenuIcon).attrs({
+  style: iconStyles
+})``;
+
+const LogoutBtn = styled(LogoutIcon).attrs({
+  style: iconStyles
+})``;
+
+const LoginBtn = styled.div`
   width: 60px;
   height: 60px;
   background-color: transparent;
@@ -58,5 +69,5 @@ const LoginBtn = styled.button`
 `;
 
 export {
-  HeaderContainer, HeaderBtn, HeaderLink, iconStyles, LoginBtn
+  HeaderContainer, HeaderBtn, HeaderLink, LogoutBtn, LoginBtn, Menu
 };

@@ -3,7 +3,7 @@ import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, shadowActive, modalActive
+  Shadow, Modal, SignInTitle, CloseBtn, iconStyles
 } from './SignIn.style';
 
 interface SignInProps {
@@ -14,8 +14,8 @@ interface SignInProps {
 
 function SignInModal({ active, setActive, changeLoggedInState }: SignInProps) {
   return (
-    <Shadow onClick={() => setActive(false)} style={active ? shadowActive : undefined}>
-      <Modal onClick={(e) => e.stopPropagation()} style={active ? modalActive : undefined}>
+    <Shadow onClick={() => setActive(false)} active={active}>
+      <Modal onClick={(e) => e.stopPropagation()} active={active}>
         <CloseBtn onClick={() => setActive(false)}>
           <CloseIcon sx={iconStyles} />
         </CloseBtn>
