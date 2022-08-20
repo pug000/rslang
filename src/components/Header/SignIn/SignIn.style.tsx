@@ -8,7 +8,7 @@ interface ModalProps {
 const Shadow = styled.div<ModalProps>`
   height: 100vh;
   width: 100vw;
-  background-color: ${defaultTheme.colors.grey};
+  background-color: rgba(0,0,0,0.6);
   position: fixed;
   top: 0;
   left: 0;
@@ -22,7 +22,7 @@ const Shadow = styled.div<ModalProps>`
 
   ${({ active }) => active && `
     pointer-events: all;
-    opacity: 0.9;
+    opacity: 1;
   `}
 `;
 
@@ -35,9 +35,10 @@ const Modal = styled.div<ModalProps>`
   margin-top: -8%;
   transition: ${defaultTheme.effects.transition};
   position: relative;
+  transform: scale(0.9);
 
   ${({ active }) => active && `
-    transform: 'scale(1)';
+    transform: scale(1);
   `}
   
   Input {

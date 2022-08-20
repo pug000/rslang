@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-// import LoginIcon from '@mui/icons-material/Login';
 import NavMenu from '@/NavMenu';
 import SignInModal from '@/SignIn';
 import SetState from '@/ts/types';

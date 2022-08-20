@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 const Container = styled.div`
   padding: 20px 25px 10px;
-  min-height: 60vh;
   margin: 0 auto;
+  width: 70vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
