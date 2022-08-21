@@ -109,12 +109,12 @@ const WordPlayIcon = styled(PlayCircleOutlineIcon).attrs({
   }
 
   ${(props) => props.disabled && `
-    color: ${props.theme.colors.grey};
-    cursor: default;
+    // color: ${props.theme.colors.grey};
+    // cursor: default;
 
-    &:hover {
-      opacity: 1;
-    }
+    // &:hover {
+    //   opacity: 1;
+    // }
   `}
 `;
 

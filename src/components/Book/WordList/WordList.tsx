@@ -28,10 +28,11 @@ function WordsList(
     setDifficultWords,
     setLearnedWords
   } = useContext(WordListContext);
-  const audioRef = useRef<HTMLAudioElement[]>([]);
+  const audioRef = useRef<HTMLAudioElement>(new Audio());
   const [isPlaying, setPlaying] = useState(false);
   const [index, setIndex] = useState(0);
   const intervalRef = useRef<ReturnType<typeof setInterval>>();
+  const [audioUrls, setAudioUrls] = useState<string[]>([]);
 
   const toggleActive = (arr: WordData[], word: WordData) => (
     arr.some((el) => el.id === word.id)
@@ -52,10 +53,11 @@ function WordsList(
   );
 
   const nextAudio = () => {
-    if (index < audioRef.current.length - 1) {
+    if (index < audioUrls.length - 1) {
       setIndex(index + 1);
     } else {
-      setPlaying(false);
+      setIndex(0);
+      setPlaying(() => false);
     }
   };
 
@@ -63,10 +65,10 @@ function WordsList(
     clearInterval(intervalRef.current);
 
     if (audioRef.current) {
-      audioRef.current[index].play();
+      audioRef.current.play();
 
       intervalRef.current = setInterval(() => {
-        if (audioRef.current && audioRef.current[index].ended) {
+        if (audioRef.current && audioRef.current.ended) {
           nextAudio();
         }
       });
@@ -75,13 +77,20 @@ function WordsList(
 
   useEffect(() => {
     if (isPlaying) {
-      audioRef.current[index].volume = 0.5;
+      audioRef.current.src = audioUrls[index];
+      audioRef.current.volume = 0.5;
       startAudio();
     }
   }, [isPlaying, index]);
 
   const playOnClick = (paths: string[]) => {
-    audioRef.current = paths.map((el) => new Audio(`${baseUrl}/${el}`));
+    if (audioRef.current) {
+      audioRef.current.pause();
+      clearInterval(intervalRef.current);
+      setIndex(0);
+    }
+
+    setAudioUrls(paths.map((el) => `${baseUrl}/${el}`));
     setPlaying(true);
   };
 
@@ -96,7 +105,7 @@ function WordsList(
                 <WordTitle>
                   {`${item.word} - ${item.transcription}`}
                   <WordPlayAudioBtn
-                    disabled={isPlaying}
+                    // disabled={isPlaying}
                     onClick={() => (
                       playOnClick([item.audio, item.audioMeaning, item.audioExample])
                     )}
