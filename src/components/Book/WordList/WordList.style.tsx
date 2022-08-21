@@ -12,11 +12,14 @@ interface ColorsProps {
 interface WordTextProps {
   color: string,
   fontSize: string,
-  opacity?: string
+  opacity?: string,
+}
+
+interface WordPlayIconProps {
+  disabled: boolean,
 }
 
 const stylesBtn = {
-  cursor: 'pointer',
   transition: `${defaultTheme.effects.transition}`,
 };
 
@@ -89,14 +92,30 @@ const WordText = styled.div<WordTextProps>`
   opacity: ${({ opacity }) => opacity ?? '1'};
 `;
 
-const WordPlay = styled(PlayCircleOutlineIcon).attrs({
+const WordPlayAudioBtn = styled.button`
+  background-color: transparent;
+  border: none;
+`;
+
+const WordPlayIcon = styled(PlayCircleOutlineIcon).attrs({
   style: stylesBtn,
-})`
-  color: ${({ theme }) => theme.colors.purple};
+}) <WordPlayIconProps>`
+  color: ${({ theme }) => theme.colors.primaryColor};
+  cursor: pointer;
+  transition: ${defaultTheme.effects.transition};
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
+
+  ${(props) => props.disabled && `
+    color: ${props.theme.colors.grey};
+    cursor: default;
+
+    &:hover {
+      opacity: 1;
+    }
+  `}
 `;
 
 const WordBtnContainer = styled.div`
@@ -114,6 +133,7 @@ const DifficultWordBtn = styled(StarBorderIcon).attrs({
   style: stylesBtn,
 })`
   color: ${({ theme }) => theme.colors.grey};
+  cursor: pointer;
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
@@ -124,6 +144,7 @@ const DifficultWordBtnActive = styled(StarIcon).attrs({
   style: stylesBtn,
 })`
   color: ${({ theme }) => theme.colors.primaryColor};
+  cursor: pointer;
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
@@ -134,6 +155,7 @@ const LearnedWordBtn = styled(MenuBookIcon).attrs({
   style: stylesBtn,
 }) <ColorsProps>`
   color: ${({ colors }) => colors};
+  cursor: pointer;
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
@@ -141,6 +163,7 @@ const LearnedWordBtn = styled(MenuBookIcon).attrs({
 `;
 
 export {
-  WordsContainer, Word, WordImg, WordInfoContainer, WordInfoWrapper, WordTitle, WordText, WordPlay,
-  WordBtnContainer, DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn,
+  WordsContainer, Word, WordImg, WordInfoContainer, WordInfoWrapper, WordTitle, WordText,
+  WordPlayIcon, WordBtnContainer, DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn,
+  WordPlayAudioBtn,
 };

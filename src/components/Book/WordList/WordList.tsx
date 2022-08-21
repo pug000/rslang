@@ -4,10 +4,13 @@ import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import DOMPurify from 'dompurify';
-import React, { useContext } from 'react';
+import React, {
+  useContext, useRef, useState, useEffect
+} from 'react';
 import {
   DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn, Word, WordBtnContainer,
-  WordImg, WordInfoContainer, WordInfoWrapper, WordPlay, WordsContainer, WordText, WordTitle
+  WordImg, WordInfoContainer, WordInfoWrapper, WordPlayAudioBtn, WordPlayIcon, WordsContainer,
+  WordText, WordTitle
 } from './WordList.style';
 
 interface WordListProps {
@@ -25,6 +28,11 @@ function WordsList(
     setDifficultWords,
     setLearnedWords
   } = useContext(WordListContext);
+  const audioRef = useRef<HTMLAudioElement[]>([]);
+  const [isPlaying, setPlaying] = useState(false);
+  const [index, setIndex] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval>>();
+
   const toggleActive = (arr: WordData[], word: WordData) => (
     arr.some((el) => el.id === word.id)
   );
@@ -43,6 +51,40 @@ function WordsList(
       : addActiveWord(word, setState)
   );
 
+  const nextAudio = () => {
+    if (index < audioRef.current.length - 1) {
+      setIndex(index + 1);
+    } else {
+      setPlaying(false);
+    }
+  };
+
+  const startAudio = () => {
+    clearInterval(intervalRef.current);
+
+    if (audioRef.current) {
+      audioRef.current[index].play();
+
+      intervalRef.current = setInterval(() => {
+        if (audioRef.current && audioRef.current[index].ended) {
+          nextAudio();
+        }
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (isPlaying) {
+      audioRef.current[index].volume = 0.5;
+      startAudio();
+    }
+  }, [isPlaying, index]);
+
+  const playOnClick = (paths: string[]) => {
+    audioRef.current = paths.map((el) => new Audio(`${baseUrl}/${el}`));
+    setPlaying(true);
+  };
+
   return (
     <WordsContainer>
       {words.map((item) => (
@@ -53,7 +95,14 @@ function WordsList(
               <WordInfoWrapper>
                 <WordTitle>
                   {`${item.word} - ${item.transcription}`}
-                  <WordPlay />
+                  <WordPlayAudioBtn
+                    disabled={isPlaying}
+                    onClick={() => (
+                      playOnClick([item.audio, item.audioMeaning, item.audioExample])
+                    )}
+                  >
+                    <WordPlayIcon disabled={isPlaying} />
+                  </WordPlayAudioBtn>
                 </WordTitle>
                 <WordText
                   color={defaultTheme.colors.text}
