@@ -1,8 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import defaultTheme from '@/styles/theme';
-import LogoutIcon from '@mui/icons-material/Logout';
-import MenuIcon from '@mui/icons-material/Menu';
 
 const HeaderContainer = styled.header`
   height: 60px;
@@ -42,16 +40,9 @@ const iconStyles = {
   transition: `${defaultTheme.effects.transition}`,
   '&:hover': {
     opacity: `${defaultTheme.effects.hoverOpacity}`,
+    transform: `${defaultTheme.effects.hoverTransform}`
   }
 };
-
-const Menu = styled(MenuIcon).attrs({
-  style: iconStyles
-})``;
-
-const LogoutBtn = styled(LogoutIcon).attrs({
-  style: iconStyles
-})``;
 
 const LoginBtn = styled.div`
   width: 60px;
@@ -67,5 +58,5 @@ const LoginBtn = styled.div`
 `;
 
 export {
-  HeaderContainer, HeaderBtn, HeaderLink, LogoutBtn, LoginBtn, Menu
+  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles
 };

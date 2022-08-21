@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import NavMenu from '@/NavMenu';
 import SignInModal from '@/SignIn';
 import SetState from '@/ts/types';
+import LogoutIcon from '@mui/icons-material/Logout';
+import MenuIcon from '@mui/icons-material/Menu';
 import {
-  HeaderContainer, HeaderBtn, LogoutBtn, HeaderLink, LoginBtn, Menu
+  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles
 } from './Header.style';
 import LogoSvg from './LogoSvg';
 import LogInIcon from './LogInIcon';
@@ -22,12 +24,12 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
   return (
     <HeaderContainer>
       <HeaderBtn onClick={() => setNavMenuOpen(modalActive ? false : !isNavMenuOpen)}>
-        <Menu />
+        <MenuIcon sx={iconStyles} />
       </HeaderBtn>
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
       <HeaderBtn>
         {isLoggedIn
-          ? <LogoutBtn onClick={changeLoggedInState} />
+          ? <LogoutIcon sx={iconStyles} onClick={changeLoggedInState} />
           : <LoginBtn onClick={() => setModalActive(!modalActive)}><LogInIcon /></LoginBtn>}
       </HeaderBtn>
       <NavMenu isNavMenuOpen={isNavMenuOpen} />

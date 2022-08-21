@@ -21,6 +21,7 @@ export const Ul = styled.ul<UlProps>`
   border: 2px solid;
   border-color: ${defaultTheme.colors.text};
   padding-top: 3.5rem;
+  z-index: 15;
 `;
 
 export const Li = styled.li`
