@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import Global from '@/styles/Global';
@@ -47,6 +47,8 @@ function App() {
       />
       <main>
         <Routes>
+          <Route path="dist/index.html" element={<Navigate replace to="/" />} />
+          <Route path="/index.html" element={<Navigate replace to="/" />} />
           <Route path="/" element={<Home />} />
           <Route
             path="/book"
