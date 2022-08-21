@@ -20,7 +20,7 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
   const [modalActive, setModalActive] = useState(false);
   const [menuActive, setMenuActive] = useState(false);
 
-  const changeLoggedInState = () => setIsLoggedIn(!isLoggedIn);
+  const changeLoggedInState = () => setIsLoggedIn((prev) => !prev);
 
   return (
     <HeaderContainer>
