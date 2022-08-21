@@ -4,6 +4,7 @@ import { Btn, WordData } from '@/ts/interfaces';
 import React, { useEffect, useMemo, useState } from 'react';
 import getPages from '@/utils';
 import WordList from '@/WordList';
+import useLocalStorage from '@/hooks/useLocalStorage';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, PaginationWrapper, PaginationPrev,
   PaginationNext, PaginationPageBtn, GamesWrapper, GameLink,
@@ -11,8 +12,8 @@ import {
 
 function Book() {
   const [words, setWords] = useState<WordData[]>([]);
-  const [groupCount, setGroupCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [groupCount, setGroupCount] = useLocalStorage('bookGroup', 0);
+  const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [pages, setPages] = useState<Btn[]>([]);
   const totalCountPages = 30;
   const groupBtns: Btn[] = [
