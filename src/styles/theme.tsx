@@ -35,7 +35,8 @@ declare module 'styled-components' {
     }
     effects: {
       transition: string,
-      hoverOpacity: string
+      hoverOpacity: string,
+      hoverTransform: string
     }
   }
 }
@@ -74,7 +75,8 @@ const defaultTheme: DefaultTheme = {
   },
   effects: {
     transition: 'all 0.2s ease-out',
-    hoverOpacity: '0.6'
+    hoverOpacity: '0.6',
+    hoverTransform: 'scale(1.2)'
   }
 };
 

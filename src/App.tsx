@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import Global from '@/styles/Global';
@@ -15,6 +15,7 @@ import WordListContext from '@/contexts/WordListContext';
 import ProtectedRoute from '@/ProtectedRoute';
 import DifficultWords from '@/DifficultWords';
 import useLocalStorage from './hooks/useLocalStorage';
+import Home from './components/Home/Home';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -45,7 +46,9 @@ function App() {
       />
       <main>
         <Routes>
-          <Route path="/" element={<p>Home</p>} />
+          <Route path="dist/index.html" element={<Navigate replace to="/" />} />
+          <Route path="/index.html" element={<Navigate replace to="/" />} />
+          <Route path="/" element={<Home />} />
           <Route
             path="/book"
             element={(

@@ -9,12 +9,12 @@ function GamesContainer() {
     <GamesMainContainer>
       <GamesTitle>Игры</GamesTitle>
       <GamesWrapper>
-        <LinkGame to="/sprint">
+        <LinkGame to="/games/sprint">
           <GameElement
             title="Спринт"
           />
         </LinkGame>
-        <LinkGame to="/audio">
+        <LinkGame to="/games/audio">
           <GameElement
             title="Аудиовызов"
           />
