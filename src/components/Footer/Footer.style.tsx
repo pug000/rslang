@@ -3,16 +3,20 @@ import styled from 'styled-components';
 
 const FooterWrapper = styled.div`
   width: 100%;
+  z-index: 25;
 `;
 
-const FooterBorder = styled.div`
-  height: 100px;
-  background: url(../../assets/icon/footer-bg.svg);
-  background-size: cover;
+const FooterBorderWrap = styled.div`
+  margin-bottom: -5px;
+
+  svg {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const FooterContainer = styled.div`
-  height: 200px;
+  min-height: 170px;
   width: 100%;
   background-color: ${defaultTheme.colors.bgPurple};
 `;
@@ -34,7 +38,7 @@ const SchoolLogo = styled.a`
   display: inline-block;
   width: 145px;
   height: 55px;
-  background: url(../../assets/icon/rs_school_js.svg);
+  background: url(https://rs.school/images/rs_school_js.svg);
   background-size: cover;
 `;
 
@@ -65,6 +69,6 @@ const Author = styled.a`
 `;
 
 export {
-  FooterWrapper, FooterBorder, FooterContainer, FooterTitleDiv, FooterTitle, SchoolLogo,
+  FooterWrapper, FooterBorderWrap, FooterContainer, FooterTitleDiv, FooterTitle, SchoolLogo,
   Copyright, Authors, Author
 };

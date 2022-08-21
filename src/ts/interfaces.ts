@@ -2,6 +2,7 @@ interface NavItem {
   id: number,
   value: string,
   link: string,
+  icon: JSX.Element
 }
 interface Btn {
   id: number,
