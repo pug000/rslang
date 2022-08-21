@@ -12,6 +12,8 @@ interface InputProps {
   id: string;
   placeholder: string;
   name: string;
+  innerRef: React.RefObject<HTMLInputElement>;
+  minlength?: number;
 }
 
 function Input({
@@ -20,6 +22,8 @@ function Input({
   id,
   placeholder,
   name,
+  innerRef,
+  minlength = 0
 }: InputProps) {
   return (
     <InputWrapper>
@@ -30,6 +34,8 @@ function Input({
           id={id}
           placeholder={placeholder}
           name={name}
+          ref={innerRef}
+          minLength={minlength}
         />
       </Label>
     </InputWrapper>
