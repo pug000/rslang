@@ -14,18 +14,17 @@ import { WordData } from '@/ts/interfaces';
 import WordListContext from '@/contexts/WordListContext';
 import ProtectedRoute from '@/ProtectedRoute';
 import DifficultWords from '@/DifficultWords';
-
-const isLoggedInFromLocalStorage = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
+import useLocalStorage from './hooks/useLocalStorage';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(isLoggedInFromLocalStorage);
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
 
   useEffect(() => (
     isLoggedIn
-      ? localStorage.setItem('isLoggedIn', 'true')
-      : localStorage.setItem('isLoggedIn', 'false')
+      ? setIsLoggedIn(true)
+      : setIsLoggedIn(false)
   ), [isLoggedIn]);
 
   const wordsListValue = useMemo(() => (
