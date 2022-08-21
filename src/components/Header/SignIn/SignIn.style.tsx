@@ -18,7 +18,7 @@ const Shadow = styled.div<ModalProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 25;
+  z-index: 35;
 
   ${({ active }) => active && `
     pointer-events: all;

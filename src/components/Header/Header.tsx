@@ -18,12 +18,17 @@ interface HeaderProps {
 function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
   const [modalActive, setModalActive] = useState(false);
+  const [menuActive, setMenuActive] = useState(false);
 
   const changeLoggedInState = () => setIsLoggedIn(!isLoggedIn);
 
   return (
     <HeaderContainer>
-      <HeaderBtn onClick={() => setNavMenuOpen(modalActive ? false : !isNavMenuOpen)}>
+      <HeaderBtn onClick={() => {
+        setNavMenuOpen(modalActive ? false : !isNavMenuOpen);
+        setMenuActive(!menuActive);
+      }}
+      >
         <MenuIcon sx={iconStyles} />
       </HeaderBtn>
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
@@ -32,7 +37,12 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
           ? <LogoutIcon sx={iconStyles} onClick={changeLoggedInState} />
           : <LoginBtn onClick={() => setModalActive(!modalActive)}><LogInIcon /></LoginBtn>}
       </HeaderBtn>
-      <NavMenu isNavMenuOpen={isNavMenuOpen} />
+      <NavMenu
+        isNavMenuOpen={isNavMenuOpen}
+        setNavMenuOpen={setNavMenuOpen}
+        active={menuActive}
+        setActive={setMenuActive}
+      />
       <SignInModal
         active={modalActive}
         setActive={setModalActive}

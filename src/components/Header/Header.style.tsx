@@ -19,7 +19,7 @@ const HeaderBtn = styled.button`
   background-color: transparent;
   cursor: pointer;
   user-select: none;
-  z-index: 20;
+  z-index: 30;
   width: 60px;
   height: 60px;
 `;

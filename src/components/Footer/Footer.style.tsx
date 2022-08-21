@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 const FooterWrapper = styled.div`
   width: 100%;
-  z-index: 17;
+  z-index: 25;
 `;
 
 const FooterBorderWrap = styled.div`
