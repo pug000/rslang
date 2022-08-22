@@ -3,11 +3,11 @@ import defaultTheme from '@/styles/theme';
 import { Btn, WordData } from '@/ts/interfaces';
 import React, { useEffect, useMemo, useState } from 'react';
 import getPages from '@/utils';
-import WordList from '@/WordList';
+import WordItem from '@/WordItem';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, PaginationWrapper, PaginationPrev,
-  PaginationNext, PaginationPageBtn, GamesWrapper, GameLink,
+  PaginationNext, PaginationPageBtn, GamesWrapper, GameLink, WordsContainer,
 } from './Book.style';
 
 function Book() {
@@ -15,6 +15,7 @@ function Book() {
   const [groupCount, setGroupCount] = useLocalStorage('bookGroup', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [pages, setPages] = useState<Btn[]>([]);
+  const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const totalCountPages = 30;
   const groupBtns: Btn[] = [
     { id: 1, value: 1 },
@@ -30,6 +31,10 @@ function Book() {
   }, [totalCountPages]);
 
   useEffect(() => {
+    if (audio) {
+      setAudio(null);
+    }
+
     (async () => {
       const res = await getWords(groupCount, currentPage);
       setWords(res.data);
@@ -44,7 +49,16 @@ function Book() {
         <GameLink to="/games/audio">Аудиовызов</GameLink>
       </GamesWrapper>
       <Wrapper>
-        <WordList words={words} />
+        <WordsContainer>
+          {words.map((word) => (
+            <WordItem
+              key={word.id}
+              item={word}
+              audio={audio}
+              setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
+            />
+          ))}
+        </WordsContainer>
         <div>
           <Group>
             <GroupTitle>Раздел</GroupTitle>
