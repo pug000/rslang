@@ -36,9 +36,10 @@ const NavUl = styled.ul<UlProps>`
   width: 260px;
   padding-top: 3.5rem;
   z-index: 22;
-  margin-left: 17px;
+  padding-left: 18px;
   transition: ${({ theme }) => theme.effects.transition};
-  background-color: ${({ isOpen }) => (isOpen ? 'rgba(255,255,255, 0.7)' : '')};
+  background-color: rgba(255,255,255,0.9);
+  width: ${({ isOpen }) => (isOpen ? '280px' : '68px')};
   
   p {
     position: absolute;
@@ -48,14 +49,14 @@ const NavUl = styled.ul<UlProps>`
   }
 
   li {
-    width: ${({ isOpen }) => (isOpen ? '250px' : '70px')};
+    width: ${({ isOpen }) => (isOpen ? '280px' : '68px')};
   }
 `;
 
 const NavLi = styled.li`
   width: 100%;
   display: flex;
-  padding: 15px 10px;
+  padding: 15px 0 15px 10px;
   height: 58px;
   position: relative;
   
