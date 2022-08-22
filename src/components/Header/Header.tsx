@@ -5,7 +5,7 @@ import SetState from '@/ts/types';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
-  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles
+  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles, menuIconStyle
 } from './Header.style';
 import LogoSvg from './LogoSvg';
 import LogInIcon from './LogInIcon';
@@ -29,7 +29,7 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
         setMenuActive(!menuActive);
       }}
       >
-        <MenuIcon sx={iconStyles} />
+        <MenuIcon sx={menuIconStyle} />
       </HeaderBtn>
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
       <HeaderBtn>

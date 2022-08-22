@@ -39,7 +39,18 @@ const HeaderLink = styled(NavLink)`
 const iconStyles = {
   color: `${defaultTheme.colors.primaryColor}`,
   transition: `${defaultTheme.effects.transition}`,
+  top: '25px',
+  left: '28px',
+  '&:hover': {
+    opacity: `${defaultTheme.effects.hoverOpacity}`,
+    transform: `${defaultTheme.effects.hoverTransform}`
+  }
+};
+
+const menuIconStyle = {
   position: 'fixed',
+  color: `${defaultTheme.colors.primaryColor}`,
+  transition: `${defaultTheme.effects.transition}`,
   top: '25px',
   left: '28px',
   '&:hover': {
@@ -62,5 +73,5 @@ const LoginBtn = styled.div`
 `;
 
 export {
-  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles
+  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles, menuIconStyle
 };
