@@ -1,17 +1,11 @@
-import styled from 'styled-components';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
+import styled, { keyframes } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import defaultTheme from '@/styles/theme';
 
-interface ColorsProps {
+interface GroupButtonProps {
   colors: string,
+  active: boolean,
 }
-
-const stylesBtn = {
-  cursor: 'pointer',
-  transition: `${defaultTheme.effects.transition}`,
-};
 
 const BookContainer = styled.div`
   display: flex;
@@ -25,16 +19,15 @@ const BookContainer = styled.div`
   margin: 0 auto;
 `;
 
-const WordsContainer = styled.div`
+const Wrapper = styled.div`
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  grid-area: words;
-
-  @media (max-width: 950px) {
-    align-items: center;
-  }
+  gap: 35px;
+  display: grid;
+  grid-template-columns: 1fr 77px;
+  grid-template-areas: 
+  "paginationTop paginationTop"
+  "words group" 
+  "paginationBottom paginationBottom";
 `;
 
 const Title = styled.h1`
@@ -43,12 +36,18 @@ const Title = styled.h1`
   color: ${({ theme }) => theme.colors.purple};
 `;
 
-const Wrapper = styled.div`
+const WordsContainer = styled.div`
   width: 100%;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
-  display: grid;
-  grid-template-columns: 1fr 77px;
-  grid-template-areas: "words group" "pagination pagination";
+  grid-area: words;
+  align-items: center;
+  justify-content: center;
+
+  @media (max-width: 950px) {
+    align-items: center;
+  }
 `;
 
 const GamesWrapper = styled.div`
@@ -80,53 +79,6 @@ const GameLink = styled(NavLink)`
   }
 `;
 
-const PaginationWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-area: pagination;
-  gap: 3px;
-  flex-wrap: wrap;
-`;
-
-const PaginationPrev = styled(NavigateBeforeIcon).attrs({
-  style: {
-    ...stylesBtn,
-    width: '35px',
-    height: '35px',
-  }
-})`
-
-`;
-
-const PaginationNext = styled(NavigateNextIcon).attrs({
-  style: {
-    ...stylesBtn,
-    width: '35px',
-    height: '35px',
-  }
-})`
-`;
-
-const PaginationPageBtn = styled.button<ColorsProps>`
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.bgWhite};
-  transition: ${({ theme }) => theme.effects.transition};
-  background-color: ${({ colors }) => colors};
-
-  &:hover {
-    opacity: ${({ theme }) => theme.effects.hoverOpacity};
-    background-color: ${({ theme }) => theme.colors.primaryColor};
-  }
-`;
-
 const Group = styled.div`
   display: flex;
   flex-direction: column;
@@ -144,26 +96,82 @@ const Group = styled.div`
 `;
 
 const GroupTitle = styled.h4`
-  color: ${({ theme }) => theme.colors.purple};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${({ theme }) => theme.fontSizes.text};
 `;
 
-const GroupBtn = styled.button<ColorsProps>`
+const GroupBtn = styled.button<GroupButtonProps>`
   width: 55px;
   height: 55px;
-  border: none;
+  border: 3px solid;
   border-radius: 50%;
   cursor: pointer;
   transition: ${({ theme }) => theme.effects.transition};
   background-color: ${({ colors }) => colors};
   color: ${({ theme }) => theme.colors.bgWhite};
+  border-color: ${({ colors }) => colors};
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
+
+  ${(props) => props.active && `
+    background-color: transparent;
+    color: ${props.colors};
+  `}
+`;
+
+const ringAnimation = keyframes`
+  0% {
+    transform: rotate(0deg);
+    box-shadow: 1px 5px 2px ${defaultTheme.colors.blue};
+  }
+  25% {
+    transform: rotate(90deg);
+    box-shadow: 1px 5px 2px ${defaultTheme.colors.textHighlighted};
+  }
+  50% {
+    transform: rotate(180deg);
+    box-shadow: 1px 5px 2px ${defaultTheme.colors.orange};
+  }
+  75% {
+    transform: rotate(270deg);
+    box-shadow: 1px 5px 2px ${defaultTheme.colors.pink};
+  }
+  100% {
+    transform: rotate(360deg);
+    box-shadow: 1px 5px 2px ${defaultTheme.colors.blue};
+  }
+`;
+
+const LoadingRing = styled.div`
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:before {
+    position: absolute;
+    content: '';
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 5px rgba(255,255,255,0.3);
+    animation: ${ringAnimation} 2s linear infinite;
+  }
+`;
+
+const LoadingText = styled.span`
+  color: ${({ theme }) => theme.colors.textBold};
+  font-size: ${({ theme }) => theme.fontSizes.text};
 `;
 
 export {
   BookContainer, Title, Wrapper, GamesWrapper, GameLink, Group, GroupBtn, GroupTitle,
-  PaginationWrapper, PaginationPrev, PaginationNext, PaginationPageBtn, WordsContainer,
+  WordsContainer, LoadingRing, LoadingText,
 };

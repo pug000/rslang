@@ -4,14 +4,11 @@ interface NavItem {
   link: string,
   icon: JSX.Element
 }
-interface Btn {
+interface GroupButton {
   id: number,
   value: number,
-}
-
-interface ResponseWord {
-  data: WordData[],
-  count: number,
+  text: string,
+  color: string,
 }
 
 interface WordData {
@@ -39,5 +36,5 @@ interface Track {
 }
 
 export {
-  Btn, NavItem, WordData, ResponseWord, Track
+  GroupButton, NavItem, WordData, Track
 };

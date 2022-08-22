@@ -1,5 +1,3 @@
-import { ResponseWord } from '@/ts/interfaces';
-
 const baseUrl = 'https://react-learnwords-example.herokuapp.com';
 
 const endpoints = {
@@ -24,11 +22,8 @@ const getWords = async (group = 0, page = 0) => {
     const res = await fetch(`${baseUrl}/${endpoints.words}?group=${group}&page=${page}`, {
       method: methods.get,
     });
-    const resObj: ResponseWord = {
-      data: await res.json(),
-      count: Number(res.headers.get('X-Total-Count'))
-    };
-    return resObj;
+    const data = await res.json();
+    return data;
   } catch (err) {
     throw new Error(`${err}`);
   }
