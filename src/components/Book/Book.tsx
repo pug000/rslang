@@ -1,6 +1,6 @@
 import { getWords } from '@/api';
 import defaultTheme from '@/styles/theme';
-import { Button, WordData } from '@/ts/interfaces';
+import { GroupButton, WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import useLocalStorage from '@/hooks/useLocalStorage';
@@ -17,13 +17,25 @@ function Book() {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setLoadingPage] = useState(false);
   const totalCountPages = 30;
-  const groupBtns: Button[] = [
-    { id: 1, value: 1 },
-    { id: 2, value: 2 },
-    { id: 3, value: 3 },
-    { id: 4, value: 4 },
-    { id: 5, value: 5 },
-    { id: 6, value: 6 }
+  const groupBtns: GroupButton[] = [
+    {
+      id: 1, value: 0, text: 'A1', color: `${defaultTheme.colors.beige}`
+    },
+    {
+      id: 2, value: 1, text: 'A2', color: `${defaultTheme.colors.beige}`
+    },
+    {
+      id: 3, value: 2, text: 'B1', color: `${defaultTheme.colors.blue}`
+    },
+    {
+      id: 4, value: 3, text: 'B2', color: `${defaultTheme.colors.blue}`
+    },
+    {
+      id: 5, value: 4, text: 'C1', color: `${defaultTheme.colors.pink}`
+    },
+    {
+      id: 6, value: 5, text: 'C2', color: `${defaultTheme.colors.pink}`
+    }
   ];
 
   useEffect(() => {
@@ -47,6 +59,28 @@ function Book() {
         <GameLink to="/games/audio">Аудиовызов</GameLink>
       </GamesWrapper>
       <Wrapper>
+        <div>
+          <Group>
+            <GroupTitle>Раздел</GroupTitle>
+            {groupBtns.map((
+              {
+                id,
+                value,
+                text,
+                color
+              }
+            ) => (
+              <GroupBtn
+                key={id}
+                colors={color}
+                active={groupCount === value}
+                onClick={() => setGroupCount(value)}
+              >
+                {text}
+              </GroupBtn>
+            ))}
+          </Group>
+        </div>
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}
@@ -77,24 +111,6 @@ function Book() {
               />
             ))}
         </WordsContainer>
-        <div>
-          <Group>
-            <GroupTitle>Раздел</GroupTitle>
-            {groupBtns.map(({ id, value }) => (
-              <GroupBtn
-                key={id}
-                colors={
-                  groupCount === value - 1
-                    ? defaultTheme.colors.primaryColor
-                    : defaultTheme.colors.grey
-                }
-                onClick={() => setGroupCount(value - 1)}
-              >
-                {value}
-              </GroupBtn>
-            ))}
-          </Group>
-        </div>
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}

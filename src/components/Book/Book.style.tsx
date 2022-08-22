@@ -2,8 +2,9 @@ import styled, { keyframes } from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import defaultTheme from '@/styles/theme';
 
-interface ColorsProps {
+interface GroupButtonProps {
   colors: string,
+  active: boolean,
 }
 
 const BookContainer = styled.div`
@@ -95,23 +96,29 @@ const Group = styled.div`
 `;
 
 const GroupTitle = styled.h4`
-  color: ${({ theme }) => theme.colors.purple};
+  color: ${({ theme }) => theme.colors.text};
   font-size: ${({ theme }) => theme.fontSizes.text};
 `;
 
-const GroupBtn = styled.button<ColorsProps>`
+const GroupBtn = styled.button<GroupButtonProps>`
   width: 55px;
   height: 55px;
-  border: none;
+  border: 3px solid;
   border-radius: 50%;
   cursor: pointer;
   transition: ${({ theme }) => theme.effects.transition};
   background-color: ${({ colors }) => colors};
   color: ${({ theme }) => theme.colors.bgWhite};
+  border-color: ${({ colors }) => colors};
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
+
+  ${(props) => props.active && `
+    background-color: transparent;
+    color: ${props.colors};
+  `}
 `;
 
 const ringAnimation = keyframes`
