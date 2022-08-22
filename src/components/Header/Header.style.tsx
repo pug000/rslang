@@ -9,7 +9,7 @@ const HeaderContainer = styled.header`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 10px 5px;
+  padding: 20px 15px 5px 10px;
   gap: 10px;
   margin-bottom: 40px;
 `;
@@ -29,15 +29,19 @@ const HeaderLink = styled(NavLink)`
     cursor: pointer;
     color: ${defaultTheme.colors.primaryColor};
     height: 100%;
-    max-width: 150px;
+    max-width: 220px;
     width: 100%;
     user-select: none;
+    padding-left: 70px;
   }
 `;
 
 const iconStyles = {
   color: `${defaultTheme.colors.primaryColor}`,
   transition: `${defaultTheme.effects.transition}`,
+  position: 'fixed',
+  top: '25px',
+  left: '28px',
   '&:hover': {
     opacity: `${defaultTheme.effects.hoverOpacity}`,
     transform: `${defaultTheme.effects.hoverTransform}`

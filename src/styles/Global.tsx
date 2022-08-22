@@ -16,6 +16,10 @@ body {
   font-family: ${defaultTheme.fonts.text};
 }
 
+main {
+  padding-left: 70px;
+}
+
 h1,
 h2,
 h3,
