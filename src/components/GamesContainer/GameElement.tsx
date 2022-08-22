@@ -2,13 +2,15 @@ import React from 'react';
 import { GameContainer, TitleGame } from './Games.style';
 
 interface GameElementProps {
-  title: string;
+  title: string,
+  children: JSX.Element,
 }
 
-function GameElement({ title }: GameElementProps) {
+function GameElement({ title, children }: GameElementProps) {
   return (
     <GameContainer>
       <TitleGame>{title}</TitleGame>
+      {children}
     </GameContainer>
   );
 }
