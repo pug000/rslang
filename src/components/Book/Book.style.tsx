@@ -25,6 +25,18 @@ const BookContainer = styled.div`
   margin: 0 auto;
 `;
 
+const WordsContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  grid-area: words;
+
+  @media (max-width: 950px) {
+    align-items: center;
+  }
+`;
+
 const Title = styled.h1`
   font-family: ${({ theme }) => theme.fonts.title};
   font-size: ${({ theme }) => theme.fontSizes.h3};
@@ -153,5 +165,5 @@ const GroupBtn = styled.button<ColorsProps>`
 
 export {
   BookContainer, Title, Wrapper, GamesWrapper, GameLink, Group, GroupBtn, GroupTitle,
-  PaginationWrapper, PaginationPrev, PaginationNext, PaginationPageBtn,
+  PaginationWrapper, PaginationPrev, PaginationNext, PaginationPageBtn, WordsContainer,
 };

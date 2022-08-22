@@ -15,25 +15,9 @@ interface WordTextProps {
   opacity?: string,
 }
 
-interface WordPlayIconProps {
-  disabled: boolean,
-}
-
 const stylesBtn = {
   transition: `${defaultTheme.effects.transition}`,
 };
-
-const WordsContainer = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-  grid-area: words;
-
-  @media (max-width: 950px) {
-    align-items: center;
-  }
-`;
 
 const Word = styled.div`
   display: flex;
@@ -99,7 +83,7 @@ const WordPlayAudioBtn = styled.button`
 
 const WordPlayIcon = styled(PlayCircleOutlineIcon).attrs({
   style: stylesBtn,
-}) <WordPlayIconProps>`
+})`
   color: ${({ theme }) => theme.colors.primaryColor};
   cursor: pointer;
   transition: ${defaultTheme.effects.transition};
@@ -107,15 +91,6 @@ const WordPlayIcon = styled(PlayCircleOutlineIcon).attrs({
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
-
-  ${(props) => props.disabled && `
-    // color: ${props.theme.colors.grey};
-    // cursor: default;
-
-    // &:hover {
-    //   opacity: 1;
-    // }
-  `}
 `;
 
 const WordBtnContainer = styled.div`
@@ -163,7 +138,7 @@ const LearnedWordBtn = styled(MenuBookIcon).attrs({
 `;
 
 export {
-  WordsContainer, Word, WordImg, WordInfoContainer, WordInfoWrapper, WordTitle, WordText,
+  Word, WordImg, WordInfoContainer, WordInfoWrapper, WordTitle, WordText,
   WordPlayIcon, WordBtnContainer, DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn,
   WordPlayAudioBtn,
 };

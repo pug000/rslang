@@ -11,7 +11,7 @@ import Footer from '@/Footer';
 import Book from '@/Book';
 import GameContainer from '@/GamesContainer';
 import { WordData } from '@/ts/interfaces';
-import WordListContext from '@/contexts/WordListContext';
+import WordItemContext from '@/contexts/WordItemContext';
 import ProtectedRoute from '@/ProtectedRoute';
 import DifficultWords from '@/DifficultWords';
 
@@ -28,7 +28,7 @@ function App() {
       : localStorage.setItem('isLoggedIn', 'false')
   ), [isLoggedIn]);
 
-  const wordsListValue = useMemo(() => (
+  const wordItemValue = useMemo(() => (
     {
       difficultWords,
       learnedWords,
@@ -50,9 +50,9 @@ function App() {
           <Route
             path="/book"
             element={(
-              <WordListContext.Provider value={wordsListValue}>
+              <WordItemContext.Provider value={wordItemValue}>
                 <Book />
-              </WordListContext.Provider>
+              </WordItemContext.Provider>
             )}
           />
           <Route
