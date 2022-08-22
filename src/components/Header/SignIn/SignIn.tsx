@@ -5,56 +5,89 @@ import CloseIcon from '@mui/icons-material/Close';
 import {
   Shadow, Modal, SignInTitle, CloseBtn, iconStyles
 } from './SignIn.style';
+import { registerUser, signInUser } from '@/api';
 
 interface SignInProps {
   active: boolean;
   setActive: (arg0: boolean) => void;
   changeLoggedInState: () => void;
+  isLoggedIn: boolean;
 }
-interface formProps {
-  login: string;
+interface userDataProps {
+  email: string;
   password: string;
 }
 
-function SignInModal({ active, setActive, changeLoggedInState }: SignInProps) {
-  const baseUrl = 'https://react-learnwords-example.herokuapp.com';
+function SignInModal({
+  active,
+  setActive,
+  changeLoggedInState,
+  isLoggedIn }: SignInProps) {
   const inputLoginRef = React.useRef<HTMLInputElement>(null);
   const inputPasswordRef = React.useRef<HTMLInputElement>(null);
-  const [form, setForm] = React.useState<formProps>()
+  const [userData, setUserData] = React.useState<userDataProps>()
 
-  const handleSubmitRegistration = () => {
+  const handleRegister = async () => {
     if (inputLoginRef.current?.value !== undefined && inputPasswordRef.current?.value !== undefined) {
-      if (inputPasswordRef.current?.value.length < 6) {
-        console.log('password length not ');
-
-      } else {
-        setForm({
-          ...form,
-          login: inputLoginRef.current?.value,
+      if (inputPasswordRef.current?.value.length >= 8) {
+        setUserData({
+          ...userData,
+          email: inputLoginRef.current?.value,
           password: inputPasswordRef.current?.value,
         })
+      }
+      if (userData?.email && userData?.password) {
+        const res = await registerUser({ email: userData.email, password: userData.password })
+        console.log('registerUser');
+        console.log('res.status ', res.status);
       }
     }
   }
 
-  const loginForm = (form: { login: string; password: string }) => {
-    return fetch(`${baseUrl}/signin`, {
-      method: 'POST',
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(form),
-    })
-      .then((rawResponse) => console.log(rawResponse, rawResponse.status))
-      .catch((err) => console.log('Error loginUser', err));
-  };
-
-  React.useEffect(() => {
-    if (form?.login && form?.password) {
-      loginForm({ login: form?.login, password: form.password })
+  const handleSignIn = async () => {
+    if (inputLoginRef.current?.value !== undefined && inputPasswordRef.current?.value !== undefined) {
+      if (inputPasswordRef.current?.value.length >= 8) {
+        setUserData({
+          ...userData,
+          email: inputLoginRef.current?.value,
+          password: inputPasswordRef.current?.value,
+        })
+      }
+      if (userData?.email && userData?.password) {
+        const res = await signInUser({ email: userData.email, password: userData.password })
+        console.log('signInUser');
+        console.log('res.status ', res.status);
+        if (res.status === 200) {
+          changeLoggedInState()
+        }
+      }
     }
-  }, [form])
+  }
+
+  const handleSignOut = async () => {
+    if (inputLoginRef.current?.value !== undefined && inputPasswordRef.current?.value !== undefined) {
+      if (inputPasswordRef.current?.value.length >= 8) {
+        setUserData({
+          ...userData,
+          email: '',
+          password: '',
+        })
+      }
+      if (userData?.email && userData?.password) {
+        const res = await signInUser({ email: userData.email, password: userData.password })
+        console.log('signInUser');
+        console.log('res.status ', res.status);
+        changeLoggedInState()
+      }
+    }
+  }
+
+  // React.useEffect(() => {
+  //   if (userData?.email && userData?.password) {
+  //     registerUser({ email: userData.email, password: userData.password })
+  //     console.log('inEffect');
+  //   }
+  // }, [userData])
 
   return (
     <Shadow onClick={() => setActive(false)} active={active}>
@@ -79,12 +112,13 @@ function SignInModal({ active, setActive, changeLoggedInState }: SignInProps) {
             name="pass"
             minlength={6}
             innerRef={inputPasswordRef} />
-          <Button id="signIn" title="Войти" callback={changeLoggedInState} />
-          <Button id="signUp" title="Зарегистрироваться" callback={handleSubmitRegistration} />
+          {isLoggedIn
+            ? <Button id="signOut" title="Выйти" callback={handleSignOut} />
+            : <Button id="signIn" title="Войти" callback={handleSignIn} />}
+          <Button id="signUp" title="Зарегистрироваться" callback={handleRegister} />
         </form>
       </Modal>
     </Shadow>
   );
 }
-
 export default SignInModal;

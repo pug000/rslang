@@ -45,6 +45,7 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
       />
       <SignInModal
         active={modalActive}
+        isLoggedIn={isLoggedIn}
         setActive={setModalActive}
         changeLoggedInState={changeLoggedInState}
       />
