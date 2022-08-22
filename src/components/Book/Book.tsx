@@ -1,20 +1,19 @@
 import { getWords } from '@/api';
 import defaultTheme from '@/styles/theme';
 import { Btn, WordData } from '@/ts/interfaces';
-import React, { useEffect, useMemo, useState } from 'react';
-import getPages from '@/utils';
+import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import useLocalStorage from '@/hooks/useLocalStorage';
+import Pagination from '@mui/material/Pagination';
 import {
-  BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, PaginationWrapper, PaginationPrev,
-  PaginationNext, PaginationPageBtn, GamesWrapper, GameLink, WordsContainer,
+  BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
+  WordsContainer,
 } from './Book.style';
 
 function Book() {
   const [words, setWords] = useState<WordData[]>([]);
   const [groupCount, setGroupCount] = useLocalStorage('bookGroup', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
-  const [pages, setPages] = useState<Btn[]>([]);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const totalCountPages = 30;
   const groupBtns: Btn[] = [
@@ -25,10 +24,6 @@ function Book() {
     { id: 5, value: 5 },
     { id: 6, value: 6 }
   ];
-
-  useMemo(() => {
-    setPages(getPages(totalCountPages));
-  }, [totalCountPages]);
 
   useEffect(() => {
     if (audio) {
@@ -49,6 +44,21 @@ function Book() {
         <GameLink to="/games/audio">Аудиовызов</GameLink>
       </GamesWrapper>
       <Wrapper>
+        <Pagination
+          count={totalCountPages}
+          page={currentPage + 1}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          sx={
+            {
+              display: 'grid',
+              gridArea: 'paginationTop',
+              justifySelf: 'center',
+            }
+          }
+          onChange={(_, value) => setCurrentPage(value - 1)}
+        />
         <WordsContainer>
           {words.map((word) => (
             <WordItem
@@ -77,30 +87,21 @@ function Book() {
             ))}
           </Group>
         </div>
-        <PaginationWrapper>
-          <PaginationPrev
-            onClick={() => (currentPage < 1
-              ? ''
-              : setCurrentPage(currentPage - 1))}
-          />
-          {pages.map(({ id, value }) => (
-            <PaginationPageBtn
-              key={id}
-              onClick={() => setCurrentPage(value)}
-              colors={
-                currentPage === value
-                  ? defaultTheme.colors.primaryColor
-                  : defaultTheme.colors.grey
-              }
-            >
-              {value + 1}
-            </PaginationPageBtn>
-          ))}
-          <PaginationNext onClick={() => (currentPage === totalCountPages - 1
-            ? ''
-            : setCurrentPage(currentPage + 1))}
-          />
-        </PaginationWrapper>
+        <Pagination
+          count={totalCountPages}
+          page={currentPage + 1}
+          variant="outlined"
+          shape="rounded"
+          size="large"
+          sx={
+            {
+              justifySelf: 'center',
+              display: 'grid',
+              gridArea: 'paginationBottom',
+            }
+          }
+          onChange={(_, value) => setCurrentPage(value - 1)}
+        />
       </Wrapper>
     </BookContainer>
   );

@@ -1,17 +1,9 @@
 import styled from 'styled-components';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import NavigateBeforeIcon from '@mui/icons-material/NavigateBefore';
 import { NavLink } from 'react-router-dom';
-import defaultTheme from '@/styles/theme';
 
 interface ColorsProps {
   colors: string,
 }
-
-const stylesBtn = {
-  cursor: 'pointer',
-  transition: `${defaultTheme.effects.transition}`,
-};
 
 const BookContainer = styled.div`
   display: flex;
@@ -45,10 +37,13 @@ const Title = styled.h1`
 
 const Wrapper = styled.div`
   width: 100%;
-  gap: 30px;
+  gap: 35px;
   display: grid;
   grid-template-columns: 1fr 77px;
-  grid-template-areas: "words group" "pagination pagination";
+  grid-template-areas: 
+  "paginationTop paginationTop"
+  "words group" 
+  "paginationBottom paginationBottom";
 `;
 
 const GamesWrapper = styled.div`
@@ -77,53 +72,6 @@ const GameLink = styled(NavLink)`
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
-  }
-`;
-
-const PaginationWrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  grid-area: pagination;
-  gap: 3px;
-  flex-wrap: wrap;
-`;
-
-const PaginationPrev = styled(NavigateBeforeIcon).attrs({
-  style: {
-    ...stylesBtn,
-    width: '35px',
-    height: '35px',
-  }
-})`
-
-`;
-
-const PaginationNext = styled(NavigateNextIcon).attrs({
-  style: {
-    ...stylesBtn,
-    width: '35px',
-    height: '35px',
-  }
-})`
-`;
-
-const PaginationPageBtn = styled.button<ColorsProps>`
-  width: 30px;
-  height: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  border: none;
-  cursor: pointer;
-  color: ${({ theme }) => theme.colors.bgWhite};
-  transition: ${({ theme }) => theme.effects.transition};
-  background-color: ${({ colors }) => colors};
-
-  &:hover {
-    opacity: ${({ theme }) => theme.effects.hoverOpacity};
-    background-color: ${({ theme }) => theme.colors.primaryColor};
   }
 `;
 
@@ -165,5 +113,5 @@ const GroupBtn = styled.button<ColorsProps>`
 
 export {
   BookContainer, Title, Wrapper, GamesWrapper, GameLink, Group, GroupBtn, GroupTitle,
-  PaginationWrapper, PaginationPrev, PaginationNext, PaginationPageBtn, WordsContainer,
+  WordsContainer,
 };
