@@ -9,11 +9,6 @@ interface Button {
   value: number,
 }
 
-interface ResponseWord {
-  data: WordData[],
-  count: number,
-}
-
 interface WordData {
   id: string;
   group: number,
@@ -39,5 +34,5 @@ interface Track {
 }
 
 export {
-  Button, NavItem, WordData, ResponseWord, Track
+  Button, NavItem, WordData, Track
 };

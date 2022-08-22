@@ -16,7 +16,7 @@ import {
 interface WordItemProps {
   item: WordData,
   audio: HTMLAudioElement | null,
-  setNewAudio: (value: HTMLAudioElement | null) => void;
+  setNewAudio: (value: HTMLAudioElement | null) => void,
 }
 
 function WordItem(

@@ -7,7 +7,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import Pagination from '@mui/material/Pagination';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
-  WordsContainer,
+  WordsContainer, LoadingRing, LoadingText,
 } from './Book.style';
 
 function Book() {
@@ -15,6 +15,7 @@ function Book() {
   const [groupCount, setGroupCount] = useLocalStorage('bookGroup', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
+  const [isLoadingPage, setLoadingPage] = useState(false);
   const totalCountPages = 30;
   const groupBtns: Button[] = [
     { id: 1, value: 1 },
@@ -31,8 +32,10 @@ function Book() {
     }
 
     (async () => {
+      setLoadingPage(true);
       const res = await getWords(groupCount, currentPage);
-      setWords(res.data);
+      setWords(res);
+      setLoadingPage(false);
     })();
   }, [groupCount, currentPage]);
 
@@ -60,14 +63,19 @@ function Book() {
           onChange={(_, value) => setCurrentPage(value - 1)}
         />
         <WordsContainer>
-          {words.map((word) => (
-            <WordItem
-              key={word.id}
-              item={word}
-              audio={audio}
-              setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
-            />
-          ))}
+          {isLoadingPage
+            ? ((
+              <LoadingRing>
+                <LoadingText>Загрузка...</LoadingText>
+              </LoadingRing>
+            )) : words.map((word) => (
+              <WordItem
+                key={word.id}
+                item={word}
+                audio={audio}
+                setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
+              />
+            ))}
         </WordsContainer>
         <div>
           <Group>
