@@ -1,6 +1,6 @@
 import { getWords } from '@/api';
 import defaultTheme from '@/styles/theme';
-import { Btn, WordData } from '@/ts/interfaces';
+import { Button, WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import useLocalStorage from '@/hooks/useLocalStorage';
@@ -16,7 +16,7 @@ function Book() {
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const totalCountPages = 30;
-  const groupBtns: Btn[] = [
+  const groupBtns: Button[] = [
     { id: 1, value: 1 },
     { id: 2, value: 2 },
     { id: 3, value: 3 },

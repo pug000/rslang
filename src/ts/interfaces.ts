@@ -4,7 +4,7 @@ interface NavItem {
   link: string,
   icon: JSX.Element
 }
-interface Btn {
+interface Button {
   id: number,
   value: number,
 }
@@ -39,5 +39,5 @@ interface Track {
 }
 
 export {
-  Btn, NavItem, WordData, ResponseWord, Track
+  Button, NavItem, WordData, ResponseWord, Track
 };
