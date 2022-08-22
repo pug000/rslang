@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
 
 import Global from '@/styles/Global';
@@ -14,18 +14,18 @@ import { WordData } from '@/ts/interfaces';
 import WordItemContext from '@/contexts/WordItemContext';
 import ProtectedRoute from '@/ProtectedRoute';
 import DifficultWords from '@/DifficultWords';
-
-const isLoggedInFromLocalStorage = JSON.parse(localStorage.getItem('isLoggedIn') || 'false');
+import useLocalStorage from './hooks/useLocalStorage';
+import Home from './components/Home/Home';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = React.useState<boolean>(isLoggedInFromLocalStorage);
+  const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
 
   useEffect(() => (
     isLoggedIn
-      ? localStorage.setItem('isLoggedIn', 'true')
-      : localStorage.setItem('isLoggedIn', 'false')
+      ? setIsLoggedIn(true)
+      : setIsLoggedIn(false)
   ), [isLoggedIn]);
 
   const wordItemValue = useMemo(() => (
@@ -46,7 +46,9 @@ function App() {
       />
       <main>
         <Routes>
-          <Route path="/" element={<p>Home</p>} />
+          <Route path="dist/index.html" element={<Navigate replace to="/" />} />
+          <Route path="/index.html" element={<Navigate replace to="/" />} />
+          <Route path="/" element={<Home />} />
           <Route
             path="/book"
             element={(

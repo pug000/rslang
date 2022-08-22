@@ -1,8 +1,6 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import defaultTheme from '@/styles/theme';
-import LogoutIcon from '@mui/icons-material/Logout';
-import MenuIcon from '@mui/icons-material/Menu';
 
 const HeaderContainer = styled.header`
   height: 60px;
@@ -11,7 +9,7 @@ const HeaderContainer = styled.header`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 25px 5px;
+  padding: 20px 10px 5px;
   gap: 10px;
   margin-bottom: 40px;
 `;
@@ -21,7 +19,7 @@ const HeaderBtn = styled.button`
   background-color: transparent;
   cursor: pointer;
   user-select: none;
-  z-index: 20;
+  z-index: 30;
   width: 60px;
   height: 60px;
 `;
@@ -42,23 +40,14 @@ const iconStyles = {
   transition: `${defaultTheme.effects.transition}`,
   '&:hover': {
     opacity: `${defaultTheme.effects.hoverOpacity}`,
+    transform: `${defaultTheme.effects.hoverTransform}`
   }
 };
-
-const Menu = styled(MenuIcon).attrs({
-  style: iconStyles
-})``;
-
-const LogoutBtn = styled(LogoutIcon).attrs({
-  style: iconStyles
-})``;
 
 const LoginBtn = styled.div`
   width: 60px;
   height: 60px;
   background-color: transparent;
-  background-image: url(../assets/icon/signin.svg);
-  background-size: cover;
   transform: scale(-1, 1);
   border: none;
   cursor: pointer;
@@ -69,5 +58,5 @@ const LoginBtn = styled.div`
 `;
 
 export {
-  HeaderContainer, HeaderBtn, HeaderLink, LogoutBtn, LoginBtn, Menu
+  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles
 };

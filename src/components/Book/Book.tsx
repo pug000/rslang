@@ -3,7 +3,8 @@ import defaultTheme from '@/styles/theme';
 import { Btn, WordData } from '@/ts/interfaces';
 import React, { useEffect, useMemo, useState } from 'react';
 import getPages from '@/utils';
-import WordItem from '@/components/Book/WordItem/WordItem';
+import WordItem from '@/WordItem';
+import useLocalStorage from '@/hooks/useLocalStorage';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, PaginationWrapper, PaginationPrev,
   PaginationNext, PaginationPageBtn, GamesWrapper, GameLink, WordsContainer,
@@ -11,8 +12,8 @@ import {
 
 function Book() {
   const [words, setWords] = useState<WordData[]>([]);
-  const [groupCount, setGroupCount] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [groupCount, setGroupCount] = useLocalStorage('bookGroup', 0);
+  const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [pages, setPages] = useState<Btn[]>([]);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const totalCountPages = 30;

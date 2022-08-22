@@ -51,8 +51,8 @@
       "@/Input": [
         "./components/Input/Input"
       ],
-      "@/WordList": [
-        "./components/Book/WordList/WordList"
+      "@/WordItem": [
+        "./components/Book/WordItem/WordItem"
       ],
       "@/ProtectedRoute": [
         "./components/ProtectedRoute/ProtectedRoute"
