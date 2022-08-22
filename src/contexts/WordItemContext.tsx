@@ -2,7 +2,7 @@ import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import { createContext } from 'react';
 
-interface WordListProps {
+interface WordItemProps {
   difficultWords: WordData[],
   learnedWords: WordData[],
   setDifficultWords: SetState<WordData[]>,
@@ -16,6 +16,6 @@ const defaultValue = {
   setLearnedWords: () => { },
 };
 
-const WordListContext = createContext<WordListProps>(defaultValue);
+const WordItemContext = createContext<WordItemProps>(defaultValue);
 
-export default WordListContext;
+export default WordItemContext;

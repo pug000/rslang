@@ -2,6 +2,7 @@ interface NavItem {
   id: number,
   value: string,
   link: string,
+  icon: JSX.Element
 }
 interface Btn {
   id: number,
@@ -30,6 +31,13 @@ interface WordData {
   textExampleTranslate: string
 }
 
+interface Track {
+  id: number,
+  src: string,
+  ref: React.MutableRefObject<HTMLAudioElement>,
+  onEnded: HTMLAudioElement | null,
+}
+
 export {
-  Btn, NavItem, WordData, ResponseWord
+  Btn, NavItem, WordData, ResponseWord, Track
 };

@@ -17,6 +17,7 @@ interface formProps {
 }
 
 function SignInModal({ active, setActive, changeLoggedInState }: SignInProps) {
+  const baseUrl = 'https://react-learnwords-example.herokuapp.com';
   const inputLoginRef = React.useRef<HTMLInputElement>(null);
   const inputPasswordRef = React.useRef<HTMLInputElement>(null);
   const [form, setForm] = React.useState<formProps>()
@@ -37,7 +38,7 @@ function SignInModal({ active, setActive, changeLoggedInState }: SignInProps) {
   }
 
   const loginForm = (form: { login: string; password: string }) => {
-    return fetch('https://react-rslang-group.herokuapp.com/signin', {
+    return fetch(`${baseUrl}/signin`, {
       method: 'POST',
       headers: {
         Accept: 'application/json',
