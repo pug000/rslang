@@ -24,8 +24,17 @@
       "@/styles": [
         "styles/"
       ],
+      "@/hooks": [
+        "hooks/"
+      ],
       "@/contexts": [
         "contexts/"
+      ],
+      "@/AppLayout": [
+        "components/AppLayout/AppLayout"
+      ],
+      "@/Home": [
+        "components/Home/Home"
       ],
       "@/Header": [
         "components/Header/Header"
