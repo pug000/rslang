@@ -8,8 +8,8 @@ import WordItemContext from '@/contexts/WordItemContext';
 import ProtectedRoute from '@/ProtectedRoute';
 import DifficultWords from '@/DifficultWords';
 import AppLayout from '@/AppLayout';
-import useLocalStorage from './hooks/useLocalStorage';
-import Home from './components/Home/Home';
+import Home from '@/Home';
+import useLocalStorage from '@/hooks/useLocalStorage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
