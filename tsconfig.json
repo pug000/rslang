@@ -59,6 +59,9 @@
       ],
       "@/DifficultWords": [
         "./components/DifficultWords/DifficultWords"
+      ],
+      "@/Timer": [
+        "./components/GamesContainer/GameComponents/Timer"
       ]
     }
   },
