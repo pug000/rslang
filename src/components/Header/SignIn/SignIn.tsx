@@ -3,7 +3,7 @@ import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { registerOrSingInUser, endpoints } from '@/api';
-import { UserData } from '@/ts/interfaces';
+import { SignInUserData, SingUpUserData, UserData } from '@/ts/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import {
@@ -24,38 +24,67 @@ function SignInModal({
   isLoggedIn
 }: SignInProps) {
   const defaultUser = { email: '', password: '' };
+  const defaultSingUpData = { email: '', id: '' };
+  const defaultSingInData = {
+    content: {
+      message: '',
+      token: '',
+      refreshToken: '',
+      userId: '',
+      name: '',
+    }
+  };
   const [userData, setUserData] = React.useState<UserData>(defaultUser);
   const [isWaitingData, setIsWaitingData] = React.useState<boolean>(false);
+  const [singUpData, setSingUpData] = React.useState<SignInUserData | SingUpUserData | undefined>(defaultSingUpData);
+  const [singInData, setSingInData] = React.useState<SignInUserData | SingUpUserData | undefined>(defaultSingInData);
+  const [token, setToken] = React.useState<string>('');
+  const [error, setError] = React.useState<number>('');
+  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const handleLogin = async (user: UserData, endpoint: string, buttonId: string) => {
+  const handleEvent = async (buttonId: string) => {
     setIsWaitingData(((prev) => !prev));
-    console.log('here start true', isWaitingData);
-
-    const response = await registerOrSingInUser(user, endpoint);
-    console.log('res.status ', response.status);
-    if (response.status === 200 && buttonId === 'signIn') {
-      console.log('signInUser');
-      changeLoggedInState();
-    } else if (response.status === 200 && buttonId === 'signOut') {
-      console.log('signInUser');
-      changeLoggedInState();
-      console.log('userData ', userData);
-    } else if (response.status === 403) {
-      console.log('');
-    }
-    console.log('here end true ', isWaitingData);
-    setIsWaitingData(((prev) => !prev));
-  };
-
-  const handleEvent = (buttonId: string) => {
     switch (buttonId) {
       case 'signOut':
         setUserData({ ...defaultUser });
-        return handleLogin(userData, endpoints.signin, buttonId);
+        await registerOrSingInUser(userData, endpoints.signin, buttonId);
+        changeLoggedInState();
+        setIsWaitingData(((prev) => !prev));
+        break;
       case 'signIn':
-        return handleLogin(userData, endpoints.signin, buttonId);
+        if (userData.password.length >= 8 && regex.test(userData.email)) {
+          const resSignIn = await registerOrSingInUser(userData, endpoints.signin, buttonId);
+          if (resSignIn.status === 200) {
+            changeLoggedInState();
+          }
+          if (resSignIn && typeof resSignIn !== 'number') {
+            setSingInData({ ...resSignIn });
+            console.log('response IN', resSignIn);
+            console.log('data response IN', singInData);
+            console.log('data response IN token', singInData.token);
+            setToken({ ...resSignIn.content.token });
+            console.log(token);
+          } else {
+            console.log('resSignIn.status ', resSignIn);
+            setError((prev) => prev = resSignIn);
+          }
+          setIsWaitingData(((prev) => !prev));
+        }
+        break;
       case 'signUp':
-        return handleLogin(userData, endpoints.users, buttonId);
+        if (userData.password.length >= 8 && regex.test(userData.email)) {
+          const resSignUp = await registerOrSingInUser(userData, endpoints.users, buttonId);
+          if (resSignUp && typeof resSignUp !== 'number') {
+            setSingUpData({ ...resSignUp });
+            console.log('response UP', resSignUp);
+            console.log('data response UP', singUpData);
+          } else {
+            console.log('resSignUp.status ', resSignUp);
+            setError((prev) => prev = resSignUp);
+          }
+          setIsWaitingData(((prev) => !prev));
+        }
+        break;
       default:
         return buttonId;
     }
@@ -104,7 +133,6 @@ function SignInModal({
                       <CircularProgress sx={circularProgressStyle} />
                     </Stack>
                   )
-
                   : (
                     <>
                       <Button id="signIn" title="Войти" callback={handleEvent} />

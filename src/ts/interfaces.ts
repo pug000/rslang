@@ -43,6 +43,21 @@ interface UserData {
   password: string;
 }
 
+interface SingUpUserData {
+  email: string;
+  id: string;
+}
+interface SignInUserData {
+  content: {
+    message: string,
+    token: string,
+    refreshToken: string,
+    userId: string,
+    name: string,
+  };
+  status: number;
+}
+
 export {
-  Btn, NavItem, WordData, ResponseWord, Track, UserData
+  Btn, NavItem, WordData, ResponseWord, Track, UserData, SingUpUserData, SignInUserData
 };

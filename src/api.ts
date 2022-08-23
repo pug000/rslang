@@ -1,4 +1,4 @@
-import { ResponseWord, UserData } from '@/ts/interfaces';
+import { ResponseWord, UserData, SingUpUserData, SignInUserData } from '@/ts/interfaces';
 
 const baseUrl = 'https://react-learnwords-example.herokuapp.com';
 
@@ -34,7 +34,7 @@ const getWords = async (group = 0, page = 0) => {
   }
 };
 
-const registerOrSingInUser = async (userData: UserData, endpoint: string) => {
+const registerOrSingInUser = async (userData: UserData, endpoint: string, buttonId: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoint}`, {
       method: methods.post,
@@ -44,9 +44,28 @@ const registerOrSingInUser = async (userData: UserData, endpoint: string) => {
       },
       body: JSON.stringify(userData),
     });
-    const content: { id: string, email: string } = await res.json();
-    const { status } = res;
-    return { content, status };
+    if (res.status === 200) {
+      if (buttonId === 'signIn') {
+        const content: SignInUserData = {
+          content: await res.json(),
+          status: res.status,
+        }
+        return content;
+      } else if (buttonId === 'signUp') {
+        const content: SingUpUserData = await res.json();
+        return content;
+      } else if (buttonId === 'signOut') {
+        const content: SignInUserData = {
+          content: await res.json(),
+          status: res.status,
+        }
+        return content;
+      }
+    }
+    else {
+      const { status } = res;
+      return status
+    }
   } catch (err) {
     throw new Error(`${err}`);
   }
