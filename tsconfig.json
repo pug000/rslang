@@ -27,6 +27,9 @@
       "@/contexts": [
         "contexts/"
       ],
+      "@/AppLayout": [
+        "components/AppLayout/AppLayout"
+      ],
       "@/Header": [
         "components/Header/Header"
       ],
