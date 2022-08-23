@@ -83,6 +83,17 @@ const iconStyles = {
   }
 };
 
+const StackStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  position: 'relative',
+  top: '43px',
+};
+
+const circularProgressStyle = {
+  color: `${defaultTheme.colors.primaryColor}`,
+};
+
 export {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles
+  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle
 };
