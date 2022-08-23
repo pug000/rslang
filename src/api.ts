@@ -1,4 +1,4 @@
-import { ResponseWord } from '@/ts/interfaces';
+import { ResponseWord, UserData } from '@/ts/interfaces';
 
 const baseUrl = 'https://react-learnwords-example.herokuapp.com';
 
@@ -34,9 +34,9 @@ const getWords = async (group = 0, page = 0) => {
   }
 };
 
-const registerUser = async (userData: { email: string; password: string }) => {
+const registerOrSingInUser = async (userData: UserData, endpoint: string) => {
   try {
-    const res = await fetch(`${baseUrl}/${endpoints.users}`, {
+    const res = await fetch(`${baseUrl}/${endpoint}`, {
       method: methods.post,
       headers: {
         Accept: 'application/json',
@@ -44,34 +44,12 @@ const registerUser = async (userData: { email: string; password: string }) => {
       },
       body: JSON.stringify(userData),
     });
-    const content = await res.json();
-    const status = await res.status
-    console.log(content);
-    console.log(status);
-    return content;
-  } catch (err) {
-    throw new Error(`${err}`);
-  }
-};
-
-const signInUser = async (userData: { email: string; password: string }) => {
-  try {
-    const res = await fetch(`${baseUrl}/${endpoints.signin}`, {
-      method: methods.post,
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(userData),
-    });
-    const content = await res.json();
-    const status = await res.status
-    console.log(content);
-    console.log(status);
+    const content: { id: string, email: string } = await res.json();
+    const { status } = res;
     return { content, status };
   } catch (err) {
     throw new Error(`${err}`);
   }
 };
 
-export { baseUrl, getWords, registerUser, signInUser };
+export { baseUrl, endpoints, getWords, registerOrSingInUser };

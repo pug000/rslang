@@ -38,6 +38,11 @@ interface Track {
   onEnded: HTMLAudioElement | null,
 }
 
+interface UserData {
+  email: string;
+  password: string;
+}
+
 export {
-  Btn, NavItem, WordData, ResponseWord, Track
+  Btn, NavItem, WordData, ResponseWord, Track, UserData
 };
