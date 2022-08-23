@@ -33,11 +33,7 @@ const bgAnimation = keyframes`
   }
 `;
 
-interface BgProps {
-  active: boolean,
-}
-
-const BgDiv = styled.div<BgProps>`
+const BgDiv = styled.div`
   position: absolute;
   top: -35px;
   left: -35px;

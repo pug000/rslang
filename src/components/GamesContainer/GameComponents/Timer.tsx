@@ -3,11 +3,10 @@ import { Time, BgDiv, TimerWrap } from './Timer.style';
 import BgElement from '../GameElementBg';
 
 interface TimerProps {
-  active: boolean,
   mainColor: string,
 }
 
-function Timer({ active, mainColor }: TimerProps) {
+function Timer({ mainColor }: TimerProps) {
   const [timeLeft, setTimeLeft] = useState(60);
 
   // перенести выше и передавать как пропсы
@@ -33,7 +32,7 @@ function Timer({ active, mainColor }: TimerProps) {
   return (
     <TimerWrap>
       <Time>{seconds}</Time>
-      <BgDiv active={active}>
+      <BgDiv>
         <BgElement color={mainColor} />
       </BgDiv>
     </TimerWrap>
