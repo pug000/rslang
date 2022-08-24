@@ -1,4 +1,5 @@
-import { ResponseWord, UserData, SingUpUserData, SignInUserData } from '@/ts/interfaces';
+
+import { WordData, UserData, SingUpUserData, SignInUserData } from '@/ts/interfaces';
 
 const baseUrl = 'https://react-learnwords-example.herokuapp.com';
 
@@ -24,11 +25,8 @@ const getWords = async (group = 0, page = 0) => {
     const res = await fetch(`${baseUrl}/${endpoints.words}?group=${group}&page=${page}`, {
       method: methods.get,
     });
-    const resObj: ResponseWord = {
-      data: await res.json(),
-      count: Number(res.headers.get('X-Total-Count'))
-    };
-    return resObj;
+    const data: WordData[] = await res.json();
+    return data;
   } catch (err) {
     throw new Error(`${err}`);
   }

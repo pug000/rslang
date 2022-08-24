@@ -25,6 +25,7 @@ const Word = styled.div`
   box-shadow: rgb(0 0 0 / 15%) 0px 0px 10px;
   border-radius: 10px;
   padding: 25px;
+  width: 100%;
 
   @media (max-width: 950px) {
     flex-direction: column;
