@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import generateRandomNumber from '@/utils/randomize';
 import getWords from '@/utils/words';
 import AudioGame from './AudioGame/AudioGame';
+import Main from './GamePage.style';
 
 interface AudioGameProps {
   isGameStarted: boolean,
@@ -34,45 +35,48 @@ function AudioGamePage(
 
   if (!isGameStarted) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
-        {groupBtns.map((
-          {
-            id,
-            value,
-            color,
-            text
-          }
-        ) => (
+      <Main>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
+          {groupBtns.map((
+            {
+              id,
+              value,
+              color,
+              text
+            }
+          ) => (
+            <button
+              type="button"
+              key={id}
+              style={currentGroupNumber === value
+                ? { backgroundColor: '#000' }
+                : { color }}
+              onClick={() => setCurrentGroupNumber(value)}
+            >
+              {text}
+            </button>
+          ))}
           <button
             type="button"
-            key={id}
-            style={currentGroupNumber === value
-              ? { backgroundColor: '#000' }
-              : { color }}
-            onClick={() => setCurrentGroupNumber(value)}
+            onClick={() => {
+              setCurrentPage(generateRandomNumber(totalCountPages - 1));
+              setIsGameStarted(true);
+            }}
           >
-            {text}
+            Start Game
           </button>
-        ))}
-        <button
-          type="button"
-          onClick={() => {
-            setCurrentPage(generateRandomNumber(totalCountPages - 1));
-            setIsGameStarted(true);
-          }}
-        >
-          Start Game
-
-        </button>
-      </div>
+        </div>
+      </Main>
     );
   }
 
   return (
-    <AudioGame
-      words={words}
-      isLoadingGame={isLoadingGame}
-    />
+    <Main>
+      <AudioGame
+        words={words}
+        isLoadingGame={isLoadingGame}
+      />
+    </Main>
   );
 }
 
