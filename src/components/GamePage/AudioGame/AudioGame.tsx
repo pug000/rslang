@@ -8,20 +8,14 @@ import {
 
 interface AudioGameProps {
   words: WordData[],
-  isLoadingGame: boolean,
 }
 
 function AudioGame(
   {
     words,
-    isLoadingGame,
   }: AudioGameProps
 ) {
   const [isFullscreen, setIsFullscreen] = useState(false);
-
-  if (isLoadingGame) {
-    return (<div>Загрузка...</div>);
-  }
 
   return (
     <AudioGameContainer>

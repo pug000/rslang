@@ -4,7 +4,7 @@ import WordItem from '@/WordItem';
 import Pagination from '@mui/material/Pagination';
 import SetState from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
-import getWords from '@/utils/words';
+import { getWords } from '@/api';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
   WordsContainer, LoadingRing, LoadingText,
@@ -29,11 +29,20 @@ function Book(
 ) {
   const [words, setWords] = useState<WordData[]>([]);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  const [isLoadingPage, setLoadingPage] = useState(false);
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   useEffect(() => {
+    audio?.remove();
     setAudio(null);
-    getWords(groupNumber, currentPage, setWords, setLoadingPage);
+
+    (async () => {
+      setIsLoadingPage(true);
+      const res = await getWords(groupNumber, currentPage);
+      setTimeout(() => {
+        setWords(res);
+        setIsLoadingPage(false);
+      }, 500);
+    })();
   }, [groupNumber, currentPage]);
 
   return (
@@ -58,6 +67,7 @@ function Book(
               <GroupBtn
                 key={id}
                 colors={color}
+                disabled={isLoadingPage}
                 active={groupNumber === value}
                 onClick={() => setGroupNumber(value)}
               >
@@ -69,6 +79,7 @@ function Book(
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}
+          disabled={isLoadingPage}
           variant="outlined"
           shape="rounded"
           size="large"
@@ -99,6 +110,7 @@ function Book(
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}
+          disabled={isLoadingPage}
           variant="outlined"
           shape="rounded"
           size="large"

@@ -3,8 +3,8 @@ import SetState from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import React, { useEffect, useState } from 'react';
 import generateRandomNumber from '@/utils/randomize';
-import getWords from '@/utils/words';
 import AudioGame from '@/AudioGame';
+import { getWords } from '@/api';
 import Main from './GamePage.style';
 
 interface AudioGameProps {
@@ -28,10 +28,25 @@ function AudioGamePage(
   const [isLoadingGame, setIsLoadingGame] = useState(false);
 
   useEffect(() => {
-    if (isGameStarted) {
-      getWords(currentGroupNumber, currentPage, setWords, setIsLoadingGame);
+    if (isLoadingGame) {
+      (async () => {
+        const res = await getWords(currentGroupNumber, currentPage);
+        setTimeout(() => {
+          setWords(res);
+          setIsLoadingGame(false);
+          setIsGameStarted(true);
+        }, 500);
+      })();
     }
-  }, [isGameStarted]);
+  }, [isLoadingGame]);
+
+  if (isLoadingGame) {
+    return (
+      <Main>
+        <div>Загрузка...</div>
+      </Main>
+    );
+  }
 
   if (!isGameStarted) {
     return (
@@ -60,7 +75,7 @@ function AudioGamePage(
             type="button"
             onClick={() => {
               setCurrentPage(generateRandomNumber(totalCountPages - 1));
-              setIsGameStarted(true);
+              setIsLoadingGame(true);
             }}
           >
             Start Game
@@ -72,10 +87,7 @@ function AudioGamePage(
 
   return (
     <Main>
-      <AudioGame
-        words={words}
-        isLoadingGame={isLoadingGame}
-      />
+      <AudioGame words={words} />
     </Main>
   );
 }
