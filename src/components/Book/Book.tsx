@@ -5,12 +5,21 @@ import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import Pagination from '@mui/material/Pagination';
+import SetState from '@/ts/types';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
   WordsContainer, LoadingRing, LoadingText,
 } from './Book.style';
 
-function Book() {
+interface BookProps {
+  setIsGameStarted: SetState<boolean>,
+}
+
+function Book(
+  {
+    setIsGameStarted,
+  }: BookProps,
+) {
   const [words, setWords] = useState<WordData[]>([]);
   const [groupCount, setGroupCount] = useLocalStorage('bookGroup', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
@@ -56,7 +65,7 @@ function Book() {
       <Title>Учебник</Title>
       <GamesWrapper>
         <GameLink to="/games/sprint">Спринт</GameLink>
-        <GameLink to="/games/audio">Аудиовызов</GameLink>
+        <GameLink to="/games/audio" onClick={() => setIsGameStarted(true)}>Аудиовызов</GameLink>
       </GamesWrapper>
       <Wrapper>
         <div>

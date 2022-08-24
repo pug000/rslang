@@ -12,8 +12,6 @@ function Timer({ mainColor }: TimerProps) {
   // перенести выше и передавать как пропсы
   const [isCounting, setIsCounting] = useState(true);
 
-  // const [isGameEnded, setIsGameEnded] = useState(true); добавить когда нужно будет
-
   const addZero = (time: number) => time.toString().padStart(2, '0');
   const seconds = addZero(timeLeft);
 

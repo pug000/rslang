@@ -14,17 +14,21 @@ import {
 
 interface NavMenuProps {
   isNavMenuOpen: boolean,
+  isGameStarted: boolean,
   setNavMenuOpen: SetState<boolean>,
   active: boolean,
   setActive: (arg0: boolean) => void,
+  setIsGameStarted: SetState<boolean>,
 }
 
 function NavMenu(
   {
     isNavMenuOpen,
+    isGameStarted,
     setNavMenuOpen,
     active,
-    setActive
+    setActive,
+    setIsGameStarted,
   }: NavMenuProps
 ) {
   const navItems: NavItem[] = [
@@ -63,6 +67,10 @@ function NavMenu(
               onClick={() => {
                 setActive(false);
                 setNavMenuOpen(false);
+
+                if (isGameStarted) {
+                  setIsGameStarted(false);
+                }
               }}
             >
               {icon}
