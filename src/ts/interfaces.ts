@@ -36,25 +36,25 @@ interface Track {
 }
 
 interface UserData {
+  name: string;
   email: string;
   password: string;
 }
 
-interface SingUpUserData {
+interface RegisteredUserData {
   email: string;
   id: string;
 }
-interface SignInUserData {
+interface LoginUserData {
   content: {
     message: string,
     token: string,
     refreshToken: string,
     userId: string,
     name: string,
-  };
-  status: number;
+  }
 }
 
 export {
-  GroupButton, NavItem, WordData, Track, UserData, SingUpUserData, SignInUserData
+  GroupButton, NavItem, WordData, Track, UserData, RegisteredUserData, LoginUserData
 };

@@ -2,13 +2,14 @@ import React from 'react';
 import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import { registerOrSingInUser, endpoints } from '@/api';
-import { SignInUserData, SingUpUserData, UserData } from '@/ts/interfaces';
+import { registerUser, loginUser } from '@/api';
+import { RegisteredUserData, LoginUserData, UserData } from '@/ts/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle
+  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle, SignInNameUser
 } from './SignIn.style';
+import PopupMessage from './PopupMessage';
 
 interface SignInProps {
   active: boolean;
@@ -23,72 +24,75 @@ function SignInModal({
   changeLoggedInState,
   isLoggedIn
 }: SignInProps) {
-  const defaultUser = { email: '', password: '' };
-  const defaultSingUpData = { email: '', id: '' };
+  const defaultUser = { name: '', email: '', password: '' };
   const defaultSingInData = {
     content: {
       message: '',
       token: '',
       refreshToken: '',
       userId: '',
-      name: '',
+      name: ' ',
     }
   };
   const [userData, setUserData] = React.useState<UserData>(defaultUser);
   const [isWaitingData, setIsWaitingData] = React.useState<boolean>(false);
-  const [singUpData, setSingUpData] = React.useState<SignInUserData | SingUpUserData | undefined>(defaultSingUpData);
-  const [singInData, setSingInData] = React.useState<SignInUserData | SingUpUserData | undefined>(defaultSingInData);
+  const [logInUserData, setLogInUserData] = React.useState<LoginUserData>(defaultSingInData);
   const [token, setToken] = React.useState<string>('');
-  const [error, setError] = React.useState<number>('');
+  const [errShow, setErrShow] = React.useState<boolean>(false);
+  const [errMessage, setErrMessage] = React.useState<string>('');
   const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-  const handleEvent = async (buttonId: string) => {
-    setIsWaitingData(((prev) => !prev));
-    switch (buttonId) {
-      case 'signOut':
-        setUserData({ ...defaultUser });
-        await registerOrSingInUser(userData, endpoints.signin, buttonId);
-        changeLoggedInState();
-        setIsWaitingData(((prev) => !prev));
-        break;
-      case 'signIn':
-        if (userData.password.length >= 8 && regex.test(userData.email)) {
-          const resSignIn = await registerOrSingInUser(userData, endpoints.signin, buttonId);
-          if (resSignIn.status === 200) {
-            changeLoggedInState();
-          }
-          if (resSignIn && typeof resSignIn !== 'number') {
-            setSingInData({ ...resSignIn });
-            console.log('response IN', resSignIn);
-            console.log('data response IN', singInData);
-            console.log('data response IN token', singInData.token);
-            setToken({ ...resSignIn.content.token });
-            console.log(token);
-          } else {
-            console.log('resSignIn.status ', resSignIn);
-            setError((prev) => prev = resSignIn);
-          }
-          setIsWaitingData(((prev) => !prev));
-        }
-        break;
-      case 'signUp':
-        if (userData.password.length >= 8 && regex.test(userData.email)) {
-          const resSignUp = await registerOrSingInUser(userData, endpoints.users, buttonId);
-          if (resSignUp && typeof resSignUp !== 'number') {
-            setSingUpData({ ...resSignUp });
-            console.log('response UP', resSignUp);
-            console.log('data response UP', singUpData);
-          } else {
-            console.log('resSignUp.status ', resSignUp);
-            setError((prev) => prev = resSignUp);
-          }
-          setIsWaitingData(((prev) => !prev));
-        }
-        break;
-      default:
-        return buttonId;
+  const changeErrShow = () => setErrShow(((prev) => !prev));
+  const changeWaitingData = () => setIsWaitingData(((prev) => !prev));
+  const changeActiveShadow = () => setActive(false);
+  const errMessageShow = (text: string) => {
+    setErrMessage(text)
+    changeErrShow()
+    setTimeout(changeErrShow, 2000)
+  }
+
+  const createUser = async () => {
+    if (userData.name.length >= 1 && userData.password.length >= 8 && regex.test(userData.email)) {
+      changeWaitingData()
+      const resCreateUser = await registerUser(userData);
+      if (typeof resCreateUser !== 'number') {
+        errMessageShow('You are registered!')
+      } else if (resCreateUser === 417) {
+        errMessageShow('You are already registered!')
+      } else if (resCreateUser === 422) {
+        errMessageShow('Incorrect name, e-mail or password!')
+      }
+      changeWaitingData()
+    } else {
+      errMessageShow('Incorrect e-mail or password!')
     }
-  };
+  }
+
+  const signInUser = async () => {
+    if (userData.name.length >= 1 && userData.password.length >= 8 && regex.test(userData.email)) {
+      changeWaitingData()
+      const resCreateUser = await loginUser(userData);
+      if (resCreateUser && typeof resCreateUser !== 'number') {
+        setLogInUserData(resCreateUser)
+        setToken((prev) => prev = resCreateUser.content.token)
+        errMessageShow('You are sign in!')
+        changeLoggedInState();
+        setTimeout(changeActiveShadow, 3000);
+      } else if (resCreateUser === 403) {
+        errMessageShow('Incorrect e-mail or password!')
+      } else if (resCreateUser === 404) {
+        errMessageShow('User not found')
+      }
+      changeWaitingData()
+    } else {
+      errMessageShow('Incorrect e-mail or password!')
+    }
+  }
+
+  const signOutUser = () => {
+    setUserData({ ...defaultUser });
+    changeLoggedInState();
+  }
 
   return (
     <Shadow onClick={() => setActive(false)} active={active}>
@@ -97,32 +101,47 @@ function SignInModal({
           <CloseIcon sx={iconStyles} />
         </CloseBtn>
         <SignInTitle>Добро пожаловать!</SignInTitle>
+        {errShow && <PopupMessage text={errMessage} />}
         <form>
-          <Input
-            type="email"
-            title=""
-            id="login"
-            placeholder="Введите Ваш e-mail"
-            name="login"
-            value={userData.email}
-            onChange={({ target }) => setUserData({ ...userData, email: target.value })}
-            minlength={0}
-          />
-          <Input
-            type="password"
-            title=""
-            id="pass"
-            placeholder="Введите Ваш пароль"
-            name="pass"
-            value={userData.password}
-            onChange={({ target }) => setUserData({ ...userData, password: target.value })}
-            minlength={6}
-          />
+          {isLoggedIn ?
+            <SignInNameUser>{logInUserData.content.name}</SignInNameUser>
+            : <>
+              <Input
+                type="text"
+                title=""
+                id="username"
+                placeholder="Введите Ваше Имя"
+                name="login"
+                value={userData.name}
+                onChange={({ target }) => setUserData({ ...userData, name: target.value })}
+                minlength={0}
+              />
+              <Input
+                type="email"
+                title=""
+                id="login"
+                placeholder="Введите Ваш e-mail"
+                name="login"
+                value={userData.email}
+                onChange={({ target }) => setUserData({ ...userData, email: target.value })}
+                minlength={0}
+              />
+              <Input
+                type="password"
+                title=""
+                id="pass"
+                placeholder="Введите Ваш пароль"
+                name="pass"
+                value={userData.password}
+                onChange={({ target }) => setUserData({ ...userData, password: target.value })}
+                minlength={6}
+              />
+            </>}
           {isLoggedIn
             ? (
               <>
-                <Button id="signOut" title="Выйти" callback={handleEvent} />
-                <Button id="signUp" title="Зарегистрироваться" callback={handleEvent} disabled />
+                <Button id="signOut" title="Выйти" callback={signOutUser} />
+                <Button id="signUp" title="Зарегистрироваться" callback={() => { }} disabled />
               </>
             )
             : (
@@ -135,8 +154,8 @@ function SignInModal({
                   )
                   : (
                     <>
-                      <Button id="signIn" title="Войти" callback={handleEvent} />
-                      <Button id="signUp" title="Зарегистрироваться" callback={handleEvent} />
+                      <Button id="signIn" title="Войти" callback={signInUser} />
+                      <Button id="signUp" title="Зарегистрироваться" callback={createUser} />
                     </>
                   )}
               </div>

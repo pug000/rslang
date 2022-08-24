@@ -34,7 +34,7 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
       <HeaderBtn>
         {isLoggedIn
-          ? <LogoutIcon sx={iconStyles} onClick={changeLoggedInState} />
+          ? <LogoutIcon sx={iconStyles} onClick={() => setModalActive(!modalActive)} />
           : <LoginBtn onClick={() => setModalActive(!modalActive)}><LogInIcon /></LoginBtn>}
       </HeaderBtn>
       <NavMenu
