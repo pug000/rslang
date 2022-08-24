@@ -1,64 +1,46 @@
 import { getWords } from '@/api';
-import defaultTheme from '@/styles/theme';
-import { GroupButton, WordData } from '@/ts/interfaces';
+import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import Pagination from '@mui/material/Pagination';
 import SetState from '@/ts/types';
+import { groupBtns, totalCountPages } from '@/utils/variables';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
   WordsContainer, LoadingRing, LoadingText,
 } from './Book.style';
 
 interface BookProps {
+  currentPage: number,
+  groupNumber: number,
+  setCurrentPage: SetState<number>,
+  setGroupNumber: SetState<number>,
   setIsGameStarted: SetState<boolean>,
 }
 
 function Book(
   {
+    currentPage,
+    groupNumber,
+    setCurrentPage,
+    setGroupNumber,
     setIsGameStarted,
   }: BookProps,
 ) {
   const [words, setWords] = useState<WordData[]>([]);
-  const [groupCount, setGroupCount] = useLocalStorage('bookGroup', 0);
-  const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setLoadingPage] = useState(false);
-  const totalCountPages = 30;
-  const groupBtns: GroupButton[] = [
-    {
-      id: 1, value: 0, text: 'A1', color: `${defaultTheme.colors.beige}`
-    },
-    {
-      id: 2, value: 1, text: 'A2', color: `${defaultTheme.colors.beige}`
-    },
-    {
-      id: 3, value: 2, text: 'B1', color: `${defaultTheme.colors.blue}`
-    },
-    {
-      id: 4, value: 3, text: 'B2', color: `${defaultTheme.colors.blue}`
-    },
-    {
-      id: 5, value: 4, text: 'C1', color: `${defaultTheme.colors.pink}`
-    },
-    {
-      id: 6, value: 5, text: 'C2', color: `${defaultTheme.colors.pink}`
-    }
-  ];
 
   useEffect(() => {
-    if (audio) {
-      setAudio(null);
-    }
+    setAudio(null);
 
     (async () => {
       setLoadingPage(true);
-      const res = await getWords(groupCount, currentPage);
+      const res = await getWords(groupNumber, currentPage);
       setWords(res);
       setLoadingPage(false);
     })();
-  }, [groupCount, currentPage]);
+  }, [groupNumber, currentPage]);
 
   return (
     <BookContainer>
@@ -82,8 +64,8 @@ function Book(
               <GroupBtn
                 key={id}
                 colors={color}
-                active={groupCount === value}
-                onClick={() => setGroupCount(value)}
+                active={groupNumber === value}
+                onClick={() => setGroupNumber(value)}
               >
                 {text}
               </GroupBtn>

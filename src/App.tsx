@@ -11,12 +11,15 @@ import AppLayout from '@/AppLayout';
 import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
+import AudioGamePage from '@/AudioGamePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
+  const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
 
   useEffect(() => (
     isLoggedIn
@@ -57,7 +60,13 @@ function App() {
           path="book"
           element={(
             <WordItemContext.Provider value={wordItemValue}>
-              <Book setIsGameStarted={setIsGameStarted} />
+              <Book
+                currentPage={currentPage}
+                groupNumber={groupNumber}
+                setCurrentPage={setCurrentPage}
+                setGroupNumber={setGroupNumber}
+                setIsGameStarted={setIsGameStarted}
+              />
             </WordItemContext.Provider>
           )}
         />
@@ -71,7 +80,17 @@ function App() {
         />
         <Route path="games" element={<GameContainer />} />
         <Route path="games/sprint" element={<p>Sprint</p>} />
-        <Route path="games/audio" element={<p>Audio</p>} />
+        <Route
+          path="games/audio"
+          element={(
+            <AudioGamePage
+              isGameStarted={isGameStarted}
+              defaultPage={currentPage}
+              defaultGroupNumber={groupNumber}
+              setIsGameStarted={setIsGameStarted}
+            />
+          )}
+        />
         <Route
           path="statistics"
           element={(
