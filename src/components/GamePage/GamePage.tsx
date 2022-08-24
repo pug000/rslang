@@ -4,7 +4,7 @@ import { groupBtns, totalCountPages } from '@/utils/variables';
 import React, { useEffect, useState } from 'react';
 import generateRandomNumber from '@/utils/randomize';
 import getWords from '@/utils/words';
-import AudioGame from './AudioGame/AudioGame';
+import AudioGame from '@/AudioGame';
 import Main from './GamePage.style';
 
 interface AudioGameProps {

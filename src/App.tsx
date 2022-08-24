@@ -11,7 +11,7 @@ import AppLayout from '@/AppLayout';
 import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
-import AudioGamePage from '@/AudioGamePage';
+import AudioGamePage from '@/components/GamePage/GamePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -79,18 +79,6 @@ function App() {
           )}
         />
         <Route path="games" element={<GameContainer />} />
-        <Route path="games/sprint" element={<p>Sprint</p>} />
-        <Route
-          path="games/audio"
-          element={(
-            <AudioGamePage
-              isGameStarted={isGameStarted}
-              defaultPage={currentPage}
-              defaultGroupNumber={groupNumber}
-              setIsGameStarted={setIsGameStarted}
-            />
-          )}
-        />
         <Route
           path="statistics"
           element={(
@@ -102,6 +90,18 @@ function App() {
         <Route path="about-project" element={<p>About Project</p>} />
         <Route path="about-team" element={<p>About Team</p>} />
       </Route>
+      <Route path="/games/sprint" element={<p>Sprint</p>} />
+      <Route
+        path="/games/audio"
+        element={(
+          <AudioGamePage
+            isGameStarted={isGameStarted}
+            defaultPage={currentPage}
+            defaultGroupNumber={groupNumber}
+            setIsGameStarted={setIsGameStarted}
+          />
+        )}
+      />
     </Routes>
   );
 }

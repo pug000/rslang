@@ -39,8 +39,11 @@
       "@/Header": [
         "components/Header/Header"
       ],
-      "@/AudioGamePage": [
-        "components/AudioGamePage/AudioGamePage"
+      "@/GamePage": [
+        "components/GamePage/GamePage"
+      ],
+      "@/AudioGame": [
+        "components/GamePage/AudioGame/AudioGame"
       ],
       "@/Footer": [
         "components/Footer/Footer"
