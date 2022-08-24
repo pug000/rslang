@@ -1,9 +1,9 @@
-import { getWords } from '@/api';
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import React, { useEffect, useState } from 'react';
 import generateRandomNumber from '@/utils/randomize';
+import getWords from '@/utils/words';
 import AudioGame from './AudioGame/AudioGame';
 
 interface AudioGameProps {
@@ -24,14 +24,12 @@ function AudioGamePage(
   const [currentPage, setCurrentPage] = useState(defaultPage);
   const [currentGroupNumber, setCurrentGroupNumber] = useState(defaultGroupNumber);
   const [words, setWords] = useState<WordData[]>([]);
+  const [isLoadingGame, setIsLoadingGame] = useState(false);
 
   useEffect(() => {
-    (async () => {
-      if (isGameStarted) {
-        const res = await getWords(currentGroupNumber, currentPage);
-        setWords(res);
-      }
-    })();
+    if (isGameStarted) {
+      getWords(currentGroupNumber, currentPage, setWords, setIsLoadingGame);
+    }
   }, [isGameStarted]);
 
   if (!isGameStarted) {
@@ -71,7 +69,10 @@ function AudioGamePage(
   }
 
   return (
-    <AudioGame words={words} />
+    <AudioGame
+      words={words}
+      isLoadingGame={isLoadingGame}
+    />
   );
 }
 

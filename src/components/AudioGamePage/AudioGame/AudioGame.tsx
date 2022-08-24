@@ -3,13 +3,19 @@ import React from 'react';
 
 interface AudioGameProps {
   words: WordData[],
+  isLoadingGame: boolean,
 }
 
 function AudioGame(
   {
     words,
+    isLoadingGame,
   }: AudioGameProps
 ) {
+  if (isLoadingGame) {
+    return (<div>Загрузка...</div>);
+  }
+
   return (
     <>
       {words.map((item) => (

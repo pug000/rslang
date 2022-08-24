@@ -17,7 +17,7 @@ const methods = {
   delete: 'DELETE',
 };
 
-const getWords = async (group = 0, page = 0) => {
+const getWordsFromApi = async (group = 0, page = 0) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.words}?group=${group}&page=${page}`, {
       method: methods.get,
@@ -29,4 +29,4 @@ const getWords = async (group = 0, page = 0) => {
   }
 };
 
-export { baseUrl, getWords };
+export { baseUrl, getWordsFromApi };

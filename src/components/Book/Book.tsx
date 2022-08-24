@@ -1,10 +1,10 @@
-import { getWords } from '@/api';
 import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import Pagination from '@mui/material/Pagination';
 import SetState from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
+import getWords from '@/utils/words';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
   WordsContainer, LoadingRing, LoadingText,
@@ -33,13 +33,7 @@ function Book(
 
   useEffect(() => {
     setAudio(null);
-
-    (async () => {
-      setLoadingPage(true);
-      const res = await getWords(groupNumber, currentPage);
-      setWords(res);
-      setLoadingPage(false);
-    })();
+    getWords(groupNumber, currentPage, setWords, setLoadingPage);
   }, [groupNumber, currentPage]);
 
   return (
