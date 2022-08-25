@@ -30,9 +30,6 @@
       "@/contexts": [
         "contexts/"
       ],
-      "@/variables": [
-        "utils/variables"
-      ],
       "@/AppLayout": [
         "components/AppLayout/AppLayout"
       ],

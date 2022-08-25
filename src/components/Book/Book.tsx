@@ -4,8 +4,8 @@ import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import Pagination from '@mui/material/Pagination';
-import { groupBtns } from '@/utils/variables';
 import Loader from '@/Loader';
+import { groupBtns } from '@/utils/variables';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
   WordsContainer

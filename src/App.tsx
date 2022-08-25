@@ -10,7 +10,7 @@ import AppLayout from '@/AppLayout';
 import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import GamePage from '@/GamePage';
-import { games } from '@/variables';
+import { games } from '@/utils/variables';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
