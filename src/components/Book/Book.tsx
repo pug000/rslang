@@ -2,7 +2,7 @@ import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import Pagination from '@mui/material/Pagination';
-import { SetState } from '@/ts/types';
+import SetState from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import { getWords } from '@/api';
 import {

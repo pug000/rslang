@@ -12,6 +12,10 @@ interface SvgStyles {
   height: string,
 }
 
+interface Color {
+  colors?: string,
+}
+
 const svgStyles: SvgStyles = {
   color: `${defaultTheme.colors.textButton}`,
   width: '100%',
@@ -102,7 +106,7 @@ const AudioGameOptions = styled.div`
   gap: 25px;
 `;
 
-const AudioGameBtn = styled.div`
+const AudioGameBtn = styled.button<Color>`
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -110,7 +114,8 @@ const AudioGameBtn = styled.div`
   border-radius: 8px;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.h4};
-  color: ${({ theme }) => theme.colors.textButton};
+  color: ${(props) => props.colors || props.theme.colors.textButton};
+  background-color: transparent;
   transition: ${({ theme }) => theme.effects.transition};
   user-select: none;
 

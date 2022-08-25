@@ -7,7 +7,7 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupsIcon from '@mui/icons-material/Groups';
-import { SetState } from '@/ts/types';
+import SetState from '@/ts/types';
 import {
   Shadow, NavLi, Link, NavUl
 } from './NavMenu.style';

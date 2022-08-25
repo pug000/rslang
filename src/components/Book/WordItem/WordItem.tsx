@@ -1,7 +1,7 @@
 import { baseUrl } from '@/api';
 import defaultTheme from '@/styles/theme';
 import { Track, WordData } from '@/ts/interfaces';
-import { SetState } from '@/ts/types';
+import SetState from '@/ts/types';
 import DOMPurify from 'dompurify';
 import React, {
   useContext, useRef, useEffect,
