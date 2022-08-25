@@ -11,13 +11,14 @@ import AppLayout from '@/AppLayout';
 import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
-import AudioGamePage from '@/components/GamePage/GamePage';
+import GamePage from '@/components/GamePage/GamePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [words, setWords] = useState<WordData[]>([]);
   const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
 
@@ -63,6 +64,8 @@ function App() {
               <Book
                 currentPage={currentPage}
                 groupNumber={groupNumber}
+                words={words}
+                setWords={setWords}
                 setCurrentPage={setCurrentPage}
                 setGroupNumber={setGroupNumber}
                 setIsGameStarted={setIsGameStarted}
@@ -94,10 +97,11 @@ function App() {
       <Route
         path="/games/audio"
         element={(
-          <AudioGamePage
+          <GamePage
             isGameStarted={isGameStarted}
             defaultPage={currentPage}
             defaultGroupNumber={groupNumber}
+            defaultWords={words}
             setIsGameStarted={setIsGameStarted}
           />
         )}

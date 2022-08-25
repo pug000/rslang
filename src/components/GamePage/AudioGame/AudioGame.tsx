@@ -1,4 +1,5 @@
 import { WordData } from '@/ts/interfaces';
+import SetState from '@/ts/types';
 import React, { useState } from 'react';
 import {
   AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions,
@@ -8,11 +9,13 @@ import {
 
 interface AudioGameProps {
   words: WordData[],
+  setIsGameStarted: SetState<boolean>,
 }
 
 function AudioGame(
   {
     words,
+    setIsGameStarted,
   }: AudioGameProps
 ) {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -21,7 +24,7 @@ function AudioGame(
     <AudioGameContainer>
       <AudioGameControls>
         <AudioGameContolBtn>
-          <Link to="/games"><CloseIconSvg /></Link>
+          <Link to="/games" onClick={() => setIsGameStarted(false)}><CloseIconSvg /></Link>
         </AudioGameContolBtn>
         <AudioGameContolBtn>
           {!isFullscreen ? <FullscreenIconSvg /> : <FullscreenExitIconSvg />}

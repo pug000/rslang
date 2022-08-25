@@ -13,6 +13,8 @@ import {
 interface BookProps {
   currentPage: number,
   groupNumber: number,
+  words: WordData[],
+  setWords: SetState<WordData[]>,
   setCurrentPage: SetState<number>,
   setGroupNumber: SetState<number>,
   setIsGameStarted: SetState<boolean>,
@@ -22,12 +24,13 @@ function Book(
   {
     currentPage,
     groupNumber,
+    words,
+    setWords,
     setCurrentPage,
     setGroupNumber,
     setIsGameStarted,
   }: BookProps,
 ) {
-  const [words, setWords] = useState<WordData[]>([]);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
@@ -37,9 +40,9 @@ function Book(
 
     (async () => {
       setIsLoadingPage(true);
-      const res = await getWords(groupNumber, currentPage);
+      const data = await getWords(groupNumber, currentPage);
       setTimeout(() => {
-        setWords(res);
+        setWords(data);
         setIsLoadingPage(false);
       }, 500);
     })();
