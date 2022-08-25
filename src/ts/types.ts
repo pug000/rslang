@@ -1,3 +1,7 @@
+import { WordData } from './interfaces';
+
 type SetState<T> = React.Dispatch<React.SetStateAction<T>>;
 
-export default SetState;
+type Answers = Pick<WordData, 'audio' | 'word' | 'wordTranslate'>;
+
+export { SetState, Answers };

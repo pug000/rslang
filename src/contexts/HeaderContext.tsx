@@ -1,4 +1,4 @@
-import SetState from '@/ts/types';
+import { SetState } from '@/ts/types';
 import { createContext } from 'react';
 
 interface HeaderContextValues {

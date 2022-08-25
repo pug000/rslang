@@ -1,5 +1,5 @@
 import { WordData } from '@/ts/interfaces';
-import SetState from '@/ts/types';
+import { SetState } from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import React, { useEffect, useState } from 'react';
 import { generateRandomNumber, shuffleArray } from '@/utils/randomize';
