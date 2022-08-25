@@ -44,16 +44,14 @@ interface RegisteredUserData {
   email: string;
   id: string;
 }
-interface LoginUserData {
-  content: {
-    message: string,
-    token: string,
-    refreshToken: string,
-    userId: string,
-    name: string,
-  }
+interface LogInUserData {
+  message: string;
+  token: string;
+  refreshToken: string;
+  userId: string;
+  name?: string;
 }
 
 export {
-  GroupButton, NavItem, WordData, Track, UserData, RegisteredUserData, LoginUserData
+  GroupButton, NavItem, WordData, Track, UserData, RegisteredUserData, LogInUserData
 };

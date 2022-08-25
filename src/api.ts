@@ -1,5 +1,5 @@
 import {
-  WordData, UserData, RegisteredUserData, LoginUserData
+  WordData, UserData, RegisteredUserData, LogInUserData
 } from '@/ts/interfaces';
 
 const baseUrl = 'https://react-learnwords-example.herokuapp.com';
@@ -68,7 +68,7 @@ const loginUser = async (userData: UserData) => {
       const { status } = res;
       return status;
     }
-    const content: LoginUserData = await res.json();
+    const content: LogInUserData = await res.json();
     return content;
   } catch (err) {
     throw new Error(`${err}`);

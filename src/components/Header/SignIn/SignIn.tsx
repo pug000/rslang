@@ -3,7 +3,7 @@ import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { registerUser, loginUser } from '@/api';
-import { LoginUserData, UserData } from '@/ts/interfaces';
+import { LogInUserData, UserData } from '@/ts/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import {
@@ -27,19 +27,19 @@ function SignInModal({
 }: SignInProps) {
   const defaultUser = { email: '', password: '' };
   const defaultSingInData = {
-    content: {
-      message: '',
-      token: '',
-      refreshToken: '',
-      userId: '',
-      name: ' ',
-    }
+    message: '',
+    token: '',
+    refreshToken: '',
+    userId: '',
   };
+  const inputLoginRef: React.MutableRefObject<HTMLInputElement | undefined> = React.useRef();
   const [userData, setUserData] = useLocalStorage('userData', defaultUser);
   // const [userData, setUserData] = React.useState<UserData>(defaultUser);
   const [isWaitingData, setIsWaitingData] = React.useState<boolean>(false);
-  const [logInUserData, setLogInUserData] = React.useState<LoginUserData>(defaultSingInData);
-  const [token, setToken] = React.useState<string>('');
+  const [logInUserData, setLogInUserData] = useLocalStorage('logInUserData', defaultSingInData);
+  // const [logInUserData, setLogInUserData] = React.useState<LogInUserData>(defaultSingInData);
+  const [token, setToken] = useLocalStorage('token', '');
+  // const [token, setToken] = React.useState<string>('');
   const [errShow, setErrShow] = React.useState<boolean>(false);
   const [errMessage, setErrMessage] = React.useState<string>('');
   // eslint-disable-next-line max-len, no-useless-escape
@@ -54,21 +54,21 @@ function SignInModal({
     setTimeout(changeErrShow, 2000);
   };
 
-  const createUser = async () => {
+  const createNewUser = async () => {
     if (userData.password.length >= 8 && regex.test(userData.email)) {
       changeWaitingData();
       const resCreateUser = await registerUser(userData);
       if (typeof resCreateUser !== 'number') {
-        errMessageShow('You are registered!');
+        errMessageShow('Вы зарегистрированы!');
         signInUser()
       } else if (resCreateUser === 417) {
-        errMessageShow('You are already registered!');
+        errMessageShow('Пользователь уже зарегистрирован!');
       } else if (resCreateUser === 422) {
-        errMessageShow('Incorrect name, e-mail or password!');
+        errMessageShow('Неправильный e-mail или пароль!');
       }
       changeWaitingData();
     } else {
-      errMessageShow('Incorrect e-mail or password!');
+      errMessageShow('Некорректный e-mail или пароль!');
     }
   };
 
@@ -77,19 +77,19 @@ function SignInModal({
       changeWaitingData();
       const resCreateUser = await loginUser(userData);
       if (resCreateUser && typeof resCreateUser !== 'number') {
-        // setLogInUserData(resCreateUser);
-        // setToken(resCreateUser.content.token);
-        errMessageShow('You are sign in!');
+        setLogInUserData(resCreateUser);
+        setToken(resCreateUser.token);
+        errMessageShow('Вы авторизовались!');
         changeLoggedInState();
         setTimeout(changeActiveShadow, 3000);
       } else if (resCreateUser === 403) {
-        errMessageShow('Incorrect e-mail or password!');
+        errMessageShow('Неправильный e-mail или пароль!');
       } else if (resCreateUser === 404) {
-        errMessageShow('User not found');
+        errMessageShow('Пользователь не найден');
       }
       changeWaitingData();
     } else {
-      errMessageShow('Incorrect e-mail or password!');
+      errMessageShow('Некорректный e-mail или пароль!');
     }
   };
 
@@ -114,7 +114,7 @@ function SignInModal({
             placeholder="Введите Ваш e-mail"
             name="login"
             value={userData.email}
-            onChange={({ target }) => setUserData({ ...userData, email: target.value })}
+            onChange={({ target }) => { setUserData({ ...userData, email: target.value }) }}
             minlength={0}
           />
           <Input
@@ -145,7 +145,7 @@ function SignInModal({
                   : (
                     <>
                       <Button id="signIn" title="Войти" callback={signInUser} />
-                      <Button id="signUp" title="Зарегистрироваться" callback={createUser} />
+                      <Button id="signUp" title="Зарегистрироваться" callback={createNewUser} />
                     </>
                   )}
               </div>
