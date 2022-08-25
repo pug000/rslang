@@ -71,6 +71,9 @@
       ],
       "@/Timer": [
         "./components/GamesContainer/GameComponents/Timer"
+      ],
+      "@/GamePage": [
+        "./components/GamesContainer/GameComponents/GamePage"
       ]
     }
   },
