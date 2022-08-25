@@ -1,8 +1,7 @@
 import React from 'react';
-import defaultTheme from '@/styles/theme';
-import { GroupButton } from '@/ts/interfaces';
 import Button from '@/Button';
 import { NavLink } from 'react-router-dom';
+import { groupBtns } from '@/utils/variables';
 import GamePageBg from './GamePageBg';
 import {
   GamePageWrapper, GamePageTitle, GamePageText, Group, GroupBtn,
@@ -25,28 +24,6 @@ function GameStartPage({
   bgColor, elementColor, gameTitle, description, icon, note,
   currentGroupNumber, setCurrentGroupNumber, setGameStarted
 }: GameStartPageProps) {
-  // нужно перенести в variables
-  const groupBtns: GroupButton[] = [
-    {
-      id: 1, value: 0, text: 'A1', color: `${defaultTheme.colors.beige}`
-    },
-    {
-      id: 2, value: 1, text: 'A2', color: `${defaultTheme.colors.beige}`
-    },
-    {
-      id: 3, value: 2, text: 'B1', color: `${defaultTheme.colors.blue}`
-    },
-    {
-      id: 4, value: 3, text: 'B2', color: `${defaultTheme.colors.blue}`
-    },
-    {
-      id: 5, value: 4, text: 'C1', color: `${defaultTheme.colors.pink}`
-    },
-    {
-      id: 6, value: 5, text: 'C2', color: `${defaultTheme.colors.pink}`
-    }
-  ];
-  // нужно перенести в variables
   return (
     <GamePageWrapper>
       <GamePageBg color={bgColor} />
