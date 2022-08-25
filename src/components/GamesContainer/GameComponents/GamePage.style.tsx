@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 import defaultTheme from '@/styles/theme';
 
+const Main = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: -70px;
+`;
+
 const GamePageWrapper = styled.div`
   height: 100vh;
   display: flex;
@@ -119,6 +128,6 @@ const Note = styled.p`
 `;
 
 export {
-  GamePageWrapper, BgWrapper, BgGamePageDiv, BgBorderWrapper, GamePageTitle, GamePageText,
+  Main, GamePageWrapper, BgWrapper, BgGamePageDiv, BgBorderWrapper, GamePageTitle, GamePageText,
   Group, GroupBtn, GameControlBtns, IconWrapper, Note
 };

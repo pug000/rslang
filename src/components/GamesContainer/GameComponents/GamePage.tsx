@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import Loader from '@/Loader';
 import GamePageBg from './GamePageBg';
 import GameStartPage from './GameStartPage';
+import { Main } from './GamePage.style';
 
 interface GamePageProps {
   bgColor: string,
@@ -18,6 +20,16 @@ function GamePage({
   isGameStarted, setGameStarted
 }: GamePageProps) {
   const [currentGroupNumber, setCurrentGroupNumber] = useState(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [isLoadingGame, setLoadingGame] = useState(false);
+
+  if (isLoadingGame) {
+    return (
+      <Main>
+        <Loader />
+      </Main>
+    );
+  }
 
   if (!isGameStarted) {
     return (
