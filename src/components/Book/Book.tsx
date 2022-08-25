@@ -1,13 +1,14 @@
 import { getWords } from '@/api';
-import defaultTheme from '@/styles/theme';
-import { GroupButton, WordData } from '@/ts/interfaces';
+import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import Pagination from '@mui/material/Pagination';
+import Loader from '@/Loader';
+import { groupBtns } from '@/utils/variables';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
-  WordsContainer, LoadingRing, LoadingText,
+  WordsContainer
 } from './Book.style';
 
 function Book() {
@@ -17,26 +18,6 @@ function Book() {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setLoadingPage] = useState(false);
   const totalCountPages = 30;
-  const groupBtns: GroupButton[] = [
-    {
-      id: 1, value: 0, text: 'A1', color: `${defaultTheme.colors.beige}`
-    },
-    {
-      id: 2, value: 1, text: 'A2', color: `${defaultTheme.colors.beige}`
-    },
-    {
-      id: 3, value: 2, text: 'B1', color: `${defaultTheme.colors.blue}`
-    },
-    {
-      id: 4, value: 3, text: 'B2', color: `${defaultTheme.colors.blue}`
-    },
-    {
-      id: 5, value: 4, text: 'C1', color: `${defaultTheme.colors.pink}`
-    },
-    {
-      id: 6, value: 5, text: 'C2', color: `${defaultTheme.colors.pink}`
-    }
-  ];
 
   useEffect(() => {
     if (audio) {
@@ -99,9 +80,7 @@ function Book() {
         <WordsContainer>
           {isLoadingPage
             ? ((
-              <LoadingRing>
-                <LoadingText>Загрузка...</LoadingText>
-              </LoadingRing>
+              <Loader />
             )) : words.map((word) => (
               <WordItem
                 key={word.id}

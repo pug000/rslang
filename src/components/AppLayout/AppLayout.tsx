@@ -2,7 +2,7 @@ import Global from '@/styles/Global';
 import defaultTheme from '@/styles/theme';
 import SetState from '@/ts/types';
 import React from 'react';
-import { Outlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { ThemeProvider } from 'styled-components';
 import Footer from '@/Footer';
 import Header from '@/Header';
@@ -18,17 +18,20 @@ function AppLayout(
     setIsLoggedIn,
   }: AppLayoutProps,
 ) {
+  const location = useLocation();
   return (
     <ThemeProvider theme={defaultTheme}>
       <Global />
-      <Header
-        isLoggedIn={isLoggedIn}
-        setIsLoggedIn={setIsLoggedIn}
-      />
+      {location.pathname !== ('/games/audio') && location.pathname !== ('/games/sprint') && (
+        <Header
+          isLoggedIn={isLoggedIn}
+          setIsLoggedIn={setIsLoggedIn}
+        />
+      )}
       <main>
         <Outlet />
       </main>
-      <Footer />
+      {location.pathname !== ('/games/audio') && location.pathname !== ('/games/sprint') && <Footer />}
     </ThemeProvider>
   );
 }

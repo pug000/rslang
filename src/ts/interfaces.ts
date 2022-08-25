@@ -35,6 +35,25 @@ interface Track {
   onEnded: HTMLAudioElement | null,
 }
 
+interface Games {
+  audio: {
+    name: string,
+    description: string,
+    bgColor: string,
+    btnColor: string,
+    icon: JSX.Element,
+    note: string
+  },
+  sprint: {
+    name: string,
+    description: string,
+    bgColor: string,
+    btnColor: string,
+    icon: JSX.Element,
+    note: string
+  }
+}
+
 export {
-  GroupButton, NavItem, WordData, Track
+  GroupButton, NavItem, WordData, Track, Games
 };

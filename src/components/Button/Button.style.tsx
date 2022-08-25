@@ -27,6 +27,9 @@ const ButtonElement = styled.button`
     }
     &:active{
       opacity: 1.0;
+      ${(props) => props.disabled && `
+        opacity: 0.5;
+      `}
     }
 `;
 
