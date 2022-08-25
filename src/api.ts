@@ -1,6 +1,7 @@
 import {
   WordData, UserData, RegisteredUserData, LogInUserData
 } from '@/ts/interfaces';
+import StatusError from './ts/enums';
 
 const baseUrl = 'https://react-learnwords-example.herokuapp.com';
 
@@ -43,7 +44,7 @@ const registerUser = async (userData: UserData) => {
       },
       body: JSON.stringify(userData),
     });
-    if (res.status === 417 || res.status === 422) {
+    if (res.status === StatusError.error417 || res.status === StatusError.error422) {
       const { status } = res;
       return status;
     }
@@ -64,7 +65,7 @@ const loginUser = async (userData: UserData) => {
       },
       body: JSON.stringify(userData),
     });
-    if (res.status === 403 || res.status === 404) {
+    if (res.status === StatusError.error403 || res.status === StatusError.error404) {
       const { status } = res;
       return status;
     }
