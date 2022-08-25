@@ -12,13 +12,14 @@ import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import SpeedIcon from '@mui/icons-material/Speed';
-import GamePage from './components/GamesContainer/GameComponents/GamePage';
+import GamePage from '@/GamePage';
 import defaultTheme from './styles/theme';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
+  const [isGameStarted, setGameStarted] = useState(false);
 
   useEffect(() => (
     isLoggedIn
@@ -95,6 +96,8 @@ function App() {
               description={games.sprint.description}
               icon={games.sprint.icon}
               note={games.sprint.note}
+              isGameStarted={isGameStarted}
+              setGameStarted={setGameStarted}
             />
           )}
         />
@@ -108,6 +111,8 @@ function App() {
               description={games.audio.description}
               icon={games.audio.icon}
               note={games.audio.note}
+              isGameStarted={isGameStarted}
+              setGameStarted={setGameStarted}
             />
           )}
         />
