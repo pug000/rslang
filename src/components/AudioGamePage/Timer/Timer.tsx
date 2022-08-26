@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import BgElement from '@/components/GamesContainer/GameElementBg';
 import { Time, BgDiv, TimerWrap } from './Timer.style';
-import BgElement from '../GameElementBg';
 
 interface TimerProps {
   mainColor: string,

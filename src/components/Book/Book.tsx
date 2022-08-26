@@ -5,9 +5,10 @@ import Pagination from '@mui/material/Pagination';
 import SetState from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import { getWords } from '@/api';
+import Loader from '@/Loader';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
-  WordsContainer, LoadingRing, LoadingText,
+  WordsContainer
 } from './Book.style';
 
 interface BookProps {
@@ -17,7 +18,7 @@ interface BookProps {
   setWords: SetState<WordData[]>,
   setCurrentPage: SetState<number>,
   setGroupNumber: SetState<number>,
-  setIsGameStarted: SetState<boolean>,
+  changeGameState: (value: boolean) => void,
 }
 
 function Book(
@@ -28,7 +29,7 @@ function Book(
     setWords,
     setCurrentPage,
     setGroupNumber,
-    setIsGameStarted,
+    changeGameState,
   }: BookProps,
 ) {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
@@ -53,7 +54,7 @@ function Book(
       <Title>Учебник</Title>
       <GamesWrapper>
         <GameLink to="/games/sprint">Спринт</GameLink>
-        <GameLink to="/games/audio" onClick={() => setIsGameStarted(true)}>Аудиовызов</GameLink>
+        <GameLink to="/games/audio" onClick={() => changeGameState(true)}>Аудиовызов</GameLink>
       </GamesWrapper>
       <Wrapper>
         <div>
@@ -98,9 +99,7 @@ function Book(
         <WordsContainer>
           {isLoadingPage
             ? ((
-              <LoadingRing>
-                <LoadingText>Загрузка...</LoadingText>
-              </LoadingRing>
+              <Loader />
             )) : words.map((word) => (
               <WordItem
                 key={word.id}

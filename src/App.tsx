@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-
 import { Route, Routes } from 'react-router-dom';
 import Book from '@/Book';
 import GameContainer from '@/GamesContainer';
@@ -11,7 +10,7 @@ import AppLayout from '@/AppLayout';
 import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
-import GamePage from '@/components/GamePage/GamePage';
+import AudioGamePage from '@/components/AudioGamePage/AudioGamePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -21,6 +20,8 @@ function App() {
   const [words, setWords] = useState<WordData[]>([]);
   const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
+
+  const changeGameState = (value: boolean) => setIsGameStarted(value);
 
   useEffect(() => (
     isLoggedIn
@@ -68,7 +69,7 @@ function App() {
                 setWords={setWords}
                 setCurrentPage={setCurrentPage}
                 setGroupNumber={setGroupNumber}
-                setIsGameStarted={setIsGameStarted}
+                changeGameState={changeGameState}
               />
             </WordItemContext.Provider>
           )}
@@ -83,6 +84,30 @@ function App() {
         />
         <Route path="games" element={<GameContainer />} />
         <Route
+          path="games/sprint"
+          element={(
+            <AudioGamePage
+              isGameStarted={isGameStarted}
+              changeGameState={changeGameState}
+              defaultPage={currentPage}
+              defaultGroupNumber={groupNumber}
+              defaultWords={words}
+            />
+          )}
+        />
+        <Route
+          path="games/audio"
+          element={(
+            <AudioGamePage
+              isGameStarted={isGameStarted}
+              changeGameState={changeGameState}
+              defaultPage={currentPage}
+              defaultGroupNumber={groupNumber}
+              defaultWords={words}
+            />
+          )}
+        />
+        <Route
           path="statistics"
           element={(
             <ProtectedRoute conditionValue={isLoggedIn}>
@@ -93,19 +118,6 @@ function App() {
         <Route path="about-project" element={<p>About Project</p>} />
         <Route path="about-team" element={<p>About Team</p>} />
       </Route>
-      <Route path="/games/sprint" element={<p>Sprint</p>} />
-      <Route
-        path="/games/audio"
-        element={(
-          <GamePage
-            isGameStarted={isGameStarted}
-            defaultPage={currentPage}
-            defaultGroupNumber={groupNumber}
-            defaultWords={words}
-            setIsGameStarted={setIsGameStarted}
-          />
-        )}
-      />
     </Routes>
   );
 }

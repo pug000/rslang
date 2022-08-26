@@ -1,6 +1,5 @@
 import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
-import SetState from '@/ts/types';
 import { shuffleArray } from '@/utils/randomize';
 import React, { useEffect, useState } from 'react';
 import {
@@ -11,13 +10,13 @@ import {
 
 interface AudioGameProps {
   words: WordData[],
-  setIsGameStarted: SetState<boolean>,
+  changeGameState: (value: boolean) => void,
 }
 
 function AudioGame(
   {
     words,
-    setIsGameStarted,
+    changeGameState,
   }: AudioGameProps
 ) {
   const [isFullscreen, setIsFullscreen] = useState(false);
@@ -62,7 +61,7 @@ function AudioGame(
     <AudioGameContainer>
       <AudioGameControls>
         <AudioGameContolBtn>
-          <Link to="/games" onClick={() => setIsGameStarted(false)}><CloseIconSvg /></Link>
+          <Link to="/games" onClick={() => changeGameState(false)}><CloseIconSvg /></Link>
         </AudioGameContolBtn>
         <AudioGameContolBtn>
           {!isFullscreen ? <FullscreenIconSvg /> : <FullscreenExitIconSvg />}
