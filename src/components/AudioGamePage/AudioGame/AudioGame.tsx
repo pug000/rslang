@@ -1,7 +1,8 @@
+import { baseUrl } from '@/api';
 import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import { shuffleArray } from '@/utils/randomize';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions,
   AudioGameContolBtn, AudioGameWrapper, Link, AudioGameControls, CloseIconSvg,
@@ -25,10 +26,12 @@ function AudioGame(
   const [wordsOptions, setWordsOptions] = useState<string[]>([]);
   const [incorrectAnswers, setInCorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
-  const [selectedAnswer, setSelectedAnswer] = useState<string>();
+  const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
+  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const audioRef = useRef(new Audio());
 
   useEffect(() => {
-    if (step > 0 && step <= words.length - 1) {
+    if (step <= words.length - 1) {
       setCurrentWord(words[step]);
     }
   }, [step]);
@@ -38,8 +41,16 @@ function AudioGame(
       .filter((item) => item.id !== currentWord.id)
       .map((item) => item.wordTranslate)
       .slice(0, 4);
+    audioRef.current.src = `${baseUrl}/${currentWord.audio}`;
+    setIsPlayingAudio(true);
     setWordsOptions(shuffleArray([currentWord.wordTranslate, ...wrongOptions]));
   }, [currentWord]);
+
+  useEffect(() => {
+    if (isPlayingAudio) {
+      audioRef.current.play();
+    }
+  }, [isPlayingAudio]);
 
   const toggleCorrect = (word: string) => {
     if (currentWord.wordTranslate === word && selectedAnswer) {
@@ -65,6 +76,7 @@ function AudioGame(
   const nextStep = () => {
     setSelectedAnswer(undefined);
     setStep((prev) => prev + 1);
+    setIsPlayingAudio(false);
   };
 
   const skipAnswer = () => {
@@ -101,16 +113,26 @@ function AudioGame(
     <AudioGameContainer>
       <AudioGameControls>
         <AudioGameContolBtn>
-          <Link to="/games" onClick={() => changeGameState(false)}><CloseIconSvg /></Link>
+          <Link
+            to="/games"
+            onClick={() => changeGameState(false)}
+          >
+            <CloseIconSvg />
+          </Link>
         </AudioGameContolBtn>
         <AudioGameContolBtn>
           {!isFullscreen ? <FullscreenIconSvg /> : <FullscreenExitIconSvg />}
         </AudioGameContolBtn>
       </AudioGameControls>
       <AudioGameWrapper>
-        <AudioBtn>
+        <AudioBtn onClick={() => setIsPlayingAudio(true)}>
           <AudioIcon />
-          {currentWord.word}
+          <audio
+            ref={audioRef}
+            onEnded={() => setIsPlayingAudio(false)}
+          >
+            <track kind="captions" />
+          </audio>
         </AudioBtn>
         <AudioGameOptions>
           {wordsOptions.map((el, i) => (
