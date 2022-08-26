@@ -57,6 +57,46 @@ function AudioGame(
     ? setCorrectAnswers((prev) => [...prev, currentWord])
     : setInCorrectAnswers((prev) => [...prev, currentWord]));
 
+  const selectAnswer = (word: string) => {
+    setSelectedAnswer(word);
+    setResultAnswers(word);
+  };
+
+  const nextStep = () => {
+    setSelectedAnswer(undefined);
+    setStep((prev) => prev + 1);
+  };
+
+  const skipAnswer = () => {
+    setSelectedAnswer('Incorrect');
+    setInCorrectAnswers((prev) => [...prev, currentWord]);
+  };
+
+  const handleKey = (e: KeyboardEvent) => {
+    if (!selectedAnswer) {
+      const currentKey = Number(e.key) - 1;
+      const word = wordsOptions[currentKey];
+
+      if (word) {
+        selectAnswer(word);
+      }
+    }
+
+    if (e.code === 'Enter') {
+      if (!selectedAnswer) {
+        skipAnswer();
+      } else {
+        nextStep();
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('keypress', handleKey);
+
+    return () => document.removeEventListener('keypress', handleKey);
+  }, [wordsOptions, selectedAnswer]);
+
   return (
     <AudioGameContainer>
       <AudioGameControls>
@@ -78,10 +118,7 @@ function AudioGame(
               key={el}
               colors={toggleCorrect(el)}
               disabled={!!selectedAnswer}
-              onClick={() => {
-                setSelectedAnswer(el);
-                setResultAnswers(el);
-              }}
+              onClick={() => selectAnswer(el)}
             >
               {`${i + 1} ${el}`}
             </AudioGameBtn>
@@ -91,20 +128,12 @@ function AudioGame(
       <AudioGameWrapper>
         {!selectedAnswer
           ? (
-            <AudioGameBtn onClick={() => {
-              setSelectedAnswer('Incorrect');
-              setInCorrectAnswers((prev) => [...prev, currentWord]);
-            }}
-            >
+            <AudioGameBtn onClick={skipAnswer}>
               Не знаю
             </AudioGameBtn>
           )
           : (
-            <AudioGameBtn onClick={() => {
-              setSelectedAnswer(undefined);
-              setStep(step + 1);
-            }}
-            >
+            <AudioGameBtn onClick={nextStep}>
               Далее
             </AudioGameBtn>
           )}
