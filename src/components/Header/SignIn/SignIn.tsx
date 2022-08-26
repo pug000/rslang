@@ -8,13 +8,13 @@ import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import StatusError from '@/ts/enums';
+import { regex } from '@/utils/variables';
 import {
   Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
   SignInWelcome, SignInWelcomeContainer
 } from './SignIn.style';
 import PopupMessage from './PopupMessage';
 import LogInIcon from '../LogInIcon';
-import { regex } from '@/utils/variables';
 
 interface SignInProps {
   active: boolean;
