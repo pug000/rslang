@@ -34,7 +34,6 @@ interface Track {
   ref: React.MutableRefObject<HTMLAudioElement>,
   onEnded: HTMLAudioElement | null,
 }
-
 interface Games {
   audio: {
     name: string,
@@ -54,6 +53,22 @@ interface Games {
   }
 }
 
+interface UserData {
+  email: string;
+  password: string;
+}
+
+interface RegisteredUserData {
+  email: string;
+  id: string;
+}
+interface LogInUserData {
+  message: string;
+  token: string;
+  refreshToken: string;
+  userId: string;
+  name?: string;
+}
 export {
-  GroupButton, NavItem, WordData, Track, Games
+  GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData, LogInUserData
 };

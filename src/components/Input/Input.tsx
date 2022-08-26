@@ -12,6 +12,9 @@ interface InputProps {
   id: string;
   placeholder: string;
   name: string;
+  value: string;
+  onChange: (target: React.ChangeEvent<HTMLInputElement>) => void;
+  minlength: number;
 }
 
 function Input({
@@ -20,6 +23,9 @@ function Input({
   id,
   placeholder,
   name,
+  value,
+  onChange,
+  minlength,
 }: InputProps) {
   return (
     <InputWrapper>
@@ -30,6 +36,9 @@ function Input({
           id={id}
           placeholder={placeholder}
           name={name}
+          minLength={minlength}
+          value={value}
+          onChange={onChange}
         />
       </Label>
     </InputWrapper>

@@ -4,21 +4,19 @@ import ButtonElement from './Button.style';
 interface ButtonProps {
   title: string;
   id: string;
-  callback: () => void;
+  callback: (id: string) => void;
   disabled?: boolean;
 }
 
 function Button({
   title, id, disabled, callback
 }: ButtonProps) {
-  const handlerClickButton = () => callback();
-
   return (
     <ButtonElement
       type="button"
       id={id}
       disabled={disabled}
-      onClick={handlerClickButton}
+      onClick={() => callback(id)}
     >
       {title}
     </ButtonElement>

@@ -24,6 +24,11 @@ const ButtonElement = styled.button`
       color: ${(props) => props.theme.colors.textButton};
       opacity: 0.5;
       cursor: auto;
+
+      &:hover{
+      opacity: 0.5;
+      box-shadow: none;
+    }  
     }
     &:active{
       opacity: 1.0;

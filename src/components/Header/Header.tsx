@@ -21,7 +21,7 @@ function Header() {
   const [modalActive, setModalActive] = useState(false);
   const [menuActive, setMenuActive] = useState(false);
 
-  const changeLoggedInState = () => setIsLoggedIn((prev) => !prev);
+  const changeLoggedInState = () => setIsLoggedIn(((prev) => !prev));
 
   return (
     <HeaderContainer>
@@ -35,7 +35,7 @@ function Header() {
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
       <HeaderBtn>
         {isLoggedIn
-          ? <LogoutIcon sx={iconStyles} onClick={changeLoggedInState} />
+          ? <LogoutIcon sx={iconStyles} onClick={() => setModalActive(!modalActive)} />
           : <LoginBtn onClick={() => setModalActive(!modalActive)}><LogInIcon /></LoginBtn>}
       </HeaderBtn>
       <NavMenu
@@ -48,6 +48,7 @@ function Header() {
       />
       <SignInModal
         active={modalActive}
+        isLoggedIn={isLoggedIn}
         setActive={setModalActive}
         changeLoggedInState={changeLoggedInState}
       />
