@@ -34,6 +34,24 @@ interface Track {
   ref: React.MutableRefObject<HTMLAudioElement>,
   onEnded: HTMLAudioElement | null,
 }
+interface Games {
+  audio: {
+    name: string,
+    description: string,
+    bgColor: string,
+    btnColor: string,
+    icon: JSX.Element,
+    note: string
+  },
+  sprint: {
+    name: string,
+    description: string,
+    bgColor: string,
+    btnColor: string,
+    icon: JSX.Element,
+    note: string
+  }
+}
 
 interface UserData {
   email: string;
@@ -51,7 +69,6 @@ interface LogInUserData {
   userId: string;
   name?: string;
 }
-
 export {
-  GroupButton, NavItem, WordData, Track, UserData, RegisteredUserData, LogInUserData
+  GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData, LogInUserData
 };

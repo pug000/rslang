@@ -3,15 +3,17 @@ import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import { registerUser, loginUser } from '@/api';
-import { LogInUserData, UserData } from '@/ts/interfaces';
+import { LogInUserData } from '@/ts/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import StatusError from '@/ts/enums';
 import {
   Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
+  SignInWelcome, SignInWelcomeContainer
 } from './SignIn.style';
 import PopupMessage from './PopupMessage';
+import LogInIcon from '../LogInIcon';
 
 interface SignInProps {
   active: boolean;
@@ -37,6 +39,7 @@ function SignInModal({
   const [isWaitingData, setIsWaitingData] = React.useState<boolean>(false);
   const [logInUserData, setLogInUserData] = React.useState<LogInUserData>(defaultSingInData);
   const [token, setToken] = useLocalStorage('token', '');
+  const [userId, setUserId] = useLocalStorage('userId', '');
   const [errShow, setErrShow] = React.useState<boolean>(false);
   const [errMessage, setErrMessage] = React.useState<string>('');
   // eslint-disable-next-line max-len, no-useless-escape
@@ -48,7 +51,7 @@ function SignInModal({
   const errMessageShow = (text: string) => {
     setErrMessage(text);
     changeErrShow();
-    setTimeout(changeErrShow, 2000);
+    setTimeout(changeErrShow, 3000);
   };
 
   const signInUser = async () => {
@@ -58,17 +61,20 @@ function SignInModal({
       if (resCreateUser && typeof resCreateUser !== 'number') {
         setLogInUserData(resCreateUser);
         setToken(resCreateUser.token);
+        setUserId(resCreateUser.userId);
         errMessageShow('Вы авторизовались!');
         changeLoggedInState();
         setTimeout(changeActiveShadow, 3000);
       } else if (resCreateUser === StatusError.error403) {
         errMessageShow('Неправильный e-mail или пароль!');
       } else if (resCreateUser === StatusError.error404) {
-        errMessageShow('Пользователь не найден');
+        errMessageShow('Пользователь не найден. Зарегистрируйтесь.');
       }
       changeWaitingData();
+    } else if (userData.password.length < 8) {
+      errMessageShow('Некорректный пароль! Минимум 8 символов.');
     } else {
-      errMessageShow('Некорректный e-mail или пароль!');
+      errMessageShow('Некорректный e-mail!');
     }
   };
 
@@ -77,16 +83,18 @@ function SignInModal({
       changeWaitingData();
       const resCreateUser = await registerUser(userData);
       if (typeof resCreateUser !== 'number') {
-        errMessageShow('Вы зарегистрированы!');
-        signInUser();
+        errMessageShow('Вы зарегистрированы! Авторизуйтесь.');
+        setUserData({ ...defaultUser });
       } else if (resCreateUser === StatusError.error417) {
         errMessageShow('Пользователь уже зарегистрирован!');
       } else if (resCreateUser === StatusError.error422) {
         errMessageShow('Неправильный e-mail или пароль!');
       }
       changeWaitingData();
+    } else if (userData.password.length < 8) {
+      errMessageShow('Некорректный пароль! Минимум 8 символов.');
     } else {
-      errMessageShow('Некорректный e-mail или пароль!');
+      errMessageShow('Некорректный e-mail!');
     }
   };
 
@@ -108,7 +116,12 @@ function SignInModal({
         {errShow && <PopupMessage text={errMessage} />}
         <form>
           {isLoggedIn
-            ? <SignInTitle>Весёлого обучения!</SignInTitle>
+            ? (
+              <SignInWelcomeContainer>
+                <SignInWelcome>Весёлого обучения!</SignInWelcome>
+                <LogInIcon />
+              </SignInWelcomeContainer>
+            )
             : (
               <>
                 <Input
@@ -129,7 +142,7 @@ function SignInModal({
                   name="pass"
                   value={userData.password}
                   onChange={({ target }) => setUserData({ ...userData, password: target.value })}
-                  minlength={6}
+                  minlength={8}
                 />
               </>
             )}

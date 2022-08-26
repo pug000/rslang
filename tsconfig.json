@@ -51,6 +51,9 @@
       "@/Book": [
         "./components/Book/Book"
       ],
+      "@/Loader": [
+        "./components/Loader/Loader"
+      ],
       "@/SignIn": [
         "./components/Header/SignIn/SignIn"
       ],
@@ -71,6 +74,9 @@
       ],
       "@/Timer": [
         "./components/GamesContainer/GameComponents/Timer"
+      ],
+      "@/GamePage": [
+        "./components/GamesContainer/GameComponents/GamePage"
       ]
     }
   },

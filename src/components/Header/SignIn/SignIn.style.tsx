@@ -65,11 +65,16 @@ const SignInTitle = styled.h3`
   padding: 20px;
 `;
 
-const SignInNameUser = styled.h3`
+const SignInWelcome = styled.h3`
   text-align: center;
   font-size: ${defaultTheme.fontSizes.h3};
-  color: ${defaultTheme.colors.title};
-  margin: 38px auto;
+  color: ${defaultTheme.colors.textHighlighted};
+  margin: 2px auto 1px;
+`;
+const SignInWelcomeContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const CloseBtn = styled.button`
@@ -103,5 +108,5 @@ const circularProgressStyle = {
 
 export {
   Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
-  SignInNameUser
+  SignInWelcome, SignInWelcomeContainer
 };
