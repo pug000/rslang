@@ -1,14 +1,5 @@
-import styled from 'styled-components';
 import defaultTheme from '@/styles/theme';
-
-const Main = styled.div`
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-left: -70px;
-`;
+import styled from 'styled-components';
 
 const GamePageWrapper = styled.div`
   height: 100vh;
@@ -128,6 +119,6 @@ const Note = styled.p`
 `;
 
 export {
-  Main, GamePageWrapper, BgWrapper, BgGamePageDiv, BgBorderWrapper, GamePageTitle, GamePageText,
+  GamePageWrapper, BgWrapper, BgGamePageDiv, BgBorderWrapper, GamePageTitle, GamePageText,
   Group, GroupBtn, GameControlBtns, IconWrapper, Note
 };

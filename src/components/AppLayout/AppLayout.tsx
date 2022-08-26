@@ -1,32 +1,18 @@
-import Global from '@/styles/Global';
-import defaultTheme from '@/styles/theme';
-import SetState from '@/ts/types';
 import React from 'react';
 import { Outlet, useLocation } from 'react-router';
 import { ThemeProvider } from 'styled-components';
 import Footer from '@/Footer';
 import Header from '@/Header';
+import defaultTheme from '@/styles/theme';
+import Global from '@/styles/Global';
 
-interface AppLayoutProps {
-  isLoggedIn: boolean,
-  setIsLoggedIn: SetState<boolean>,
-}
-
-function AppLayout(
-  {
-    isLoggedIn,
-    setIsLoggedIn,
-  }: AppLayoutProps,
-) {
+function AppLayout() {
   const location = useLocation();
   return (
     <ThemeProvider theme={defaultTheme}>
       <Global />
       {location.pathname !== ('/games/audio') && location.pathname !== ('/games/sprint') && (
-        <Header
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-        />
+        <Header />
       )}
       <main>
         <Outlet />

@@ -15,21 +15,6 @@
       "@/*": [
         "*"
       ],
-      "@/assets": [
-        "assets/"
-      ],
-      "@/ts": [
-        "ts/"
-      ],
-      "@/styles": [
-        "styles/"
-      ],
-      "@/hooks": [
-        "hooks/"
-      ],
-      "@/contexts": [
-        "contexts/"
-      ],
       "@/AppLayout": [
         "components/AppLayout/AppLayout"
       ],
@@ -39,45 +24,51 @@
       "@/Header": [
         "components/Header/Header"
       ],
+      "@/AudioGamePage": [
+        "components/AudioGamePage/AudioGamePage"
+      ],
+      "@/GameStart": [
+        "components/GamePage/GameStart"
+      ],
+      "@/AudioGame": [
+        "components/GamePage/AudioGame/AudioGame"
+      ],
       "@/Footer": [
         "components/Footer/Footer"
       ],
       "@/Button": [
-        "./components/Button/Button"
+        "components/Button/Button"
       ],
       "@/NavMenu": [
-        "./components/Header/NavMenu/NavMenu"
+        "components/Header/NavMenu/NavMenu"
       ],
       "@/Book": [
-        "./components/Book/Book"
+        "components/Book/Book"
       ],
       "@/Loader": [
         "./components/Loader/Loader"
       ],
       "@/SignIn": [
-        "./components/Header/SignIn/SignIn"
+        "components/Header/SignIn/SignIn"
       ],
       "@/GamesContainer": [
-        "./components/GamesContainer/GamesContainer"
+        "components/GamesContainer/GamesContainer"
       ],
       "@/Input": [
-        "./components/Input/Input"
+        "components/Input/Input"
       ],
       "@/WordItem": [
-        "./components/Book/WordItem/WordItem"
+        "components/Book/WordItem/WordItem"
       ],
       "@/ProtectedRoute": [
-        "./components/ProtectedRoute/ProtectedRoute"
+        "components/ProtectedRoute/ProtectedRoute"
       ],
       "@/DifficultWords": [
-        "./components/DifficultWords/DifficultWords"
+        "components/DifficultWords/DifficultWords"
       ],
       "@/Timer": [
-        "./components/GamesContainer/GameComponents/Timer"
+        "components/GamesContainer/GameComponents/Timer"
       ],
-      "@/GamePage": [
-        "./components/GamesContainer/GameComponents/GamePage"
-      ]
     }
   },
   "files": [

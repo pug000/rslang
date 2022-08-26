@@ -1,43 +1,60 @@
-import { getWords } from '@/api';
 import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import Pagination from '@mui/material/Pagination';
+import SetState from '@/ts/types';
+import { groupBtns, totalCountPages } from '@/utils/variables';
+import { getWords } from '@/api';
 import Loader from '@/Loader';
-import { groupBtns } from '@/utils/variables';
 import {
   BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
   WordsContainer
 } from './Book.style';
 
-function Book() {
-  const [words, setWords] = useState<WordData[]>([]);
-  const [groupCount, setGroupCount] = useLocalStorage('bookGroup', 0);
-  const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
+interface BookProps {
+  currentPage: number,
+  groupNumber: number,
+  words: WordData[],
+  setWords: SetState<WordData[]>,
+  setCurrentPage: SetState<number>,
+  setGroupNumber: SetState<number>,
+  changeGameState: (value: boolean) => void,
+}
+
+function Book(
+  {
+    currentPage,
+    groupNumber,
+    words,
+    setWords,
+    setCurrentPage,
+    setGroupNumber,
+    changeGameState,
+  }: BookProps,
+) {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
-  const [isLoadingPage, setLoadingPage] = useState(false);
-  const totalCountPages = 30;
+  const [isLoadingPage, setIsLoadingPage] = useState(false);
 
   useEffect(() => {
-    if (audio) {
-      setAudio(null);
-    }
+    audio?.remove();
+    setAudio(null);
 
     (async () => {
-      setLoadingPage(true);
-      const res = await getWords(groupCount, currentPage);
-      setWords(res);
-      setLoadingPage(false);
+      setIsLoadingPage(true);
+      const data = await getWords(groupNumber, currentPage);
+      setTimeout(() => {
+        setWords(data);
+        setIsLoadingPage(false);
+      }, 500);
     })();
-  }, [groupCount, currentPage]);
+  }, [groupNumber, currentPage]);
 
   return (
     <BookContainer>
       <Title>Учебник</Title>
       <GamesWrapper>
         <GameLink to="/games/sprint">Спринт</GameLink>
-        <GameLink to="/games/audio">Аудиовызов</GameLink>
+        <GameLink to="/games/audio" onClick={() => changeGameState(true)}>Аудиовызов</GameLink>
       </GamesWrapper>
       <Wrapper>
         <div>
@@ -54,8 +71,9 @@ function Book() {
               <GroupBtn
                 key={id}
                 colors={color}
-                active={groupCount === value}
-                onClick={() => setGroupCount(value)}
+                disabled={isLoadingPage}
+                active={groupNumber === value}
+                onClick={() => setGroupNumber(value)}
               >
                 {text}
               </GroupBtn>
@@ -65,6 +83,7 @@ function Book() {
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}
+          disabled={isLoadingPage}
           variant="outlined"
           shape="rounded"
           size="large"
@@ -93,6 +112,7 @@ function Book() {
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}
+          disabled={isLoadingPage}
           variant="outlined"
           shape="rounded"
           size="large"

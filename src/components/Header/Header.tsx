@@ -1,21 +1,22 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import NavMenu from '@/NavMenu';
 import SignInModal from '@/SignIn';
-import SetState from '@/ts/types';
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
+import HeaderContext from '@/contexts/HeaderContext';
 import {
   HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles, menuIconStyle
 } from './Header.style';
 import LogoSvg from './LogoSvg';
 import LogInIcon from './LogInIcon';
 
-interface HeaderProps {
-  isLoggedIn: boolean,
-  setIsLoggedIn: SetState<boolean>,
-}
-
-function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
+function Header() {
+  const {
+    isLoggedIn,
+    isGameStarted,
+    setIsLoggedIn,
+    setIsGameStarted,
+  } = useContext(HeaderContext);
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
   const [modalActive, setModalActive] = useState(false);
   const [menuActive, setMenuActive] = useState(false);
@@ -39,9 +40,11 @@ function Header({ isLoggedIn, setIsLoggedIn }: HeaderProps) {
       </HeaderBtn>
       <NavMenu
         isNavMenuOpen={isNavMenuOpen}
+        isGameStarted={isGameStarted}
         setNavMenuOpen={setNavMenuOpen}
         active={menuActive}
         setActive={setMenuActive}
+        setIsGameStarted={setIsGameStarted}
       />
       <SignInModal
         active={modalActive}

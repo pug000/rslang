@@ -4,6 +4,8 @@ import { Games, GroupButton } from '@/ts/interfaces';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import SpeedIcon from '@mui/icons-material/Speed';
 
+const totalCountPages = 30;
+
 const games: Games = {
   audio: {
     name: 'Аудиовызов',
@@ -47,5 +49,5 @@ const groupBtns: GroupButton[] = [
 const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export {
-  games, groupBtns, regex
+  games, groupBtns, totalCountPages, regex
 };

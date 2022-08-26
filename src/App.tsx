@@ -9,14 +9,19 @@ import DifficultWords from '@/DifficultWords';
 import AppLayout from '@/AppLayout';
 import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import GamePage from '@/GamePage';
-import { games } from '@/utils/variables';
+import HeaderContext from '@/contexts/HeaderContext';
+import AudioGamePage from '@/components/AudioGamePage/AudioGamePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
-  const [isGameStarted, setGameStarted] = useState(false);
+  const [isGameStarted, setIsGameStarted] = useState(false);
+  const [words, setWords] = useState<WordData[]>([]);
+  const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
+  const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
+
+  const changeGameState = (value: boolean) => setIsGameStarted(value);
 
   useEffect(() => (
     isLoggedIn
@@ -33,15 +38,23 @@ function App() {
     }
   ), [difficultWords, learnedWords]);
 
+  const headerValue = useMemo(() => (
+    {
+      isLoggedIn,
+      isGameStarted,
+      setIsLoggedIn,
+      setIsGameStarted,
+    }
+  ), [isGameStarted, isLoggedIn]);
+
   return (
     <Routes>
       <Route
         path="/"
         element={(
-          <AppLayout
-            isLoggedIn={isLoggedIn}
-            setIsLoggedIn={setIsLoggedIn}
-          />
+          <HeaderContext.Provider value={headerValue}>
+            <AppLayout />
+          </HeaderContext.Provider>
         )}
       >
         <Route index element={<Home />} />
@@ -49,7 +62,15 @@ function App() {
           path="book"
           element={(
             <WordItemContext.Provider value={wordItemValue}>
-              <Book />
+              <Book
+                currentPage={currentPage}
+                groupNumber={groupNumber}
+                words={words}
+                setWords={setWords}
+                setCurrentPage={setCurrentPage}
+                setGroupNumber={setGroupNumber}
+                changeGameState={changeGameState}
+              />
             </WordItemContext.Provider>
           )}
         />
@@ -65,30 +86,24 @@ function App() {
         <Route
           path="games/sprint"
           element={(
-            <GamePage
-              bgColor={games.sprint.bgColor}
-              elementColor={games.sprint.btnColor}
-              gameTitle={games.sprint.name}
-              description={games.sprint.description}
-              icon={games.sprint.icon}
-              note={games.sprint.note}
+            <AudioGamePage
               isGameStarted={isGameStarted}
-              setGameStarted={setGameStarted}
+              changeGameState={changeGameState}
+              defaultPage={currentPage}
+              defaultGroupNumber={groupNumber}
+              defaultWords={words}
             />
           )}
         />
         <Route
           path="games/audio"
           element={(
-            <GamePage
-              bgColor={games.audio.bgColor}
-              elementColor={games.audio.btnColor}
-              gameTitle={games.audio.name}
-              description={games.audio.description}
-              icon={games.audio.icon}
-              note={games.audio.note}
+            <AudioGamePage
               isGameStarted={isGameStarted}
-              setGameStarted={setGameStarted}
+              changeGameState={changeGameState}
+              defaultPage={currentPage}
+              defaultGroupNumber={groupNumber}
+              defaultWords={words}
             />
           )}
         />

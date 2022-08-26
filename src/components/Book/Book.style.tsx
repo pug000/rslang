@@ -23,6 +23,7 @@ const Wrapper = styled.div`
   gap: 35px;
   display: grid;
   grid-template-columns: 1fr 77px;
+  user-select: none;
   grid-template-areas: 
   "paginationTop paginationTop"
   "words group" 

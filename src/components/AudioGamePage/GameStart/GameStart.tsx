@@ -1,12 +1,14 @@
 import React from 'react';
 import Button from '@/Button';
-import { NavLink } from 'react-router-dom';
-import { groupBtns } from '@/utils/variables';
-import GamePageBg from './GamePageBg';
+import { useNavigate } from 'react-router-dom';
+import { groupBtns, totalCountPages } from '@/utils/variables';
+import SetState from '@/ts/types';
+import { generateRandomNumber } from '@/utils/randomize';
+import GamePageBg from '../GamePageBg';
 import {
   GamePageWrapper, GamePageTitle, GamePageText, Group, GroupBtn,
   GameControlBtns, IconWrapper, Note
-} from './GamePage.style';
+} from '../GamePage.style';
 
 interface GameStartPageProps {
   bgColor: string,
@@ -16,14 +18,26 @@ interface GameStartPageProps {
   icon: JSX.Element,
   note: string,
   currentGroupNumber: number,
-  setCurrentGroupNumber: React.Dispatch<React.SetStateAction<number>>,
-  setGameStarted: React.Dispatch<React.SetStateAction<boolean>>
+  setCurrentGroupNumber: SetState<number>,
+  setCurrentPage: SetState<number>,
+  setIsLoadingGame: SetState<boolean>,
+  changeGameState: (value: boolean) => void,
 }
 
 function GameStartPage({
-  bgColor, elementColor, gameTitle, description, icon, note,
-  currentGroupNumber, setCurrentGroupNumber, setGameStarted
+  bgColor,
+  elementColor,
+  gameTitle,
+  description,
+  icon,
+  note,
+  currentGroupNumber,
+  setCurrentGroupNumber,
+  setCurrentPage,
+  setIsLoadingGame,
+  changeGameState
 }: GameStartPageProps) {
+  const navigate = useNavigate();
   return (
     <GamePageWrapper>
       <GamePageBg color={bgColor} />
@@ -49,10 +63,16 @@ function GameStartPage({
         ))}
       </Group>
       <GameControlBtns btnColor={elementColor}>
-        <NavLink to="/games">
-          <Button id="exit" title="Выйти" callback={() => { }} />
-        </NavLink>
-        <Button id="start" title="Играть" callback={() => setGameStarted(true)} />
+        <Button id="exit" title="Выйти" callback={() => navigate(-1)} />
+        <Button
+          id="start"
+          title="Играть"
+          callback={() => {
+            setCurrentPage(generateRandomNumber(totalCountPages - 1));
+            setIsLoadingGame(true);
+            changeGameState(true);
+          }}
+        />
       </GameControlBtns>
       <IconWrapper iconColor={elementColor}>
         {icon}
