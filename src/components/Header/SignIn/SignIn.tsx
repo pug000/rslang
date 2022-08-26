@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
@@ -14,6 +14,7 @@ import {
 } from './SignIn.style';
 import PopupMessage from './PopupMessage';
 import LogInIcon from '../LogInIcon';
+import { regex } from '@/utils/variables';
 
 interface SignInProps {
   active: boolean;
@@ -36,14 +37,12 @@ function SignInModal({
     userId: '',
   };
   const [userData, setUserData] = useLocalStorage('userData', defaultUser);
-  const [isWaitingData, setIsWaitingData] = React.useState<boolean>(false);
-  const [logInUserData, setLogInUserData] = React.useState<LogInUserData>(defaultSingInData);
+  const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
+  const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
   const [token, setToken] = useLocalStorage('token', '');
   const [userId, setUserId] = useLocalStorage('userId', '');
-  const [errShow, setErrShow] = React.useState<boolean>(false);
-  const [errMessage, setErrMessage] = React.useState<string>('');
-  // eslint-disable-next-line max-len, no-useless-escape
-  const regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const [errShow, setErrShow] = useState<boolean>(false);
+  const [errMessage, setErrMessage] = useState<string>('');
 
   const changeErrShow = () => setErrShow(((prev) => !prev));
   const changeWaitingData = () => setIsWaitingData(((prev) => !prev));
