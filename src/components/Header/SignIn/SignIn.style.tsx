@@ -65,6 +65,18 @@ const SignInTitle = styled.h3`
   padding: 20px;
 `;
 
+const SignInWelcome = styled.h3`
+  text-align: center;
+  font-size: ${defaultTheme.fontSizes.h3};
+  color: ${defaultTheme.colors.textHighlighted};
+  margin: 2px auto 1px;
+`;
+const SignInWelcomeContainer = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+`;
+
 const CloseBtn = styled.button`
   border: none;
   background-color: transparent;
@@ -83,6 +95,18 @@ const iconStyles = {
   }
 };
 
+const StackStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  position: 'relative',
+  top: '43px',
+};
+
+const circularProgressStyle = {
+  color: `${defaultTheme.colors.primaryColor}`,
+};
+
 export {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles
+  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
+  SignInWelcome, SignInWelcomeContainer
 };
