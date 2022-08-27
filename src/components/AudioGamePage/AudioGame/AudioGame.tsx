@@ -32,7 +32,9 @@ function AudioGame(
 
   useEffect(() => {
     if (step <= words.length - 1) {
-      setCurrentWord(words[step]);
+      setTimeout(() => {
+        setCurrentWord(words[step]);
+      }, 250);
     }
   }, [step]);
 
@@ -41,13 +43,13 @@ function AudioGame(
       .filter((item) => item.id !== currentWord.id)
       .map((item) => item.wordTranslate)
       .slice(0, 4);
-    audioRef.current.src = `${baseUrl}/${currentWord.audio}`;
     setIsPlayingAudio(true);
     setWordsOptions(shuffleArray([currentWord.wordTranslate, ...wrongOptions]));
   }, [currentWord]);
 
   useEffect(() => {
     if (isPlayingAudio) {
+      audioRef.current.src = `${baseUrl}/${currentWord.audio}`;
       audioRef.current.play();
     }
   }, [isPlayingAudio]);
@@ -112,7 +114,7 @@ function AudioGame(
   return (
     <AudioGameContainer>
       <AudioGameControls>
-        <AudioGameContolBtn>
+        <AudioGameContolBtn tabIndex={-1}>
           <Link
             to="/games"
             onClick={() => changeGameState(false)}
@@ -120,12 +122,16 @@ function AudioGame(
             <CloseIconSvg />
           </Link>
         </AudioGameContolBtn>
-        <AudioGameContolBtn>
+        <AudioGameContolBtn tabIndex={-1}>
           {!isFullscreen ? <FullscreenIconSvg /> : <FullscreenExitIconSvg />}
         </AudioGameContolBtn>
       </AudioGameControls>
       <AudioGameWrapper>
-        <AudioBtn onClick={() => setIsPlayingAudio(true)}>
+        <AudioBtn
+          tabIndex={-1}
+          disabled={isPlayingAudio}
+          onClick={() => setIsPlayingAudio(true)}
+        >
           <AudioIcon />
           <audio
             ref={audioRef}
@@ -138,6 +144,7 @@ function AudioGame(
           {wordsOptions.map((el, i) => (
             <AudioGameBtn
               key={el}
+              tabIndex={-1}
               colors={toggleCorrect(el)}
               disabled={!!selectedAnswer}
               onClick={() => selectAnswer(el)}
@@ -150,12 +157,12 @@ function AudioGame(
       <AudioGameWrapper>
         {!selectedAnswer
           ? (
-            <AudioGameBtn onClick={skipAnswer}>
+            <AudioGameBtn tabIndex={-1} onClick={skipAnswer}>
               Не знаю
             </AudioGameBtn>
           )
           : (
-            <AudioGameBtn onClick={nextStep}>
+            <AudioGameBtn tabIndex={-1} onClick={nextStep}>
               Далее
             </AudioGameBtn>
           )}
