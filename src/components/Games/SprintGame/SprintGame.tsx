@@ -48,7 +48,7 @@ function SprintGame(
     if (translateOption === 1) {
       setTranslation(currentWord.wordTranslate);
     } else {
-      setTranslation('aaaaaaaaa');
+      setTranslation(wrongTranslate[0]);
     }
   }, [currentWord]);
 
