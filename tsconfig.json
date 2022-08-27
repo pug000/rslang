@@ -25,13 +25,19 @@
         "components/Header/Header"
       ],
       "@/AudioGamePage": [
-        "components/AudioGamePage/AudioGamePage"
+        "components/Games/AudioGamePage"
       ],
       "@/GameStart": [
-        "components/GamePage/GameStart"
+        "components/Games/GameStart/GameStart"
       ],
       "@/AudioGame": [
-        "components/GamePage/AudioGame/AudioGame"
+        "components/Games/AudioGame/AudioGame"
+      ],
+      "@/SprintGamePage": [
+        "components/Games/SprintGamePage"
+      ],
+      "@/SprintGame": [
+        "components/Games/SprintGame/SprintGame"
       ],
       "@/Footer": [
         "components/Footer/Footer"
@@ -46,7 +52,7 @@
         "components/Book/Book"
       ],
       "@/Loader": [
-        "./components/Loader/Loader"
+        "components/Loader/Loader"
       ],
       "@/SignIn": [
         "components/Header/SignIn/SignIn"
@@ -67,7 +73,7 @@
         "components/DifficultWords/DifficultWords"
       ],
       "@/Timer": [
-        "components/GamesContainer/GameComponents/Timer"
+        "components/Games/GameComponents/Timer/Timer"
       ],
     }
   },
