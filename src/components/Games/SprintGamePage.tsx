@@ -1,12 +1,12 @@
 import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import { shuffleArray } from '@/utils/randomize';
-import AudioGame from '@/AudioGame';
 import { getWords } from '@/api';
 import { games } from '@/utils/variables';
+import Loader from '@/Loader';
 import GameStart from '@/GameStart';
+import SprintGame from '@/SprintGame';
 import { GamePageWrapper } from './GamePage.style';
-import Loader from '../Loader/Loader';
 import GamePageBg from './GamePageBg';
 
 interface GamePageProps {
@@ -17,13 +17,13 @@ interface GamePageProps {
   defaultWords: WordData[],
 }
 
-function AudioGamePage(
+function SprintGamePage(
   {
     isGameStarted,
     changeGameState,
     defaultPage,
     defaultGroupNumber,
-    defaultWords,
+    defaultWords
   }: GamePageProps,
 ) {
   const [currentPage, setCurrentPage] = useState(defaultPage);
@@ -56,7 +56,7 @@ function AudioGamePage(
   if (isLoadingGame) {
     return (
       <GamePageWrapper>
-        <GamePageBg color={games.audio.bgColor} />
+        <GamePageBg color={games.sprint.bgColor} />
         <Loader />
       </GamePageWrapper>
     );
@@ -65,12 +65,12 @@ function AudioGamePage(
   if (!isGameStarted) {
     return (
       <GameStart
-        bgColor={games.audio.bgColor}
-        elementColor={games.audio.btnColor}
-        gameTitle={games.audio.name}
-        description={games.audio.description}
-        icon={games.audio.icon}
-        note={games.audio.note}
+        bgColor={games.sprint.bgColor}
+        elementColor={games.sprint.btnColor}
+        gameTitle={games.sprint.name}
+        description={games.sprint.description}
+        icon={games.sprint.icon}
+        note={games.sprint.note}
         currentGroupNumber={currentGroupNumber}
         setCurrentGroupNumber={setCurrentGroupNumber}
         setCurrentPage={setCurrentPage}
@@ -82,13 +82,15 @@ function AudioGamePage(
 
   return (
     <GamePageWrapper>
-      <GamePageBg color={games.audio.bgColor} />
-      <AudioGame
+      <GamePageBg color={games.sprint.bgColor} />
+      <SprintGame
         words={words}
         changeGameState={changeGameState}
+        mainColor={games.sprint.btnColor}
+        isGameStarted={isGameStarted}
       />
     </GamePageWrapper>
   );
 }
 
-export default AudioGamePage;
+export default SprintGamePage;

@@ -53,7 +53,7 @@ function Book(
     <BookContainer>
       <Title>Учебник</Title>
       <GamesWrapper>
-        <GameLink to="/games/sprint">Спринт</GameLink>
+        <GameLink to="/games/sprint" onClick={() => changeGameState(true)}>Спринт</GameLink>
         <GameLink to="/games/audio" onClick={() => changeGameState(true)}>Аудиовызов</GameLink>
       </GamesWrapper>
       <Wrapper>

@@ -4,13 +4,12 @@ import { Time, BgDiv, TimerWrap } from './Timer.style';
 
 interface TimerProps {
   mainColor: string,
+  isCounting: boolean,
+  setIsCounting: (value: boolean) => void
 }
 
-function Timer({ mainColor }: TimerProps) {
+function Timer({ mainColor, isCounting, setIsCounting }: TimerProps) {
   const [timeLeft, setTimeLeft] = useState(60);
-
-  // перенести выше и передавать как пропсы
-  const [isCounting, setIsCounting] = useState(true);
 
   const addZero = (time: number) => time.toString().padStart(2, '0');
   const seconds = addZero(timeLeft);

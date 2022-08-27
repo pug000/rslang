@@ -11,6 +11,7 @@ import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
 import AudioGamePage from '@/AudioGamePage';
+import SprintGamePage from '@/SprintGamePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -86,7 +87,7 @@ function App() {
         <Route
           path="games/sprint"
           element={(
-            <AudioGamePage
+            <SprintGamePage
               isGameStarted={isGameStarted}
               changeGameState={changeGameState}
               defaultPage={currentPage}
