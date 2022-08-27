@@ -3,7 +3,7 @@ import {
 } from '@/ts/interfaces';
 import StatusError from './ts/enums';
 
-const baseUrl = 'https://react-learnwords-example.herokuapp.com';
+const baseUrl = 'https://lang-learnwords.herokuapp.com';
 
 const endpoints = {
   words: 'words',
