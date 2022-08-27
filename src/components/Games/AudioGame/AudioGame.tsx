@@ -2,8 +2,11 @@ import { baseUrl } from '@/api';
 import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import { shuffleArray } from '@/utils/randomize';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useContext, useEffect, useRef, useState
+} from 'react';
 import GameControl from '@/GameControl';
+import GameContext from '@/contexts/GameContext';
 import {
   AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer
 } from './AudioGame.style';
@@ -19,11 +22,15 @@ function AudioGame(
     changeGameState,
   }: AudioGameProps
 ) {
+  const {
+    correctAnswers,
+    incorrectAnswers,
+    setCorrectAnswers,
+    setInCorrectAnswers,
+  } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [wordsOptions, setWordsOptions] = useState<string[]>([]);
-  const [incorrectAnswers, setInCorrectAnswers] = useState<WordData[]>([]);
-  const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const audioRef = useRef(new Audio());

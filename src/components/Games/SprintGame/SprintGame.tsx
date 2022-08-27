@@ -1,7 +1,8 @@
 import { WordData } from '@/ts/interfaces';
 import { generateRandomNumber, shuffleArray } from '@/utils/randomize';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Timer from '@/Timer';
+import GameContext from '@/contexts/GameContext';
 import {
   SprintGameContainer, SprintGameWrapper
 } from './SprintGame.style';
@@ -21,12 +22,16 @@ function SprintGame(
     isGameStarted
   }: SprintGameProps
 ) {
+  const {
+    correctAnswers,
+    incorrectAnswers,
+    setCorrectAnswers,
+    setInCorrectAnswers,
+  } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [translation, setTranslation] = useState<string>(currentWord.wordTranslate);
   const [score, setScore] = useState(0);
-  const [incorrectAnswers, setInCorrectAnswers] = useState<WordData[]>([]);
-  const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
 
   useEffect(() => {
     if (step <= words.length - 1) {
