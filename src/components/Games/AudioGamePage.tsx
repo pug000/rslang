@@ -1,11 +1,11 @@
 import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import { shuffleArray } from '@/utils/randomize';
-import AudioGame from '@/components/AudioGamePage/AudioGame/AudioGame';
+import AudioGame from '@/AudioGame';
 import { getWords } from '@/api';
 import { games } from '@/utils/variables';
+import GameStart from '@/GameStart';
 import { GamePageWrapper } from './GamePage.style';
-import GameStart from './GameStart/GameStart';
 import Loader from '../Loader/Loader';
 import GamePageBg from './GamePageBg';
 

@@ -1,26 +1,8 @@
 import styled from 'styled-components';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
-import defaultTheme from '@/styles/theme';
 import { NavLink } from 'react-router-dom';
-import CloseIcon from '@mui/icons-material/Close';
-import FullscreenIcon from '@mui/icons-material/Fullscreen';
-import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
-
-interface SvgStyles {
-  color: string,
-  width: string,
-  height: string,
-}
-
-interface Color {
-  colors?: string,
-}
-
-const svgStyles: SvgStyles = {
-  color: `${defaultTheme.colors.textButton}`,
-  width: '100%',
-  height: '100%',
-};
+import { Color } from '@/ts/interfaces';
+import defaultTheme from '@/styles/theme';
 
 const AudioGameContainer = styled.div`
   height: 100%;
@@ -49,17 +31,23 @@ const AudioBtn = styled.button`
   width: 100%;
   height: 100%;
 
+  :disabled {
+    cursor: default;
+  }
+
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
 `;
 
-const AudioIcon = styled(VolumeUpIcon).attrs({
-  style: {
-    ...svgStyles,
-    padding: '20px',
-  },
-})``;
+const AudioIcon = styled(VolumeUpIcon).attrs({ className: 'AudioIcon' })`
+  &.AudioIcon {
+    width: 100%;
+    height: 100%;
+    color: ${defaultTheme.colors.textButton};
+    padding: 20px;
+  }
+`;
 
 const AudioGameControls = styled.div`
   width: 100%;
@@ -69,7 +57,7 @@ const AudioGameControls = styled.div`
   padding: 0px 40px;
 `;
 
-const AudioGameContolBtn = styled.button`
+const AudioGameControlBtn = styled.button`
   background-color: transparent;
   width: 50px;
   border: none;
@@ -87,18 +75,6 @@ const Link = styled(NavLink)`
   }
 `;
 
-const CloseIconSvg = styled(CloseIcon).attrs({
-  style: svgStyles
-})``;
-
-const FullscreenIconSvg = styled(FullscreenIcon).attrs({
-  style: svgStyles
-})``;
-
-const FullscreenExitIconSvg = styled(FullscreenExitIcon).attrs({
-  style: svgStyles
-})``;
-
 const AudioGameOptions = styled.div`
   display: flex;
   justify-content: center;
@@ -114,7 +90,7 @@ const AudioGameBtn = styled.button<Color>`
   border-radius: 8px;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.h4};
-  color: ${(props) => props.colors || props.theme.colors.textButton};
+  color: ${(props) => props.$color || props.theme.colors.textButton};
   background-color: transparent;
   transition: ${({ theme }) => theme.effects.transition};
   user-select: none;
@@ -126,6 +102,5 @@ const AudioGameBtn = styled.button<Color>`
 
 export {
   AudioGameWrapper, AudioBtn, AudioIcon, AudioGameOptions, AudioGameBtn,
-  AudioGameControls, AudioGameContolBtn, CloseIconSvg, Link, FullscreenIconSvg,
-  FullscreenExitIconSvg, AudioGameContainer,
+  AudioGameControls, AudioGameControlBtn, Link, AudioGameContainer
 };

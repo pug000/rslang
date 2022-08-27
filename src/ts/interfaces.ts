@@ -69,6 +69,18 @@ interface LogInUserData {
   userId: string;
   name?: string;
 }
+
+interface SvgStyles {
+  width: string,
+  height: string,
+  transition: string,
+}
+
+interface Color {
+  $color?: string,
+}
+
 export {
-  GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData, LogInUserData
+  GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
+  LogInUserData, SvgStyles, Color,
 };

@@ -25,13 +25,13 @@
         "components/Header/Header"
       ],
       "@/AudioGamePage": [
-        "components/AudioGamePage/AudioGamePage"
+        "components/Games/AudioGamePage"
       ],
       "@/GameStart": [
-        "components/GamePage/GameStart"
+        "components/Games/GameStart/GameStart"
       ],
       "@/AudioGame": [
-        "components/GamePage/AudioGame/AudioGame"
+        "components/Games/AudioGame/AudioGame"
       ],
       "@/Footer": [
         "components/Footer/Footer"
@@ -67,8 +67,11 @@
         "components/DifficultWords/DifficultWords"
       ],
       "@/Timer": [
-        "components/GamesContainer/GameComponents/Timer"
+        "components/Games/GameComponents/Timer/Timer"
       ],
+      "@/GameControl": [
+        "components/Games/GameComponents/GameControl/GameControl"
+      ]
     }
   },
   "files": [
