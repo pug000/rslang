@@ -33,7 +33,7 @@ function SprintGame(
       setCurrentWord(words[step]);
     }
 
-    if (step === words.length - 1) {
+    if (step === words.length) {
       changeGameState(false);
     }
   }, [step]);
@@ -87,16 +87,18 @@ function SprintGame(
   useEffect(() => {
     document.addEventListener('keydown', handleKey);
 
-    return () => {
-      document.removeEventListener('keydown', handleKey);
-    };
+    return () => document.removeEventListener('keydown', handleKey);
   }, [step, translation]);
 
   return (
     <SprintGameContainer>
       {/* компонент верхняя панель игры (закрыть, full screen) */}
       <SprintGameWrapper>
-        <Timer mainColor={mainColor} isCounting={isGameStarted} setIsCounting={changeGameState} />
+        <Timer
+          mainColor={mainColor}
+          isCounting={isGameStarted}
+          setIsCounting={changeGameState}
+        />
         <p>
           Ваш результат
           {score}
