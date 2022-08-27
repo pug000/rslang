@@ -17,7 +17,7 @@ interface Color {
 }
 
 const svgStyles: SvgStyles = {
-  color: `${defaultTheme.colors.textButton}`,
+  color: `${defaultTheme.colors.pink}`,
   width: '100%',
   height: '100%',
 };

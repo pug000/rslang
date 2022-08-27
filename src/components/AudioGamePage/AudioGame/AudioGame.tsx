@@ -111,18 +111,40 @@ function AudioGame(
     return () => document.removeEventListener('keypress', handleKey);
   }, [wordsOptions, selectedAnswer]);
 
+  useEffect(() => {
+    if (isFullscreen) {
+      document.documentElement.requestFullscreen();
+    }
+
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+  }, [isFullscreen]);
+
+  const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
+
+  useEffect(() => {
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+
+    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+  }, []);
+
   return (
     <AudioGameContainer>
       <AudioGameControls>
         <AudioGameContolBtn tabIndex={-1}>
           <Link
             to="/games"
+            tabIndex={-1}
             onClick={() => changeGameState(false)}
           >
             <CloseIconSvg />
           </Link>
         </AudioGameContolBtn>
-        <AudioGameContolBtn tabIndex={-1}>
+        <AudioGameContolBtn
+          tabIndex={-1}
+          onClick={() => setIsFullscreen((prev) => !prev)}
+        >
           {!isFullscreen ? <FullscreenIconSvg /> : <FullscreenExitIconSvg />}
         </AudioGameContolBtn>
       </AudioGameControls>
