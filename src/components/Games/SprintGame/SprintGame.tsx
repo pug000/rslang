@@ -48,11 +48,16 @@ function SprintGame(
     if (translateOption === 1) {
       setTranslation(currentWord.wordTranslate);
     } else {
-      setTranslation(wrongTranslate[0]);
+      setTranslation('aaaaaaaaa');
     }
   }, [currentWord]);
 
+  const nextStep = () => {
+    setStep((prev) => prev + 1);
+  };
+
   const clickCorrectBtn = () => {
+    nextStep();
     if (currentWord.wordTranslate === translation) {
       setCorrectAnswers((prev) => [...prev, currentWord]);
       setScore(score + 20);
@@ -62,6 +67,7 @@ function SprintGame(
   };
 
   const clickInCorrectBtn = () => {
+    nextStep();
     if (currentWord.wordTranslate !== translation) {
       setCorrectAnswers((prev) => [...prev, currentWord]);
       setScore(score + 20);
@@ -70,27 +76,21 @@ function SprintGame(
     }
   };
 
-  const nextStep = () => {
-    setStep((prev) => prev + 1);
-  };
-
   const handleKey = (e: KeyboardEvent) => {
     if (e.code === 'ArrowLeft') {
-      nextStep();
       clickCorrectBtn();
     } else if (e.code === 'ArrowRight') {
-      nextStep();
       clickInCorrectBtn();
     }
   };
 
   useEffect(() => {
-    window.addEventListener('keydown', handleKey);
+    document.addEventListener('keydown', handleKey);
 
     return () => {
-      window.removeEventListener('keydown', handleKey);
+      document.removeEventListener('keydown', handleKey);
     };
-  });
+  }, [step, translation]);
 
   return (
     <SprintGameContainer>
@@ -106,7 +106,6 @@ function SprintGame(
         <button
           type="button"
           onClick={() => {
-            nextStep();
             clickCorrectBtn();
           }}
         >
@@ -115,7 +114,6 @@ function SprintGame(
         <button
           type="button"
           onClick={() => {
-            nextStep();
             clickInCorrectBtn();
           }}
         >
