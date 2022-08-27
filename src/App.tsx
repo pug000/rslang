@@ -10,7 +10,7 @@ import AppLayout from '@/AppLayout';
 import Home from '@/Home';
 import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
-import AudioGamePage from '@/components/AudioGamePage/AudioGamePage';
+import AudioGamePage from '@/AudioGamePage';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);

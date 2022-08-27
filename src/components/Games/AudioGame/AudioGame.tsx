@@ -3,10 +3,9 @@ import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import { shuffleArray } from '@/utils/randomize';
 import React, { useEffect, useRef, useState } from 'react';
+import GameControl from '@/GameControl';
 import {
-  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions,
-  AudioGameContolBtn, AudioGameWrapper, Link, AudioGameControls, CloseIconSvg,
-  FullscreenIconSvg, FullscreenExitIconSvg, AudioGameContainer,
+  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer
 } from './AudioGame.style';
 
 interface AudioGameProps {
@@ -20,7 +19,6 @@ function AudioGame(
     changeGameState,
   }: AudioGameProps
 ) {
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [wordsOptions, setWordsOptions] = useState<string[]>([]);
@@ -111,43 +109,12 @@ function AudioGame(
     return () => document.removeEventListener('keypress', handleKey);
   }, [wordsOptions, selectedAnswer]);
 
-  useEffect(() => {
-    if (isFullscreen) {
-      document.documentElement.requestFullscreen();
-    }
-
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    }
-  }, [isFullscreen]);
-
-  const onFullscreenChange = () => setIsFullscreen(Boolean(document.fullscreenElement));
-
-  useEffect(() => {
-    document.addEventListener('fullscreenchange', onFullscreenChange);
-
-    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
-  }, []);
-
   return (
     <AudioGameContainer>
-      <AudioGameControls>
-        <AudioGameContolBtn tabIndex={-1}>
-          <Link
-            to="/games"
-            tabIndex={-1}
-            onClick={() => changeGameState(false)}
-          >
-            <CloseIconSvg />
-          </Link>
-        </AudioGameContolBtn>
-        <AudioGameContolBtn
-          tabIndex={-1}
-          onClick={() => setIsFullscreen((prev) => !prev)}
-        >
-          {!isFullscreen ? <FullscreenIconSvg /> : <FullscreenExitIconSvg />}
-        </AudioGameContolBtn>
-      </AudioGameControls>
+      <GameControl
+        changeGameState={changeGameState}
+        color={defaultTheme.colors.pink}
+      />
       <AudioGameWrapper>
         <AudioBtn
           tabIndex={-1}
@@ -167,7 +134,7 @@ function AudioGame(
             <AudioGameBtn
               key={el}
               tabIndex={-1}
-              colors={toggleCorrect(el)}
+              $color={toggleCorrect(el)}
               disabled={!!selectedAnswer}
               onClick={() => selectAnswer(el)}
             >
@@ -179,12 +146,18 @@ function AudioGame(
       <AudioGameWrapper>
         {!selectedAnswer
           ? (
-            <AudioGameBtn tabIndex={-1} onClick={skipAnswer}>
+            <AudioGameBtn
+              tabIndex={-1}
+              onClick={skipAnswer}
+            >
               Не знаю
             </AudioGameBtn>
           )
           : (
-            <AudioGameBtn tabIndex={-1} onClick={nextStep}>
+            <AudioGameBtn
+              tabIndex={-1}
+              onClick={nextStep}
+            >
               Далее
             </AudioGameBtn>
           )}
