@@ -3,10 +3,9 @@ import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import { shuffleArray } from '@/utils/randomize';
 import React, { useEffect, useRef, useState } from 'react';
+import GameControl from '@/GameControl';
 import {
-  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions,
-  AudioGameContolBtn, AudioGameWrapper, Link, AudioGameControls, CloseIconSvg,
-  FullscreenIconSvg, FullscreenExitIconSvg, AudioGameContainer,
+  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer
 } from './AudioGame.style';
 
 interface AudioGameProps {
@@ -20,7 +19,6 @@ function AudioGame(
     changeGameState,
   }: AudioGameProps
 ) {
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [wordsOptions, setWordsOptions] = useState<string[]>([]);
@@ -32,7 +30,9 @@ function AudioGame(
 
   useEffect(() => {
     if (step <= words.length - 1) {
-      setCurrentWord(words[step]);
+      setTimeout(() => {
+        setCurrentWord(words[step]);
+      }, 250);
     }
   }, [step]);
 
@@ -41,13 +41,13 @@ function AudioGame(
       .filter((item) => item.id !== currentWord.id)
       .map((item) => item.wordTranslate)
       .slice(0, 4);
-    audioRef.current.src = `${baseUrl}/${currentWord.audio}`;
     setIsPlayingAudio(true);
     setWordsOptions(shuffleArray([currentWord.wordTranslate, ...wrongOptions]));
   }, [currentWord]);
 
   useEffect(() => {
     if (isPlayingAudio) {
+      audioRef.current.src = `${baseUrl}/${currentWord.audio}`;
       audioRef.current.play();
     }
   }, [isPlayingAudio]);
@@ -111,21 +111,16 @@ function AudioGame(
 
   return (
     <AudioGameContainer>
-      <AudioGameControls>
-        <AudioGameContolBtn>
-          <Link
-            to="/games"
-            onClick={() => changeGameState(false)}
-          >
-            <CloseIconSvg />
-          </Link>
-        </AudioGameContolBtn>
-        <AudioGameContolBtn>
-          {!isFullscreen ? <FullscreenIconSvg /> : <FullscreenExitIconSvg />}
-        </AudioGameContolBtn>
-      </AudioGameControls>
+      <GameControl
+        changeGameState={changeGameState}
+        color={defaultTheme.colors.pink}
+      />
       <AudioGameWrapper>
-        <AudioBtn onClick={() => setIsPlayingAudio(true)}>
+        <AudioBtn
+          tabIndex={-1}
+          disabled={isPlayingAudio}
+          onClick={() => setIsPlayingAudio(true)}
+        >
           <AudioIcon />
           <audio
             ref={audioRef}
@@ -138,7 +133,8 @@ function AudioGame(
           {wordsOptions.map((el, i) => (
             <AudioGameBtn
               key={el}
-              colors={toggleCorrect(el)}
+              tabIndex={-1}
+              $color={toggleCorrect(el)}
               disabled={!!selectedAnswer}
               onClick={() => selectAnswer(el)}
             >
@@ -150,12 +146,18 @@ function AudioGame(
       <AudioGameWrapper>
         {!selectedAnswer
           ? (
-            <AudioGameBtn onClick={skipAnswer}>
+            <AudioGameBtn
+              tabIndex={-1}
+              onClick={skipAnswer}
+            >
               Не знаю
             </AudioGameBtn>
           )
           : (
-            <AudioGameBtn onClick={nextStep}>
+            <AudioGameBtn
+              tabIndex={-1}
+              onClick={nextStep}
+            >
               Далее
             </AudioGameBtn>
           )}

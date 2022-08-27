@@ -75,6 +75,9 @@
       "@/Timer": [
         "components/Games/GameComponents/Timer/Timer"
       ],
+      "@/GameControl": [
+        "components/Games/GameComponents/GameControl/GameControl"
+      ]
     }
   },
   "files": [
