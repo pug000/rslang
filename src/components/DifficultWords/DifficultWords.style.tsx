@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 const DifficultWordsContainer = styled.div`
   padding: 20px 25px 10px;
-  min-height: 60vh;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
