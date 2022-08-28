@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { WordData } from '@/ts/interfaces';
 import { generateRandomNumber, shuffleArray } from '@/utils/randomize';
@@ -65,18 +64,18 @@ function SprintGame(
     setStep((prev) => prev + 1);
   };
 
-  const isStrike = () => {
-    if (strike === 3) {
-      setScore(score + 100);
-      setStrike(0);
-    }
-  };
-
   const correctAnswer = () => {
-    setScore(score + 20);
-    setStrike(strike + 1);
+    if (strike === 2) {
+      setScore(score + 100);
+      setStrike(strike + 1);
+    } else if (strike === 3) {
+      setScore(score + 20);
+      setStrike(1);
+    } else {
+      setScore(score + 20);
+      setStrike(strike + 1);
+    }
     setIsCorrect(true);
-    isStrike();
     setCorrectAnswers((prev) => [...prev, currentWord]);
   };
 
@@ -145,9 +144,7 @@ function SprintGame(
           <Strike strike={strike} id="strike1">✔️</Strike>
           <Strike strike={strike} id="strike2">✔️</Strike>
           <Strike strike={strike} id="strike3">✔️</Strike>
-          {strike === 3
-            ? <StrikeMessage>{strikeMessageText}</StrikeMessage>
-            : null}
+          {strike === 3 && <StrikeMessage>{strikeMessageText}</StrikeMessage>}
         </StrikeBlock>
         <TextBlock>
           <Word>{currentWord.word}</Word>
