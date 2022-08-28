@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { baseUrl } from '@/api';
 import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';

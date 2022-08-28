@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { WordData } from '@/ts/interfaces';
 import { generateRandomNumber, shuffleArray } from '@/utils/randomize';
 import React, { useEffect, useState } from 'react';
