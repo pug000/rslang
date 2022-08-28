@@ -28,7 +28,7 @@ const HeaderLink = styled(NavLink)`
     cursor: pointer;
     color: ${defaultTheme.colors.primaryColor};
     height: 100%;
-    max-width: 220px;
+    max-width: 230px;
     width: 100%;
     user-select: none;
     padding-left: 80px;
