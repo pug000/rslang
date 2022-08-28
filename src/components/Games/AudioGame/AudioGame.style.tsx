@@ -21,6 +21,13 @@ const AudioGameWrapper = styled.div`
   gap: 50px;
 `;
 
+const GameBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  justify-content: space-evenly;
+`;
+
 const AudioBtn = styled.button`
   border: 3px solid ${({ theme }) => theme.colors.textButton};
   border-radius: 50%;
@@ -102,5 +109,5 @@ const AudioGameBtn = styled.button<Color>`
 
 export {
   AudioGameWrapper, AudioBtn, AudioIcon, AudioGameOptions, AudioGameBtn,
-  AudioGameControls, AudioGameControlBtn, Link, AudioGameContainer
+  AudioGameControls, AudioGameControlBtn, Link, AudioGameContainer, GameBlock
 };

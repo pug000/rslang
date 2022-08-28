@@ -7,8 +7,10 @@ import React, {
 } from 'react';
 import GameControl from '@/GameControl';
 import GameContext from '@/contexts/GameContext';
+import GameResults from '@/GameResults';
 import {
-  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer
+  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer,
+  GameBlock
 } from './AudioGame.style';
 
 interface AudioGameProps {
@@ -33,13 +35,16 @@ function AudioGame(
   const [wordsOptions, setWordsOptions] = useState<string[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [isShowResult, setIsShowResult] = useState(false);
   const audioRef = useRef(new Audio());
 
   useEffect(() => {
-    if (step <= words.length - 1) {
-      setTimeout(() => {
-        setCurrentWord(words[step]);
-      }, 250);
+    if (step > 0 && step <= words.length - 1) {
+      setCurrentWord(words[step]);
+    }
+
+    if (step === words.length) {
+      setIsShowResult(true);
     }
   }, [step]);
 
@@ -88,7 +93,7 @@ function AudioGame(
 
   const skipAnswer = () => {
     setSelectedAnswer('Incorrect');
-    setInCorrectAnswers((prev) => [...prev, currentWord]);
+    setResultAnswers('Incorrect');
   };
 
   const handleKey = (e: KeyboardEvent) => {
@@ -111,10 +116,12 @@ function AudioGame(
   };
 
   useEffect(() => {
-    document.addEventListener('keypress', handleKey);
+    if (step < words.length) {
+      document.addEventListener('keypress', handleKey);
+    }
 
     return () => document.removeEventListener('keypress', handleKey);
-  }, [wordsOptions, selectedAnswer]);
+  }, [selectedAnswer, step]);
 
   return (
     <AudioGameContainer>
@@ -122,53 +129,65 @@ function AudioGame(
         changeGameState={changeGameState}
         color={defaultTheme.colors.pink}
       />
-      <AudioGameWrapper>
-        <AudioBtn
-          tabIndex={-1}
-          disabled={isPlayingAudio}
-          onClick={() => setIsPlayingAudio(true)}
-        >
-          <AudioIcon />
-          <audio
-            ref={audioRef}
-            onEnded={() => setIsPlayingAudio(false)}
-          >
-            <track kind="captions" />
-          </audio>
-        </AudioBtn>
-        <AudioGameOptions>
-          {wordsOptions.map((el, i) => (
-            <AudioGameBtn
-              key={el}
+      {!isShowResult ? (
+        <GameBlock>
+          <AudioGameWrapper>
+            <AudioBtn
               tabIndex={-1}
-              $color={toggleCorrect(el)}
-              disabled={!!selectedAnswer}
-              onClick={() => selectAnswer(el)}
+              disabled={isPlayingAudio}
+              onClick={() => setIsPlayingAudio(true)}
             >
-              {`${i + 1} ${el}`}
-            </AudioGameBtn>
-          ))}
-        </AudioGameOptions>
-      </AudioGameWrapper>
-      <AudioGameWrapper>
-        {!selectedAnswer
-          ? (
-            <AudioGameBtn
-              tabIndex={-1}
-              onClick={skipAnswer}
-            >
-              Не знаю
-            </AudioGameBtn>
-          )
-          : (
-            <AudioGameBtn
-              tabIndex={-1}
-              onClick={nextStep}
-            >
-              Далее
-            </AudioGameBtn>
-          )}
-      </AudioGameWrapper>
+              <AudioIcon />
+              <audio
+                ref={audioRef}
+                onEnded={() => setIsPlayingAudio(false)}
+              >
+                <track kind="captions" />
+              </audio>
+            </AudioBtn>
+            <AudioGameOptions>
+              {wordsOptions.map((el, i) => (
+                <AudioGameBtn
+                  key={el}
+                  tabIndex={-1}
+                  $color={toggleCorrect(el)}
+                  disabled={!!selectedAnswer}
+                  onClick={() => selectAnswer(el)}
+                >
+                  {`${i + 1} ${el}`}
+                </AudioGameBtn>
+              ))}
+            </AudioGameOptions>
+          </AudioGameWrapper>
+          <AudioGameWrapper>
+            {!selectedAnswer
+              ? (
+                <AudioGameBtn
+                  tabIndex={-1}
+                  onClick={skipAnswer}
+                >
+                  Не знаю
+                </AudioGameBtn>
+              )
+              : (
+                <AudioGameBtn
+                  tabIndex={-1}
+                  onClick={nextStep}
+                >
+                  Далее
+                </AudioGameBtn>
+              )}
+          </AudioGameWrapper>
+        </GameBlock>
+      )
+        : (
+          <GameResults
+            correctAnswers={correctAnswers}
+            incorrectAnswers={incorrectAnswers}
+            path="audio"
+            changeGameState={changeGameState}
+          />
+        )}
     </AudioGameContainer>
   );
 }

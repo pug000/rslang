@@ -3,6 +3,7 @@ import { generateRandomNumber, shuffleArray } from '@/utils/randomize';
 import React, { useContext, useEffect, useState } from 'react';
 import Timer from '@/Timer';
 import GameContext from '@/contexts/GameContext';
+import GameResults from '@/GameResults';
 import {
   SprintGameContainer, SprintGameWrapper
 } from './SprintGame.style';
@@ -31,6 +32,7 @@ function SprintGame(
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [translation, setTranslation] = useState<string>(currentWord.wordTranslate);
+  const [isShowResult, setIsShowResult] = useState(false);
   const [score, setScore] = useState(0);
 
   useEffect(() => {
@@ -38,8 +40,8 @@ function SprintGame(
       setCurrentWord(words[step]);
     }
 
-    if (step === words.length - 1) {
-      changeGameState(false);
+    if (step === words.length) {
+      setIsShowResult(true);
     }
   }, [step]);
 
@@ -90,7 +92,9 @@ function SprintGame(
   };
 
   useEffect(() => {
-    document.addEventListener('keydown', handleKey);
+    if (step < words.length) {
+      document.addEventListener('keydown', handleKey);
+    }
 
     return () => {
       document.removeEventListener('keydown', handleKey);
@@ -100,31 +104,46 @@ function SprintGame(
   return (
     <SprintGameContainer>
       {/* компонент верхняя панель игры (закрыть, full screen) */}
-      <SprintGameWrapper>
-        <Timer mainColor={mainColor} isCounting={isGameStarted} setIsCounting={changeGameState} />
-        <p>
-          Ваш результат
-          {score}
-        </p>
-        <p>{currentWord.word}</p>
-        <p>{translation}</p>
-        <button
-          type="button"
-          onClick={() => {
-            clickCorrectBtn();
-          }}
-        >
-          верно
-        </button>
-        <button
-          type="button"
-          onClick={() => {
-            clickInCorrectBtn();
-          }}
-        >
-          неверно
-        </button>
-      </SprintGameWrapper>
+      {!isShowResult
+        ? (
+          <SprintGameWrapper>
+            <Timer
+              mainColor={mainColor}
+              isCounting={isGameStarted}
+              setIsCounting={setIsShowResult}
+            />
+            <p>
+              Ваш результат
+              {score}
+            </p>
+            <p>{currentWord.word}</p>
+            <p>{translation}</p>
+            <button
+              type="button"
+              onClick={() => {
+                clickCorrectBtn();
+              }}
+            >
+              верно
+            </button>
+            <button
+              type="button"
+              onClick={() => {
+                clickInCorrectBtn();
+              }}
+            >
+              неверно
+            </button>
+          </SprintGameWrapper>
+        )
+        : (
+          <GameResults
+            correctAnswers={correctAnswers}
+            incorrectAnswers={incorrectAnswers}
+            path="sprint"
+            changeGameState={changeGameState}
+          />
+        )}
     </SprintGameContainer>
   );
 }
