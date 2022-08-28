@@ -5,7 +5,6 @@ import StatusError from './ts/enums';
 
 const baseUrl = 'https://lang-learnwords.herokuapp.com';
 
-
 const endpoints = {
   words: 'words',
   users: 'users',

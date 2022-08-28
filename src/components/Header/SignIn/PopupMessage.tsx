@@ -14,6 +14,7 @@ function PopupMessage({ text, statusErr }: PopupMessageProp) {
 
 PopupMessage.defaultProps = {
   text: '',
+  statusErr: true,
 };
 
 export default PopupMessage;

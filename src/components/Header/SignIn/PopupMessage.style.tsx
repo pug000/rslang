@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components';
 
 interface MessageProps {
@@ -10,7 +9,7 @@ const Message = styled.div<MessageProps>`
   top: 120px;
   text-align: center; 
   width: 360px;
-  color: ${(props) => props.active ? props.theme.colors.pink : props.theme.colors.purple};
+  color: ${(props) => (props.active ? props.theme.colors.pink : props.theme.colors.purple)};
 `;
 
 export default Message;

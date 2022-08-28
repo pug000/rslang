@@ -52,7 +52,7 @@ function SignInModal({
   const dafaultErrMessage = {
     text: '',
     activeErr: false,
-  }
+  };
 
   const [errMessage, setErrMessage] = useState<ErrMessageProps>(dafaultErrMessage);
 
@@ -60,7 +60,7 @@ function SignInModal({
   const changeWaitingData = () => setIsWaitingData(((prev) => !prev));
   const changeActiveShadow = () => setActive(false);
   const errMessageShow = (text: string, activeErr: boolean) => {
-    setErrMessage({ ...errMessage, text: text, activeErr: activeErr });
+    setErrMessage({ ...errMessage, text, activeErr });
     changeErrShow();
     setTimeout(changeErrShow, 3000);
   };
