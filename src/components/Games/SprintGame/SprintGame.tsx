@@ -154,10 +154,10 @@ function SprintGame(
         </TextBlock>
         <SprintButtons>
           <Button
-            id="incorrect"
+            id="correct"
             title="← верно"
             callback={() => {
-              clickInCorrectBtn();
+              clickCorrectBtn();
             }}
           />
           <Button
