@@ -11,7 +11,6 @@ const HeaderContainer = styled.header`
   align-items: center;
   padding: 20px 15px 5px 10px;
   gap: 10px;
-  margin-bottom: 40px;
 `;
 
 const HeaderBtn = styled.button`
