@@ -1,4 +1,5 @@
 import { WordData } from '@/ts/interfaces';
+import SetState from '@/ts/types';
 import React from 'react';
 import Answers from './Answers';
 import {
@@ -8,6 +9,8 @@ import {
 interface GameResultsProps {
   correctAnswers: WordData[],
   incorrectAnswers: WordData[],
+  setCorrectAnswers: SetState<WordData[]>,
+  setIncorrectAnswers: SetState<WordData[]>,
   path: string,
   changeGameState: (value: boolean) => void,
 }
@@ -16,6 +19,8 @@ function GameResults(
   {
     correctAnswers,
     incorrectAnswers,
+    setCorrectAnswers,
+    setIncorrectAnswers,
     path,
     changeGameState,
   }: GameResultsProps,
@@ -31,6 +36,11 @@ function GameResults(
     }
 
     return 'В этот раз не получилось, но продолжай тренироваться!';
+  };
+
+  const clearAnswersState = () => {
+    setCorrectAnswers([]);
+    setIncorrectAnswers([]);
   };
 
   return (
@@ -49,13 +59,19 @@ function GameResults(
       <GameResultsWrapper>
         <Link
           to={`/games/${path}`}
-          onClick={() => changeGameState(false)}
+          onClick={() => {
+            changeGameState(false);
+            clearAnswersState();
+          }}
         >
           Играть ещё
         </Link>
         <Link
           to="/games"
-          onClick={() => changeGameState(false)}
+          onClick={() => {
+            changeGameState(false);
+            clearAnswersState();
+          }}
         >
           К списку игр
         </Link>

@@ -3,7 +3,7 @@ import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import { shuffleArray } from '@/utils/randomize';
 import React, {
-  useContext, useEffect, useRef, useState
+  useContext, useEffect, useState
 } from 'react';
 import GameControl from '@/GameControl';
 import GameContext from '@/contexts/GameContext';
@@ -36,10 +36,10 @@ function AudioGame(
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
   const [isShowResult, setIsShowResult] = useState(false);
-  const audioRef = useRef(new Audio());
+  const audio = new Audio();
 
   useEffect(() => {
-    if (step > 0 && step <= words.length - 1) {
+    if (step <= words.length - 1) {
       setCurrentWord(words[step]);
     }
 
@@ -57,32 +57,40 @@ function AudioGame(
     setWordsOptions(shuffleArray([currentWord.wordTranslate, ...wrongOptions]));
   }, [currentWord]);
 
+  const changePlayStatus = (value: boolean) => setIsPlayingAudio(value);
+
   useEffect(() => {
     if (isPlayingAudio) {
-      audioRef.current.src = `${baseUrl}/${currentWord.audio}`;
-      audioRef.current.play();
+      audio.src = `${baseUrl}/${currentWord.audio}`;
+      audio.play();
+
+      audio.addEventListener(('ended'), () => changePlayStatus(false));
     }
+
+    return () => {
+      audio.removeEventListener('ended', () => changePlayStatus(false));
+      audio.remove();
+    };
   }, [isPlayingAudio]);
 
   const toggleCorrect = (word: string) => {
     if (currentWord.wordTranslate === word && selectedAnswer) {
-      return defaultTheme.colors.blue;
+      return 'CorrectAnswer';
     }
 
     if (selectedAnswer === word) {
-      return defaultTheme.colors.pink;
+      return 'IncorrectAnswer';
     }
 
     return '';
   };
 
-  const setResultAnswers = (word: string) => (currentWord.wordTranslate === word
-    ? setCorrectAnswers((prev) => [...prev, currentWord])
-    : setInCorrectAnswers((prev) => [...prev, currentWord]));
-
-  const selectAnswer = (word: string) => {
-    setSelectedAnswer(word);
-    setResultAnswers(word);
+  const handleEvent = (word: string) => {
+    if (currentWord.wordTranslate === word) {
+      setCorrectAnswers((prev) => [...prev, currentWord]);
+    } else {
+      setInCorrectAnswers((prev) => [...prev, currentWord]);
+    }
   };
 
   const nextStep = () => {
@@ -91,24 +99,21 @@ function AudioGame(
     setIsPlayingAudio(false);
   };
 
-  const skipAnswer = () => {
-    setSelectedAnswer('Incorrect');
-    setResultAnswers('Incorrect');
-  };
-
   const handleKey = (e: KeyboardEvent) => {
     if (!selectedAnswer) {
       const currentKey = Number(e.key) - 1;
       const word = wordsOptions[currentKey];
 
       if (word) {
-        selectAnswer(word);
+        setSelectedAnswer(word);
+        handleEvent(word);
       }
     }
 
     if (e.code === 'Enter') {
       if (!selectedAnswer) {
-        skipAnswer();
+        setSelectedAnswer('Incorrect');
+        handleEvent('Incorrect');
       } else {
         nextStep();
       }
@@ -121,7 +126,7 @@ function AudioGame(
     }
 
     return () => document.removeEventListener('keypress', handleKey);
-  }, [selectedAnswer, step]);
+  }, [wordsOptions, selectedAnswer, step]);
 
   return (
     <AudioGameContainer>
@@ -135,24 +140,21 @@ function AudioGame(
             <AudioBtn
               tabIndex={-1}
               disabled={isPlayingAudio}
-              onClick={() => setIsPlayingAudio(true)}
+              onClick={() => changePlayStatus(true)}
             >
               <AudioIcon />
-              <audio
-                ref={audioRef}
-                onEnded={() => setIsPlayingAudio(false)}
-              >
-                <track kind="captions" />
-              </audio>
             </AudioBtn>
             <AudioGameOptions>
               {wordsOptions.map((el, i) => (
                 <AudioGameBtn
                   key={el}
                   tabIndex={-1}
-                  $color={toggleCorrect(el)}
+                  className={toggleCorrect(el)}
                   disabled={!!selectedAnswer}
-                  onClick={() => selectAnswer(el)}
+                  onClick={() => {
+                    setSelectedAnswer(el);
+                    handleEvent(el);
+                  }}
                 >
                   {`${i + 1} ${el}`}
                 </AudioGameBtn>
@@ -164,7 +166,11 @@ function AudioGame(
               ? (
                 <AudioGameBtn
                   tabIndex={-1}
-                  onClick={skipAnswer}
+                  disabled={!!selectedAnswer}
+                  onClick={() => {
+                    setSelectedAnswer('Incorrect');
+                    handleEvent('Incorrect');
+                  }}
                 >
                   Не знаю
                 </AudioGameBtn>
@@ -184,6 +190,8 @@ function AudioGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
+            setCorrectAnswers={setCorrectAnswers}
+            setIncorrectAnswers={setInCorrectAnswers}
             path="audio"
             changeGameState={changeGameState}
           />

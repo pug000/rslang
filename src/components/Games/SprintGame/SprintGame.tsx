@@ -59,28 +59,28 @@ function SprintGame(
     }
   }, [currentWord]);
 
-  const nextStep = () => {
-    setStep((prev) => prev + 1);
-  };
+  const nextStep = () => setStep((prev) => prev + 1);
 
   const clickCorrectBtn = () => {
-    nextStep();
     if (currentWord.wordTranslate === translation) {
       setCorrectAnswers((prev) => [...prev, currentWord]);
       setScore(score + 20);
     } else {
       setInCorrectAnswers((prev) => [...prev, currentWord]);
     }
+
+    nextStep();
   };
 
   const clickInCorrectBtn = () => {
-    nextStep();
     if (currentWord.wordTranslate !== translation) {
       setCorrectAnswers((prev) => [...prev, currentWord]);
       setScore(score + 20);
     } else {
       setInCorrectAnswers((prev) => [...prev, currentWord]);
     }
+
+    nextStep();
   };
 
   const handleKey = (e: KeyboardEvent) => {
@@ -140,6 +140,8 @@ function SprintGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
+            setCorrectAnswers={setCorrectAnswers}
+            setIncorrectAnswers={setInCorrectAnswers}
             path="sprint"
             changeGameState={changeGameState}
           />

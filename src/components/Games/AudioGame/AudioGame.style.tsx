@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { NavLink } from 'react-router-dom';
-import { Color } from '@/ts/interfaces';
 import defaultTheme from '@/styles/theme';
 
 const AudioGameContainer = styled.div`
@@ -89,7 +88,7 @@ const AudioGameOptions = styled.div`
   gap: 25px;
 `;
 
-const AudioGameBtn = styled.button<Color>`
+const AudioGameBtn = styled.button`
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -97,10 +96,18 @@ const AudioGameBtn = styled.button<Color>`
   border-radius: 8px;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.h4};
-  color: ${(props) => props.$color || props.theme.colors.textButton};
+  color: ${({ theme }) => theme.colors.textButton};
   background-color: transparent;
   transition: ${({ theme }) => theme.effects.transition};
   user-select: none;
+
+  &.CorrectAnswer {
+    color: ${({ theme }) => theme.colors.blue}
+  }
+
+  &.IncorrectAnswer {
+    color: ${({ theme }) => theme.colors.pink}
+  }
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
