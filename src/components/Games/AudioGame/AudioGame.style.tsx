@@ -22,10 +22,10 @@ const AudioGameWrapper = styled.div`
 `;
 
 const AudioBtn = styled.button`
-  border: 3px solid ${({ theme }) => theme.colors.textButton};
+  border: 3px solid ${({ theme }) => theme.colors.text};
   border-radius: 50%;
   cursor: pointer;
-  background-color: transparent;
+  background-color: rgba(255,255,255, 0.4);
   transition: ${({ theme }) => theme.effects.transition};
   max-width: 150px;
   width: 100%;
@@ -40,12 +40,21 @@ const AudioBtn = styled.button`
   }
 `;
 
-const AudioIcon = styled(VolumeUpIcon).attrs({ className: 'AudioIcon' })`
+interface AudioIconProps {
+  active: boolean,
+}
+
+const AudioIcon = styled(VolumeUpIcon).attrs({ className: 'AudioIcon' }) <AudioIconProps>`
   &.AudioIcon {
     width: 100%;
     height: 100%;
-    color: ${defaultTheme.colors.textButton};
+    color: ${defaultTheme.colors.text};
     padding: 20px;
+
+    ${({ active }) => active && `
+    color: ${defaultTheme.colors.pink};
+    opacity: ${defaultTheme.effects.hoverOpacity};
+  `}
   }
 `;
 
@@ -90,17 +99,29 @@ const AudioGameBtn = styled.button<Color>`
   border-radius: 8px;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.h4};
-  color: ${(props) => props.$color || props.theme.colors.textButton};
-  background-color: transparent;
+  color: ${(props) => props.$color || props.theme.colors.text};
+  background-color: rgba(255,255,255, 0.4);
   transition: ${({ theme }) => theme.effects.transition};
   user-select: none;
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
+
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+`;
+
+const Note = styled.p`
+  margin-top: -30px;
+  font-size: 14px;
+  color: rgba(0,0,0,0.2);
+  font-style: italic;
 `;
 
 export {
   AudioGameWrapper, AudioBtn, AudioIcon, AudioGameOptions, AudioGameBtn,
-  AudioGameControls, AudioGameControlBtn, Link, AudioGameContainer
+  AudioGameControls, AudioGameControlBtn, Link, AudioGameContainer, Note
 };
