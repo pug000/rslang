@@ -19,7 +19,7 @@ const SprintGameWrapper = styled.div`
 `;
 
 interface ResultProps {
-  isIncorrect: number;
+  isCorrect: boolean;
 }
 
 const Result = styled.p<ResultProps>`
@@ -29,11 +29,11 @@ const Result = styled.p<ResultProps>`
   transition: ${defaultTheme.effects.transition};
 
   span {
-    ${({ isIncorrect }) => !isIncorrect && `
+    ${({ isCorrect }) => !isCorrect && `
       color: ${defaultTheme.colors.pink};
     `}
 
-    ${({ isIncorrect }) => isIncorrect && `
+    ${({ isCorrect }) => isCorrect && `
       color: ${defaultTheme.colors.blue};
     `}
   }

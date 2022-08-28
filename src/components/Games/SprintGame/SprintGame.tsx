@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { WordData } from '@/ts/interfaces';
 import { generateRandomNumber, shuffleArray } from '@/utils/randomize';
@@ -32,6 +33,7 @@ function SprintGame(
   const [translation, setTranslation] = useState<string>(currentWord.wordTranslate);
   const [score, setScore] = useState(0);
   const [strike, setStrike] = useState(0);
+  const [isCorrect, setIsCorrect] = useState(true);
   const [incorrectAnswers, setInCorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
 
@@ -63,31 +65,32 @@ function SprintGame(
     setStep((prev) => prev + 1);
   };
 
+  const isStrike = () => {
+    if (strike === 3) {
+      setScore(score + 100);
+      setStrike(0);
+    }
+  };
+
   const correctAnswer = () => {
     setScore(score + 20);
     setStrike(strike + 1);
+    setIsCorrect(true);
+    isStrike();
     setCorrectAnswers((prev) => [...prev, currentWord]);
   };
 
   const incorrectAnswer = () => {
     if (strike) setStrike(0);
+    setIsCorrect(false);
     setInCorrectAnswers((prev) => [...prev, currentWord]);
-  };
-
-  const isStrike = () => {
-    if (strike === 3) {
-      setScore(score + 100);
-      setStrike(1);
-    }
   };
 
   const clickCorrectBtn = () => {
     if (currentWord.wordTranslate === translation) {
       correctAnswer();
-      isStrike();
     } else {
       incorrectAnswer();
-      isStrike();
     }
     nextStep();
   };
@@ -95,10 +98,8 @@ function SprintGame(
   const clickInCorrectBtn = () => {
     if (currentWord.wordTranslate !== translation) {
       correctAnswer();
-      isStrike();
     } else {
       incorrectAnswer();
-      isStrike();
     }
     nextStep();
   };
@@ -133,7 +134,7 @@ function SprintGame(
           isCounting={isGameStarted}
           setIsCounting={changeGameState}
         />
-        <Result isIncorrect={strike}>
+        <Result isCorrect={isCorrect}>
           {'Ваш результат '}
           <span>
             {score}
