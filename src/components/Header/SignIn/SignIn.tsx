@@ -37,19 +37,31 @@ function SignInModal({
     refreshToken: '',
     userId: '',
   };
-  const [userData, setUserData] = useLocalStorage('userData', defaultUser);
+  const dafaultToken = '';
+  const dafaultUserID = '';
+  const [userData, setUserData] = useState(defaultUser);
   const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
   const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
-  const [token, setToken] = useLocalStorage('token', '');
-  const [userId, setUserId] = useLocalStorage('userId', '');
+  const [token, setToken] = useLocalStorage('token', dafaultToken);
+  const [userId, setUserId] = useLocalStorage('userId', dafaultUserID);
   const [errShow, setErrShow] = useState<boolean>(false);
-  const [errMessage, setErrMessage] = useState<string>('');
+  interface ErrMessageProps {
+    text: string;
+    activeErr: boolean;
+  }
+
+  const dafaultErrMessage = {
+    text: '',
+    activeErr: false,
+  }
+
+  const [errMessage, setErrMessage] = useState<ErrMessageProps>(dafaultErrMessage);
 
   const changeErrShow = () => setErrShow(((prev) => !prev));
   const changeWaitingData = () => setIsWaitingData(((prev) => !prev));
   const changeActiveShadow = () => setActive(false);
-  const errMessageShow = (text: string) => {
-    setErrMessage(text);
+  const errMessageShow = (text: string, activeErr: boolean) => {
+    setErrMessage({ ...errMessage, text: text, activeErr: activeErr });
     changeErrShow();
     setTimeout(changeErrShow, 3000);
   };
@@ -62,19 +74,19 @@ function SignInModal({
         setLogInUserData(resCreateUser);
         setToken(resCreateUser.token);
         setUserId(resCreateUser.userId);
-        errMessageShow('Вы авторизовались!');
+        errMessageShow('Вы авторизовались!', false);
         changeLoggedInState();
         setTimeout(changeActiveShadow, 3000);
       } else if (resCreateUser === StatusError.error403) {
-        errMessageShow('Неправильный e-mail или пароль!');
+        errMessageShow('Неправильный e-mail или пароль!', true);
       } else if (resCreateUser === StatusError.error404) {
-        errMessageShow('Пользователь не найден. Зарегистрируйтесь.');
+        errMessageShow('Пользователь не найден. Зарегистрируйтесь.', true);
       }
       changeWaitingData();
     } else if (userData.password.length < 8) {
-      errMessageShow('Некорректный пароль! Минимум 8 символов.');
+      errMessageShow('Некорректный пароль! Минимум 8 символов.', true);
     } else {
-      errMessageShow('Некорректный e-mail!');
+      errMessageShow('Некорректный e-mail!', true);
     }
   };
 
@@ -83,24 +95,26 @@ function SignInModal({
       changeWaitingData();
       const resCreateUser = await registerUser(userData);
       if (typeof resCreateUser !== 'number') {
-        errMessageShow('Вы зарегистрированы! Авторизуйтесь.');
+        errMessageShow('Вы зарегистрированы! Авторизуйтесь.', false);
         setUserData({ ...defaultUser });
       } else if (resCreateUser === StatusError.error417) {
-        errMessageShow('Пользователь уже зарегистрирован!');
+        errMessageShow('Пользователь уже зарегистрирован!', true);
       } else if (resCreateUser === StatusError.error422) {
-        errMessageShow('Неправильный e-mail или пароль!');
+        errMessageShow('Неправильный e-mail или пароль!', true);
       }
       changeWaitingData();
     } else if (userData.password.length < 8) {
-      errMessageShow('Некорректный пароль! Минимум 8 символов.');
+      errMessageShow('Некорректный пароль! Минимум 8 символов.', true);
     } else {
-      errMessageShow('Некорректный e-mail!');
+      errMessageShow('Некорректный e-mail!', true);
     }
   };
 
   const signOutUser = () => {
-    errMessageShow('До новых встреч!');
+    errMessageShow('До новых встреч!', false);
     setUserData({ ...defaultUser });
+    setToken(dafaultToken);
+    setUserId(dafaultUserID);
     changeLoggedInState();
   };
 
@@ -113,7 +127,7 @@ function SignInModal({
         {isLoggedIn
           ? <SignInTitle>Вы авторизованы!</SignInTitle>
           : <SignInTitle>Добро пожаловать!</SignInTitle>}
-        {errShow && <PopupMessage text={errMessage} />}
+        {errShow && <PopupMessage statusErr={errMessage.activeErr} text={errMessage.text} />}
         <form>
           {isLoggedIn
             ? (

@@ -68,7 +68,7 @@ const SignInTitle = styled.h3`
 const SignInWelcome = styled.h3`
   text-align: center;
   font-size: ${defaultTheme.fontSizes.h3};
-  color: ${defaultTheme.colors.textHighlighted};
+  color: ${defaultTheme.colors.purple};
   margin: 2px auto 1px;
 `;
 const SignInWelcomeContainer = styled.div`
