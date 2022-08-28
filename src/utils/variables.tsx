@@ -1,8 +1,39 @@
 import React from 'react';
 import defaultTheme from '@/styles/theme';
-import { Games, GroupButton } from '@/ts/interfaces';
+import { Games, GroupButton, NavItem } from '@/ts/interfaces';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import SpeedIcon from '@mui/icons-material/Speed';
+import HomeIcon from '@mui/icons-material/Home';
+import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import StarIcon from '@mui/icons-material/Star';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import TrendingUpIcon from '@mui/icons-material/TrendingUp';
+import InfoIcon from '@mui/icons-material/Info';
+import GroupsIcon from '@mui/icons-material/Groups';
+
+const navItems: NavItem[] = [
+  {
+    id: 1, value: 'Главная', link: '/', icon: <HomeIcon />
+  },
+  {
+    id: 2, value: 'Учебник', link: '/book', icon: <AutoStoriesIcon />
+  },
+  {
+    id: 3, value: 'Сложные слова', link: '/difficult-words', icon: <StarIcon />
+  },
+  {
+    id: 4, value: 'Игры', link: '/games', icon: <SportsEsportsIcon />
+  },
+  {
+    id: 5, value: 'Статистика', link: '/statistics', icon: <TrendingUpIcon />
+  },
+  {
+    id: 6, value: 'О проекте', link: '/about-project', icon: <InfoIcon />
+  },
+  {
+    id: 7, value: 'О команде', link: '/about-team', icon: <GroupsIcon />
+  },
+];
 
 const totalCountPages = 30;
 
@@ -46,8 +77,16 @@ const groupBtns: GroupButton[] = [
   }
 ];
 
+const strikeMessages: string[] = [
+  'Ты просто молодец!',
+  'Отлично! Так держать!',
+  'У тебя все прекрасно получается.',
+  'Здорово! Опять все правильно!',
+  'И снова без ошибок!'
+];
+
 const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export {
-  games, groupBtns, totalCountPages, regex
+  navItems, games, groupBtns, totalCountPages, regex, strikeMessages
 };
