@@ -69,6 +69,7 @@ const HomeTitle = styled.h1`
   margin: 0 auto;
   text-align: center;
   max-width: 500px;
+  color: ${defaultTheme.colors.title};
   font-size: ${defaultTheme.fontSizes.h2};
   padding: 0 30px;
 `;

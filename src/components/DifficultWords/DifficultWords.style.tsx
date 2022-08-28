@@ -9,6 +9,7 @@ const DifficultWordsContainer = styled.div`
 `;
 
 const DifficultWordsTitle = styled.h2`
+  color: ${(props) => props.theme.colors.title};
   font-family: ${(props) => props.theme.fonts.title};
   font-size: ${(props) => props.theme.fontSizes.h2};
   font-weight: 700;

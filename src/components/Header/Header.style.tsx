@@ -31,7 +31,7 @@ const HeaderLink = styled(NavLink)`
     max-width: 220px;
     width: 100%;
     user-select: none;
-    padding-left: 70px;
+    padding-left: 80px;
   }
 `;
 

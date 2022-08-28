@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import defaultTheme from '@/styles/theme';
 
+interface ResultProps {
+  isCorrect: boolean;
+}
+
+interface StrikeProps {
+  strike: number;
+}
+
 const SprintGameContainer = styled.div`
   height: 100%;
   max-width: 1280px;
@@ -17,10 +25,6 @@ const SprintGameWrapper = styled.div`
   align-items: center;
   gap: 50px;
 `;
-
-interface ResultProps {
-  isCorrect: boolean;
-}
 
 const Result = styled.p<ResultProps>`
   font-size: ${defaultTheme.fontSizes.h4};
@@ -78,10 +82,6 @@ const StrikeBlock = styled.div`
   gap: 10px;
   position: relative;
 `;
-
-interface StrikeProps {
-  strike: number;
-}
 
 const Strike = styled.div<StrikeProps>`
   border-radius: 50%;

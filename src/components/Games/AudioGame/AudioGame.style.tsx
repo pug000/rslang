@@ -4,6 +4,10 @@ import { NavLink } from 'react-router-dom';
 import { Color } from '@/ts/interfaces';
 import defaultTheme from '@/styles/theme';
 
+interface AudioIconProps {
+  active: boolean,
+}
+
 const AudioGameContainer = styled.div`
   height: 100%;
   max-width: 1280px;
@@ -39,10 +43,6 @@ const AudioBtn = styled.button`
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
 `;
-
-interface AudioIconProps {
-  active: boolean,
-}
 
 const AudioIcon = styled(VolumeUpIcon).attrs({ className: 'AudioIcon' }) <AudioIconProps>`
   &.AudioIcon {

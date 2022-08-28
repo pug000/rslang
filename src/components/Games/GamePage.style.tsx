@@ -69,7 +69,6 @@ const Group = styled.div`
   padding: 7px;
   border-radius: 5px;
   gap: 20px;
-  grid-area: group;
 `;
 
 const GroupBtn = styled.button<GroupButtonProps>`
