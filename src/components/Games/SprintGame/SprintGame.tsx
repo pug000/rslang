@@ -1,7 +1,9 @@
 import { WordData } from '@/ts/interfaces';
 import { generateRandomNumber, shuffleArray } from '@/utils/randomize';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Timer from '@/Timer';
+import GameContext from '@/contexts/GameContext';
+import GameResults from '@/GameResults';
 import GameControl from '@/GameControl';
 import Button from '@/Button';
 import { strikeMessages } from '@/utils/variables';
@@ -26,14 +28,19 @@ function SprintGame(
     isGameStarted
   }: SprintGameProps
 ) {
+  const {
+    correctAnswers,
+    incorrectAnswers,
+    setCorrectAnswers,
+    setIncorrectAnswers,
+  } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [translation, setTranslation] = useState<string>(currentWord.wordTranslate);
+  const [isShowResult, setIsShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [strike, setStrike] = useState(0);
   const [isCorrect, setIsCorrect] = useState(true);
-  const [incorrectAnswers, setInCorrectAnswers] = useState<WordData[]>([]);
-  const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
 
   useEffect(() => {
     if (step <= words.length - 1) {
@@ -41,7 +48,7 @@ function SprintGame(
     }
 
     if (step === words.length) {
-      changeGameState(false);
+      setIsShowResult(true);
     }
   }, [step]);
 
@@ -59,9 +66,7 @@ function SprintGame(
     }
   }, [currentWord]);
 
-  const nextStep = () => {
-    setStep((prev) => prev + 1);
-  };
+  const nextStep = () => setStep((prev) => prev + 1);
 
   const correctAnswer = () => {
     if (strike === 2) {
@@ -74,6 +79,7 @@ function SprintGame(
       setScore(score + 20);
       setStrike(strike + 1);
     }
+
     setIsCorrect(true);
     setCorrectAnswers((prev) => [...prev, currentWord]);
   };
@@ -81,7 +87,7 @@ function SprintGame(
   const incorrectAnswer = () => {
     if (strike) setStrike(0);
     setIsCorrect(false);
-    setInCorrectAnswers((prev) => [...prev, currentWord]);
+    setIncorrectAnswers((prev) => [...prev, currentWord]);
   };
 
   const clickCorrectBtn = () => {
@@ -90,6 +96,7 @@ function SprintGame(
     } else {
       incorrectAnswer();
     }
+
     nextStep();
   };
 
@@ -99,6 +106,7 @@ function SprintGame(
     } else {
       incorrectAnswer();
     }
+
     nextStep();
   };
 
@@ -118,7 +126,7 @@ function SprintGame(
     }
 
     return () => document.removeEventListener('keydown', handleKey);
-  }, [step, translation]);
+  }, [step, translation, currentWord]);
 
   return (
     <SprintGameContainer>
@@ -126,47 +134,54 @@ function SprintGame(
         changeGameState={changeGameState}
         color={mainColor}
       />
-      <SprintGameWrapper>
-        <Timer
-          mainColor={mainColor}
-          isCounting={isGameStarted}
-          setIsCounting={changeGameState}
-        />
-        <Result isCorrect={isCorrect}>
-          {'Ваш результат '}
-          <span>
-            {score}
-          </span>
-          {' баллов'}
-        </Result>
-        <StrikeBlock>
-          <Strike strike={strike} id="strike1">✔️</Strike>
-          <Strike strike={strike} id="strike2">✔️</Strike>
-          <Strike strike={strike} id="strike3">✔️</Strike>
-          {strike === 3 && <StrikeMessage>{strikeMessageText}</StrikeMessage>}
-        </StrikeBlock>
-        <TextBlock>
-          <Word>{currentWord.word}</Word>
-          <Translation>{translation}</Translation>
-        </TextBlock>
-        <SprintButtons>
-          <Button
-            id="correct"
-            title="← верно"
-            callback={() => {
-              clickCorrectBtn();
-            }}
+      {!isShowResult
+        ? (
+          <SprintGameWrapper>
+            <Timer
+              mainColor={mainColor}
+              isCounting={isGameStarted}
+              setIsCounting={changeGameState}
+            />
+            <Result isCorrect={isCorrect}>
+              {'Ваш результат '}
+              <span>
+                {score}
+              </span>
+              {' баллов'}
+            </Result>
+            <StrikeBlock>
+              <Strike strike={strike} id="strike1">✔️</Strike>
+              <Strike strike={strike} id="strike2">✔️</Strike>
+              <Strike strike={strike} id="strike3">✔️</Strike>
+              {strike === 3 && <StrikeMessage>{strikeMessageText}</StrikeMessage>}
+            </StrikeBlock>
+            <TextBlock>
+              <Word>{currentWord.word}</Word>
+              <Translation>{translation}</Translation>
+            </TextBlock>
+            <SprintButtons>
+              <Button
+                id="correct"
+                title="← верно"
+                callback={clickCorrectBtn}
+              />
+              <Button
+                id="incorrect"
+                title="неверно →"
+                callback={clickInCorrectBtn}
+              />
+            </SprintButtons>
+            <Note>*можно использовать стрелки</Note>
+          </SprintGameWrapper>
+        )
+        : (
+          <GameResults
+            correctAnswers={correctAnswers}
+            incorrectAnswers={incorrectAnswers}
+            path="sprint"
+            mainColor={mainColor}
           />
-          <Button
-            id="incorrect"
-            title="неверно →"
-            callback={() => {
-              clickInCorrectBtn();
-            }}
-          />
-        </SprintButtons>
-        <Note>*можно использовать стрелки</Note>
-      </SprintGameWrapper>
+        )}
     </SprintGameContainer>
   );
 }

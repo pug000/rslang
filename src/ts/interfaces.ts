@@ -76,11 +76,7 @@ interface SvgStyles {
   transition: string,
 }
 
-interface Color {
-  $color?: string,
-}
-
 export {
   GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, Color,
+  LogInUserData, SvgStyles,
 };

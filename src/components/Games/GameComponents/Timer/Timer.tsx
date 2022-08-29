@@ -8,7 +8,13 @@ interface TimerProps {
   setIsCounting: (value: boolean) => void
 }
 
-function Timer({ mainColor, isCounting, setIsCounting }: TimerProps) {
+function Timer(
+  {
+    mainColor,
+    isCounting,
+    setIsCounting
+  }: TimerProps
+) {
   const [timeLeft, setTimeLeft] = useState(60);
 
   const addZero = (time: number) => time.toString().padStart(2, '0');
@@ -20,7 +26,7 @@ function Timer({ mainColor, isCounting, setIsCounting }: TimerProps) {
         setTimeLeft(timeLeft >= 1 ? timeLeft - 1 : 0);
       }
     }, 1000);
-    if (timeLeft === 0) setIsCounting(false);
+    if (timeLeft === 0) setIsCounting(true);
     return () => {
       clearInterval(intervalId);
     };
