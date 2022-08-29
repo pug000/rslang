@@ -81,7 +81,6 @@ interface SvgStyles {
   height: string,
   transition: string,
 }
-
 interface Color {
   $color?: string,
 }

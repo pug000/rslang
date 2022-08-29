@@ -1,11 +1,15 @@
 import { baseUrl } from '@/api';
-import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import { shuffleArray } from '@/utils/randomize';
-import React, { useEffect, useRef, useState } from 'react';
+import React, {
+  useContext, useEffect, useState
+} from 'react';
 import GameControl from '@/GameControl';
+import GameContext from '@/contexts/GameContext';
+import GameResults from '@/GameResults';
 import {
-  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer, Note
+  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer, Note,
+  GameBlock,
 } from './AudioGame.style';
 
 interface AudioGameProps {
@@ -21,20 +25,27 @@ function AudioGame(
     mainColor,
   }: AudioGameProps
 ) {
+  const {
+    correctAnswers,
+    incorrectAnswers,
+    setCorrectAnswers,
+    setIncorrectAnswers,
+  } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [wordsOptions, setWordsOptions] = useState<string[]>([]);
-  const [incorrectAnswers, setInCorrectAnswers] = useState<WordData[]>([]);
-  const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const audioRef = useRef(new Audio());
+  const [isShowResult, setIsShowResult] = useState(false);
+  const audio = new Audio();
 
   useEffect(() => {
     if (step <= words.length - 1) {
-      setTimeout(() => {
-        setCurrentWord(words[step]);
-      }, 250);
+      setCurrentWord(words[step]);
+    }
+
+    if (step === words.length) {
+      setIsShowResult(true);
     }
   }, [step]);
 
@@ -47,32 +58,40 @@ function AudioGame(
     setWordsOptions(shuffleArray([currentWord.wordTranslate, ...wrongOptions]));
   }, [currentWord]);
 
+  const changePlayStatus = (value: boolean) => setIsPlayingAudio(value);
+
   useEffect(() => {
     if (isPlayingAudio) {
-      audioRef.current.src = `${baseUrl}/${currentWord.audio}`;
-      audioRef.current.play();
+      audio.src = `${baseUrl}/${currentWord.audio}`;
+      audio.play();
+
+      audio.addEventListener(('ended'), () => changePlayStatus(false));
     }
+
+    return () => {
+      audio.removeEventListener('ended', () => changePlayStatus(false));
+      audio.remove();
+    };
   }, [isPlayingAudio]);
 
   const toggleCorrect = (word: string) => {
     if (currentWord.wordTranslate === word && selectedAnswer) {
-      return defaultTheme.colors.blue;
+      return 'CorrectAnswer';
     }
 
     if (selectedAnswer === word) {
-      return mainColor;
+      return 'IncorrectAnswer';
     }
 
     return '';
   };
 
-  const setResultAnswers = (word: string) => (currentWord.wordTranslate === word
-    ? setCorrectAnswers((prev) => [...prev, currentWord])
-    : setInCorrectAnswers((prev) => [...prev, currentWord]));
-
-  const selectAnswer = (word: string) => {
-    setSelectedAnswer(word);
-    setResultAnswers(word);
+  const handleEvent = (word: string) => {
+    if (currentWord.wordTranslate === word) {
+      setCorrectAnswers((prev) => [...prev, currentWord]);
+    } else {
+      setIncorrectAnswers((prev) => [...prev, currentWord]);
+    }
   };
 
   const nextStep = () => {
@@ -81,24 +100,21 @@ function AudioGame(
     setIsPlayingAudio(false);
   };
 
-  const skipAnswer = () => {
-    setSelectedAnswer('Incorrect');
-    setInCorrectAnswers((prev) => [...prev, currentWord]);
-  };
-
   const handleKey = (e: KeyboardEvent) => {
     if (!selectedAnswer) {
       const currentKey = Number(e.key) - 1;
       const word = wordsOptions[currentKey];
 
       if (word) {
-        selectAnswer(word);
+        setSelectedAnswer(word);
+        handleEvent(word);
       }
     }
 
     if (e.code === 'Enter') {
       if (!selectedAnswer) {
-        skipAnswer();
+        setSelectedAnswer('Incorrect');
+        handleEvent('Incorrect');
       } else {
         nextStep();
       }
@@ -106,10 +122,12 @@ function AudioGame(
   };
 
   useEffect(() => {
-    document.addEventListener('keypress', handleKey);
+    if (step < words.length) {
+      document.addEventListener('keypress', handleKey);
+    }
 
     return () => document.removeEventListener('keypress', handleKey);
-  }, [wordsOptions, selectedAnswer]);
+  }, [wordsOptions, selectedAnswer, step]);
 
   return (
     <AudioGameContainer>
@@ -117,54 +135,67 @@ function AudioGame(
         changeGameState={changeGameState}
         color={mainColor}
       />
-      <AudioGameWrapper>
-        <AudioBtn
-          tabIndex={-1}
-          disabled={isPlayingAudio}
-          onClick={() => setIsPlayingAudio(true)}
-        >
-          <AudioIcon active={isPlayingAudio} />
-          <audio
-            ref={audioRef}
-            onEnded={() => setIsPlayingAudio(false)}
-          >
-            <track kind="captions" />
-          </audio>
-        </AudioBtn>
-        <AudioGameOptions>
-          {wordsOptions.map((el, i) => (
-            <AudioGameBtn
-              key={el}
+      {!isShowResult ? (
+        <GameBlock>
+          <AudioGameWrapper>
+            <AudioBtn
               tabIndex={-1}
-              $color={toggleCorrect(el)}
-              disabled={!!selectedAnswer}
-              onClick={() => selectAnswer(el)}
+              disabled={isPlayingAudio}
+              onClick={() => setIsPlayingAudio(true)}
             >
-              {`${i + 1}. ${el}`}
-            </AudioGameBtn>
-          ))}
-        </AudioGameOptions>
-      </AudioGameWrapper>
-      <AudioGameWrapper>
-        {!selectedAnswer
-          ? (
-            <AudioGameBtn
-              tabIndex={-1}
-              onClick={skipAnswer}
-            >
-              Не знаю
-            </AudioGameBtn>
-          )
-          : (
-            <AudioGameBtn
-              tabIndex={-1}
-              onClick={nextStep}
-            >
-              Далее
-            </AudioGameBtn>
-          )}
-        <Note>*можно использовать цифры на клавиатуре и клавишу Enter</Note>
-      </AudioGameWrapper>
+              <AudioIcon $active={isPlayingAudio} />
+            </AudioBtn>
+            <AudioGameOptions>
+              {wordsOptions.map((el, i) => (
+                <AudioGameBtn
+                  key={el}
+                  tabIndex={-1}
+                  className={toggleCorrect(el)}
+                  disabled={!!selectedAnswer}
+                  onClick={() => {
+                    setSelectedAnswer(el);
+                    handleEvent(el);
+                  }}
+                >
+                  {`${i + 1} ${el}`}
+                </AudioGameBtn>
+              ))}
+            </AudioGameOptions>
+          </AudioGameWrapper>
+          <AudioGameWrapper>
+            {!selectedAnswer
+              ? (
+                <AudioGameBtn
+                  tabIndex={-1}
+                  disabled={!!selectedAnswer}
+                  onClick={() => {
+                    setSelectedAnswer('Incorrect');
+                    handleEvent('Incorrect');
+                  }}
+                >
+                  Не знаю
+                </AudioGameBtn>
+              )
+              : (
+                <AudioGameBtn
+                  tabIndex={-1}
+                  onClick={nextStep}
+                >
+                  Далее
+                </AudioGameBtn>
+              )}
+            <Note>*можно использовать цифры на клавиатуре и клавишу Enter</Note>
+          </AudioGameWrapper>
+        </GameBlock>
+      )
+        : (
+          <GameResults
+            correctAnswers={correctAnswers}
+            incorrectAnswers={incorrectAnswers}
+            path="audio"
+            mainColor={mainColor}
+          />
+        )}
     </AudioGameContainer>
   );
 }

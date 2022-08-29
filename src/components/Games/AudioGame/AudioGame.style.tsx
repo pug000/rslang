@@ -1,11 +1,10 @@
 import styled from 'styled-components';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { NavLink } from 'react-router-dom';
-import { Color } from '@/ts/interfaces';
 import defaultTheme from '@/styles/theme';
 
 interface AudioIconProps {
-  active: boolean,
+  $active: boolean,
 }
 
 const AudioGameContainer = styled.div`
@@ -16,6 +15,7 @@ const AudioGameContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
 `;
 
 const AudioGameWrapper = styled.div`
@@ -23,6 +23,13 @@ const AudioGameWrapper = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 50px;
+`;
+
+const GameBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 60vh;
+  justify-content: space-evenly;
 `;
 
 const AudioBtn = styled.button`
@@ -50,8 +57,9 @@ const AudioIcon = styled(VolumeUpIcon).attrs({ className: 'AudioIcon' }) <AudioI
     height: 100%;
     color: ${defaultTheme.colors.text};
     padding: 20px;
+    transition: ${({ theme }) => theme.effects.transition};
 
-    ${({ active }) => active && `
+    ${({ $active }) => $active && `
     color: ${defaultTheme.colors.pink};
     opacity: ${defaultTheme.effects.hoverOpacity};
   `}
@@ -91,7 +99,7 @@ const AudioGameOptions = styled.div`
   gap: 25px;
 `;
 
-const AudioGameBtn = styled.button<Color>`
+const AudioGameBtn = styled.button`
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -99,10 +107,18 @@ const AudioGameBtn = styled.button<Color>`
   border-radius: 8px;
   cursor: pointer;
   font-size: ${({ theme }) => theme.fontSizes.h4};
-  color: ${(props) => props.$color || props.theme.colors.text};
+  color: ${({ theme }) => theme.colors.text};
   background-color: rgba(255,255,255, 0.4);
   transition: ${({ theme }) => theme.effects.transition};
   user-select: none;
+
+  &.CorrectAnswer {
+    color: ${({ theme }) => theme.colors.blue}
+  }
+
+  &.IncorrectAnswer {
+    color: ${({ theme }) => theme.colors.pink}
+  }
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
@@ -123,5 +139,5 @@ const Note = styled.p`
 
 export {
   AudioGameWrapper, AudioBtn, AudioIcon, AudioGameOptions, AudioGameBtn,
-  AudioGameControls, AudioGameControlBtn, Link, AudioGameContainer, Note
+  AudioGameControls, AudioGameControlBtn, Link, AudioGameContainer, Note, GameBlock
 };

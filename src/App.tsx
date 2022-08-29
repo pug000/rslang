@@ -13,6 +13,7 @@ import HeaderContext from '@/contexts/HeaderContext';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
 import { getFilteredUserWords } from '@/api';
+import GameContext from './contexts/GameContext';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -22,8 +23,26 @@ function App() {
   const [words, setWords] = useState<WordData[]>([]);
   const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
+  const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
 
   const changeGameState = (value: boolean) => setIsGameStarted(value);
+
+  const clearGameState = () => {
+    setIsGameStarted(false);
+    setCorrectAnswers([]);
+    setIncorrectAnswers([]);
+  };
+
+  useEffect(() => {
+    if (isGameStarted) {
+      window.addEventListener('popstate', clearGameState);
+    }
+
+    return () => (
+      window.removeEventListener('popstate', clearGameState)
+    );
+  }, [isGameStarted]);
 
   useEffect(() => (
     isLoggedIn
@@ -57,13 +76,23 @@ function App() {
       const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS);
       const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS);
       setTimeout(() => {
-        setDifficultWords(difficultWordsData[0].paginatedResults)
-        setLearnedWords(learnedWordsData[0].paginatedResults)
+        setDifficultWords(difficultWordsData[0].paginatedResults);
+        setLearnedWords(learnedWordsData[0].paginatedResults);
         console.log('difficultWords 1 ', difficultWords);
         console.log('learnedWords 1 ', learnedWords);
       }, 500);
-    })()
-  }, [])
+    })();
+  }, []);
+
+  const gameValue = useMemo(() => (
+    {
+      correctAnswers,
+      incorrectAnswers,
+      setCorrectAnswers,
+      setIncorrectAnswers,
+      clearGameState,
+    }
+  ), [correctAnswers, incorrectAnswers]);
 
   return (
     <Routes>
@@ -104,25 +133,29 @@ function App() {
         <Route
           path="games/sprint"
           element={(
-            <SprintGamePage
-              isGameStarted={isGameStarted}
-              changeGameState={changeGameState}
-              defaultPage={currentPage}
-              defaultGroupNumber={groupNumber}
-              defaultWords={words}
-            />
+            <GameContext.Provider value={gameValue}>
+              <SprintGamePage
+                isGameStarted={isGameStarted}
+                changeGameState={changeGameState}
+                defaultPage={currentPage}
+                defaultGroupNumber={groupNumber}
+                defaultWords={words}
+              />
+            </GameContext.Provider>
           )}
         />
         <Route
           path="games/audio"
           element={(
-            <AudioGamePage
-              isGameStarted={isGameStarted}
-              changeGameState={changeGameState}
-              defaultPage={currentPage}
-              defaultGroupNumber={groupNumber}
-              defaultWords={words}
-            />
+            <GameContext.Provider value={gameValue}>
+              <AudioGamePage
+                isGameStarted={isGameStarted}
+                changeGameState={changeGameState}
+                defaultPage={currentPage}
+                defaultGroupNumber={groupNumber}
+                defaultWords={words}
+              />
+            </GameContext.Provider>
           )}
         />
         <Route

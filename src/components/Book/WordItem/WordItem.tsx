@@ -75,17 +75,22 @@ function WordItem(
 
   const handleClick = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
-    arr: WordData[], setState: SetState<WordData[]>
+    arr: WordData[],
+    setState: SetState<WordData[]>
   ) => {
-    let isDifficultWord = true;
+    let isDifficultWord: boolean;
     if (e.currentTarget.id === 'learned') {
       isDifficultWord = false;
+      // setDifficultWords((prev) => prev.filter((el) => el.id === item.id));
+    } else {
+      isDifficultWord = true;
+      // setLearnedWords((prev) => prev.filter((el) => el.id === item.id));
     }
     console.log('difficultWords 3 ', difficultWords);
     console.log('learnedWords 3 ', learnedWords);
     toggleActive(arr)
       ? removeActiveWord(setState)
-      : addActiveWord(setState, isDifficultWord)
+      : addActiveWord(setState, isDifficultWord);
   };
 
   useEffect(() => {
@@ -183,7 +188,7 @@ function WordItem(
       </WordInfoContainer>
       <WordBtnContainer>
         <LearnedWordBtn
-          id='learned'
+          id="learned"
           colors={
             toggleActive(learnedWords)
               ? defaultTheme.colors.primaryColor
