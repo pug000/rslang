@@ -51,7 +51,8 @@ const Modal = styled.div<ModalProps>`
     margin: 8px 40px;
   }
 
-  Button#signUp {
+  Button#signUp,
+  Button#cancel {
     color: ${defaultTheme.colors.primaryColor};
     background-color: ${defaultTheme.colors.bgWhite};
     border: solid 0.2rem ${defaultTheme.colors.primaryColor};
@@ -67,12 +68,13 @@ const SignInTitle = styled.h3`
 
 const SignInWelcome = styled.h3`
   text-align: center;
-  font-size: ${defaultTheme.fontSizes.h3};
-  color: ${defaultTheme.colors.textHighlighted};
+  font-size: ${defaultTheme.fontSizes.h4};
+  color: ${defaultTheme.colors.primaryColor};
   margin: 2px auto 1px;
 `;
 const SignInWelcomeContainer = styled.div`
   display: flex;
+  gap: 15px;
   align-items: center;
   flex-direction: column;
 `;

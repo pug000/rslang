@@ -30,6 +30,9 @@
       "@/GameStart": [
         "components/Games/GameStart/GameStart"
       ],
+      "@/GameResults": [
+        "components/Games/GameResults/GameResults"
+      ],
       "@/AudioGame": [
         "components/Games/AudioGame/AudioGame"
       ],

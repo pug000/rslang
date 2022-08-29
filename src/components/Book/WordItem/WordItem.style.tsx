@@ -22,7 +22,7 @@ const stylesBtn = {
 const Word = styled.div`
   display: flex;
   flex-direction: row;
-  box-shadow: rgb(0 0 0 / 15%) 0px 0px 10px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
   border-radius: 10px;
   padding: 25px;
   width: 100%;

@@ -32,16 +32,6 @@ function SprintGamePage(
   const [isLoadingGame, setIsLoadingGame] = useState(false);
 
   useEffect(() => {
-    if (isGameStarted) {
-      window.addEventListener('popstate', () => changeGameState(false));
-    }
-
-    return () => (
-      window.removeEventListener('popstate', () => changeGameState(false))
-    );
-  }, [isGameStarted]);
-
-  useEffect(() => {
     if (isLoadingGame) {
       (async () => {
         const data = await getWords(currentGroupNumber, currentPage);

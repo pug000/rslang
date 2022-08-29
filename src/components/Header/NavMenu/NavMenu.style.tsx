@@ -6,6 +6,10 @@ interface ShadowProps {
   active: boolean,
 }
 
+interface UlProps {
+  isOpen: boolean,
+}
+
 const Shadow = styled.div<ShadowProps>`
   height: 100vh;
   width: 100vw;
@@ -20,9 +24,6 @@ const Shadow = styled.div<ShadowProps>`
     display: block;
   `}
 `;
-interface UlProps {
-  isOpen: boolean,
-}
 
 const NavUl = styled.ul<UlProps>`
   list-style: none;

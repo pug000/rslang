@@ -1,6 +1,23 @@
 import defaultTheme from '@/styles/theme';
 import styled from 'styled-components';
 
+interface BgProps {
+  color: string,
+}
+
+interface GroupButtonProps {
+  colors: string,
+  active: boolean,
+}
+
+interface GameControlBtnsProps {
+  btnColor: string,
+}
+
+interface IconProps {
+  iconColor: string,
+}
+
 const GamePageWrapper = styled.div`
   height: 100vh;
   display: flex;
@@ -19,10 +36,6 @@ const BgWrapper = styled.div`
   z-index: -5;
   height: 80%;
 `;
-
-interface BgProps {
-  color: string,
-}
 
 const BgGamePageDiv = styled.div<BgProps>`
   background-color: ${(props) => props.color};
@@ -56,13 +69,7 @@ const Group = styled.div`
   padding: 7px;
   border-radius: 5px;
   gap: 20px;
-  grid-area: group;
 `;
-
-interface GroupButtonProps {
-  colors: string,
-  active: boolean,
-}
 
 const GroupBtn = styled.button<GroupButtonProps>`
   width: 55px;
@@ -85,10 +92,6 @@ const GroupBtn = styled.button<GroupButtonProps>`
   `}
 `;
 
-interface GameControlBtnsProps {
-  btnColor: string,
-}
-
 const GameControlBtns = styled.div<GameControlBtnsProps>`
   display: flex;
   gap: 40px;
@@ -97,10 +100,6 @@ const GameControlBtns = styled.div<GameControlBtnsProps>`
     background-color: ${(props) => props.btnColor};
   }
 `;
-
-interface IconProps {
-  iconColor: string,
-}
 
 const IconWrapper = styled.div<IconProps>`
 
