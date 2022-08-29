@@ -86,6 +86,7 @@ function AudioGamePage(
       <AudioGame
         words={words}
         changeGameState={changeGameState}
+        mainColor={games.audio.btnColor}
       />
     </GamePageWrapper>
   );

@@ -5,18 +5,20 @@ import { shuffleArray } from '@/utils/randomize';
 import React, { useEffect, useRef, useState } from 'react';
 import GameControl from '@/GameControl';
 import {
-  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer
+  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer, Note
 } from './AudioGame.style';
 
 interface AudioGameProps {
   words: WordData[],
   changeGameState: (value: boolean) => void,
+  mainColor: string,
 }
 
 function AudioGame(
   {
     words,
     changeGameState,
+    mainColor,
   }: AudioGameProps
 ) {
   const [step, setStep] = useState(0);
@@ -58,7 +60,7 @@ function AudioGame(
     }
 
     if (selectedAnswer === word) {
-      return defaultTheme.colors.pink;
+      return mainColor;
     }
 
     return '';
@@ -113,7 +115,7 @@ function AudioGame(
     <AudioGameContainer>
       <GameControl
         changeGameState={changeGameState}
-        color={defaultTheme.colors.pink}
+        color={mainColor}
       />
       <AudioGameWrapper>
         <AudioBtn
@@ -121,7 +123,7 @@ function AudioGame(
           disabled={isPlayingAudio}
           onClick={() => setIsPlayingAudio(true)}
         >
-          <AudioIcon />
+          <AudioIcon active={isPlayingAudio} />
           <audio
             ref={audioRef}
             onEnded={() => setIsPlayingAudio(false)}
@@ -138,7 +140,7 @@ function AudioGame(
               disabled={!!selectedAnswer}
               onClick={() => selectAnswer(el)}
             >
-              {`${i + 1} ${el}`}
+              {`${i + 1}. ${el}`}
             </AudioGameBtn>
           ))}
         </AudioGameOptions>
@@ -161,6 +163,7 @@ function AudioGame(
               Далее
             </AudioGameBtn>
           )}
+        <Note>*можно использовать цифры на клавиатуре и клавишу Enter</Note>
       </AudioGameWrapper>
     </AudioGameContainer>
   );

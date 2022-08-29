@@ -11,7 +11,6 @@ const HeaderContainer = styled.header`
   align-items: center;
   padding: 20px 15px 5px 10px;
   gap: 10px;
-  margin-bottom: 40px;
 `;
 
 const HeaderBtn = styled.button`
@@ -29,10 +28,10 @@ const HeaderLink = styled(NavLink)`
     cursor: pointer;
     color: ${defaultTheme.colors.primaryColor};
     height: 100%;
-    max-width: 220px;
+    max-width: 230px;
     width: 100%;
     user-select: none;
-    padding-left: 70px;
+    padding-left: 80px;
   }
 `;
 
