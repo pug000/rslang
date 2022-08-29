@@ -1,26 +1,20 @@
 import React from 'react';
-import styled from 'styled-components';
-
-const Message = styled.div`
-  position: fixed;
-  top: 120px;
-  text-align: center; 
-  width: 360px;
-  color: ${(props) => props.theme.colors.pink};
-`;
+import { Message } from './PopupMessage.style';
 
 interface PopupMessageProp {
   text?: string;
+  statusErr?: boolean;
 }
 
-function PopupMessage({ text }: PopupMessageProp) {
+function PopupMessage({ text, statusErr }: PopupMessageProp) {
   return (
-    <Message>{text}</Message>
+    <Message active={statusErr}>{text}</Message>
   );
 }
 
 PopupMessage.defaultProps = {
   text: '',
+  statusErr: true,
 };
 
 export default PopupMessage;

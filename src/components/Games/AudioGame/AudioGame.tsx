@@ -1,5 +1,4 @@
 import { baseUrl } from '@/api';
-import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import { shuffleArray } from '@/utils/randomize';
 import React, {
@@ -9,19 +8,21 @@ import GameControl from '@/GameControl';
 import GameContext from '@/contexts/GameContext';
 import GameResults from '@/GameResults';
 import {
-  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer,
-  GameBlock
+  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer, Note,
+  GameBlock,
 } from './AudioGame.style';
 
 interface AudioGameProps {
   words: WordData[],
   changeGameState: (value: boolean) => void,
+  mainColor: string,
 }
 
 function AudioGame(
   {
     words,
     changeGameState,
+    mainColor,
   }: AudioGameProps
 ) {
   const {
@@ -132,7 +133,7 @@ function AudioGame(
     <AudioGameContainer>
       <GameControl
         changeGameState={changeGameState}
-        color={defaultTheme.colors.pink}
+        color={mainColor}
       />
       {!isShowResult ? (
         <GameBlock>
@@ -140,9 +141,9 @@ function AudioGame(
             <AudioBtn
               tabIndex={-1}
               disabled={isPlayingAudio}
-              onClick={() => changePlayStatus(true)}
+              onClick={() => setIsPlayingAudio(true)}
             >
-              <AudioIcon />
+              <AudioIcon $active={isPlayingAudio} />
             </AudioBtn>
             <AudioGameOptions>
               {wordsOptions.map((el, i) => (
@@ -183,6 +184,7 @@ function AudioGame(
                   Далее
                 </AudioGameBtn>
               )}
+            <Note>*можно использовать цифры на клавиатуре и клавишу Enter</Note>
           </AudioGameWrapper>
         </GameBlock>
       )

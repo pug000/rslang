@@ -6,9 +6,11 @@ import SetState from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import { getWords } from '@/api';
 import Loader from '@/Loader';
+import Button from '@/Button';
+import { NavLink } from 'react-router-dom';
 import {
-  BookContainer, Group, GroupBtn, GroupTitle, Title, Wrapper, GamesWrapper, GameLink,
-  WordsContainer
+  BookContainer, Group, GroupBtn, Title, Wrapper, GamesWrapper,
+  WordsContainer, Note
 } from './Book.style';
 
 interface BookProps {
@@ -52,14 +54,30 @@ function Book(
   return (
     <BookContainer>
       <Title>Учебник</Title>
+      <Note>
+        {'Добро пожаловать в учебник RS Lang! '}
+        {'Выберите необходимый уровень английского языка и начните обучение, '}
+        изучая новые слова в словаре или с помощью игр.
+      </Note>
       <GamesWrapper>
-        <GameLink to="/games/sprint" onClick={() => changeGameState(true)}>Спринт</GameLink>
-        <GameLink to="/games/audio" onClick={() => changeGameState(true)}>Аудиовызов</GameLink>
+        <NavLink to="/games/sprint">
+          <Button
+            id="sprint"
+            title="Спринт"
+            callback={() => changeGameState(true)}
+          />
+        </NavLink>
+        <NavLink to="/games/audio">
+          <Button
+            id="audio"
+            title="Аудиовызов"
+            callback={() => changeGameState(true)}
+          />
+        </NavLink>
       </GamesWrapper>
       <Wrapper>
         <div>
           <Group>
-            <GroupTitle>Раздел</GroupTitle>
             {groupBtns.map((
               {
                 id,
