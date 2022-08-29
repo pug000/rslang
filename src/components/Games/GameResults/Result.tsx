@@ -1,23 +1,22 @@
 import { baseUrl } from '@/api';
-import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   ResultContainer, ResultTitle, ResultWrapper, ResultItem, PlayAudioBtn, PlayAudioIcon,
-  ResultTextBlock, ResultText,
+  ResultText,
 } from './GameResults.style';
 
 interface ResultProps {
   answers: WordData[],
   title: string,
-  colorTitle: string,
+  color: string,
 }
 
 function Result(
   {
     answers,
     title,
-    colorTitle,
+    color,
   }: ResultProps
 ) {
   const audioRef = useRef(new Audio());
@@ -38,7 +37,7 @@ function Result(
   return (
     <ResultContainer>
       <ResultTitle
-        $color={colorTitle}
+        $color={color}
       >
         {`${title}: ${answers.length}`}
       </ResultTitle>
@@ -55,17 +54,11 @@ function Result(
             <PlayAudioBtn
               onClick={() => playOnClick(`${baseUrl}/${audio}`)}
             >
-              <PlayAudioIcon />
+              <PlayAudioIcon $color={color} />
             </PlayAudioBtn>
-            <ResultTextBlock>
-              <ResultText
-                $color={defaultTheme.colors.purple}
-              >
-                {word}
-              </ResultText>
-              <ResultText>-</ResultText>
-              <ResultText>{wordTranslate}</ResultText>
-            </ResultTextBlock>
+            <ResultText>
+              {`${word} - ${wordTranslate}`}
+            </ResultText>
           </ResultItem>
         ))}
       </ResultWrapper>

@@ -196,6 +196,7 @@ function AudioGame(
             setIncorrectAnswers={setInCorrectAnswers}
             path="audio"
             changeGameState={changeGameState}
+            mainColor={mainColor}
           />
         )}
     </AudioGameContainer>

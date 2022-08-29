@@ -15,6 +15,7 @@ const AudioGameContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
 `;
 
 const AudioGameWrapper = styled.div`

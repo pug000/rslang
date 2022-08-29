@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { NavLink } from 'react-router-dom';
-import defaultTheme from '@/styles/theme';
 
 const GameResultsContainer = styled.div`
   display: flex;
@@ -20,6 +19,7 @@ const GameResultsWrapper = styled.div`
   padding: 30px 35px 25px 35px;
   background-color: #fff;
   border-radius: 15px;
+  box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
 `;
 
 const GameResultsTitle = styled.h2`
@@ -62,14 +62,11 @@ const ResultItem = styled.div`
   gap: 10px;
 `;
 
-const ResultTextBlock = styled.div`
+const ResultText = styled.div`
   display: flex;
   gap: 5px;
-`;
-
-const ResultText = styled.span<{ $color?: string }>`
-  color: ${({ $color, theme }) => $color || theme.colors.text};
   font-size: ${({ theme }) => theme.fontSizes.text};
+  color: ${({ theme }) => theme.colors.text};
 `;
 
 const PlayAudioBtn = styled.button`
@@ -84,20 +81,21 @@ const PlayAudioBtn = styled.button`
   }
 `;
 
-const PlayAudioIcon = styled(VolumeUpIcon).attrs({
+const PlayAudioIcon = styled(VolumeUpIcon).attrs<{ $color: string }>(({ $color }) => ({
   style: {
-    color: `${defaultTheme.colors.purple}`,
+    color: $color,
   }
-})``;
+})) <{ $color: string }>``;
 
 const BtnContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
+  width: 70%;
 `;
 
-const Link = styled(NavLink)`
+const Link = styled(NavLink) <{ $color: string }>`
   color: ${({ theme }) => theme.colors.textButton};
-  background-color: ${({ theme }) => theme.colors.beige};
+  background-color: ${({ $color }) => $color};
   font-size: ${({ theme }) => theme.fontSizes.h4};
   padding: 15px;
   border-radius: 10px;
@@ -114,6 +112,6 @@ const Link = styled(NavLink)`
 
 export {
   GameResultsWrapper, GameResultsTitle, ResultTitle, ResultContainer,
-  ResultItem, ResultTextBlock, PlayAudioBtn, PlayAudioIcon, ResultWrapper,
-  GameResultsContainer, Link, BtnContainer, Line, ResultText
+  ResultItem, ResultText, PlayAudioBtn, PlayAudioIcon, ResultWrapper,
+  GameResultsContainer, Link, BtnContainer, Line
 };

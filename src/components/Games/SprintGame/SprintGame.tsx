@@ -182,6 +182,7 @@ function SprintGame(
             setIncorrectAnswers={setInCorrectAnswers}
             path="sprint"
             changeGameState={changeGameState}
+            mainColor={mainColor}
           />
         )}
     </SprintGameContainer>

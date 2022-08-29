@@ -15,6 +15,7 @@ interface GameResultsProps {
   setIncorrectAnswers: SetState<WordData[]>,
   path: string,
   changeGameState: (value: boolean) => void,
+  mainColor: string,
 }
 
 function GameResults(
@@ -25,6 +26,7 @@ function GameResults(
     setIncorrectAnswers,
     path,
     changeGameState,
+    mainColor,
   }: GameResultsProps,
 ) {
   const setResultTitle = () => {
@@ -53,19 +55,20 @@ function GameResults(
           <Result
             answers={correctAnswers}
             title="Правильно"
-            colorTitle={defaultTheme.colors.blue}
+            color={defaultTheme.colors.blue}
           />
           <Line />
           <Result
             answers={incorrectAnswers}
             title="Неправильно"
-            colorTitle={defaultTheme.colors.pink}
+            color={defaultTheme.colors.pink}
           />
         </GameResultsWrapper>
       </GameResultsContainer>
       <BtnContainer>
         <Link
           to={`/games/${path}`}
+          $color={mainColor}
           onClick={() => {
             changeGameState(false);
             clearAnswersState();
@@ -75,6 +78,7 @@ function GameResults(
         </Link>
         <Link
           to="/games"
+          $color={mainColor}
           onClick={() => {
             changeGameState(false);
             clearAnswersState();
