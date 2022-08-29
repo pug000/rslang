@@ -40,7 +40,7 @@ function SprintGame(
       setCurrentWord(words[step]);
     }
 
-    if (step === words.length) {
+    if (step >= words.length) {
       setIsShowResult(true);
     }
   }, [step]);

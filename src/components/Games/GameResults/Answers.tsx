@@ -1,20 +1,24 @@
 import { baseUrl } from '@/api';
+import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   AnswerContainer, AnswerTitle, AnswerWrapper, AnswerItem, PlayAudioBtn, PlayAudioIcon,
   AnswerItemText,
+  SpanText,
 } from './GameResults.style';
 
 interface AnswersProps {
   answers: WordData[],
   title: string,
+  colorTitle: string,
 }
 
 function Answers(
   {
     answers,
     title,
+    colorTitle,
   }: AnswersProps
 ) {
   const audioRef = useRef(new Audio());
@@ -34,7 +38,9 @@ function Answers(
 
   return (
     <AnswerContainer>
-      <AnswerTitle>
+      <AnswerTitle
+        $color={colorTitle}
+      >
         {`${title}: ${answers.length}`}
       </AnswerTitle>
       <AnswerWrapper>
@@ -53,7 +59,13 @@ function Answers(
               <PlayAudioIcon />
             </PlayAudioBtn>
             <AnswerItemText>
-              {`${word} - ${wordTranslate}`}
+              <SpanText
+                $color={defaultTheme.colors.purple}
+              >
+                {word}
+              </SpanText>
+              <SpanText>-</SpanText>
+              <SpanText>{wordTranslate}</SpanText>
             </AnswerItemText>
           </AnswerItem>
         ))}

@@ -1,9 +1,11 @@
+import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import React from 'react';
 import Answers from './Answers';
 import {
-  GameResultsContainer, GameResultsTitle, GameResultsWrapper, Link
+  BtnContainer,
+  GameResultsContainer, GameResultsTitle, GameResultsWrapper, Line, Link
 } from './GameResults.style';
 
 interface GameResultsProps {
@@ -44,19 +46,24 @@ function GameResults(
   };
 
   return (
-    <GameResultsContainer>
-      <GameResultsWrapper>
-        <GameResultsTitle>{setResultTitle()}</GameResultsTitle>
-        <Answers
-          answers={correctAnswers}
-          title="Правильно"
-        />
-        <Answers
-          answers={incorrectAnswers}
-          title="Неправильно"
-        />
-      </GameResultsWrapper>
-      <GameResultsWrapper>
+    <>
+      <GameResultsContainer>
+        <GameResultsWrapper>
+          <GameResultsTitle>{setResultTitle()}</GameResultsTitle>
+          <Answers
+            answers={correctAnswers}
+            title="Правильно"
+            colorTitle={defaultTheme.colors.blue}
+          />
+          <Line />
+          <Answers
+            answers={incorrectAnswers}
+            title="Неправильно"
+            colorTitle={defaultTheme.colors.pink}
+          />
+        </GameResultsWrapper>
+      </GameResultsContainer>
+      <BtnContainer>
         <Link
           to={`/games/${path}`}
           onClick={() => {
@@ -75,8 +82,8 @@ function GameResults(
         >
           К списку игр
         </Link>
-      </GameResultsWrapper>
-    </GameResultsContainer>
+      </BtnContainer>
+    </>
   );
 }
 
