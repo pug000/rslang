@@ -12,6 +12,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
+import { getFilteredUserWords } from '@/api';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -47,6 +48,22 @@ function App() {
       setIsGameStarted,
     }
   ), [isGameStarted, isLoggedIn]);
+
+  const FILTER_DIFFICULT_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
+  const FILTER_LEARNED_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"false"}');
+
+  useEffect(() => {
+    (async () => {
+      const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS);
+      const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS);
+      setTimeout(() => {
+        setDifficultWords(difficultWordsData[0].paginatedResults)
+        setLearnedWords(learnedWordsData[0].paginatedResults)
+        console.log('difficultWords 1 ', difficultWords);
+        console.log('learnedWords 1 ', learnedWords);
+      }, 500);
+    })()
+  }, [])
 
   return (
     <Routes>

@@ -12,7 +12,7 @@ import {
   BookContainer, Group, GroupBtn, Title, Wrapper, GamesWrapper,
   WordsContainer, Note
 } from './Book.style';
-
+import WordItemContext from '@/contexts/WordItemContext';
 interface BookProps {
   currentPage: number,
   groupNumber: number,

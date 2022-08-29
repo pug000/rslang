@@ -52,19 +52,19 @@ function WordItem(
     arr.some((el) => el.id === item.id)
   );
 
-  const createWordProp = (word: WordData) => {
+  const createWordProp = (word: WordData, isDifficultWord: boolean) => {
     const currentWord: WordCreateProp = {
       difficulty: String(word.group),
       optional: {
-        status: 'new',
+        isDifficultWord: String(isDifficultWord),
       }
     };
     return currentWord;
   };
 
-  const addActiveWord = (setState: SetState<WordData[]>) => {
+  const addActiveWord = (setState: SetState<WordData[]>, isDifficultWord: boolean) => {
     setState((prev) => [...prev, item]);
-    const currentWord = createWordProp(item);
+    const currentWord = createWordProp(item, isDifficultWord);
     createUserWord(item.id, currentWord);
   };
 
@@ -73,11 +73,20 @@ function WordItem(
     deleteUserWord(item.id);
   };
 
-  const handleClick = (arr: WordData[], setState: SetState<WordData[]>) => (
+  const handleClick = (
+    e: React.MouseEvent<SVGSVGElement, MouseEvent>,
+    arr: WordData[], setState: SetState<WordData[]>
+  ) => {
+    let isDifficultWord = true;
+    if (e.currentTarget.id === 'learned') {
+      isDifficultWord = false;
+    }
+    console.log('difficultWords 3 ', difficultWords);
+    console.log('learnedWords 3 ', learnedWords);
     toggleActive(arr)
       ? removeActiveWord(setState)
-      : addActiveWord(setState)
-  );
+      : addActiveWord(setState, isDifficultWord)
+  };
 
   useEffect(() => {
     if (audio) {
@@ -174,23 +183,24 @@ function WordItem(
       </WordInfoContainer>
       <WordBtnContainer>
         <LearnedWordBtn
+          id='learned'
           colors={
             toggleActive(learnedWords)
               ? defaultTheme.colors.primaryColor
               : defaultTheme.colors.grey
           }
-          onClick={() => handleClick(learnedWords, setLearnedWords)}
+          onClick={(e) => handleClick(e, learnedWords, setLearnedWords)}
         />
         {
           toggleActive(difficultWords)
             ? (
               <DifficultWordBtnActive
-                onClick={() => handleClick(difficultWords, setDifficultWords)}
+                onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
               />
             )
             : (
               <DifficultWordBtn
-                onClick={() => handleClick(difficultWords, setDifficultWords)}
+                onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
               />
             )
         }

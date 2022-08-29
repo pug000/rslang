@@ -87,9 +87,9 @@ interface Color {
 }
 
 interface WordCreateProp {
-  'difficulty': string,
-  'optional': {
-    'status': string,
+  difficulty: string,
+  optional: {
+    isDifficultWord: string,
   }
 }
 

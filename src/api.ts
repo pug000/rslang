@@ -193,7 +193,25 @@ const getUserWords = async (userId: string) => {
   return content;
 };
 
+const getFilteredUserWords = async (filter: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userIdLocal}/aggregatedWords?filter=${filter}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${tokenLocal}`,
+      Accept: 'application/json',
+    }
+  });
+  if (res.status === ServerResponses.error402) {
+    const { status } = res;
+    console.log('need token');
+    return status;
+  }
+  const content = await res.json();
+  console.log('getFilteredUserWords', content);
+  return content;
+};
+
 export {
   baseUrl, endpoints, getWords, registerUser, loginUser, getUser, getUserWords,
-  getNewToken, createUserWord, deleteUserWord,
+  getNewToken, createUserWord, deleteUserWord, getFilteredUserWords
 };
