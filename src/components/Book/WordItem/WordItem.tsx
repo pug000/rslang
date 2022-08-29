@@ -1,6 +1,6 @@
-import { baseUrl } from '@/api';
+import { baseUrl, createUserWord, deleteUserWord } from '@/api';
 import defaultTheme from '@/styles/theme';
-import { Track, WordData } from '@/ts/interfaces';
+import { Track, WordData, WordCreateProp } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import DOMPurify from 'dompurify';
 import React, {
@@ -52,13 +52,26 @@ function WordItem(
     arr.some((el) => el.id === item.id)
   );
 
-  const addActiveWord = (setState: SetState<WordData[]>) => (
-    setState((prev) => [...prev, item])
-  );
+  const createWordProp = (word: WordData) => {
+    const currentWord: WordCreateProp = {
+      difficulty: String(word.group),
+      optional: {
+        status: 'new',
+      }
+    };
+    return currentWord;
+  };
 
-  const removeActiveWord = (setState: SetState<WordData[]>) => (
-    setState((prev) => prev.filter((el) => el.id !== item.id))
-  );
+  const addActiveWord = (setState: SetState<WordData[]>) => {
+    setState((prev) => [...prev, item]);
+    const currentWord = createWordProp(item);
+    createUserWord(item.id, currentWord);
+  };
+
+  const removeActiveWord = (setState: SetState<WordData[]>) => {
+    setState((prev) => prev.filter((el) => el.id !== item.id));
+    deleteUserWord(item.id);
+  };
 
   const handleClick = (arr: WordData[], setState: SetState<WordData[]>) => (
     toggleActive(arr)

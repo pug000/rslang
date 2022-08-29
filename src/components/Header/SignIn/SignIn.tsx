@@ -2,12 +2,14 @@ import React, { useState } from 'react';
 import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
-import { registerUser, loginUser } from '@/api';
+import {
+  registerUser, loginUser, getUser, getUserWords, getNewToken
+} from '@/api';
 import { LogInUserData } from '@/ts/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
 import useLocalStorage from '@/hooks/useLocalStorage';
-import StatusError from '@/ts/enums';
+import ServerResponses from '@/ts/enums';
 import { regex } from '@/utils/variables';
 import {
   Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
@@ -36,13 +38,14 @@ function SignInModal({
     refreshToken: '',
     userId: '',
   };
-  const dafaultToken = '';
-  const dafaultUserID = '';
+  const defaultToken = '';
+  const defaultUserId = '';
   const [userData, setUserData] = useState(defaultUser);
   const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
-  const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
-  const [token, setToken] = useLocalStorage('token', dafaultToken);
-  const [userId, setUserId] = useLocalStorage('userId', dafaultUserID);
+  // const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
+  const [logInUserData, setLogInUserData] = useLocalStorage('logInUserData', defaultSingInData);
+  const [token, setToken] = useLocalStorage('token', defaultToken);
+  const [userId, setUserId] = useLocalStorage('userId', defaultUserId);
   const [errShow, setErrShow] = useState<boolean>(false);
   interface ErrMessageProps {
     text: string;
@@ -76,9 +79,9 @@ function SignInModal({
         errMessageShow('Вы авторизовались!', false);
         changeLoggedInState();
         setTimeout(changeActiveShadow, 3000);
-      } else if (resCreateUser === StatusError.error403) {
+      } else if (resCreateUser === ServerResponses.error403) {
         errMessageShow('Неправильный e-mail или пароль!', true);
-      } else if (resCreateUser === StatusError.error404) {
+      } else if (resCreateUser === ServerResponses.error404) {
         errMessageShow('Пользователь не найден. Зарегистрируйтесь.', true);
       }
       changeWaitingData();
@@ -96,9 +99,9 @@ function SignInModal({
       if (typeof resCreateUser !== 'number') {
         errMessageShow('Вы зарегистрированы! Авторизуйтесь.', false);
         setUserData({ ...defaultUser });
-      } else if (resCreateUser === StatusError.error417) {
+      } else if (resCreateUser === ServerResponses.error417) {
         errMessageShow('Пользователь уже зарегистрирован!', true);
-      } else if (resCreateUser === StatusError.error422) {
+      } else if (resCreateUser === ServerResponses.error422) {
         errMessageShow('Неправильный e-mail или пароль!', true);
       }
       changeWaitingData();
@@ -112,10 +115,19 @@ function SignInModal({
   const signOutUser = () => {
     errMessageShow('До новых встреч!', false);
     setUserData({ ...defaultUser });
-    setToken(dafaultToken);
-    setUserId(dafaultUserID);
+    setToken(defaultToken);
+    setUserId(defaultUserId);
     changeLoggedInState();
   };
+
+  // const getData = async () => {
+  //   const resGetUser = await getUser(logInUserData.userId);
+  //   console.log('getUser ', resGetUser);
+  //   const resWordsUser = await getUserWords(logInUserData.userId);
+  //   console.log('getUserWord ', resWordsUser);
+  //   const resNewToken = await getNewToken(logInUserData.userId);
+  //   console.log('getUser resNewToken ', resNewToken);
+  // };
 
   return (
     <Shadow onClick={() => setActive(false)} active={active}>
@@ -164,6 +176,7 @@ function SignInModal({
               <>
                 <Button id="signOut" title="Выйти" callback={signOutUser} />
                 <Button id="signCancel" title="Отмена" callback={() => setActive(false)} />
+                {/* <Button id="signCancel" title="проба" callback={getData} /> */}
               </>
             )
             : (

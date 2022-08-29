@@ -70,6 +70,12 @@ interface LogInUserData {
   name?: string;
 }
 
+interface GetUserProp {
+  name: string,
+  email: string,
+  password: string
+}
+
 interface SvgStyles {
   width: string,
   height: string,
@@ -80,7 +86,14 @@ interface Color {
   $color?: string,
 }
 
+interface WordCreateProp {
+  'difficulty': string,
+  'optional': {
+    'status': string,
+  }
+}
+
 export {
   GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, Color,
+  LogInUserData, SvgStyles, Color, WordCreateProp, GetUserProp,
 };
