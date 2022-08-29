@@ -2,7 +2,7 @@ import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import React from 'react';
-import Answers from './Answers';
+import Result from './Result';
 import {
   BtnContainer,
   GameResultsContainer, GameResultsTitle, GameResultsWrapper, Line, Link
@@ -50,13 +50,13 @@ function GameResults(
       <GameResultsContainer>
         <GameResultsWrapper>
           <GameResultsTitle>{setResultTitle()}</GameResultsTitle>
-          <Answers
+          <Result
             answers={correctAnswers}
             title="Правильно"
             colorTitle={defaultTheme.colors.blue}
           />
           <Line />
-          <Answers
+          <Result
             answers={incorrectAnswers}
             title="Неправильно"
             colorTitle={defaultTheme.colors.pink}

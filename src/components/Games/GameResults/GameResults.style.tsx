@@ -39,35 +39,35 @@ const Line = styled.div`
   opacity: 0.3;
 `;
 
-const AnswerContainer = styled.div`
+const ResultContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 30px;
 `;
 
-const AnswerTitle = styled.h3<{ $color: string }>`
+const ResultTitle = styled.h3<{ $color: string }>`
   font-size: ${({ theme }) => theme.fontSizes.h4};
   color: ${({ $color }) => $color};
 `;
 
-const AnswerWrapper = styled.div`
+const ResultWrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 25px;
 `;
 
-const AnswerItem = styled.div`
+const ResultItem = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
 `;
 
-const AnswerItemText = styled.div`
+const ResultTextBlock = styled.div`
   display: flex;
   gap: 5px;
 `;
 
-const SpanText = styled.span<{ $color?: string }>`
+const ResultText = styled.span<{ $color?: string }>`
   color: ${({ $color, theme }) => $color || theme.colors.text};
   font-size: ${({ theme }) => theme.fontSizes.text};
 `;
@@ -113,7 +113,7 @@ const Link = styled(NavLink)`
 `;
 
 export {
-  GameResultsWrapper, GameResultsTitle, AnswerTitle, AnswerContainer,
-  AnswerItem, AnswerItemText, PlayAudioBtn, PlayAudioIcon, AnswerWrapper,
-  GameResultsContainer, Link, BtnContainer, Line, SpanText
+  GameResultsWrapper, GameResultsTitle, ResultTitle, ResultContainer,
+  ResultItem, ResultTextBlock, PlayAudioBtn, PlayAudioIcon, ResultWrapper,
+  GameResultsContainer, Link, BtnContainer, Line, ResultText
 };
