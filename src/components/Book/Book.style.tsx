@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
 
 interface GroupButtonProps {
   colors: string,
@@ -32,8 +31,18 @@ const Wrapper = styled.div`
 
 const Title = styled.h1`
   font-family: ${({ theme }) => theme.fonts.title};
-  font-size: ${({ theme }) => theme.fontSizes.h3};
-  color: ${({ theme }) => theme.colors.purple};
+  font-size: ${({ theme }) => theme.fontSizes.h2};
+  color: ${({ theme }) => theme.colors.title};
+  margin-top: 20px;
+`;
+
+const Note = styled.p`
+  margin-top: -30px;
+  font-size: 14px;
+  color: rgba(0,0,0,0.4);
+  font-style: italic;
+  text-align: center;
+  max-width: 350px;
 `;
 
 const WordsContainer = styled.div`
@@ -53,29 +62,12 @@ const WordsContainer = styled.div`
 const GamesWrapper = styled.div`
   display: flex;
   width: 100%;
-  justify-content: space-evenly;
+  justify-content: center;
   padding: 20px;
   gap: 20px;
-`;
 
-const GameLink = styled(NavLink)`
-  max-width: 200px;
-  width: 100%;
-  padding: 15px 10px;
-  display: flex;
-  justify-content: center;
-  background-color: ${({ theme }) => theme.colors.primaryColor};
-  color: ${({ theme }) => theme.colors.bgWhite};
-  border-radius: 10px;
-  font-size: ${({ theme }) => theme.fontSizes.h4};
-  transition: ${({ theme }) => theme.effects.transition};
-
-  &:link{
-    text-decoration: none;
-  }
-
-  &:hover {
-    opacity: ${({ theme }) => theme.effects.hoverOpacity};
+  Button {
+    width: 150px;
   }
 `;
 
@@ -89,22 +81,14 @@ const Group = styled.div`
   gap: 10px;
   position: sticky;
   top: 15px;
-  box-shadow: 0px 3px 3px 0px rgb(0 0 0 / 20%),
-  0px 3px 4px 0px rgb(0 0 0 / 14%),
-  0px 1px 8px 0px rgb(0 0 0 / 12%);
   grid-area: group;
-`;
-
-const GroupTitle = styled.h4`
-  color: ${({ theme }) => theme.colors.text};
-  font-size: ${({ theme }) => theme.fontSizes.text};
 `;
 
 const GroupBtn = styled.button<GroupButtonProps>`
   width: 55px;
   height: 55px;
   border: 3px solid;
-  border-radius: 50%;
+  border-radius: 15%;
   cursor: pointer;
   transition: ${({ theme }) => theme.effects.transition};
   background-color: ${({ colors }) => colors};
@@ -122,6 +106,6 @@ const GroupBtn = styled.button<GroupButtonProps>`
 `;
 
 export {
-  BookContainer, Title, Wrapper, GamesWrapper, GameLink, Group, GroupBtn, GroupTitle,
-  WordsContainer
+  BookContainer, Title, Wrapper, GamesWrapper, Group, GroupBtn,
+  WordsContainer, Note
 };

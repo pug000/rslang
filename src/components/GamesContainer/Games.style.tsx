@@ -13,6 +13,7 @@ const GamesMainContainer = styled.div`
 
 const GamesTitle = styled.h2`
   font-family: ${(props) => props.theme.fonts.title};
+  color: ${(props) => props.theme.colors.title};
   font-size: ${(props) => props.theme.fontSizes.h2};
   font-weight: 700;
   margin-bottom: 3rem;
