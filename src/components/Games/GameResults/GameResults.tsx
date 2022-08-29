@@ -1,7 +1,7 @@
 import defaultTheme from '@/styles/theme';
 import { WordData } from '@/ts/interfaces';
-import SetState from '@/ts/types';
-import React from 'react';
+import React, { useContext } from 'react';
+import GameContext from '@/contexts/GameContext';
 import Result from './Result';
 import {
   BtnContainer,
@@ -11,10 +11,7 @@ import {
 interface GameResultsProps {
   correctAnswers: WordData[],
   incorrectAnswers: WordData[],
-  setCorrectAnswers: SetState<WordData[]>,
-  setIncorrectAnswers: SetState<WordData[]>,
   path: string,
-  changeGameState: (value: boolean) => void,
   mainColor: string,
 }
 
@@ -22,13 +19,11 @@ function GameResults(
   {
     correctAnswers,
     incorrectAnswers,
-    setCorrectAnswers,
-    setIncorrectAnswers,
     path,
-    changeGameState,
     mainColor,
   }: GameResultsProps,
 ) {
+  const { clearGameState } = useContext(GameContext);
   const setResultTitle = () => {
     if (correctAnswers.length >= 5
       && correctAnswers.length < 10) {
@@ -40,11 +35,6 @@ function GameResults(
     }
 
     return 'В этот раз не получилось, но продолжай тренироваться!';
-  };
-
-  const clearAnswersState = () => {
-    setCorrectAnswers([]);
-    setIncorrectAnswers([]);
   };
 
   return (
@@ -69,20 +59,14 @@ function GameResults(
         <Link
           to={`/games/${path}`}
           $color={mainColor}
-          onClick={() => {
-            changeGameState(false);
-            clearAnswersState();
-          }}
+          onClick={clearGameState}
         >
           Играть ещё
         </Link>
         <Link
           to="/games"
           $color={mainColor}
-          onClick={() => {
-            changeGameState(false);
-            clearAnswersState();
-          }}
+          onClick={clearGameState}
         >
           К списку игр
         </Link>

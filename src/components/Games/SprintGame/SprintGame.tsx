@@ -32,7 +32,7 @@ function SprintGame(
     correctAnswers,
     incorrectAnswers,
     setCorrectAnswers,
-    setInCorrectAnswers,
+    setIncorrectAnswers,
   } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
@@ -87,7 +87,7 @@ function SprintGame(
   const incorrectAnswer = () => {
     if (strike) setStrike(0);
     setIsCorrect(false);
-    setInCorrectAnswers((prev) => [...prev, currentWord]);
+    setIncorrectAnswers((prev) => [...prev, currentWord]);
   };
 
   const clickCorrectBtn = () => {
@@ -178,10 +178,7 @@ function SprintGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
-            setCorrectAnswers={setCorrectAnswers}
-            setIncorrectAnswers={setInCorrectAnswers}
             path="sprint"
-            changeGameState={changeGameState}
             mainColor={mainColor}
           />
         )}

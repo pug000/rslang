@@ -6,14 +6,16 @@ interface GameContextValues {
   correctAnswers: WordData[],
   incorrectAnswers: WordData[],
   setCorrectAnswers: SetState<WordData[]>,
-  setInCorrectAnswers: SetState<WordData[]>,
+  setIncorrectAnswers: SetState<WordData[]>,
+  clearGameState: () => void,
 }
 
 const defaultValue = {
   correctAnswers: [],
   incorrectAnswers: [],
   setCorrectAnswers: () => { },
-  setInCorrectAnswers: () => { },
+  setIncorrectAnswers: () => { },
+  clearGameState: () => { },
 };
 
 const GameContext = createContext<GameContextValues>(defaultValue);

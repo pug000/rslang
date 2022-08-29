@@ -29,7 +29,7 @@ function AudioGame(
     correctAnswers,
     incorrectAnswers,
     setCorrectAnswers,
-    setInCorrectAnswers,
+    setIncorrectAnswers,
   } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
@@ -90,7 +90,7 @@ function AudioGame(
     if (currentWord.wordTranslate === word) {
       setCorrectAnswers((prev) => [...prev, currentWord]);
     } else {
-      setInCorrectAnswers((prev) => [...prev, currentWord]);
+      setIncorrectAnswers((prev) => [...prev, currentWord]);
     }
   };
 
@@ -192,10 +192,7 @@ function AudioGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
-            setCorrectAnswers={setCorrectAnswers}
-            setIncorrectAnswers={setInCorrectAnswers}
             path="audio"
-            changeGameState={changeGameState}
             mainColor={mainColor}
           />
         )}

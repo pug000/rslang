@@ -22,10 +22,26 @@ function App() {
   const [words, setWords] = useState<WordData[]>([]);
   const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
-  const [incorrectAnswers, setInCorrectAnswers] = useState<WordData[]>([]);
+  const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
 
   const changeGameState = (value: boolean) => setIsGameStarted(value);
+
+  const clearGameState = () => {
+    setIsGameStarted(false);
+    setCorrectAnswers([]);
+    setIncorrectAnswers([]);
+  };
+
+  useEffect(() => {
+    if (isGameStarted) {
+      window.addEventListener('popstate', clearGameState);
+    }
+
+    return () => (
+      window.removeEventListener('popstate', clearGameState)
+    );
+  }, [isGameStarted]);
 
   useEffect(() => (
     isLoggedIn
@@ -56,7 +72,8 @@ function App() {
       correctAnswers,
       incorrectAnswers,
       setCorrectAnswers,
-      setInCorrectAnswers,
+      setIncorrectAnswers,
+      clearGameState,
     }
   ), [correctAnswers, incorrectAnswers]);
 
