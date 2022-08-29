@@ -30,6 +30,7 @@ const config = {
     ),
     new HtmlWebpackPlugin({
       template: './src/index.html',
+      favicon: './src/assets/icon/favicon.png',
     }),
     new CleanWebpackPlugin(),
     new CopyPlugin({
