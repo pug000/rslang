@@ -93,20 +93,9 @@ const BtnContainer = styled.div`
   width: 70%;
 `;
 
-const Link = styled(NavLink) <{ $color: string }>`
-  color: ${({ theme }) => theme.colors.textButton};
-  background-color: ${({ $color }) => $color};
-  font-size: ${({ theme }) => theme.fontSizes.h4};
-  padding: 15px;
-  border-radius: 10px;
-  transition: ${({ theme }) => theme.effects.transition};
-
+const Link = styled(NavLink)`
   &:link{
     text-decoration: none;
-  }
-
-  &:hover {
-    opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
 `;
 

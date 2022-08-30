@@ -3,6 +3,7 @@ import { Statistics, WordData } from '@/ts/interfaces';
 import React, { useContext, useEffect } from 'react';
 import GameContext from '@/contexts/GameContext';
 import { getUserStatistics, updateUserStatistics } from '@/api';
+import Button from '@/Button';
 import Result from './Result';
 import {
   BtnContainer,
@@ -94,17 +95,23 @@ function GameResults(
       <BtnContainer>
         <Link
           to={`/games/${game}`}
-          $color={mainColor}
-          onClick={clearGameState}
         >
-          Играть ещё
+          <Button
+            id={game}
+            title="Играть ещё"
+            callback={clearGameState}
+            color={mainColor}
+          />
         </Link>
         <Link
           to="/games"
-          $color={mainColor}
-          onClick={clearGameState}
         >
-          К списку игр
+          <Button
+            id="games"
+            title="К списку игр"
+            callback={clearGameState}
+            color={mainColor}
+          />
         </Link>
       </BtnContainer>
     </>

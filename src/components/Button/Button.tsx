@@ -5,11 +5,16 @@ interface ButtonProps {
   title: string;
   id: string;
   callback: (id: string) => void;
+  color?: string;
   disabled?: boolean;
 }
 
 function Button({
-  title, id, disabled, callback
+  title,
+  id,
+  disabled,
+  callback,
+  color,
 }: ButtonProps) {
   return (
     <ButtonElement
@@ -17,6 +22,7 @@ function Button({
       id={id}
       disabled={disabled}
       onClick={() => callback(id)}
+      $color={color}
     >
       {title}
     </ButtonElement>
@@ -25,6 +31,7 @@ function Button({
 
 Button.defaultProps = {
   disabled: false,
+  color: '',
 };
 
 export default Button;
