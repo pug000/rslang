@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import GameContext from '@/contexts/GameContext';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   CloseIconSvg, FullscreenExitIconSvg, FullscreenIconSvg, GameControlBtn,
   GameControls, Link
 } from './GameControl.style';
 
 interface GameControlProps {
-  changeGameState: (value: boolean) => void,
   color: string,
 }
 
 function GameControl(
   {
-    changeGameState,
     color,
   }: GameControlProps
 ) {
+  const { clearGameState } = useContext(GameContext);
   const [isFullscreen, setIsFullscreen] = useState(false);
 
   useEffect(() => {
@@ -32,7 +32,9 @@ function GameControl(
   useEffect(() => {
     document.addEventListener('fullscreenchange', onFullscreenChange);
 
-    return () => document.removeEventListener('fullscreenchange', onFullscreenChange);
+    return () => (
+      document.removeEventListener('fullscreenchange', onFullscreenChange)
+    );
   }, []);
 
   return (
@@ -43,7 +45,7 @@ function GameControl(
         <Link
           to="/games"
           tabIndex={-1}
-          onClick={() => changeGameState(false)}
+          onClick={clearGameState}
         >
           <CloseIconSvg $color={color} />
         </Link>

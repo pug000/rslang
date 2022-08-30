@@ -76,7 +76,20 @@ interface SvgStyles {
   transition: string,
 }
 
+interface GameStatistics {
+  gameLearnedWords: number,
+  percentCorrectWord: number,
+  correctAnswersCount: number,
+}
+
+interface Statistics {
+  learnedWords: number,
+  optional: {
+    [key: string]: GameStatistics,
+  }
+}
+
 export {
   GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles,
+  LogInUserData, SvgStyles, GameStatistics, Statistics,
 };
