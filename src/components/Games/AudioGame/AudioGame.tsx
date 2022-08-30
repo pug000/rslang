@@ -14,20 +14,20 @@ import {
 
 interface AudioGameProps {
   words: WordData[],
-  changeGameState: (value: boolean) => void,
   mainColor: string,
 }
 
 function AudioGame(
   {
     words,
-    changeGameState,
     mainColor,
   }: AudioGameProps
 ) {
   const {
     correctAnswers,
     incorrectAnswers,
+    isShowResult,
+    setIsShowResult,
     setCorrectAnswers,
     setIncorrectAnswers,
   } = useContext(GameContext);
@@ -36,7 +36,6 @@ function AudioGame(
   const [wordsOptions, setWordsOptions] = useState<string[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
   const [isPlayingAudio, setIsPlayingAudio] = useState(false);
-  const [isShowResult, setIsShowResult] = useState(false);
   const audio = new Audio();
 
   useEffect(() => {
@@ -132,7 +131,6 @@ function AudioGame(
   return (
     <AudioGameContainer>
       <GameControl
-        changeGameState={changeGameState}
         color={mainColor}
       />
       {!isShowResult ? (
@@ -194,7 +192,6 @@ function AudioGame(
             incorrectAnswers={incorrectAnswers}
             game="audio"
             mainColor={mainColor}
-            isShowResult={isShowResult}
             words={words}
           />
         )}

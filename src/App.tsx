@@ -20,6 +20,7 @@ function App() {
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isShowResult, setIsShowResult] = useState(false);
   const [words, setWords] = useState<WordData[]>([]);
   const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
@@ -28,10 +29,9 @@ function App() {
   const [token, setToken] = useLocalStorage('token', defaultToken);
   const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
 
-  const changeGameState = (value: boolean) => setIsGameStarted(value);
-
   const clearGameState = () => {
     setIsGameStarted(false);
+    setIsShowResult(false);
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
   };
@@ -79,11 +79,23 @@ function App() {
       token,
       userId,
       isLoggedIn,
+      isGameStarted,
+      isShowResult,
+      setIsShowResult,
+      setIsGameStarted,
       setCorrectAnswers,
       setIncorrectAnswers,
       clearGameState,
     }
-  ), [correctAnswers, incorrectAnswers, token, userId, isLoggedIn]);
+  ), [
+    correctAnswers,
+    incorrectAnswers,
+    token,
+    userId,
+    isLoggedIn,
+    isGameStarted,
+    isShowResult,
+  ]);
 
   return (
     <Routes>
@@ -107,7 +119,7 @@ function App() {
                 setWords={setWords}
                 setCurrentPage={setCurrentPage}
                 setGroupNumber={setGroupNumber}
-                changeGameState={changeGameState}
+                setIsGameStarted={setIsGameStarted}
               />
             </WordItemContext.Provider>
           )}
@@ -127,7 +139,6 @@ function App() {
             <GameContext.Provider value={gameValue}>
               <SprintGamePage
                 isGameStarted={isGameStarted}
-                changeGameState={changeGameState}
                 defaultPage={currentPage}
                 defaultGroupNumber={groupNumber}
                 defaultWords={words}
@@ -141,7 +152,6 @@ function App() {
             <GameContext.Provider value={gameValue}>
               <AudioGamePage
                 isGameStarted={isGameStarted}
-                changeGameState={changeGameState}
                 defaultPage={currentPage}
                 defaultGroupNumber={groupNumber}
                 defaultWords={words}

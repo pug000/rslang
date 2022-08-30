@@ -15,7 +15,6 @@ interface GameResultsProps {
   incorrectAnswers: WordData[],
   game: string,
   mainColor: string,
-  isShowResult: boolean,
   words: WordData[],
 }
 
@@ -25,7 +24,6 @@ function GameResults(
     incorrectAnswers,
     game,
     mainColor,
-    isShowResult,
     words,
   }: GameResultsProps,
 ) {
@@ -33,7 +31,8 @@ function GameResults(
     clearGameState,
     userId,
     token,
-    isLoggedIn
+    isLoggedIn,
+    isShowResult,
   } = useContext(GameContext);
 
   const setResultTitle = () => {

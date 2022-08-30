@@ -1,5 +1,5 @@
 import {
-  WordData, UserData, RegisteredUserData, LogInUserData, Statistics, GameStatistics
+  WordData, UserData, RegisteredUserData, LogInUserData, Statistics,
 } from '@/ts/interfaces';
 import StatusError from './ts/enums';
 

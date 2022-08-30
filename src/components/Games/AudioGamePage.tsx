@@ -11,7 +11,6 @@ import GamePageBg from './GamePageBg';
 
 interface GamePageProps {
   isGameStarted: boolean,
-  changeGameState: (value: boolean) => void,
   defaultPage: number,
   defaultGroupNumber: number,
   defaultWords: WordData[],
@@ -20,7 +19,6 @@ interface GamePageProps {
 function AudioGamePage(
   {
     isGameStarted,
-    changeGameState,
     defaultPage,
     defaultGroupNumber,
     defaultWords,
@@ -30,16 +28,6 @@ function AudioGamePage(
   const [currentGroupNumber, setCurrentGroupNumber] = useState(defaultGroupNumber);
   const [words, setWords] = useState<WordData[]>(defaultWords);
   const [isLoadingGame, setIsLoadingGame] = useState(false);
-
-  useEffect(() => {
-    if (isGameStarted) {
-      window.addEventListener('popstate', () => changeGameState(false));
-    }
-
-    return () => (
-      window.removeEventListener('popstate', () => changeGameState(false))
-    );
-  }, [isGameStarted]);
 
   useEffect(() => {
     if (isLoadingGame) {
@@ -75,7 +63,6 @@ function AudioGamePage(
         setCurrentGroupNumber={setCurrentGroupNumber}
         setCurrentPage={setCurrentPage}
         setIsLoadingGame={setIsLoadingGame}
-        changeGameState={changeGameState}
       />
     );
   }
@@ -85,7 +72,6 @@ function AudioGamePage(
       <GamePageBg color={games.audio.bgColor} />
       <AudioGame
         words={words}
-        changeGameState={changeGameState}
         mainColor={games.audio.btnColor}
       />
     </GamePageWrapper>
