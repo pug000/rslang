@@ -12,6 +12,7 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
+import About from '@/About';
 import GameContext from './contexts/GameContext';
 
 function App() {
@@ -149,8 +150,7 @@ function App() {
             </ProtectedRoute>
           )}
         />
-        <Route path="about-project" element={<p>About Project</p>} />
-        <Route path="about-team" element={<p>About Team</p>} />
+        <Route path="about" element={<About />} />
       </Route>
     </Routes>
   );
