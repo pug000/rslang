@@ -192,8 +192,10 @@ function AudioGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
-            path="audio"
+            game="audio"
             mainColor={mainColor}
+            isShowResult={isShowResult}
+            words={words}
           />
         )}
     </AudioGameContainer>

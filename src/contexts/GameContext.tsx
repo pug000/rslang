@@ -5,6 +5,9 @@ import { createContext } from 'react';
 interface GameContextValues {
   correctAnswers: WordData[],
   incorrectAnswers: WordData[],
+  token: string,
+  userId: string,
+  isLoggedIn: boolean,
   setCorrectAnswers: SetState<WordData[]>,
   setIncorrectAnswers: SetState<WordData[]>,
   clearGameState: () => void,
@@ -13,6 +16,9 @@ interface GameContextValues {
 const defaultValue = {
   correctAnswers: [],
   incorrectAnswers: [],
+  token: '',
+  userId: '',
+  isLoggedIn: false,
   setCorrectAnswers: () => { },
   setIncorrectAnswers: () => { },
   clearGameState: () => { },

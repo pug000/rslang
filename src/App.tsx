@@ -13,6 +13,7 @@ import HeaderContext from '@/contexts/HeaderContext';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
 import GameContext from './contexts/GameContext';
+import { defaultToken, defaultUserID } from './utils/variables';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -24,6 +25,8 @@ function App() {
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
+  const [token, setToken] = useLocalStorage('token', defaultToken);
+  const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
 
   const changeGameState = (value: boolean) => setIsGameStarted(value);
 
@@ -64,6 +67,8 @@ function App() {
       isGameStarted,
       setIsLoggedIn,
       setIsGameStarted,
+      setToken,
+      setUserId,
     }
   ), [isGameStarted, isLoggedIn]);
 
@@ -71,11 +76,14 @@ function App() {
     {
       correctAnswers,
       incorrectAnswers,
+      token,
+      userId,
+      isLoggedIn,
       setCorrectAnswers,
       setIncorrectAnswers,
       clearGameState,
     }
-  ), [correctAnswers, incorrectAnswers]);
+  ), [correctAnswers, incorrectAnswers, token, userId, isLoggedIn]);
 
   return (
     <Routes>

@@ -178,8 +178,10 @@ function SprintGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
-            path="sprint"
+            game="sprint"
             mainColor={mainColor}
+            isShowResult={isShowResult}
+            words={words}
           />
         )}
     </SprintGameContainer>

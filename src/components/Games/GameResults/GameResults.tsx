@@ -1,7 +1,8 @@
 import defaultTheme from '@/styles/theme';
-import { WordData } from '@/ts/interfaces';
-import React, { useContext } from 'react';
+import { Statistics, WordData } from '@/ts/interfaces';
+import React, { useContext, useEffect } from 'react';
 import GameContext from '@/contexts/GameContext';
+import { getUserStatistics, updateUserStatistics } from '@/api';
 import Result from './Result';
 import {
   BtnContainer,
@@ -11,19 +12,29 @@ import {
 interface GameResultsProps {
   correctAnswers: WordData[],
   incorrectAnswers: WordData[],
-  path: string,
+  game: string,
   mainColor: string,
+  isShowResult: boolean,
+  words: WordData[],
 }
 
 function GameResults(
   {
     correctAnswers,
     incorrectAnswers,
-    path,
+    game,
     mainColor,
+    isShowResult,
+    words,
   }: GameResultsProps,
 ) {
-  const { clearGameState } = useContext(GameContext);
+  const {
+    clearGameState,
+    userId,
+    token,
+    isLoggedIn
+  } = useContext(GameContext);
+
   const setResultTitle = () => {
     if (correctAnswers.length >= 5
       && correctAnswers.length < 10) {
@@ -36,6 +47,31 @@ function GameResults(
 
     return 'В этот раз не получилось, но продолжай тренироваться!';
   };
+
+  useEffect(() => {
+    if (isShowResult && isLoggedIn) {
+      (async () => {
+        const data = await getUserStatistics(userId, token);
+        const learnedWords = data.learnedWords + words.length;
+        const gameLearnedWords = data.optional[game].gameLearnedWords + words.length;
+        const correctAnswersCount = data.optional[game].correctAnswersCount + correctAnswers.length;
+        const percentCorrectWord = Math.round((correctAnswersCount * 100) / gameLearnedWords);
+
+        const statistics: Statistics = {
+          learnedWords,
+          optional: {
+            ...data.optional,
+            [game]: {
+              gameLearnedWords,
+              correctAnswersCount,
+              percentCorrectWord,
+            }
+          }
+        };
+        await updateUserStatistics(userId, token, statistics);
+      })();
+    }
+  }, [isShowResult]);
 
   return (
     <>
@@ -57,7 +93,7 @@ function GameResults(
       </GameResultsContainer>
       <BtnContainer>
         <Link
-          to={`/games/${path}`}
+          to={`/games/${game}`}
           $color={mainColor}
           onClick={clearGameState}
         >
