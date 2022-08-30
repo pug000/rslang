@@ -9,7 +9,6 @@ import StarIcon from '@mui/icons-material/Star';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InfoIcon from '@mui/icons-material/Info';
-import GroupsIcon from '@mui/icons-material/Groups';
 
 const navItems: NavItem[] = [
   {
@@ -28,10 +27,7 @@ const navItems: NavItem[] = [
     id: 5, value: 'Статистика', link: '/statistics', icon: <TrendingUpIcon />
   },
   {
-    id: 6, value: 'О проекте', link: '/about-project', icon: <InfoIcon />
-  },
-  {
-    id: 7, value: 'О команде', link: '/about-team', icon: <GroupsIcon />
+    id: 6, value: 'О нас', link: '/about', icon: <InfoIcon />
   },
 ];
 
