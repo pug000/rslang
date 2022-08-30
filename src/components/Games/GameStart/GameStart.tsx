@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 import Button from '@/Button';
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import SetState from '@/ts/types';
 import { generateRandomNumber } from '@/utils/randomize';
@@ -36,7 +36,6 @@ function GameStartPage({
   setCurrentPage,
   setIsLoadingGame,
 }: GameStartPageProps) {
-  const navigate = useNavigate();
   const { setIsGameStarted } = useContext(GameContext);
   return (
     <GamePageWrapper>
@@ -63,11 +62,13 @@ function GameStartPage({
         ))}
       </Group>
       <GameControlBtns btnColor={elementColor}>
-        <Button
-          id="exit"
-          title="Выйти"
-          callback={() => navigate(-1)}
-        />
+        <NavLink to="/games">
+          <Button
+            id="exit"
+            title="Выйти"
+            callback={() => { }}
+          />
+        </NavLink>
         <Button
           id="start"
           title="Играть"
