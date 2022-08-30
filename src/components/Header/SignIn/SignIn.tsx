@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,9 +6,11 @@ import { registerUser, loginUser } from '@/api';
 import { LogInUserData } from '@/ts/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import StatusError from '@/ts/enums';
-import { regex } from '@/utils/variables';
+import {
+  defaultSingInData, defaultToken, defaultUser, defaultUserID, regex
+} from '@/utils/variables';
+import HeaderContext from '@/contexts/HeaderContext';
 import {
   Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
   SignInWelcome, SignInWelcomeContainer
@@ -29,32 +31,22 @@ function SignInModal({
   changeLoggedInState,
   isLoggedIn
 }: SignInProps) {
-  const defaultUser = { email: '', password: '' };
-  const defaultSingInData = {
-    message: '',
-    token: '',
-    refreshToken: '',
-    userId: '',
-  };
-  const dafaultToken = '';
-  const dafaultUserID = '';
+  const { setToken, setUserId } = useContext(HeaderContext);
   const [userData, setUserData] = useState(defaultUser);
   const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
   const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
-  const [token, setToken] = useLocalStorage('token', dafaultToken);
-  const [userId, setUserId] = useLocalStorage('userId', dafaultUserID);
   const [errShow, setErrShow] = useState<boolean>(false);
   interface ErrMessageProps {
     text: string;
     activeErr: boolean;
   }
 
-  const dafaultErrMessage = {
+  const defaultErrMessage = {
     text: '',
     activeErr: false,
   };
 
-  const [errMessage, setErrMessage] = useState<ErrMessageProps>(dafaultErrMessage);
+  const [errMessage, setErrMessage] = useState<ErrMessageProps>(defaultErrMessage);
 
   const changeErrShow = () => setErrShow(((prev) => !prev));
   const changeWaitingData = () => setIsWaitingData(((prev) => !prev));
@@ -112,8 +104,8 @@ function SignInModal({
   const signOutUser = () => {
     errMessageShow('До новых встреч!', false);
     setUserData({ ...defaultUser });
-    setToken(dafaultToken);
-    setUserId(dafaultUserID);
+    setToken(defaultToken);
+    setUserId(defaultUserID);
     changeLoggedInState();
   };
 

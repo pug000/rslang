@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Button from '@/Button';
-import { useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import SetState from '@/ts/types';
 import { generateRandomNumber } from '@/utils/randomize';
+import GameContext from '@/contexts/GameContext';
 import GamePageBg from '../GamePageBg';
 import {
   GamePageWrapper, GamePageTitle, GamePageText, Group, GroupBtn,
@@ -21,7 +22,6 @@ interface GameStartPageProps {
   setCurrentGroupNumber: SetState<number>,
   setCurrentPage: SetState<number>,
   setIsLoadingGame: SetState<boolean>,
-  changeGameState: (value: boolean) => void,
 }
 
 function GameStartPage({
@@ -35,9 +35,8 @@ function GameStartPage({
   setCurrentGroupNumber,
   setCurrentPage,
   setIsLoadingGame,
-  changeGameState
 }: GameStartPageProps) {
-  const navigate = useNavigate();
+  const { setIsGameStarted } = useContext(GameContext);
   return (
     <GamePageWrapper>
       <GamePageBg color={bgColor} />
@@ -63,14 +62,20 @@ function GameStartPage({
         ))}
       </Group>
       <GameControlBtns btnColor={elementColor}>
-        <Button id="exit" title="Выйти" callback={() => navigate(-1)} />
+        <NavLink to="/games">
+          <Button
+            id="exit"
+            title="Выйти"
+            callback={() => { }}
+          />
+        </NavLink>
         <Button
           id="start"
           title="Играть"
           callback={() => {
             setCurrentPage(generateRandomNumber(totalCountPages - 1));
             setIsLoadingGame(true);
-            changeGameState(true);
+            setIsGameStarted(true);
           }}
         />
       </GameControlBtns>

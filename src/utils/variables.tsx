@@ -11,6 +11,16 @@ import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupsIcon from '@mui/icons-material/Groups';
 
+const defaultUser = { email: '', password: '' };
+const defaultSingInData = {
+  message: '',
+  token: '',
+  refreshToken: '',
+  userId: '',
+};
+const defaultToken = '';
+const defaultUserID = '';
+
 const navItems: NavItem[] = [
   {
     id: 1, value: 'Главная', link: '/', icon: <HomeIcon />
@@ -88,5 +98,6 @@ const strikeMessages: string[] = [
 const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export {
-  navItems, games, groupBtns, totalCountPages, regex, strikeMessages
+  navItems, games, groupBtns, totalCountPages, regex, strikeMessages,
+  defaultSingInData, defaultToken, defaultUser, defaultUserID
 };

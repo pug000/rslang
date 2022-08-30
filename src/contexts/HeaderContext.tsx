@@ -6,6 +6,8 @@ interface HeaderContextValues {
   isGameStarted: boolean,
   setIsLoggedIn: SetState<boolean>,
   setIsGameStarted: SetState<boolean>,
+  setToken: SetState<string>,
+  setUserId: SetState<string>,
 }
 
 const defaultValue = {
@@ -13,6 +15,8 @@ const defaultValue = {
   isGameStarted: false,
   setIsLoggedIn: () => { },
   setIsGameStarted: () => { },
+  setToken: () => { },
+  setUserId: () => { },
 };
 
 const HeaderContext = createContext<HeaderContextValues>(defaultValue);
