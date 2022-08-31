@@ -83,6 +83,9 @@
       ],
       "@/About": [
         "components/About/About"
+      ],
+      "@/NotFound": [
+        "components/NotFound/NotFound"
       ]
     }
   },

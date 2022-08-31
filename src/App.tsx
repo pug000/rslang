@@ -13,6 +13,7 @@ import HeaderContext from '@/contexts/HeaderContext';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
 import About from '@/About';
+import NotFound from '@/NotFound';
 import { getFilteredUserWords } from '@/api';
 import GameContext from './contexts/GameContext';
 import {
@@ -198,6 +199,7 @@ function App() {
           )}
         />
         <Route path="about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );
