@@ -2,12 +2,14 @@ import { WordData } from '@/ts/interfaces';
 import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import Pagination from '@mui/material/Pagination';
+import StarRateIcon from '@mui/icons-material/StarRate';
 import SetState from '@/ts/types';
 import { groupBtns, totalCountPages } from '@/utils/variables';
 import { getWords } from '@/api';
 import Loader from '@/Loader';
 import Button from '@/Button';
 import { NavLink } from 'react-router-dom';
+import defaultTheme from '@/styles/theme';
 import {
   BookContainer, Group, GroupBtn, Title, Wrapper, GamesWrapper,
   WordsContainer, Note
@@ -55,8 +57,8 @@ function Book(
     <BookContainer>
       <Title>Учебник</Title>
       <Note>
-        {'Добро пожаловать в учебник RS Lang! '}
-        {'Выберите необходимый уровень английского языка и начните обучение, '}
+        Добро пожаловать в учебник RS Lang!
+        Выберите необходимый уровень английского языка и начните обучение,
         изучая новые слова в словаре или с помощью игр.
       </Note>
       <GamesWrapper>
@@ -65,6 +67,7 @@ function Book(
             id="sprint"
             title="Спринт"
             callback={() => setIsGameStarted(true)}
+            disabled={!!isLoadingPage}
           />
         </NavLink>
         <NavLink to="/games/audio">
@@ -72,6 +75,7 @@ function Book(
             id="audio"
             title="Аудиовызов"
             callback={() => setIsGameStarted(true)}
+            disabled={!!isLoadingPage}
           />
         </NavLink>
       </GamesWrapper>
@@ -89,13 +93,23 @@ function Book(
               <GroupBtn
                 key={id}
                 colors={color}
-                disabled={isLoadingPage}
+                disabled={!!isLoadingPage}
                 active={groupNumber === value}
                 onClick={() => setGroupNumber(value)}
               >
                 {text}
               </GroupBtn>
             ))}
+            <NavLink to="/difficult-words">
+              <GroupBtn
+                colors={defaultTheme.colors.primaryColor}
+                active={false}
+                disabled={!!isLoadingPage}
+                title="Сложные слова"
+              >
+                <StarRateIcon />
+              </GroupBtn>
+            </NavLink>
           </Group>
         </div>
         <Pagination
