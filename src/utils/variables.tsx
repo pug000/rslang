@@ -1,6 +1,8 @@
 import React from 'react';
 import defaultTheme from '@/styles/theme';
-import { Games, GroupButton, NavItem } from '@/ts/interfaces';
+import {
+  Games, GroupButton, NavItem, ProjectDescription
+} from '@/ts/interfaces';
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import SpeedIcon from '@mui/icons-material/Speed';
 import HomeIcon from '@mui/icons-material/Home';
@@ -93,7 +95,25 @@ const strikeMessages: string[] = [
 
 const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+const projectDescription: ProjectDescription[] = [
+  {
+    id: 1,
+    title: 'Эффективность RS Lang',
+    text: 'Наша миссия — сделать обучение английскому языку доступным для всех. Начать учиться с RS Lang может каждый вне зависимости от его подготовки.'
+  },
+  {
+    id: 1,
+    title: 'Обучение в игре',
+    text: 'Игровая механика доказала свою эффективность для всех возрастов. В RS Lang вам будет предложено две игры на понимание английских слов на слух и чтение.'
+  },
+  {
+    id: 1,
+    title: 'Оценка эффективности',
+    text: 'Мы постоянно контролируем качество и прогресс обучения. Один из таких инструментов — статистика, где зарегистрированные пользователи могут отслеживать количество изученных слов, результаты игр и многое другое.'
+  },
+];
+
 export {
   navItems, games, groupBtns, totalCountPages, regex, strikeMessages,
-  defaultSingInData, defaultToken, defaultUser, defaultUserID
+  defaultSingInData, defaultToken, defaultUser, defaultUserID, projectDescription
 };

@@ -89,7 +89,21 @@ interface Statistics {
   }
 }
 
+interface Teammate {
+  id: number,
+  name: string,
+  icon: JSX.Element,
+  role: string,
+  link: string
+}
+
+interface ProjectDescription {
+  id: number,
+  title: string,
+  text: string
+}
+
 export {
   GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, GameStatistics, Statistics,
+  LogInUserData, SvgStyles, GameStatistics, Statistics, Teammate, ProjectDescription
 };

@@ -1,24 +1,5 @@
 import React from 'react';
 
-interface BgElementProps {
-  color: string,
-}
-
-function BgElement({ color }: BgElementProps) {
-  return (
-    <svg width="530" height="477" viewBox="0 0 530 477" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <g clipPath="url(#clip0_1_527)">
-        <path d="M400.034 37.3891C452.992 63.4986 503.267 105.188 521.09 158.211C539.226 211.197 524.908 275.517 499.648 335.991C474.387 396.466 437.796 452.502 388.208 469.923C338.584 487.03 275.579 464.929 215.238 446.661C154.862 428.079 96.8366 413.366 57.8188 375.487C19.1154 337.571 -0.616374 276.174 0.222867 213.707C0.712028 150.962 21.7722 87.1478 64.2825 49.5301C107.107 11.8767 171.382 0.42033 231.217 0.288958C291.367 0.121803 347.077 11.2797 400.034 37.3891Z" fill={color} />
-      </g>
-      <defs>
-        <clipPath id="clip0_1_527">
-          <rect width="530" height="477" fill="white" />
-        </clipPath>
-      </defs>
-    </svg>
-  );
-}
-
 function RomaSvg() {
   return (
     <svg width="392" height="500" viewBox="0 0 392 500" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -60,5 +41,5 @@ function ArtemSvg() {
 }
 
 export {
-  BgElement, RomaSvg, NastyaSvg, ArtemSvg
+  RomaSvg, NastyaSvg, ArtemSvg
 };
