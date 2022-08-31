@@ -7,6 +7,8 @@ interface WordItemContextValues {
   learnedWords: WordData[],
   setDifficultWords: SetState<WordData[]>,
   setLearnedWords: SetState<WordData[]>,
+  token: string,
+  userId: string,
 }
 
 const defaultValue = {
@@ -14,6 +16,8 @@ const defaultValue = {
   learnedWords: [],
   setDifficultWords: () => { },
   setLearnedWords: () => { },
+  token: '',
+  userId: '',
 };
 
 const WordItemContext = createContext<WordItemContextValues>(defaultValue);

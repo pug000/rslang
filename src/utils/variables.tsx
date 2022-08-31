@@ -21,6 +21,10 @@ const defaultSingInData = {
 };
 const defaultToken = '';
 const defaultUserID = '';
+const defaultErrMessage = {
+  text: '',
+  activeErr: false,
+};
 
 const navItems: NavItem[] = [
   {
@@ -113,7 +117,21 @@ const projectDescription: ProjectDescription[] = [
   },
 ];
 
+const FILTER_DIFFICULT_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
+const FILTER_LEARNED_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"false"}');
+
 export {
-  navItems, games, groupBtns, totalCountPages, regex, strikeMessages,
-  defaultSingInData, defaultToken, defaultUser, defaultUserID, projectDescription
+  navItems,
+  games,
+  groupBtns,
+  totalCountPages,
+  regex,
+  strikeMessages,
+  defaultSingInData,
+  defaultToken, defaultUser,
+  defaultUserID,
+  defaultErrMessage,
+  FILTER_DIFFICULT_WORDS,
+  FILTER_LEARNED_WORDS,
+  projectDescription
 };

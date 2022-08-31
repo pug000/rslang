@@ -57,6 +57,10 @@ interface UserData {
   email: string;
   password: string;
 }
+interface ErrMessageProps {
+  text: string;
+  activeErr: boolean;
+}
 
 interface RegisteredUserData {
   email: string;
@@ -70,10 +74,56 @@ interface LogInUserData {
   name?: string;
 }
 
+interface GetUserProp {
+  name: string,
+  email: string,
+  password: string
+}
+
 interface SvgStyles {
   width: string,
   height: string,
   transition: string,
+}
+interface Color {
+  $color?: string,
+}
+
+interface WordCreateProp {
+  difficulty: string,
+  optional: {
+    isDifficultWord: string,
+  }
+}
+
+interface FilteredWordData {
+  paginatedResults: [{
+    _id: string;
+    group: number,
+    page: number,
+    word: string,
+    image: string,
+    audio: string,
+    audioMeaning: string,
+    audioExample: string,
+    textMeaning: string,
+    textExample: string,
+    transcription: string,
+    wordTranslate: string,
+    textMeaningTranslate: string,
+    textExampleTranslate: string,
+    userWord?: {
+      difficulty?: number,
+      optional?: {
+        isDifficultWord?: boolean
+      }
+    }
+  }]
+  totalCount: [
+    {
+      count: number
+    }
+  ]
 }
 
 interface GameStatistics {
@@ -104,6 +154,22 @@ interface ProjectDescription {
 }
 
 export {
-  GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, GameStatistics, Statistics, Teammate, ProjectDescription
+  GroupButton,
+  NavItem,
+  WordData,
+  Track,
+  Games,
+  UserData,
+  RegisteredUserData,
+  LogInUserData,
+  SvgStyles,
+  GameStatistics,
+  Statistics,
+  Teammate,
+  ProjectDescription,
+  Color,
+  WordCreateProp,
+  GetUserProp,
+  FilteredWordData,
+  ErrMessageProps
 };
