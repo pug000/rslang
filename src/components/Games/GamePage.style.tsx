@@ -10,10 +10,6 @@ interface GroupButtonProps {
   active: boolean,
 }
 
-interface GameControlBtnsProps {
-  btnColor: string,
-}
-
 interface IconProps {
   iconColor: string,
 }
@@ -92,13 +88,9 @@ const GroupBtn = styled.button<GroupButtonProps>`
   `}
 `;
 
-const GameControlBtns = styled.div<GameControlBtnsProps>`
+const GameControlBtns = styled.div`
   display: flex;
   gap: 40px;
-
-  Button {
-    background-color: ${(props) => props.btnColor};
-  }
 `;
 
 const IconWrapper = styled.div<IconProps>`

@@ -159,8 +159,7 @@ function SignInModal({
             ? (
               <>
                 <Button id="signOut" title="Выйти" callback={signOutUser} />
-                <Button id="signCancel" title="Отмена" callback={() => setActive(false)} />
-                {/* <Button id="signCancel" title="проба" callback={getData} /> */}
+                <Button id="cancel" title="Отмена" callback={() => setActive(false)} />
               </>
             )
             : (
