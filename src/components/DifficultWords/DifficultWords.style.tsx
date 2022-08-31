@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const DifficultWordsContainer = styled.div`
+const DifficultWordsWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,6 +21,21 @@ const DifficultWordsTitle = styled.h2`
   margin-bottom: 1.5rem;
 `;
 
+const DifficultWordsContainer = styled.div`
+width: 100%;
+display: flex;
+flex-direction: column;
+gap: 30px;
+grid-area: words;
+align-items: center;
+justify-content: center;
+min-height: 600px;
+
+@media (max-width: 950px) {
+  align-items: center;
+}
+`;
+
 export {
-  DifficultWordsContainer, DifficultWordsTitle
+  DifficultWordsWrapper, DifficultWordsTitle, DifficultWordsContainer
 };

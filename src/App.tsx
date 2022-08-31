@@ -28,6 +28,7 @@ function App() {
   const [words, setWords] = useState<WordData[]>([]);
   const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
+  const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('CurrentPageDifficult', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
   const [token, setToken] = useLocalStorage('token', defaultToken);
@@ -53,7 +54,7 @@ function App() {
   useEffect(() => (
     isLoggedIn
       ? setIsLoggedIn(true)
-      : setIsLoggedIn(false)
+      : (setIsLoggedIn(false), setDifficultWords([]), setLearnedWords([]))
   ), [isLoggedIn]);
 
   const wordItemValue = useMemo(() => (
@@ -92,7 +93,7 @@ function App() {
         setLearnedWords(lernedWordsChangeKeys);
       }
     })();
-  }, [groupNumber, currentPage]);
+  }, [isLoggedIn, currentPage]);
 
   const gameValue = useMemo(() => (
     {
@@ -153,12 +154,8 @@ function App() {
               <ProtectedRoute conditionValue={isLoggedIn}>
                 <DifficultWords
                   isLoggedIn={isLoggedIn}
-                  currentPage={currentPage}
-                  groupNumber={groupNumber}
-                  words={words}
-                  setWords={setWords}
-                  setCurrentPage={setCurrentPage}
-                  setGroupNumber={setGroupNumber}
+                  currentPageDifficult={currentPageDifficult}
+                  setCurrentPageDifficult={setCurrentPageDifficult}
                 />
               </ProtectedRoute>
             </WordItemContext.Provider>

@@ -3,7 +3,8 @@ import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import {
-  registerUser, loginUser, getUser, getUserWords, getNewToken
+  registerUser, loginUser,
+  // getUser, getUserWords, getNewToken
 } from '@/api';
 import { LogInUserData, ErrMessageProps } from '@/ts/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
@@ -102,14 +103,14 @@ function SignInModal({
     changeLoggedInState();
   };
 
-  const getData = async () => {
-    const resGetUser = await getUser(logInUserData.userId, logInUserData.token);
-    console.log('getUser ', resGetUser);
-    const resWordsUser = await getUserWords(logInUserData.userId, logInUserData.token);
-    console.log('getUserWord ', resWordsUser);
-    const resNewToken = await getNewToken(logInUserData.userId, logInUserData.token);
-    console.log('getUser resNewToken ', resNewToken);
-  };
+  // const getData = async () => {
+  //   const resGetUser = await getUser(logInUserData.userId, logInUserData.token);
+  //   console.log('getUser ', resGetUser);
+  //   const resWordsUser = await getUserWords(logInUserData.userId, logInUserData.token);
+  //   console.log('getUserWord ', resWordsUser);
+  //   const resNewToken = await getNewToken(logInUserData.userId, logInUserData.token);
+  //   console.log('getUser resNewToken ', resNewToken);
+  // };
 
   return (
     <Shadow onClick={() => setActive(false)} active={active}>
@@ -158,7 +159,7 @@ function SignInModal({
               <>
                 <Button id="signOut" title="Выйти" callback={signOutUser} />
                 <Button id="signCancel" title="Отмена" callback={() => setActive(false)} />
-                <Button id="signCancel" title="проба" callback={getData} />
+                {/* <Button id="signCancel" title="проба" callback={getData} /> */}
               </>
             )
             : (

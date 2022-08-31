@@ -1,95 +1,123 @@
-import { FilteredWordData, WordData } from '@/ts/interfaces';
 import React, { useContext, useEffect, useState } from 'react';
-import WordItem from '@/WordItem';
+import { WordData } from '@/ts/interfaces';
 import Pagination from '@mui/material/Pagination';
 import SetState from '@/ts/types';
-import { FILTER_DIFFICULT_WORDS, groupBtns, totalCountPages } from '@/utils/variables';
-import { getFilteredUserWords, getWords } from '@/api';
+import { FILTER_DIFFICULT_WORDS } from '@/utils/variables';
+import { getFilteredUserWordsByPage } from '@/api';
 import Loader from '@/Loader';
-import Button from '@/Button';
-import { NavLink } from 'react-router-dom';
 import WordItemContext from '@/contexts/WordItemContext';
-import { DifficultWordsContainer, DifficultWordsTitle } from './DifficultWords.style';
-import {
-  BookContainer, Group, GroupBtn, Title, Wrapper, GamesWrapper,
-  WordsContainer, Note
-} from '../Book/Book.style';
-import WordElem from './DifficultWordItem';
 import { ChangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
+import {
+  DifficultWordsWrapper, DifficultWordsContainer, DifficultWordsTitle
+} from './DifficultWords.style';
+import DifficultWordItem from './DifficultWordItem/DifficultWordItem';
 
 interface DifficultWordsProps {
   isLoggedIn: boolean | null;
-  currentPage: number,
-  groupNumber: number,
-  words: WordData[],
-  setWords: SetState<WordData[]>,
-  setCurrentPage: SetState<number>,
-  setGroupNumber: SetState<number>,
+  currentPageDifficult: number,
+  setCurrentPageDifficult: SetState<number>,
 }
 
 function DifficultWords({
-  isLoggedIn, currentPage,
-  groupNumber,
-  words,
-  setWords,
-  setCurrentPage,
-  setGroupNumber,
+  isLoggedIn,
+  currentPageDifficult,
+  setCurrentPageDifficult,
 }: DifficultWordsProps) {
   if (!isLoggedIn) return null;
 
   const {
     difficultWords,
-    learnedWords,
-    setDifficultWords,
-    setLearnedWords,
     token,
     userId,
   } = useContext(WordItemContext);
 
+  const totalCountPagesDifficult = Math.floor(difficultWords.length / 20);
+
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const [wordsDifficult, setWordsDifficult] = useState<WordData[]>([]);
 
-  // useEffect(() => {
-  //   audio?.remove();
-  //   setAudio(null);
+  useEffect(() => {
+    audio?.remove();
+    setAudio(null);
 
-  //   (async () => {
-  //     setIsLoadingPage(true);
-  //     const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
-
-  //     if (difficultWordsData && typeof difficultWordsData !== 'number') {
-  //       const difficultWordsChangeKeys = ChangeWordsDataKeyFromServer([difficultWordsData[0]]);
-  //       setDifficultWords(difficultWordsChangeKeys);
-  //       setIsLoadingPage(false);
-  //     }
-  //     console.log('difficultWords', difficultWords);
-  //   })();
-  // }, [groupNumber, currentPage]);
+    (async () => {
+      setIsLoadingPage(true);
+      const wordsDifficultData = await getFilteredUserWordsByPage(FILTER_DIFFICULT_WORDS, userId, token, currentPageDifficult);
+      if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
+        const wordsDifficultDataChangeKeys = ChangeWordsDataKeyFromServer([wordsDifficultData[0]]);
+        setWordsDifficult(wordsDifficultDataChangeKeys);
+        setIsLoadingPage(false);
+      }
+    })();
+  }, [currentPageDifficult]);
 
   return (
-    <DifficultWordsContainer>
+    <DifficultWordsWrapper>
       {isLoggedIn
         && (
           <>
             <DifficultWordsTitle>
               Сложные слова
             </DifficultWordsTitle>
-            <WordsContainer>
+            {
+              totalCountPagesDifficult >= 1
+              && (
+                <Pagination
+                  count={totalCountPagesDifficult + 1}
+                  page={currentPageDifficult + 1}
+                  disabled={isLoadingPage}
+                  variant="outlined"
+                  shape="rounded"
+                  size="large"
+                  sx={
+                    {
+                      display: 'grid',
+                      gridArea: 'paginationTop',
+                      justifySelf: 'center',
+                    }
+                  }
+                  onChange={(_, value) => setCurrentPageDifficult(value - 1)}
+                />
+              )
+            }
+            <DifficultWordsContainer>
               {isLoadingPage
                 ? ((
                   <Loader />
-                )) : difficultWords.map((word) => (
-                  <WordElem
+                )) : wordsDifficult.map((word) => (
+                  <DifficultWordItem
                     key={word.id}
                     item={word}
                     audio={audio}
                     setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
                   />
                 ))}
-            </WordsContainer>
+            </DifficultWordsContainer>
+            {
+              totalCountPagesDifficult >= 1
+              && (
+                <Pagination
+                  count={totalCountPagesDifficult + 1}
+                  page={currentPageDifficult + 1}
+                  disabled={isLoadingPage}
+                  variant="outlined"
+                  shape="rounded"
+                  size="large"
+                  sx={
+                    {
+                      display: 'grid',
+                      gridArea: 'paginationTop',
+                      justifySelf: 'center',
+                    }
+                  }
+                  onChange={(_, value) => setCurrentPageDifficult(value - 1)}
+                />
+              )
+            }
           </>
         )}
-    </DifficultWordsContainer>
+    </DifficultWordsWrapper>
   );
 }
 

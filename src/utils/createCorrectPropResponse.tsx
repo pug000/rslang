@@ -1,4 +1,3 @@
-import React from 'react';
 import { WordData, WordCreateProp, FilteredWordData } from '@/ts/interfaces';
 
 const createWordProp = (word: WordData, isDifficultWord: boolean) => {

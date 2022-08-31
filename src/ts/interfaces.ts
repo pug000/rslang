@@ -119,9 +119,9 @@ interface FilteredWordData {
       }
     }
   }]
-  totalCount?: [
+  totalCount: [
     {
-      count?: number
+      count: number
     }
   ]
 }

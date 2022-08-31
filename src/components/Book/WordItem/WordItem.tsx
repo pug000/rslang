@@ -2,7 +2,7 @@ import {
   baseUrl, createUserWord, deleteUserWord, getUserWord
 } from '@/api';
 import defaultTheme from '@/styles/theme';
-import { Track, WordData, WordCreateProp } from '@/ts/interfaces';
+import { Track, WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import DOMPurify from 'dompurify';
 import React, {
@@ -10,12 +10,12 @@ import React, {
 } from 'react';
 import WordItemContext from '@/contexts/WordItemContext';
 import ServerResponses from '@/ts/enums';
+import { createWordProp } from '@/utils/createCorrectPropResponse';
 import {
   DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn, Word, WordBtnContainer,
   WordImg, WordInfoContainer, WordInfoWrapper, WordPlayAudioBtn, WordPlayIcon,
   WordText, WordTitle
 } from './WordItem.style';
-import { createWordProp } from '@/utils/createCorrectPropResponse';
 
 interface WordItemProps {
   item: WordData,
@@ -62,19 +62,11 @@ function WordItem(
     setState((prev) => [...prev, item]);
     const currentWord = createWordProp(item, isDifficultWord);
     const resCreateUserWord = await getUserWord(item.id, userId, token);
-    console.log('resCreateUserWord ', resCreateUserWord);
-
     if (resCreateUserWord === ServerResponses.error404) {
-      await createUserWord(item.id, currentWord, userId, token);
-      console.log('create');
-    } else if (resCreateUserWord === ServerResponses.error417) {
-      console.log('del then create');
-      await deleteUserWord(item.id, userId, token);
       await createUserWord(item.id, currentWord, userId, token);
     } else {
       await deleteUserWord(item.id, userId, token);
       await createUserWord(item.id, currentWord, userId, token);
-      console.log('else create');
     }
   };
 
@@ -88,8 +80,6 @@ function WordItem(
     arr: WordData[],
     setState: SetState<WordData[]>
   ) => {
-    console.log(item);
-
     let isDifficultWord: boolean;
     if (e.currentTarget.id === 'learned') {
       isDifficultWord = false;
@@ -98,11 +88,9 @@ function WordItem(
       isDifficultWord = true;
       setLearnedWords((prev) => prev.filter((el) => el.id !== item.id));
     }
-    console.log('difficultWords 3 ', difficultWords);
-    console.log('learnedWords 3 ', learnedWords);
-    toggleActive(arr)
+    return (toggleActive(arr)
       ? removeActiveWord(setState)
-      : addActiveWord(setState, isDifficultWord);
+      : addActiveWord(setState, isDifficultWord));
   };
 
   useEffect(() => {
