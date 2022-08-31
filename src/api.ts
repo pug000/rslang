@@ -1,5 +1,5 @@
 import {
-  WordData, UserData, RegisteredUserData, LogInUserData, WordCreateProp, GetUserProp,
+  WordData, UserData, RegisteredUserData, LogInUserData, WordCreateProp, GetUserProp, FilteredWordData,
 } from '@/ts/interfaces';
 import ServerResponses from './ts/enums';
 
@@ -144,8 +144,7 @@ const createUserWord = async (wordId: string, word: WordCreateProp) => {
     const { status } = res;
     console.log('word created');
     return status;
-  }
-  if (res.status === ServerResponses.error417) {
+  } if (res.status === ServerResponses.error417) {
     const { status } = res;
     console.log('word already exist');
     return status;
@@ -193,6 +192,32 @@ const getUserWords = async (userId: string) => {
   return content;
 };
 
+const getUserWord = async (wirdId: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userIdLocal}/words/${wirdId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${tokenLocal}`,
+      Accept: 'application/json',
+    }
+  });
+  if (res.status === ServerResponses.error402) {
+    const { status } = res;
+    console.log('need token');
+    return status;
+  } if (res.status === ServerResponses.error404) {
+    const { status } = res;
+    console.log('not found');
+    return status;
+  } if (res.status === ServerResponses.error417) {
+    const { status } = res;
+    console.log('already exist');
+    return status;
+  }
+  const content: WordCreateProp = await res.json();
+  console.log('get word');
+  return content;
+};
+
 const getFilteredUserWords = async (filter: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userIdLocal}/aggregatedWords?filter=${filter}`, {
     method: 'GET',
@@ -206,12 +231,12 @@ const getFilteredUserWords = async (filter: string) => {
     console.log('need token');
     return status;
   }
-  const content = await res.json();
+  const content: FilteredWordData[] = await res.json();
   console.log('getFilteredUserWords', content);
   return content;
 };
 
 export {
   baseUrl, endpoints, getWords, registerUser, loginUser, getUser, getUserWords,
-  getNewToken, createUserWord, deleteUserWord, getFilteredUserWords
+  getNewToken, createUserWord, deleteUserWord, getFilteredUserWords, getUserWord
 };

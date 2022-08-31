@@ -92,7 +92,37 @@ interface WordCreateProp {
   }
 }
 
+interface FilteredWordData {
+  paginatedResults: [{
+    _id: string;
+    group: number,
+    page: number,
+    word: string,
+    image: string,
+    audio: string,
+    audioMeaning: string,
+    audioExample: string,
+    textMeaning: string,
+    textExample: string,
+    transcription: string,
+    wordTranslate: string,
+    textMeaningTranslate: string,
+    textExampleTranslate: string,
+    userWord?: {
+      difficulty?: number,
+      optional?: {
+        isDifficultWord?: boolean
+      }
+    }
+  }]
+  totalCount?: [
+    {
+      count?: number
+    }
+  ]
+}
+
 export {
   GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, Color, WordCreateProp, GetUserProp,
+  LogInUserData, SvgStyles, Color, WordCreateProp, GetUserProp, FilteredWordData
 };

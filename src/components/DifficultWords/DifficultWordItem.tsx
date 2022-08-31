@@ -14,7 +14,7 @@ import {
   DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn, Word, WordBtnContainer,
   WordImg, WordInfoContainer, WordInfoWrapper, WordPlayAudioBtn, WordPlayIcon,
   WordText, WordTitle
-} from './WordItem.style';
+} from './DifficultWordItem.style';
 
 interface WordItemProps {
   item: WordData,
