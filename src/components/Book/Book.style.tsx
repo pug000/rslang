@@ -1,7 +1,7 @@
+import { ColorProps } from '@/ts/interfaces';
 import styled from 'styled-components';
 
-interface GroupButtonProps {
-  colors: string,
+interface GroupButtonProps extends ColorProps {
   active: boolean,
 }
 
@@ -84,16 +84,16 @@ const Group = styled.div`
   grid-area: group;
 `;
 
-const GroupBtn = styled.button<GroupButtonProps>`
+const GroupButton = styled.button<GroupButtonProps>`
   width: 55px;
   height: 55px;
   border: 3px solid;
   border-radius: 15%;
   cursor: pointer;
   transition: ${({ theme }) => theme.effects.transition};
-  background-color: ${({ colors }) => colors};
-  color: ${({ theme }) => theme.colors.bgWhite};
-  border-color: ${({ colors }) => colors};
+  background-color: ${({ $color }) => $color};
+  color: ${({ theme }) => theme.colors.backgroundWhite};
+  border-color: ${({ $color }) => $color};
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
@@ -101,11 +101,11 @@ const GroupBtn = styled.button<GroupButtonProps>`
 
   ${(props) => props.active && `
     background-color: transparent;
-    color: ${props.colors};
+    color: ${props.$color};
   `}
 `;
 
 export {
-  BookContainer, Title, Wrapper, GamesWrapper, Group, GroupBtn,
+  BookContainer, Title, Wrapper, GamesWrapper, Group, GroupButton,
   WordsContainer, Note
 };

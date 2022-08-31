@@ -24,10 +24,10 @@ const methods = {
 
 const getWords = async (group = 0, page = 0) => {
   try {
-    const res = await fetch(`${baseUrl}/${endpoints.words}?group=${group}&page=${page}`, {
+    const response = await fetch(`${baseUrl}/${endpoints.words}?group=${group}&page=${page}`, {
       method: methods.get,
     });
-    const data: WordData[] = await res.json();
+    const data: WordData[] = await response.json();
     return data;
   } catch (err) {
     throw new Error(`${err}`);
@@ -36,7 +36,7 @@ const getWords = async (group = 0, page = 0) => {
 
 const updateUserStatistics = async (userId: string, token: string, body: Statistics) => {
   try {
-    const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.statistics}`, {
+    const response = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.statistics}`, {
       method: methods.put,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -45,7 +45,7 @@ const updateUserStatistics = async (userId: string, token: string, body: Statist
       },
       body: JSON.stringify(body)
     });
-    const { status } = res;
+    const { status } = response;
 
     return status;
   } catch (err) {
@@ -55,7 +55,7 @@ const updateUserStatistics = async (userId: string, token: string, body: Statist
 
 const getUserStatistics = async (userId: string, token: string) => {
   try {
-    const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.statistics}`, {
+    const response = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.statistics}`, {
       method: methods.get,
       headers: {
         Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const getUserStatistics = async (userId: string, token: string) => {
         'Content-Type': 'application/json'
       },
     });
-    const { status } = res;
+    const { status } = response;
 
     if (status === StatusError.error404) {
       const defaultData: Statistics = {
@@ -85,7 +85,7 @@ const getUserStatistics = async (userId: string, token: string) => {
       return defaultData;
     }
 
-    const data: Statistics = await res.json();
+    const data: Statistics = await response.json();
     return data;
   } catch (err) {
     throw new Error(`${err}`);
@@ -94,7 +94,7 @@ const getUserStatistics = async (userId: string, token: string) => {
 
 const registerUser = async (userData: UserData) => {
   try {
-    const res = await fetch(`${baseUrl}/${endpoints.users}`, {
+    const response = await fetch(`${baseUrl}/${endpoints.users}`, {
       method: methods.post,
       headers: {
         Accept: 'application/json',
@@ -102,12 +102,14 @@ const registerUser = async (userData: UserData) => {
       },
       body: JSON.stringify(userData),
     });
-    if (res.status === StatusError.error417 || res.status === StatusError.error422) {
-      const { status } = res;
+    const { status } = response;
+
+    if (status === StatusError.error417 || status === StatusError.error422) {
       return status;
     }
-    const content: RegisteredUserData = await res.json();
-    return content;
+
+    const data: RegisteredUserData = await response.json();
+    return data;
   } catch (err) {
     throw new Error(`${err}`);
   }
@@ -115,7 +117,7 @@ const registerUser = async (userData: UserData) => {
 
 const loginUser = async (userData: UserData) => {
   try {
-    const res = await fetch(`${baseUrl}/${endpoints.signin}`, {
+    const response = await fetch(`${baseUrl}/${endpoints.signin}`, {
       method: methods.post,
       headers: {
         Accept: 'application/json',
@@ -123,12 +125,14 @@ const loginUser = async (userData: UserData) => {
       },
       body: JSON.stringify(userData),
     });
-    if (res.status === StatusError.error403 || res.status === StatusError.error404) {
-      const { status } = res;
+    const { status } = response;
+
+    if (status === StatusError.error403 || status === StatusError.error404) {
       return status;
     }
-    const content: LogInUserData = await res.json();
-    return content;
+
+    const data: LogInUserData = await response.json();
+    return data;
   } catch (err) {
     throw new Error(`${err}`);
   }

@@ -5,46 +5,39 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
 import HeaderContext from '@/contexts/HeaderContext';
 import {
-  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles, menuIconStyle
+  HeaderContainer, HeaderButton, HeaderLink, LoginButton, iconStyles, menuIconStyle
 } from './Header.style';
 import LogoSvg from './LogoSvg';
 import LogInIcon from './LogInIcon';
 
 function Header() {
-  const {
-    isLoggedIn,
-    isGameStarted,
-    setIsLoggedIn,
-    setIsGameStarted,
-  } = useContext(HeaderContext);
+  const { isLoggedIn, setLoggedIn } = useContext(HeaderContext);
   const [isNavMenuOpen, setNavMenuOpen] = useState(false);
   const [modalActive, setModalActive] = useState(false);
   const [menuActive, setMenuActive] = useState(false);
 
-  const changeLoggedInState = () => setIsLoggedIn(((prev) => !prev));
+  const changeLoggedInState = () => setLoggedIn(((prev) => !prev));
 
   return (
     <HeaderContainer>
-      <HeaderBtn onClick={() => {
+      <HeaderButton onClick={() => {
         setNavMenuOpen(modalActive ? false : !isNavMenuOpen);
         setMenuActive(!menuActive);
       }}
       >
         <MenuIcon sx={menuIconStyle} />
-      </HeaderBtn>
+      </HeaderButton>
       <HeaderLink to="/"><LogoSvg /></HeaderLink>
-      <HeaderBtn>
+      <HeaderButton>
         {isLoggedIn
           ? <LogoutIcon sx={iconStyles} onClick={() => setModalActive(!modalActive)} />
-          : <LoginBtn onClick={() => setModalActive(!modalActive)}><LogInIcon /></LoginBtn>}
-      </HeaderBtn>
+          : <LoginButton onClick={() => setModalActive(!modalActive)}><LogInIcon /></LoginButton>}
+      </HeaderButton>
       <NavMenu
         isNavMenuOpen={isNavMenuOpen}
-        isGameStarted={isGameStarted}
         setNavMenuOpen={setNavMenuOpen}
         active={menuActive}
         setActive={setMenuActive}
-        setIsGameStarted={setIsGameStarted}
       />
       <SignInModal
         active={modalActive}

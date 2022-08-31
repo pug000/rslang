@@ -3,7 +3,7 @@ import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import CloseIcon from '@mui/icons-material/Close';
 import { NavLink } from 'react-router-dom';
-import { SvgStyles } from '@/ts/interfaces';
+import { ColorProps, SvgStyles } from '@/ts/interfaces';
 import defaultTheme from '@/styles/theme';
 
 const svgStyles: SvgStyles = {
@@ -11,10 +11,6 @@ const svgStyles: SvgStyles = {
   height: '100%',
   transition: defaultTheme.effects.transition,
 };
-
-interface SvgColorProps {
-  $color?: string,
-}
 
 const GameControls = styled.div`
   width: 100%;
@@ -24,7 +20,7 @@ const GameControls = styled.div`
   padding: 0px 40px;
 `;
 
-const GameControlBtn = styled.button`
+const GameControlButton = styled.button`
   background-color: transparent;
   width: 50px;
   border: none;
@@ -42,39 +38,39 @@ const Link = styled(NavLink)`
   }
 `;
 
-const CloseIconSvg = styled(CloseIcon).attrs<SvgColorProps>((props) => ({
+const CloseIconSvg = styled(CloseIcon).attrs<ColorProps>((props) => ({
   style: {
     ...svgStyles,
     color: props.$color,
   }
-})) <SvgColorProps>`
+})) <ColorProps>`
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
 `;
 
-const FullscreenIconSvg = styled(FullscreenIcon).attrs<SvgColorProps>((props) => ({
+const FullscreenIconSvg = styled(FullscreenIcon).attrs<ColorProps>((props) => ({
   style: {
     ...svgStyles,
     color: props.$color,
   }
-})) <SvgColorProps>`
+})) <ColorProps>`
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
 `;
 
-const FullscreenExitIconSvg = styled(FullscreenExitIcon).attrs<SvgColorProps>((props) => ({
+const FullscreenExitIconSvg = styled(FullscreenExitIcon).attrs<ColorProps>((props) => ({
   style: {
     ...svgStyles,
     color: props.$color,
   }
-})) <SvgColorProps>`
+})) <ColorProps>`
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
 `;
 
 export {
-  GameControls, GameControlBtn, Link, CloseIconSvg, FullscreenIconSvg, FullscreenExitIconSvg
+  GameControls, GameControlButton, Link, CloseIconSvg, FullscreenIconSvg, FullscreenExitIconSvg
 };

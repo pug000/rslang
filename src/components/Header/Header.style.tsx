@@ -4,7 +4,7 @@ import defaultTheme from '@/styles/theme';
 
 const HeaderContainer = styled.header`
   height: 60px;
-  background-color: ${defaultTheme.colors.bgWhite};
+  background-color: ${defaultTheme.colors.backgroundWhite};
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -13,7 +13,7 @@ const HeaderContainer = styled.header`
   gap: 10px;
 `;
 
-const HeaderBtn = styled.button`
+const HeaderButton = styled.button`
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -58,7 +58,7 @@ const menuIconStyle = {
   }
 };
 
-const LoginBtn = styled.div`
+const LoginButton = styled.div`
   width: 60px;
   height: 60px;
   background-color: transparent;
@@ -72,5 +72,5 @@ const LoginBtn = styled.div`
 `;
 
 export {
-  HeaderContainer, HeaderBtn, HeaderLink, LoginBtn, iconStyles, menuIconStyle
+  HeaderContainer, HeaderButton, HeaderLink, LoginButton, iconStyles, menuIconStyle
 };

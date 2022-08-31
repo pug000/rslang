@@ -1,7 +1,7 @@
 import GameContext from '@/contexts/GameContext';
 import React, { useContext, useEffect, useState } from 'react';
 import {
-  CloseIconSvg, FullscreenExitIconSvg, FullscreenIconSvg, GameControlBtn,
+  CloseIconSvg, FullscreenExitIconSvg, FullscreenIconSvg, GameControlButton,
   GameControls, Link
 } from './GameControl.style';
 
@@ -39,7 +39,7 @@ function GameControl(
 
   return (
     <GameControls>
-      <GameControlBtn
+      <GameControlButton
         tabIndex={-1}
       >
         <Link
@@ -49,15 +49,15 @@ function GameControl(
         >
           <CloseIconSvg $color={color} />
         </Link>
-      </GameControlBtn>
-      <GameControlBtn
+      </GameControlButton>
+      <GameControlButton
         tabIndex={-1}
         onClick={() => setIsFullscreen((prev) => !prev)}
       >
         {!isFullscreen
           ? <FullscreenIconSvg $color={color} />
           : <FullscreenExitIconSvg $color={color} />}
-      </GameControlBtn>
+      </GameControlButton>
     </GameControls>
   );
 }

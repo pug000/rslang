@@ -16,13 +16,13 @@ import GameContext from './contexts/GameContext';
 import { defaultToken, defaultUserID } from './utils/variables';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
+  const [isLoggedIn, setLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
-  const [isGameStarted, setIsGameStarted] = useState(false);
-  const [isShowResult, setIsShowResult] = useState(false);
+  const [isGameStarted, setGameStarted] = useState(false);
+  const [isShowResult, setShowResult] = useState(false);
   const [words, setWords] = useState<WordData[]>([]);
-  const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
+  const [bookGroupNumber, setBookGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
@@ -30,8 +30,8 @@ function App() {
   const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
 
   const clearGameState = () => {
-    setIsGameStarted(false);
-    setIsShowResult(false);
+    setGameStarted(false);
+    setShowResult(false);
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
   };
@@ -46,12 +46,6 @@ function App() {
     );
   }, [isGameStarted]);
 
-  useEffect(() => (
-    isLoggedIn
-      ? setIsLoggedIn(true)
-      : setIsLoggedIn(false)
-  ), [isLoggedIn]);
-
   const wordItemValue = useMemo(() => (
     {
       difficultWords,
@@ -64,9 +58,7 @@ function App() {
   const headerValue = useMemo(() => (
     {
       isLoggedIn,
-      isGameStarted,
-      setIsLoggedIn,
-      setIsGameStarted,
+      setLoggedIn,
       setToken,
       setUserId,
     }
@@ -81,8 +73,8 @@ function App() {
       isLoggedIn,
       isGameStarted,
       isShowResult,
-      setIsShowResult,
-      setIsGameStarted,
+      setShowResult,
+      setGameStarted,
       setCorrectAnswers,
       setIncorrectAnswers,
       clearGameState,
@@ -114,12 +106,12 @@ function App() {
             <WordItemContext.Provider value={wordItemValue}>
               <Book
                 currentPage={currentPage}
-                groupNumber={groupNumber}
+                bookGroupNumber={bookGroupNumber}
                 words={words}
                 setWords={setWords}
                 setCurrentPage={setCurrentPage}
-                setGroupNumber={setGroupNumber}
-                setIsGameStarted={setIsGameStarted}
+                setBookGroupNumber={setBookGroupNumber}
+                setGameStarted={setGameStarted}
               />
             </WordItemContext.Provider>
           )}
@@ -140,7 +132,7 @@ function App() {
               <SprintGamePage
                 isGameStarted={isGameStarted}
                 defaultPage={currentPage}
-                defaultGroupNumber={groupNumber}
+                defaultGroupNumber={bookGroupNumber}
                 defaultWords={words}
               />
             </GameContext.Provider>
@@ -153,7 +145,7 @@ function App() {
               <AudioGamePage
                 isGameStarted={isGameStarted}
                 defaultPage={currentPage}
-                defaultGroupNumber={groupNumber}
+                defaultGroupNumber={bookGroupNumber}
                 defaultWords={words}
               />
             </GameContext.Provider>

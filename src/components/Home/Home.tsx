@@ -2,35 +2,36 @@ import React from 'react';
 import Button from '@/Button';
 import { Link } from 'react-router-dom';
 import {
-  HomeContainer, Bg, BgLeft, BgRight, HomeTextContainer, HomeTitle, HomeText, HomeBtns
+  HomeContainer, Background, BackgroundLeft, BackgroundRight, HomeTextContainer,
+  HomeTitle, HomeText, HomeButtons
 } from './Home.style';
-import { BgLeftIcon, BgRightIcon } from './HomeBg';
+import { BackgroundLeftIcon, BackgroundRightIcon } from './HomeBackground';
 
 function Home() {
   return (
     <HomeContainer>
-      <Bg>
-        <BgLeft>
-          <BgLeftIcon />
-        </BgLeft>
-        <BgRight>
-          <BgRightIcon />
-        </BgRight>
-      </Bg>
+      <Background>
+        <BackgroundLeft>
+          <BackgroundLeftIcon />
+        </BackgroundLeft>
+        <BackgroundRight>
+          <BackgroundRightIcon />
+        </BackgroundRight>
+      </Background>
       <HomeTextContainer>
         <HomeTitle>Английский - это легко!</HomeTitle>
         <HomeText>
           RS Lang — это эффективный сервис для увлекательной практики английского языка.
           Учиться здесь весело и интересно.
         </HomeText>
-        <HomeBtns>
+        <HomeButtons>
           <Link to="/book">
             <Button id="toBook" title="Учебник" callback={() => { }} />
           </Link>
           <Link to="/games">
             <Button id="toGames" title="Игры" callback={() => { }} />
           </Link>
-        </HomeBtns>
+        </HomeButtons>
       </HomeTextContainer>
     </HomeContainer>
   );

@@ -1,21 +1,13 @@
 import defaultTheme from '@/styles/theme';
+import { ColorProps } from '@/ts/interfaces';
 import styled from 'styled-components';
 
-interface BgProps {
-  color: string,
-}
-
-interface GroupButtonProps {
-  colors: string,
+interface GroupButtonProps extends ColorProps {
   active: boolean,
 }
 
 interface GameControlBtnsProps {
   btnColor: string,
-}
-
-interface IconProps {
-  iconColor: string,
 }
 
 const GamePageWrapper = styled.div`
@@ -28,7 +20,7 @@ const GamePageWrapper = styled.div`
   padding-right: 70px;
 `;
 
-const BgWrapper = styled.div`
+const BackgroundWrapper = styled.div`
   position: fixed;
   left: 0;
   bottom: 0;
@@ -37,13 +29,13 @@ const BgWrapper = styled.div`
   height: 80%;
 `;
 
-const BgGamePageDiv = styled.div<BgProps>`
-  background-color: ${(props) => props.color};
+const BackgroundGamePageDiv = styled.div<ColorProps>`
+  background-color: ${({ $color }) => $color};
   margin-top: -5px;
   height: 100%;
 `;
 
-const BgBorderWrapper = styled.div`
+const BackgroundBorderWrapper = styled.div`
   svg {
     width: 100%;
     height: 100%;
@@ -71,16 +63,16 @@ const Group = styled.div`
   gap: 20px;
 `;
 
-const GroupBtn = styled.button<GroupButtonProps>`
+const GroupButton = styled.button<GroupButtonProps>`
   width: 55px;
   height: 55px;
   border: 3px solid;
   border-radius: 15%;
   cursor: pointer;
   transition: ${({ theme }) => theme.effects.transition};
-  background-color: ${({ colors }) => colors};
-  color: ${({ theme }) => theme.colors.bgWhite};
-  border-color: ${({ colors }) => colors};
+  background-color: ${({ $color }) => $color};
+  color: ${({ theme }) => theme.colors.backgroundWhite};
+  border-color: ${({ $color }) => $color};
 
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};  
@@ -88,11 +80,11 @@ const GroupBtn = styled.button<GroupButtonProps>`
 
   ${(props) => props.active && `
     background-color: rgba(255,255,255,0.5);
-    color: ${props.colors};
+    color: ${props.$color};
   `}
 `;
 
-const GameControlBtns = styled.div<GameControlBtnsProps>`
+const GameControlButtons = styled.div<GameControlBtnsProps>`
   display: flex;
   gap: 40px;
 
@@ -101,11 +93,11 @@ const GameControlBtns = styled.div<GameControlBtnsProps>`
   }
 `;
 
-const IconWrapper = styled.div<IconProps>`
+const IconWrapper = styled.div<ColorProps>`
 
   svg {
     font-size: 120px;
-    color: ${(props) => props.iconColor};
+    color: ${({ $color }) => $color};
     opacity: 0.2;
   }
 `;
@@ -118,6 +110,6 @@ const Note = styled.p`
 `;
 
 export {
-  GamePageWrapper, BgWrapper, BgGamePageDiv, BgBorderWrapper, GamePageTitle, GamePageText,
-  Group, GroupBtn, GameControlBtns, IconWrapper, Note
+  GamePageWrapper, BackgroundWrapper, BackgroundGamePageDiv, BackgroundBorderWrapper, GamePageTitle,
+  GamePageText, Group, GroupButton, GameControlButtons, IconWrapper, Note
 };

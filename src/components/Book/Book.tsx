@@ -3,35 +3,35 @@ import React, { useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import Pagination from '@mui/material/Pagination';
 import SetState from '@/ts/types';
-import { groupBtns, totalCountPages } from '@/utils/variables';
+import { groupButtons, totalCountPages } from '@/utils/variables';
 import { getWords } from '@/api';
 import Loader from '@/Loader';
 import Button from '@/Button';
 import { NavLink } from 'react-router-dom';
 import {
-  BookContainer, Group, GroupBtn, Title, Wrapper, GamesWrapper,
+  BookContainer, Group, GroupButton, Title, Wrapper, GamesWrapper,
   WordsContainer, Note
 } from './Book.style';
 
 interface BookProps {
   currentPage: number,
-  groupNumber: number,
+  bookGroupNumber: number,
   words: WordData[],
   setWords: SetState<WordData[]>,
   setCurrentPage: SetState<number>,
-  setGroupNumber: SetState<number>,
-  setIsGameStarted: SetState<boolean>,
+  setBookGroupNumber: SetState<number>,
+  setGameStarted: SetState<boolean>,
 }
 
 function Book(
   {
     currentPage,
-    groupNumber,
+    bookGroupNumber,
     words,
     setWords,
     setCurrentPage,
-    setGroupNumber,
-    setIsGameStarted,
+    setBookGroupNumber,
+    setGameStarted,
   }: BookProps,
 ) {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
@@ -43,13 +43,13 @@ function Book(
 
     (async () => {
       setIsLoadingPage(true);
-      const data = await getWords(groupNumber, currentPage);
+      const data = await getWords(bookGroupNumber, currentPage);
       setTimeout(() => {
         setWords(data);
         setIsLoadingPage(false);
       }, 500);
     })();
-  }, [groupNumber, currentPage]);
+  }, [bookGroupNumber, currentPage]);
 
   return (
     <BookContainer>
@@ -64,21 +64,21 @@ function Book(
           <Button
             id="sprint"
             title="Спринт"
-            callback={() => setIsGameStarted(true)}
+            callback={() => setGameStarted(true)}
           />
         </NavLink>
         <NavLink to="/games/audio">
           <Button
             id="audio"
             title="Аудиовызов"
-            callback={() => setIsGameStarted(true)}
+            callback={() => setGameStarted(true)}
           />
         </NavLink>
       </GamesWrapper>
       <Wrapper>
         <div>
           <Group>
-            {groupBtns.map((
+            {groupButtons.map((
               {
                 id,
                 value,
@@ -86,15 +86,15 @@ function Book(
                 color
               }
             ) => (
-              <GroupBtn
+              <GroupButton
                 key={id}
-                colors={color}
+                $color={color}
                 disabled={isLoadingPage}
-                active={groupNumber === value}
-                onClick={() => setGroupNumber(value)}
+                active={bookGroupNumber === value}
+                onClick={() => setBookGroupNumber(value)}
               >
                 {text}
-              </GroupBtn>
+              </GroupButton>
             ))}
           </Group>
         </div>

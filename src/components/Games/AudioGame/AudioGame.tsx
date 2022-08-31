@@ -8,8 +8,8 @@ import GameControl from '@/GameControl';
 import GameContext from '@/contexts/GameContext';
 import GameResults from '@/GameResults';
 import {
-  AudioBtn, AudioGameBtn, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer, Note,
-  GameBlock,
+  AudioButton, AudioGameButton, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer,
+  Note, GameBlock,
 } from './AudioGame.style';
 
 interface AudioGameProps {
@@ -27,7 +27,7 @@ function AudioGame(
     correctAnswers,
     incorrectAnswers,
     isShowResult,
-    setIsShowResult,
+    setShowResult,
     setCorrectAnswers,
     setIncorrectAnswers,
   } = useContext(GameContext);
@@ -35,7 +35,7 @@ function AudioGame(
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [wordsOptions, setWordsOptions] = useState<string[]>([]);
   const [selectedAnswer, setSelectedAnswer] = useState<string | undefined>();
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [isPlayingAudio, setPlayingAudio] = useState(false);
   const audio = new Audio();
 
   useEffect(() => {
@@ -44,7 +44,7 @@ function AudioGame(
     }
 
     if (step === words.length) {
-      setIsShowResult(true);
+      setShowResult(true);
     }
   }, [step]);
 
@@ -53,11 +53,11 @@ function AudioGame(
       .filter((item) => item.id !== currentWord.id)
       .map((item) => item.wordTranslate)
       .slice(0, 4);
-    setIsPlayingAudio(true);
+    setPlayingAudio(true);
     setWordsOptions(shuffleArray([currentWord.wordTranslate, ...wrongOptions]));
   }, [currentWord]);
 
-  const changePlayStatus = (value: boolean) => setIsPlayingAudio(value);
+  const changePlayStatus = (value: boolean) => setPlayingAudio(value);
 
   useEffect(() => {
     if (isPlayingAudio) {
@@ -96,7 +96,7 @@ function AudioGame(
   const nextStep = () => {
     setSelectedAnswer(undefined);
     setStep((prev) => prev + 1);
-    setIsPlayingAudio(false);
+    setPlayingAudio(false);
   };
 
   const handleKey = (e: KeyboardEvent) => {
@@ -136,16 +136,16 @@ function AudioGame(
       {!isShowResult ? (
         <GameBlock>
           <AudioGameWrapper>
-            <AudioBtn
+            <AudioButton
               tabIndex={-1}
               disabled={isPlayingAudio}
-              onClick={() => setIsPlayingAudio(true)}
+              onClick={() => setPlayingAudio(true)}
             >
               <AudioIcon $active={isPlayingAudio} />
-            </AudioBtn>
+            </AudioButton>
             <AudioGameOptions>
               {wordsOptions.map((el, i) => (
-                <AudioGameBtn
+                <AudioGameButton
                   key={el}
                   tabIndex={-1}
                   className={toggleCorrect(el)}
@@ -156,14 +156,14 @@ function AudioGame(
                   }}
                 >
                   {`${i + 1} ${el}`}
-                </AudioGameBtn>
+                </AudioGameButton>
               ))}
             </AudioGameOptions>
           </AudioGameWrapper>
           <AudioGameWrapper>
             {!selectedAnswer
               ? (
-                <AudioGameBtn
+                <AudioGameButton
                   tabIndex={-1}
                   disabled={!!selectedAnswer}
                   onClick={() => {
@@ -172,15 +172,15 @@ function AudioGame(
                   }}
                 >
                   Не знаю
-                </AudioGameBtn>
+                </AudioGameButton>
               )
               : (
-                <AudioGameBtn
+                <AudioGameButton
                   tabIndex={-1}
                   onClick={nextStep}
                 >
                   Далее
-                </AudioGameBtn>
+                </AudioGameButton>
               )}
             <Note>*можно использовать цифры на клавиатуре и клавишу Enter</Note>
           </AudioGameWrapper>

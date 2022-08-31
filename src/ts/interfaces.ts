@@ -38,16 +38,16 @@ interface Games {
   audio: {
     name: string,
     description: string,
-    bgColor: string,
-    btnColor: string,
+    backgroundColor: string,
+    buttonColor: string,
     icon: JSX.Element,
     note: string
   },
   sprint: {
     name: string,
     description: string,
-    bgColor: string,
-    btnColor: string,
+    backgroundColor: string,
+    buttonColor: string,
     icon: JSX.Element,
     note: string
   }
@@ -89,7 +89,11 @@ interface Statistics {
   }
 }
 
+interface ColorProps {
+  $color?: string,
+}
+
 export {
   GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, GameStatistics, Statistics,
+  LogInUserData, SvgStyles, GameStatistics, Statistics, ColorProps,
 };

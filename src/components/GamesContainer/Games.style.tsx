@@ -35,7 +35,7 @@ const LinkGame = styled(NavLink)`
   }
 `;
 
-const bgAnimation = keyframes`
+const backgroundAnimation = keyframes`
   0% {
     transform: rotate(0deg) scale(2, 2);
   };
@@ -80,7 +80,7 @@ const GameContainer = styled.div`
   &:hover svg {
     transition: ${(props) => props.theme.effects.transition};
     transform: scale(2);
-    animation: ${bgAnimation} 8s infinite 0.2s linear
+    animation: ${backgroundAnimation} 8s infinite 0.2s linear
   }
 `;
 
@@ -90,14 +90,14 @@ const TitleGame = styled.h3`
   transition: ${(props) => props.theme.effects.transition};
 `;
 
-const BgDiv = styled.div`
+const BackgroundDiv = styled.div`
   position: absolute;
   top: 4rem;
   left: 5rem;
   z-index: -1;
 `;
 
-const BgContainer = styled.div`
+const BackgroundContainer = styled.div`
   position: absolute;
   top: -17%;
   left: 50%;
@@ -111,5 +111,5 @@ const BgContainer = styled.div`
 
 export {
   GamesMainContainer, GamesTitle, GamesWrapper, LinkGame,
-  GameContainer, TitleGame, BgDiv, BgContainer
+  GameContainer, TitleGame, BackgroundDiv, BackgroundContainer
 };

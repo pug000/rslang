@@ -7,7 +7,7 @@ import { games } from '@/utils/variables';
 import GameStart from '@/GameStart';
 import { GamePageWrapper } from './GamePage.style';
 import Loader from '../Loader/Loader';
-import GamePageBg from './GamePageBg';
+import GamePageBackground from './GamePageBackground';
 
 interface GamePageProps {
   isGameStarted: boolean,
@@ -27,7 +27,7 @@ function AudioGamePage(
   const [currentPage, setCurrentPage] = useState(defaultPage);
   const [currentGroupNumber, setCurrentGroupNumber] = useState(defaultGroupNumber);
   const [words, setWords] = useState<WordData[]>(defaultWords);
-  const [isLoadingGame, setIsLoadingGame] = useState(false);
+  const [isLoadingGame, setLoadingGame] = useState(false);
 
   useEffect(() => {
     if (isLoadingGame) {
@@ -35,7 +35,7 @@ function AudioGamePage(
         const data = await getWords(currentGroupNumber, currentPage);
         setTimeout(() => {
           setWords(shuffleArray(data));
-          setIsLoadingGame(false);
+          setLoadingGame(false);
         }, 500);
       })();
     }
@@ -44,7 +44,7 @@ function AudioGamePage(
   if (isLoadingGame) {
     return (
       <GamePageWrapper>
-        <GamePageBg color={games.audio.bgColor} />
+        <GamePageBackground $color={games.audio.backgroundColor} />
         <Loader />
       </GamePageWrapper>
     );
@@ -53,8 +53,8 @@ function AudioGamePage(
   if (!isGameStarted) {
     return (
       <GameStart
-        bgColor={games.audio.bgColor}
-        elementColor={games.audio.btnColor}
+        backgroundColor={games.audio.backgroundColor}
+        elementColor={games.audio.buttonColor}
         gameTitle={games.audio.name}
         description={games.audio.description}
         icon={games.audio.icon}
@@ -62,17 +62,17 @@ function AudioGamePage(
         currentGroupNumber={currentGroupNumber}
         setCurrentGroupNumber={setCurrentGroupNumber}
         setCurrentPage={setCurrentPage}
-        setIsLoadingGame={setIsLoadingGame}
+        setLoadingGame={setLoadingGame}
       />
     );
   }
 
   return (
     <GamePageWrapper>
-      <GamePageBg color={games.audio.bgColor} />
+      <GamePageBackground $color={games.audio.backgroundColor} />
       <AudioGame
         words={words}
-        mainColor={games.audio.btnColor}
+        mainColor={games.audio.backgroundColor}
       />
     </GamePageWrapper>
   );

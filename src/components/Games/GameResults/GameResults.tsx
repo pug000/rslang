@@ -6,7 +6,7 @@ import { getUserStatistics, updateUserStatistics } from '@/api';
 import Button from '@/Button';
 import Result from './Result';
 import {
-  BtnContainer,
+  ButtonContainer,
   GameResultsContainer, GameResultsTitle, GameResultsWrapper, Line, Link
 } from './GameResults.style';
 
@@ -91,7 +91,7 @@ function GameResults(
           />
         </GameResultsWrapper>
       </GameResultsContainer>
-      <BtnContainer>
+      <ButtonContainer>
         <Link
           to={`/games/${game}`}
         >
@@ -112,7 +112,7 @@ function GameResults(
             color={mainColor}
           />
         </Link>
-      </BtnContainer>
+      </ButtonContainer>
     </>
   );
 }

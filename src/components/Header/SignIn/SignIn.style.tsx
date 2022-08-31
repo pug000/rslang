@@ -29,7 +29,7 @@ const Shadow = styled.div<ModalProps>`
 const Modal = styled.div<ModalProps>`
   padding: 20px;
   border-radius: 0.6rem;
-  background-color: ${defaultTheme.colors.bgWhite};
+  background-color: ${defaultTheme.colors.backgroundWhite};
   width: 400px;
   height: 450px;
   margin-top: -8%;
@@ -54,7 +54,7 @@ const Modal = styled.div<ModalProps>`
   Button#signUp,
   Button#cancel {
     color: ${defaultTheme.colors.primaryColor};
-    background-color: ${defaultTheme.colors.bgWhite};
+    background-color: ${defaultTheme.colors.backgroundWhite};
     border: solid 0.2rem ${defaultTheme.colors.primaryColor};
   }
 `;

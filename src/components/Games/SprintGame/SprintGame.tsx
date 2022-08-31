@@ -30,14 +30,14 @@ function SprintGame(
     isShowResult,
     setCorrectAnswers,
     setIncorrectAnswers,
-    setIsShowResult,
+    setShowResult,
   } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [translation, setTranslation] = useState<string>(currentWord.wordTranslate);
   const [score, setScore] = useState(0);
   const [strike, setStrike] = useState(0);
-  const [isCorrect, setIsCorrect] = useState(true);
+  const [isCorrect, setCorrect] = useState(true);
 
   useEffect(() => {
     if (step <= words.length - 1) {
@@ -45,7 +45,7 @@ function SprintGame(
     }
 
     if (step === words.length) {
-      setIsShowResult(true);
+      setShowResult(true);
     }
   }, [step]);
 
@@ -77,13 +77,13 @@ function SprintGame(
       setStrike(strike + 1);
     }
 
-    setIsCorrect(true);
+    setCorrect(true);
     setCorrectAnswers((prev) => [...prev, currentWord]);
   };
 
   const incorrectAnswer = () => {
     if (strike) setStrike(0);
-    setIsCorrect(false);
+    setCorrect(false);
     setIncorrectAnswers((prev) => [...prev, currentWord]);
   };
 

@@ -12,7 +12,7 @@ const Global = createGlobalStyle`
 }
 
 body {
-  background-color: ${defaultTheme.colors.bgWhite};
+  background-color: ${defaultTheme.colors.backgroundWhite};
   font-family: ${defaultTheme.fonts.text};
 }
 

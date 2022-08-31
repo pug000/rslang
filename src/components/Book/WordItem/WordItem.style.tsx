@@ -4,18 +4,14 @@ import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
+import { ColorProps } from '@/ts/interfaces';
 
-interface ColorsProps {
-  colors: string,
-}
-
-interface WordTextProps {
-  color: string,
+interface WordTextProps extends ColorProps {
   fontSize: string,
   opacity?: string,
 }
 
-const stylesBtn = {
+const stylesButton = {
   transition: `${defaultTheme.effects.transition}`,
 };
 
@@ -36,7 +32,7 @@ const Word = styled.div`
   }
 `;
 
-const WordImg = styled.img`
+const WordImage = styled.img`
   max-width: 250px;
   width: 100%;
   min-height: 200px;
@@ -72,18 +68,18 @@ const WordTitle = styled.h2`
 `;
 
 const WordText = styled.div<WordTextProps>`
-  color: ${({ color }) => color};
+  color: ${({ $color }) => $color};
   font-size: ${({ fontSize }) => fontSize};
   opacity: ${({ opacity }) => opacity ?? '1'};
 `;
 
-const WordPlayAudioBtn = styled.button`
+const WordPlayAudioButton = styled.button`
   background-color: transparent;
   border: none;
 `;
 
 const WordPlayIcon = styled(PlayCircleOutlineIcon).attrs({
-  style: stylesBtn,
+  style: stylesButton,
 })`
   color: ${({ theme }) => theme.colors.primaryColor};
   cursor: pointer;
@@ -94,7 +90,7 @@ const WordPlayIcon = styled(PlayCircleOutlineIcon).attrs({
   }
 `;
 
-const WordBtnContainer = styled.div`
+const WordButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -105,8 +101,8 @@ const WordBtnContainer = styled.div`
   }
 `;
 
-const DifficultWordBtn = styled(StarBorderIcon).attrs({
-  style: stylesBtn,
+const DifficultWordButton = styled(StarBorderIcon).attrs({
+  style: stylesButton,
 })`
   color: ${({ theme }) => theme.colors.grey};
   cursor: pointer;
@@ -116,8 +112,8 @@ const DifficultWordBtn = styled(StarBorderIcon).attrs({
   }
 `;
 
-const DifficultWordBtnActive = styled(StarIcon).attrs({
-  style: stylesBtn,
+const DifficultWordButtonActive = styled(StarIcon).attrs({
+  style: stylesButton,
 })`
   color: ${({ theme }) => theme.colors.primaryColor};
   cursor: pointer;
@@ -127,10 +123,10 @@ const DifficultWordBtnActive = styled(StarIcon).attrs({
   }
 `;
 
-const LearnedWordBtn = styled(MenuBookIcon).attrs({
-  style: stylesBtn,
-}) <ColorsProps>`
-  color: ${({ colors }) => colors};
+const LearnedWordButton = styled(MenuBookIcon).attrs({
+  style: stylesButton,
+}) <ColorProps>`
+  color: ${({ $color }) => $color};
   cursor: pointer;
 
   &:hover {
@@ -139,7 +135,7 @@ const LearnedWordBtn = styled(MenuBookIcon).attrs({
 `;
 
 export {
-  Word, WordImg, WordInfoContainer, WordInfoWrapper, WordTitle, WordText,
-  WordPlayIcon, WordBtnContainer, DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn,
-  WordPlayAudioBtn,
+  Word, WordImage, WordInfoContainer, WordInfoWrapper, WordTitle, WordText,
+  WordPlayIcon, WordButtonContainer, DifficultWordButton, DifficultWordButtonActive,
+  LearnedWordButton, WordPlayAudioButton,
 };

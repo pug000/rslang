@@ -51,22 +51,22 @@ const games: Games = {
   audio: {
     name: 'Аудиовызов',
     description: 'Вы слышите слово на английском языке и видите 5 вариантов перевода. Цель игры - выбрать правильный перевод озвученного слова.',
-    bgColor: `${defaultTheme.colors.bgPink}`,
-    btnColor: `${defaultTheme.colors.pink}`,
+    backgroundColor: `${defaultTheme.colors.backgroundPink}`,
+    buttonColor: `${defaultTheme.colors.pink}`,
     icon: <VolumeUpIcon />,
     note: '*не забудьте включить звук',
   },
   sprint: {
     name: 'Спринт',
     description: 'Спринт - это тренировка на скорость. Вам будет предложено слово и его перевод. Цель игры - выбрать как можно больше правильных переводов за 1 минуту.',
-    bgColor: `${defaultTheme.colors.bgBlue}`,
-    btnColor: `${defaultTheme.colors.blue}`,
+    backgroundColor: `${defaultTheme.colors.backgroundBlue}`,
+    buttonColor: `${defaultTheme.colors.blue}`,
     icon: <SpeedIcon />,
     note: '*будьте внимательны',
   }
 };
 
-const groupBtns: GroupButton[] = [
+const groupButtons: GroupButton[] = [
   {
     id: 1, value: 0, text: 'A1', color: `${defaultTheme.colors.beige}`
   },
@@ -98,6 +98,6 @@ const strikeMessages: string[] = [
 const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export {
-  navItems, games, groupBtns, totalCountPages, regex, strikeMessages,
+  navItems, games, groupButtons, totalCountPages, regex, strikeMessages,
   defaultSingInData, defaultToken, defaultUser, defaultUserID
 };

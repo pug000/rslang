@@ -8,8 +8,8 @@ import React, {
 } from 'react';
 import WordItemContext from '@/contexts/WordItemContext';
 import {
-  DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn, Word, WordBtnContainer,
-  WordImg, WordInfoContainer, WordInfoWrapper, WordPlayAudioBtn, WordPlayIcon,
+  DifficultWordButton, DifficultWordButtonActive, LearnedWordButton, Word, WordButtonContainer,
+  WordImage, WordInfoContainer, WordInfoWrapper, WordPlayAudioButton, WordPlayIcon,
   WordText, WordTitle
 } from './WordItem.style';
 
@@ -85,15 +85,13 @@ function WordItem(
 
   return (
     <Word>
-      <WordImg src={`${baseUrl}/${item.image}`} alt="word-img" />
+      <WordImage src={`${baseUrl}/${item.image}`} alt="word-img" />
       <WordInfoContainer>
         <div>
           <WordInfoWrapper>
             <WordTitle>
               {`${item.word} - ${item.transcription}`}
-              <WordPlayAudioBtn
-                onClick={() => playAudioOnClick()}
-              >
+              <WordPlayAudioButton onClick={() => playAudioOnClick()}>
                 <WordPlayIcon />
                 {tracks.map((el) => (
                   <audio
@@ -105,10 +103,10 @@ function WordItem(
                     <track kind="captions" />
                   </audio>
                 ))}
-              </WordPlayAudioBtn>
+              </WordPlayAudioButton>
             </WordTitle>
             <WordText
-              color={defaultTheme.colors.text}
+              $color={defaultTheme.colors.text}
               fontSize={defaultTheme.fontSizes.smallText}
               opacity={defaultTheme.effects.hoverOpacity}
             >
@@ -122,7 +120,7 @@ function WordItem(
                   __html: DOMPurify.sanitize(item.textMeaning)
                 }
               }
-              color={defaultTheme.colors.textBold}
+              $color={defaultTheme.colors.textBold}
               fontSize={defaultTheme.fontSizes.smallText}
             />
             <WordText
@@ -152,16 +150,16 @@ function WordItem(
                   __html: DOMPurify.sanitize(item.textExampleTranslate)
                 }
               }
-              color={defaultTheme.colors.text}
+              $color={defaultTheme.colors.text}
               fontSize={defaultTheme.fontSizes.smallText}
               opacity={defaultTheme.effects.hoverOpacity}
             />
           </WordInfoWrapper>
         </div>
       </WordInfoContainer>
-      <WordBtnContainer>
-        <LearnedWordBtn
-          colors={
+      <WordButtonContainer>
+        <LearnedWordButton
+          $color={
             toggleActive(learnedWords)
               ? defaultTheme.colors.primaryColor
               : defaultTheme.colors.grey
@@ -171,17 +169,17 @@ function WordItem(
         {
           toggleActive(difficultWords)
             ? (
-              <DifficultWordBtnActive
+              <DifficultWordButtonActive
                 onClick={() => handleClick(difficultWords, setDifficultWords)}
               />
             )
             : (
-              <DifficultWordBtn
+              <DifficultWordButton
                 onClick={() => handleClick(difficultWords, setDifficultWords)}
               />
             )
         }
-      </WordBtnContainer>
+      </WordButtonContainer>
     </Word>
   );
 }

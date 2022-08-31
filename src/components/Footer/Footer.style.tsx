@@ -18,7 +18,7 @@ const FooterBorderWrap = styled.div`
 const FooterContainer = styled.div`
   min-height: 170px;
   width: 100%;
-  background-color: ${defaultTheme.colors.bgPurple};
+  background-color: ${defaultTheme.colors.backgroundPurple};
 `;
 
 const FooterTitleDiv = styled.div`

@@ -7,21 +7,17 @@ import {
 
 interface NavMenuProps {
   isNavMenuOpen: boolean,
-  isGameStarted: boolean,
   setNavMenuOpen: SetState<boolean>,
   active: boolean,
   setActive: (arg0: boolean) => void,
-  setIsGameStarted: SetState<boolean>,
 }
 
 function NavMenu(
   {
     isNavMenuOpen,
-    isGameStarted,
     setNavMenuOpen,
     active,
     setActive,
-    setIsGameStarted,
   }: NavMenuProps
 ) {
   return (
@@ -36,10 +32,6 @@ function NavMenu(
               onClick={() => {
                 setActive(false);
                 setNavMenuOpen(false);
-
-                if (isGameStarted) {
-                  setIsGameStarted(false);
-                }
               }}
             >
               {icon}
