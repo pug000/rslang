@@ -80,7 +80,7 @@ function AudioGamePage(
       <GamePageBackground $color={games.audio.backgroundColor} />
       <AudioGame
         words={words}
-        mainColor={games.audio.backgroundColor}
+        mainColor={games.audio.buttonColor}
       />
     </GamePageWrapper>
   );

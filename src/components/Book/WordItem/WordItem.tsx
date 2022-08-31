@@ -128,7 +128,7 @@ function WordItem(
               fontSize={defaultTheme.fontSizes.smallText}
               opacity={defaultTheme.effects.hoverOpacity}
             >
-              {`${item.wordTranslate}`}
+              {item.wordTranslate}
             </WordText>
           </WordInfoWrapper>
           <WordInfoWrapper>

@@ -72,8 +72,8 @@ function Book(
     <BookContainer>
       <Title>Учебник</Title>
       <Note>
-        {'Добро пожаловать в учебник RS Lang! '}
-        {'Выберите необходимый уровень английского языка и начните обучение, '}
+        Добро пожаловать в учебник RS Lang!
+        Выберите необходимый уровень английского языка и начните обучение,
         изучая новые слова в словаре или с помощью игр.
       </Note>
       <GamesWrapper>
@@ -133,9 +133,8 @@ function Book(
         />
         <WordsContainer>
           {isLoadingPage
-            ? ((
-              <Loader />
-            )) : words.map((word) => (
+            ? (<Loader />)
+            : words.map((word) => (
               <WordItem
                 key={word.id}
                 item={word}
