@@ -14,6 +14,7 @@ import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
 import { getFilteredUserWords } from '@/api';
 import GameContext from './contexts/GameContext';
+import { defaultToken, defaultUserID } from './utils/variables';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -37,16 +38,18 @@ function App() {
   // }
   // ]);
   const [isGameStarted, setIsGameStarted] = useState(false);
+  const [isShowResult, setIsShowResult] = useState(false);
   const [words, setWords] = useState<WordData[]>([]);
   const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
-
-  const changeGameState = (value: boolean) => setIsGameStarted(value);
+  const [token, setToken] = useLocalStorage('token', defaultToken);
+  const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
 
   const clearGameState = () => {
     setIsGameStarted(false);
+    setIsShowResult(false);
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
   };
@@ -82,6 +85,8 @@ function App() {
       isGameStarted,
       setIsLoggedIn,
       setIsGameStarted,
+      setToken,
+      setUserId,
     }
   ), [isGameStarted, isLoggedIn]);
 
@@ -105,11 +110,26 @@ function App() {
     {
       correctAnswers,
       incorrectAnswers,
+      token,
+      userId,
+      isLoggedIn,
+      isGameStarted,
+      isShowResult,
+      setIsShowResult,
+      setIsGameStarted,
       setCorrectAnswers,
       setIncorrectAnswers,
       clearGameState,
     }
-  ), [correctAnswers, incorrectAnswers]);
+  ), [
+    correctAnswers,
+    incorrectAnswers,
+    token,
+    userId,
+    isLoggedIn,
+    isGameStarted,
+    isShowResult,
+  ]);
 
   return (
     <Routes>
@@ -133,7 +153,7 @@ function App() {
                 setWords={setWords}
                 setCurrentPage={setCurrentPage}
                 setGroupNumber={setGroupNumber}
-                changeGameState={changeGameState}
+                setIsGameStarted={setIsGameStarted}
               />
             </WordItemContext.Provider>
           )}
@@ -151,7 +171,6 @@ function App() {
                   setWords={setWords}
                   setCurrentPage={setCurrentPage}
                   setGroupNumber={setGroupNumber}
-                  changeGameState={changeGameState}
                 />
               </ProtectedRoute>
             </WordItemContext.Provider>
@@ -164,7 +183,6 @@ function App() {
             <GameContext.Provider value={gameValue}>
               <SprintGamePage
                 isGameStarted={isGameStarted}
-                changeGameState={changeGameState}
                 defaultPage={currentPage}
                 defaultGroupNumber={groupNumber}
                 defaultWords={words}
@@ -178,7 +196,6 @@ function App() {
             <GameContext.Provider value={gameValue}>
               <AudioGamePage
                 isGameStarted={isGameStarted}
-                changeGameState={changeGameState}
                 defaultPage={currentPage}
                 defaultGroupNumber={groupNumber}
                 defaultWords={words}

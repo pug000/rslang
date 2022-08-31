@@ -21,7 +21,7 @@ interface BookProps {
   setWords: SetState<WordData[]>,
   setCurrentPage: SetState<number>,
   setGroupNumber: SetState<number>,
-  changeGameState: (value: boolean) => void,
+  setIsGameStarted: SetState<boolean>,
 }
 
 function Book(
@@ -32,7 +32,7 @@ function Book(
     setWords,
     setCurrentPage,
     setGroupNumber,
-    changeGameState,
+    setIsGameStarted,
   }: BookProps,
 ) {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
@@ -65,14 +65,14 @@ function Book(
           <Button
             id="sprint"
             title="Спринт"
-            callback={() => changeGameState(true)}
+            callback={() => setIsGameStarted(true)}
           />
         </NavLink>
         <NavLink to="/games/audio">
           <Button
             id="audio"
             title="Аудиовызов"
-            callback={() => changeGameState(true)}
+            callback={() => setIsGameStarted(true)}
           />
         </NavLink>
       </GamesWrapper>

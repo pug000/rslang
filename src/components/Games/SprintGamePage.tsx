@@ -11,7 +11,6 @@ import GamePageBg from './GamePageBg';
 
 interface GamePageProps {
   isGameStarted: boolean,
-  changeGameState: (value: boolean) => void,
   defaultPage: number,
   defaultGroupNumber: number,
   defaultWords: WordData[],
@@ -20,7 +19,6 @@ interface GamePageProps {
 function SprintGamePage(
   {
     isGameStarted,
-    changeGameState,
     defaultPage,
     defaultGroupNumber,
     defaultWords
@@ -65,7 +63,6 @@ function SprintGamePage(
         setCurrentGroupNumber={setCurrentGroupNumber}
         setCurrentPage={setCurrentPage}
         setIsLoadingGame={setIsLoadingGame}
-        changeGameState={changeGameState}
       />
     );
   }
@@ -75,9 +72,7 @@ function SprintGamePage(
       <GamePageBg color={games.sprint.bgColor} />
       <SprintGame
         words={words}
-        changeGameState={changeGameState}
         mainColor={games.sprint.btnColor}
-        isGameStarted={isGameStarted}
       />
     </GamePageWrapper>
   );

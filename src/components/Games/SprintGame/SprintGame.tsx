@@ -15,29 +15,26 @@ import {
 
 interface SprintGameProps {
   words: WordData[],
-  changeGameState: (value: boolean) => void,
   mainColor: string,
-  isGameStarted: boolean
 }
 
 function SprintGame(
   {
     words,
-    changeGameState,
     mainColor,
-    isGameStarted
   }: SprintGameProps
 ) {
   const {
     correctAnswers,
     incorrectAnswers,
+    isShowResult,
     setCorrectAnswers,
     setIncorrectAnswers,
+    setIsShowResult,
   } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
   const [translation, setTranslation] = useState<string>(currentWord.wordTranslate);
-  const [isShowResult, setIsShowResult] = useState(false);
   const [score, setScore] = useState(0);
   const [strike, setStrike] = useState(0);
   const [isCorrect, setIsCorrect] = useState(true);
@@ -130,18 +127,11 @@ function SprintGame(
 
   return (
     <SprintGameContainer>
-      <GameControl
-        changeGameState={changeGameState}
-        color={mainColor}
-      />
+      <GameControl color={mainColor} />
       {!isShowResult
         ? (
           <SprintGameWrapper>
-            <Timer
-              mainColor={mainColor}
-              isCounting={isGameStarted}
-              setIsCounting={changeGameState}
-            />
+            <Timer mainColor={mainColor} />
             <Result isCorrect={isCorrect}>
               {'Ваш результат '}
               <span>
@@ -178,8 +168,9 @@ function SprintGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
-            path="sprint"
+            game="sprint"
             mainColor={mainColor}
+            words={words}
           />
         )}
     </SprintGameContainer>

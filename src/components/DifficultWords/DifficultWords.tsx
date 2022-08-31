@@ -24,16 +24,6 @@ interface DifficultWordsProps {
   setWords: SetState<WordData[]>,
   setCurrentPage: SetState<number>,
   setGroupNumber: SetState<number>,
-  changeGameState: (value: boolean) => void,
-}
-interface BookProps {
-  currentPage: number,
-  groupNumber: number,
-  words: WordData[],
-  setWords: SetState<WordData[]>,
-  setCurrentPage: SetState<number>,
-  setGroupNumber: SetState<number>,
-  changeGameState: (value: boolean) => void,
 }
 
 function DifficultWords({
@@ -43,7 +33,6 @@ function DifficultWords({
   setWords,
   setCurrentPage,
   setGroupNumber,
-  changeGameState,
 }: DifficultWordsProps) {
   if (!isLoggedIn) return null;
 
@@ -70,7 +59,7 @@ function DifficultWords({
       if (difficultWordsData && typeof difficultWordsData !== 'number') {
         const ChangeWordsDataKeyFromServer = (arr: FilteredWordData[]) => {
           const WordsDataNewKeyArr: WordData[] = [];
-          for (let i = 0; i < arr[0].paginatedResults.length; i + 1) {
+          for (let i = 0; i < arr[0].paginatedResults.length; i += 1) {
             const WordNewKey: WordData = {
               // eslint-disable-next-line no-underscore-dangle
               id: String(arr[0].paginatedResults[i]._id),

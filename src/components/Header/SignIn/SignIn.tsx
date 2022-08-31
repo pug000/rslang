@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Input from '@/Input';
 import Button from '@/Button';
 import CloseIcon from '@mui/icons-material/Close';
 import {
   registerUser, loginUser, getUser, getUserWords, getNewToken
 } from '@/api';
-import { LogInUserData } from '@/ts/interfaces';
+import { LogInUserData, ErrMessageProps } from '@/ts/interfaces';
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
-import useLocalStorage from '@/hooks/useLocalStorage';
 import ServerResponses from '@/ts/enums';
-import { regex } from '@/utils/variables';
+import {
+  defaultSingInData, defaultToken, defaultUser, defaultUserID, defaultErrMessage, regex
+} from '@/utils/variables';
+import HeaderContext from '@/contexts/HeaderContext';
 import {
   Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
   SignInWelcome, SignInWelcomeContainer
@@ -31,33 +33,13 @@ function SignInModal({
   changeLoggedInState,
   isLoggedIn
 }: SignInProps) {
-  const defaultUser = { email: '', password: '' };
-  const defaultSingInData = {
-    message: '',
-    token: '',
-    refreshToken: '',
-    userId: '',
-  };
-  const defaultToken = '';
-  const defaultUserId = '';
+  const { setToken, setUserId } = useContext(HeaderContext);
   const [userData, setUserData] = useState(defaultUser);
   const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
-  // const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
-  const [logInUserData, setLogInUserData] = useLocalStorage('logInUserData', defaultSingInData);
-  const [token, setToken] = useLocalStorage('token', defaultToken);
-  const [userId, setUserId] = useLocalStorage('userId', defaultUserId);
+  const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
   const [errShow, setErrShow] = useState<boolean>(false);
-  interface ErrMessageProps {
-    text: string;
-    activeErr: boolean;
-  }
 
-  const dafaultErrMessage = {
-    text: '',
-    activeErr: false,
-  };
-
-  const [errMessage, setErrMessage] = useState<ErrMessageProps>(dafaultErrMessage);
+  const [errMessage, setErrMessage] = useState<ErrMessageProps>(defaultErrMessage);
 
   const changeErrShow = () => setErrShow(((prev) => !prev));
   const changeWaitingData = () => setIsWaitingData(((prev) => !prev));
@@ -71,17 +53,17 @@ function SignInModal({
   const signInUser = async () => {
     if (userData.password.length >= 8 && regex.test(userData.email)) {
       changeWaitingData();
-      const resCreateUser = await loginUser(userData);
-      if (resCreateUser && typeof resCreateUser !== 'number') {
-        setLogInUserData(resCreateUser);
-        setToken(resCreateUser.token);
-        setUserId(resCreateUser.userId);
+      const responseSignIn = await loginUser(userData);
+      if (responseSignIn && typeof responseSignIn !== 'number') {
+        setLogInUserData(responseSignIn);
+        setToken(responseSignIn.token);
+        setUserId(responseSignIn.userId);
         errMessageShow('Вы авторизовались!', false);
         changeLoggedInState();
         setTimeout(changeActiveShadow, 3000);
-      } else if (resCreateUser === ServerResponses.error403) {
+      } else if (responseSignIn === ServerResponses.error403) {
         errMessageShow('Неправильный e-mail или пароль!', true);
-      } else if (resCreateUser === ServerResponses.error404) {
+      } else if (responseSignIn === ServerResponses.error404) {
         errMessageShow('Пользователь не найден. Зарегистрируйтесь.', true);
       }
       changeWaitingData();
@@ -95,13 +77,13 @@ function SignInModal({
   const createNewUser = async () => {
     if (userData.password.length >= 8 && regex.test(userData.email)) {
       changeWaitingData();
-      const resCreateUser = await registerUser(userData);
-      if (typeof resCreateUser !== 'number') {
+      const responseCreateUser = await registerUser(userData);
+      if (typeof responseCreateUser !== 'number') {
         errMessageShow('Вы зарегистрированы! Авторизуйтесь.', false);
         setUserData({ ...defaultUser });
-      } else if (resCreateUser === ServerResponses.error417) {
+      } else if (responseCreateUser === ServerResponses.error417) {
         errMessageShow('Пользователь уже зарегистрирован!', true);
-      } else if (resCreateUser === ServerResponses.error422) {
+      } else if (responseCreateUser === ServerResponses.error422) {
         errMessageShow('Неправильный e-mail или пароль!', true);
       }
       changeWaitingData();
@@ -116,7 +98,7 @@ function SignInModal({
     errMessageShow('До новых встреч!', false);
     setUserData({ ...defaultUser });
     setToken(defaultToken);
-    setUserId(defaultUserId);
+    setUserId(defaultUserID);
     changeLoggedInState();
   };
 

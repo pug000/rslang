@@ -57,6 +57,10 @@ interface UserData {
   email: string;
   password: string;
 }
+interface ErrMessageProps {
+  text: string;
+  activeErr: boolean;
+}
 
 interface RegisteredUserData {
   email: string;
@@ -122,7 +126,21 @@ interface FilteredWordData {
   ]
 }
 
+interface GameStatistics {
+  gameLearnedWords: number,
+  percentCorrectWord: number,
+  correctAnswersCount: number,
+}
+
+interface Statistics {
+  learnedWords: number,
+  optional: {
+    [key: string]: GameStatistics,
+  }
+}
+
 export {
   GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, Color, WordCreateProp, GetUserProp, FilteredWordData
+  LogInUserData, SvgStyles, GameStatistics, Statistics, Color, WordCreateProp, GetUserProp,
+  FilteredWordData, ErrMessageProps
 };

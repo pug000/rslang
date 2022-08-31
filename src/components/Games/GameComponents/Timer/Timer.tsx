@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import BgElement from '@/components/GamesContainer/GameElementBg';
+import GameContext from '@/contexts/GameContext';
 import { Time, BgDiv, TimerWrap } from './Timer.style';
 
 interface TimerProps {
   mainColor: string,
-  isCounting: boolean,
-  setIsCounting: (value: boolean) => void
 }
 
 function Timer(
   {
     mainColor,
-    isCounting,
-    setIsCounting
   }: TimerProps
 ) {
+  const { isGameStarted, setIsShowResult } = useContext(GameContext);
   const [timeLeft, setTimeLeft] = useState(60);
 
   const addZero = (time: number) => time.toString().padStart(2, '0');
@@ -22,15 +20,15 @@ function Timer(
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      if (isCounting) {
+      if (isGameStarted) {
         setTimeLeft(timeLeft >= 1 ? timeLeft - 1 : 0);
       }
     }, 1000);
-    if (timeLeft === 0) setIsCounting(true);
+    if (timeLeft === 0) setIsShowResult(true);
     return () => {
       clearInterval(intervalId);
     };
-  }, [timeLeft, isCounting]);
+  }, [timeLeft, isGameStarted]);
 
   return (
     <TimerWrap>
