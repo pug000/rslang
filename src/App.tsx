@@ -83,15 +83,15 @@ function App() {
   useEffect(() => {
     (async () => {
       const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
-      const lernedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
+      const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
 
       if (difficultWordsData && typeof difficultWordsData !== 'number') {
         const difficultWordsChangeKeys = ChangeWordsDataKeyFromServer([difficultWordsData[0]]);
         setDifficultWords(difficultWordsChangeKeys);
       }
-      if (lernedWordsData && typeof lernedWordsData !== 'number') {
-        const lernedWordsChangeKeys = ChangeWordsDataKeyFromServer([lernedWordsData[0]]);
-        setLearnedWords(lernedWordsChangeKeys);
+      if (learnedWordsData && typeof learnedWordsData !== 'number') {
+        const learnedWordsChangeKeys = ChangeWordsDataKeyFromServer([learnedWordsData[0]]);
+        setLearnedWords(learnedWordsChangeKeys);
       }
     })();
   }, [isLoggedIn, currentPage]);
