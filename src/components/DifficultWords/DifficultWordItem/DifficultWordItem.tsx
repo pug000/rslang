@@ -15,7 +15,7 @@ import {
   DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn, Word, WordBtnContainer,
   WordImg, WordInfoContainer, WordInfoWrapper, WordPlayAudioBtn, WordPlayIcon,
   WordText, WordTitle
-} from './WordItem.style';
+} from './DifficultWordItem.style';
 
 interface WordItemProps {
   item: WordData,
@@ -23,7 +23,7 @@ interface WordItemProps {
   setNewAudio: (value: HTMLAudioElement | null) => void,
 }
 
-function WordItem(
+function DifficultWordItem(
   {
     item,
     audio,
@@ -74,13 +74,13 @@ function WordItem(
     setState((prev) => prev.filter((el) => el.id !== item.id));
     deleteUserWord(item.id, userId, token);
   };
-
   const handleClick = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     arr: WordData[],
     setState: SetState<WordData[]>
   ) => {
     let isDifficultWord: boolean;
+
     if (e.currentTarget.id === 'learned') {
       isDifficultWord = false;
       setDifficultWords((prev) => prev.filter((el) => el.id !== item.id));
@@ -214,4 +214,4 @@ function WordItem(
   );
 }
 
-export default WordItem;
+export default DifficultWordItem;
