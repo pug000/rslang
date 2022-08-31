@@ -6,9 +6,6 @@ import ServerResponses from './ts/enums';
 
 const baseUrl = 'https://lang-learnwords.herokuapp.com';
 
-const tokenLocal = window.localStorage.getItem('token')?.slice(1, length - 1);
-const userIdLocal = window.localStorage.getItem('userId')?.slice(1, length - 1);
-
 const endpoints = {
   words: 'words',
   users: 'users',
@@ -138,12 +135,12 @@ const loginUser = async (userData: UserData) => {
   }
 };
 
-const getUser = async (userId: string) => {
+const getUser = async (userId: string, token: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}`, {
       method: 'GET',
       headers: {
-        Authorization: `Bearer ${tokenLocal}`,
+        Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
       },
     });
@@ -164,13 +161,13 @@ const getUser = async (userId: string) => {
   }
 };
 
-const getNewToken = async (userId: string) => {
+const getNewToken = async (userId: string, token: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/tokens`, {
       method: 'GET',
       headers: {
         Accept: 'application/json',
-        Authorization: `Bearer ${tokenLocal}`,
+        Authorization: `Bearer ${token}`,
       },
     });
     if (res.status === ServerResponses.error403) {
@@ -189,11 +186,16 @@ const getNewToken = async (userId: string) => {
   }
 };
 
-const createUserWord = async (wordId: string, word: WordCreateProp) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userIdLocal}/words/${wordId}`, {
+const createUserWord = async (
+  wordId: string,
+  word: WordCreateProp,
+  userId: string,
+  token: string
+) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wordId}`, {
     method: methods.post,
     headers: {
-      Authorization: `Bearer ${tokenLocal}`,
+      Authorization: `Bearer ${token}`,
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
@@ -211,11 +213,11 @@ const createUserWord = async (wordId: string, word: WordCreateProp) => {
   return null;
 };
 
-const deleteUserWord = async (wordId: string) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userIdLocal}/words/${wordId}`, {
+const deleteUserWord = async (wordId: string, userId: string, token: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wordId}`, {
     method: methods.delete,
     headers: {
-      Authorization: `Bearer ${tokenLocal}`,
+      Authorization: `Bearer ${token}`,
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
@@ -232,11 +234,11 @@ const deleteUserWord = async (wordId: string) => {
   return null;
 };
 
-const getUserWords = async (userId: string) => {
+const getUserWords = async (userId: string, token: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${tokenLocal}`,
+      Authorization: `Bearer ${token}`,
       Accept: 'application/json',
       'Content-Type': 'application/json'
     }
@@ -251,11 +253,11 @@ const getUserWords = async (userId: string) => {
   return content;
 };
 
-const getUserWord = async (wirdId: string) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userIdLocal}/words/${wirdId}`, {
+const getUserWord = async (wirdId: string, userId: string, token: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wirdId}`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${tokenLocal}`,
+      Authorization: `Bearer ${token}`,
       Accept: 'application/json',
     }
   });
@@ -277,11 +279,11 @@ const getUserWord = async (wirdId: string) => {
   return content;
 };
 
-const getFilteredUserWords = async (filter: string) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userIdLocal}/aggregatedWords?filter=${filter}`, {
+const getFilteredUserWords = async (filter: string, userId: string, token: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/aggregatedWords?filter=${filter}`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${tokenLocal}`,
+      Authorization: `Bearer ${token}`,
       Accept: 'application/json',
     }
   });

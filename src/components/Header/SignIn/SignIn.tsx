@@ -103,11 +103,11 @@ function SignInModal({
   };
 
   const getData = async () => {
-    const resGetUser = await getUser(logInUserData.userId);
+    const resGetUser = await getUser(logInUserData.userId, logInUserData.token);
     console.log('getUser ', resGetUser);
-    const resWordsUser = await getUserWords(logInUserData.userId);
+    const resWordsUser = await getUserWords(logInUserData.userId, logInUserData.token);
     console.log('getUserWord ', resWordsUser);
-    const resNewToken = await getNewToken(logInUserData.userId);
+    const resNewToken = await getNewToken(logInUserData.userId, logInUserData.token);
     console.log('getUser resNewToken ', resNewToken);
   };
 

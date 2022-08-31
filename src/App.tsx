@@ -14,29 +14,15 @@ import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
 import { getFilteredUserWords } from '@/api';
 import GameContext from './contexts/GameContext';
-import { defaultToken, defaultUserID } from './utils/variables';
+import {
+  defaultToken, defaultUserID, FILTER_DIFFICULT_WORDS, FILTER_LEARNED_WORDS
+} from './utils/variables';
+import { ChangeWordsDataKeyFromServer } from './utils/createCorrectPropResponse';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
-  // const [learnedWords, setLearnedWords] = useState<WordData[]>([{
-  //   id: "5e9f5ee35eb9e72bc21af4a3",
-  //   group: 0,
-  //   page: 0,
-  //   word: "arrive",
-  //   image: "files/01_0003.jpg",
-  //   audio: "files/01_0003.mp3",
-  //   audioMeaning: "files/01_0003_meaning.mp3",
-  //   audioExample: "files/01_0003_example.mp3",
-  //   textMeaning: "To <i>arrive</i> is to get somewhere.",
-  //   textExample: "They <b>arrived</b> at school at 7 a.m.",
-  //   transcription: "[əráiv]",
-  //   wordTranslate: "прибыть",
-  //   textMeaningTranslate: "Приехать значит попасть куда-то",
-  //   textExampleTranslate: "Они прибыли в школу в 7 часов утра"
-  // }
-  // ]);
   const [isGameStarted, setIsGameStarted] = useState(false);
   const [isShowResult, setIsShowResult] = useState(false);
   const [words, setWords] = useState<WordData[]>([]);
@@ -76,6 +62,8 @@ function App() {
       learnedWords,
       setDifficultWords,
       setLearnedWords,
+      token,
+      userId,
     }
   ), [difficultWords, learnedWords]);
 
@@ -90,21 +78,21 @@ function App() {
     }
   ), [isGameStarted, isLoggedIn]);
 
-  const FILTER_DIFFICULT_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
-  const FILTER_LEARNED_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"false"}');
+  useEffect(() => {
+    (async () => {
+      const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
+      const lernedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
 
-  // useEffect(() => {
-  //   (async () => {
-  //     const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS);
-  //     const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS);
-  //     setTimeout(() => {
-  //       setDifficultWords(difficultWordsData[0].paginatedResults);
-  //       setLearnedWords(learnedWordsData[0].paginatedResults);
-  //       console.log('difficultWords 1 ', difficultWords);
-  //       console.log('learnedWords 1 ', learnedWords);
-  //     }, 500);
-  //   })();
-  // }, []);
+      if (difficultWordsData && typeof difficultWordsData !== 'number') {
+        const difficultWordsChangeKeys = ChangeWordsDataKeyFromServer([difficultWordsData[0]]);
+        setDifficultWords(difficultWordsChangeKeys);
+      }
+      if (lernedWordsData && typeof lernedWordsData !== 'number') {
+        const lernedWordsChangeKeys = ChangeWordsDataKeyFromServer([lernedWordsData[0]]);
+        setLearnedWords(lernedWordsChangeKeys);
+      }
+    })();
+  }, [groupNumber, currentPage]);
 
   const gameValue = useMemo(() => (
     {

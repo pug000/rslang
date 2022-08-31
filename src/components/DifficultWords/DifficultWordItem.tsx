@@ -33,7 +33,9 @@ function WordItem(
     difficultWords,
     learnedWords,
     setDifficultWords,
-    setLearnedWords
+    setLearnedWords,
+    token,
+    userId,
   } = useContext(WordItemContext);
   const audioWord = useRef(new Audio());
   const audioMeaning = useRef(new Audio());
@@ -68,28 +70,27 @@ function WordItem(
   const addActiveWord = async (setState: SetState<WordData[]>, isDifficultWord: boolean) => {
     setState((prev) => [...prev, item]);
     const currentWord = createWordProp(item, isDifficultWord);
-    const resCreateUserWord = await getUserWord(item.id);
+    const resCreateUserWord = await getUserWord(item.id, userId, token);
     console.log('resCreateUserWord ', resCreateUserWord);
 
     if (resCreateUserWord === ServerResponses.error404) {
-      await createUserWord(item.id, currentWord);
+      await createUserWord(item.id, currentWord, userId, token);
       console.log('create');
     } else if (resCreateUserWord === ServerResponses.error417) {
       console.log('del then create');
-      await deleteUserWord(item.id);
-      await createUserWord(item.id, currentWord);
+      await deleteUserWord(item.id, userId, token);
+      await createUserWord(item.id, currentWord, userId, token);
     } else {
-      await deleteUserWord(item.id);
-      await createUserWord(item.id, currentWord);
+      await deleteUserWord(item.id, userId, token);
+      await createUserWord(item.id, currentWord, userId, token);
       console.log('else create');
     }
   };
 
   const removeActiveWord = (setState: SetState<WordData[]>) => {
     setState((prev) => prev.filter((el) => el.id !== item.id));
-    deleteUserWord(item.id);
+    deleteUserWord(item.id, userId, token);
   };
-
   const handleClick = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     arr: WordData[],

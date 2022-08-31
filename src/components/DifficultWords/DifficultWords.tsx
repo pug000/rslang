@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import WordItem from '@/WordItem';
 import Pagination from '@mui/material/Pagination';
 import SetState from '@/ts/types';
-import { groupBtns, totalCountPages } from '@/utils/variables';
+import { FILTER_DIFFICULT_WORDS, groupBtns, totalCountPages } from '@/utils/variables';
 import { getFilteredUserWords, getWords } from '@/api';
 import Loader from '@/Loader';
 import Button from '@/Button';
@@ -15,6 +15,7 @@ import {
   WordsContainer, Note
 } from '../Book/Book.style';
 import WordElem from './DifficultWordItem';
+import { ChangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
 
 interface DifficultWordsProps {
   isLoggedIn: boolean | null;
@@ -40,56 +41,30 @@ function DifficultWords({
     difficultWords,
     learnedWords,
     setDifficultWords,
-    setLearnedWords
+    setLearnedWords,
+    token,
+    userId,
   } = useContext(WordItemContext);
 
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
-  const FILTER_DIFFICULT_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
+  // useEffect(() => {
+  //   audio?.remove();
+  //   setAudio(null);
 
-  useEffect(() => {
-    audio?.remove();
-    setAudio(null);
+  //   (async () => {
+  //     setIsLoadingPage(true);
+  //     const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
 
-    (async () => {
-      setIsLoadingPage(true);
-      const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS);
-
-      if (difficultWordsData && typeof difficultWordsData !== 'number') {
-        const ChangeWordsDataKeyFromServer = (arr: FilteredWordData[]) => {
-          const WordsDataNewKeyArr: WordData[] = [];
-          for (let i = 0; i < arr[0].paginatedResults.length; i += 1) {
-            const WordNewKey: WordData = {
-              // eslint-disable-next-line no-underscore-dangle
-              id: String(arr[0].paginatedResults[i]._id),
-              group: arr[0].paginatedResults[i].group,
-              page: arr[0].paginatedResults[i].page,
-              word: String(arr[0].paginatedResults[i].word),
-              image: String(arr[0].paginatedResults[i].image),
-              audio: String(arr[0].paginatedResults[i].audio),
-              audioMeaning: String(arr[0].paginatedResults[i].audioMeaning),
-              audioExample: String(arr[0].paginatedResults[i].audioExample),
-              textMeaning: String(arr[0].paginatedResults[i].textMeaning),
-              textExample: String(arr[0].paginatedResults[i].textExample),
-              transcription: String(arr[0].paginatedResults[i].transcription),
-              wordTranslate: String(arr[0].paginatedResults[i].wordTranslate),
-              textMeaningTranslate: String(arr[0].paginatedResults[i].textMeaningTranslate),
-              textExampleTranslate: String(arr[0].paginatedResults[i].textExampleTranslate),
-            };
-            WordsDataNewKeyArr.push(WordNewKey);
-          }
-          return WordsDataNewKeyArr;
-        };
-        const difficultWordsChangeKeys = ChangeWordsDataKeyFromServer([difficultWordsData[0]]);
-        setTimeout(() => {
-          setDifficultWords(difficultWordsChangeKeys);
-          setIsLoadingPage(false);
-        }, 500);
-      }
-      console.log('difficultWords', difficultWords);
-    })();
-  }, [groupNumber, currentPage]);
+  //     if (difficultWordsData && typeof difficultWordsData !== 'number') {
+  //       const difficultWordsChangeKeys = ChangeWordsDataKeyFromServer([difficultWordsData[0]]);
+  //       setDifficultWords(difficultWordsChangeKeys);
+  //       setIsLoadingPage(false);
+  //     }
+  //     console.log('difficultWords', difficultWords);
+  //   })();
+  // }, [groupNumber, currentPage]);
 
   return (
     <DifficultWordsContainer>
