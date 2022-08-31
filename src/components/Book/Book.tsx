@@ -1,16 +1,33 @@
-import { WordData } from '@/ts/interfaces';
-import React, { useEffect, useState } from 'react';
-import WordItem from '@/WordItem';
-import Pagination from '@mui/material/Pagination';
-import SetState from '@/ts/types';
-import { groupButtons, totalCountPages } from '@/utils/variables';
-import { getWords } from '@/api';
+import React, {
+  useEffect,
+  useState
+} from 'react';
+import { NavLink } from 'react-router-dom';
+
 import Loader from '@/Loader';
 import Button from '@/Button';
-import { NavLink } from 'react-router-dom';
+import WordItem from '@/WordItem';
+
+import Pagination from '@mui/material/Pagination';
+
 import {
-  BookContainer, Group, GroupButton, Title, Wrapper, GamesWrapper,
-  WordsContainer, Note
+  groupButtons,
+  totalCountPages
+} from '@/utils/variables';
+import { getWords } from '@/api';
+
+import { WordData } from '@/ts/interfaces';
+import SetState from '@/ts/types';
+
+import {
+  BookContainer,
+  Group,
+  GroupButton,
+  Title,
+  Wrapper,
+  GamesWrapper,
+  WordsContainer,
+  Note
 } from './Book.style';
 
 interface BookProps {

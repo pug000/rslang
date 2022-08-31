@@ -1,11 +1,23 @@
 import React from 'react';
-import Button from '@/Button';
 import { Link } from 'react-router-dom';
+
+import Button from '@/Button';
+
 import {
-  HomeContainer, Background, BackgroundLeft, BackgroundRight, HomeTextContainer,
-  HomeTitle, HomeText, HomeButtons
+  BackgroundLeftIcon,
+  BackgroundRightIcon
+} from './HomeBackground';
+
+import {
+  HomeContainer,
+  Background,
+  BackgroundLeft,
+  BackgroundRight,
+  HomeTextContainer,
+  HomeTitle,
+  HomeText,
+  HomeButtons
 } from './Home.style';
-import { BackgroundLeftIcon, BackgroundRightIcon } from './HomeBackground';
 
 function Home() {
   return (

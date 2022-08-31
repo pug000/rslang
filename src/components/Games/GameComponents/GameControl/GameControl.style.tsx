@@ -1,10 +1,15 @@
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import defaultTheme from '@/styles/theme';
+
 import FullscreenIcon from '@mui/icons-material/Fullscreen';
 import FullscreenExitIcon from '@mui/icons-material/FullscreenExit';
 import CloseIcon from '@mui/icons-material/Close';
-import { NavLink } from 'react-router-dom';
-import { ColorProps, SvgStyles } from '@/ts/interfaces';
-import defaultTheme from '@/styles/theme';
+
+import {
+  ColorProps,
+  SvgStyles
+} from '@/ts/interfaces';
 
 const svgStyles: SvgStyles = {
   width: '100%',
@@ -72,5 +77,10 @@ const FullscreenExitIconSvg = styled(FullscreenExitIcon).attrs<ColorProps>((prop
 `;
 
 export {
-  GameControls, GameControlButton, Link, CloseIconSvg, FullscreenIconSvg, FullscreenExitIconSvg
+  GameControls,
+  GameControlButton,
+  Link,
+  CloseIconSvg,
+  FullscreenIconSvg,
+  FullscreenExitIconSvg
 };

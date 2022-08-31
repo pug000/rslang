@@ -1,8 +1,9 @@
-import { WordData } from '@/ts/interfaces';
-import SetState from '@/ts/types';
 import { createContext } from 'react';
 
-interface WordItemContextValues {
+import { WordData } from '@/ts/interfaces';
+import SetState from '@/ts/types';
+
+interface BookContextValues {
   difficultWords: WordData[],
   learnedWords: WordData[],
   setDifficultWords: SetState<WordData[]>,
@@ -16,6 +17,6 @@ const defaultValue = {
   setLearnedWords: () => { },
 };
 
-const WordItemContext = createContext<WordItemContextValues>(defaultValue);
+const BookContext = createContext<BookContextValues>(defaultValue);
 
-export default WordItemContext;
+export default BookContext;

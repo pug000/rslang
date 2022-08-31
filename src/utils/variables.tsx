@@ -1,6 +1,6 @@
 import React from 'react';
 import defaultTheme from '@/styles/theme';
-import { Games, GroupButton, NavItem } from '@/ts/interfaces';
+
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import SpeedIcon from '@mui/icons-material/Speed';
 import HomeIcon from '@mui/icons-material/Home';
@@ -10,6 +10,12 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InfoIcon from '@mui/icons-material/Info';
 import GroupsIcon from '@mui/icons-material/Groups';
+
+import {
+  Games,
+  GroupButton,
+  NavItem
+} from '@/ts/interfaces';
 
 const defaultUser = { email: '', password: '' };
 const defaultSingInData = {
@@ -98,6 +104,14 @@ const strikeMessages: string[] = [
 const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 export {
-  navItems, games, groupButtons, totalCountPages, regex, strikeMessages,
-  defaultSingInData, defaultToken, defaultUser, defaultUserID
+  navItems,
+  games,
+  groupButtons,
+  totalCountPages,
+  regex,
+  strikeMessages,
+  defaultSingInData,
+  defaultToken,
+  defaultUser,
+  defaultUserID
 };

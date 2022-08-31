@@ -1,6 +1,7 @@
+import { createContext } from 'react';
+
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
-import { createContext } from 'react';
 
 interface GameContextValues {
   correctAnswers: WordData[],

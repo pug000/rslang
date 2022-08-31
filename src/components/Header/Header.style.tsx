@@ -1,5 +1,5 @@
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
 import defaultTheme from '@/styles/theme';
 
 const HeaderContainer = styled.header`
@@ -72,5 +72,10 @@ const LoginButton = styled.div`
 `;
 
 export {
-  HeaderContainer, HeaderButton, HeaderLink, LoginButton, iconStyles, menuIconStyle
+  HeaderContainer,
+  HeaderButton,
+  HeaderLink,
+  LoginButton,
+  iconStyles,
+  menuIconStyle
 };

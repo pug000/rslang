@@ -124,7 +124,15 @@ const StrikeMessage = styled.p`
 `;
 
 export {
-  SprintGameContainer, SprintGameWrapper, Result,
-  TextBlock, Word, Translation, SprintButtons, Note,
-  StrikeBlock, Strike, StrikeMessage
+  SprintGameContainer,
+  SprintGameWrapper,
+  Result,
+  TextBlock,
+  Word,
+  Translation,
+  SprintButtons,
+  Note,
+  StrikeBlock,
+  Strike,
+  StrikeMessage
 };

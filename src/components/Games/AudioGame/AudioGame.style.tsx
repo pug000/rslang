@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { NavLink } from 'react-router-dom';
 import defaultTheme from '@/styles/theme';
+
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 
 interface AudioIconProps {
   $active: boolean,
@@ -138,6 +139,15 @@ const Note = styled.p`
 `;
 
 export {
-  AudioGameWrapper, AudioButton, AudioIcon, AudioGameOptions, AudioGameButton,
-  AudioGameControls, AudioGameControlButton, Link, AudioGameContainer, Note, GameBlock
+  AudioGameWrapper,
+  AudioButton,
+  AudioIcon,
+  AudioGameOptions,
+  AudioGameButton,
+  AudioGameControls,
+  AudioGameControlButton,
+  Link,
+  AudioGameContainer,
+  Note,
+  GameBlock
 };

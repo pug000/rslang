@@ -1,11 +1,23 @@
-import React, { useContext, useState } from 'react';
+import React, {
+  useContext,
+  useState
+} from 'react';
+
+import HeaderContext from '@/contexts/HeaderContext';
+
 import NavMenu from '@/NavMenu';
 import SignInModal from '@/SignIn';
+
 import LogoutIcon from '@mui/icons-material/Logout';
 import MenuIcon from '@mui/icons-material/Menu';
-import HeaderContext from '@/contexts/HeaderContext';
+
 import {
-  HeaderContainer, HeaderButton, HeaderLink, LoginButton, iconStyles, menuIconStyle
+  HeaderContainer,
+  HeaderButton,
+  HeaderLink,
+  LoginButton,
+  iconStyles,
+  menuIconStyle
 } from './Header.style';
 import LogoSvg from './LogoSvg';
 import LogInIcon from './LogInIcon';

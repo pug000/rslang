@@ -1,14 +1,29 @@
 import React, { useContext } from 'react';
-import Button from '@/Button';
 import { NavLink } from 'react-router-dom';
-import { groupButtons, totalCountPages } from '@/utils/variables';
-import SetState from '@/ts/types';
-import { generateRandomNumber } from '@/utils/randomize';
+
 import GameContext from '@/contexts/GameContext';
-import GamePageBackground from '../GamePageBackground';
+
+import Button from '@/Button';
+
 import {
-  GamePageWrapper, GamePageTitle, GamePageText, Group, GroupButton,
-  GameControlButtons, IconWrapper, Note
+  groupButtons,
+  totalCountPages
+} from '@/utils/variables';
+import { generateRandomNumber } from '@/utils/randomize';
+
+import SetState from '@/ts/types';
+
+import GamePageBackground from '../GamePageBackground';
+
+import {
+  GamePageWrapper,
+  GamePageTitle,
+  GamePageText,
+  Group,
+  GroupButton,
+  GameControlButtons,
+  IconWrapper,
+  Note
 } from '../GamePage.style';
 
 interface GameStartPageProps {

@@ -1,19 +1,33 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Book from '@/Book';
-import GameContainer from '@/GamesContainer';
-import { WordData } from '@/ts/interfaces';
-import WordItemContext from '@/contexts/WordItemContext';
-import ProtectedRoute from '@/ProtectedRoute';
-import DifficultWords from '@/DifficultWords';
+import React, {
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+import {
+  Route,
+  Routes
+} from 'react-router-dom';
+
+import HeaderContext from '@/contexts/HeaderContext';
+import WordItemContext from '@/contexts/BookContext';
+import GameContext from '@/contexts/GameContext';
+
 import AppLayout from '@/AppLayout';
 import Home from '@/Home';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import HeaderContext from '@/contexts/HeaderContext';
+import Book from '@/Book';
+import ProtectedRoute from '@/ProtectedRoute';
+import DifficultWords from '@/DifficultWords';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
-import GameContext from './contexts/GameContext';
-import { defaultToken, defaultUserID } from './utils/variables';
+import GameContainer from '@/GamesContainer';
+
+import {
+  defaultToken,
+  defaultUserID
+} from '@/utils/variables';
+import useLocalStorage from '@/hooks/useLocalStorage';
+
+import { WordData } from '@/ts/interfaces';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useLocalStorage('isLoggedIn', false);

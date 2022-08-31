@@ -1,5 +1,5 @@
-import defaultTheme from '@/styles/theme';
 import styled, { keyframes } from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 const HomeContainer = styled.div`
   position: relative;
@@ -88,6 +88,12 @@ const HomeButtons = styled.div`
 `;
 
 export {
-  HomeContainer, Background, BackgroundLeft, BackgroundRight, HomeTextContainer,
-  HomeTitle, HomeText, HomeButtons
+  HomeContainer,
+  Background,
+  BackgroundLeft,
+  BackgroundRight,
+  HomeTextContainer,
+  HomeTitle,
+  HomeText,
+  HomeButtons
 };

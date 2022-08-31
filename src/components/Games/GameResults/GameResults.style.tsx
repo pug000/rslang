@@ -1,6 +1,8 @@
 import styled from 'styled-components';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { NavLink } from 'react-router-dom';
+
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
+
 import { ColorProps } from '@/ts/interfaces';
 
 const GameResultsContainer = styled.div`
@@ -101,7 +103,17 @@ const Link = styled(NavLink)`
 `;
 
 export {
-  GameResultsWrapper, GameResultsTitle, ResultTitle, ResultContainer,
-  ResultItem, ResultText, PlayAudioButton, PlayAudioIcon, ResultWrapper,
-  GameResultsContainer, Link, ButtonContainer, Line
+  GameResultsWrapper,
+  GameResultsTitle,
+  ResultTitle,
+  ResultContainer,
+  ResultItem,
+  ResultText,
+  PlayAudioButton,
+  PlayAudioIcon,
+  ResultWrapper,
+  GameResultsContainer,
+  Link,
+  ButtonContainer,
+  Line
 };

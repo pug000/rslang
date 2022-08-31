@@ -1,9 +1,11 @@
-import defaultTheme from '@/styles/theme';
 import styled from 'styled-components';
+import defaultTheme from '@/styles/theme';
+
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
+
 import { ColorProps } from '@/ts/interfaces';
 
 interface WordTextProps extends ColorProps {
@@ -135,7 +137,16 @@ const LearnedWordButton = styled(MenuBookIcon).attrs({
 `;
 
 export {
-  Word, WordImage, WordInfoContainer, WordInfoWrapper, WordTitle, WordText,
-  WordPlayIcon, WordButtonContainer, DifficultWordButton, DifficultWordButtonActive,
-  LearnedWordButton, WordPlayAudioButton,
+  Word,
+  WordImage,
+  WordInfoContainer,
+  WordInfoWrapper,
+  WordTitle,
+  WordText,
+  WordPlayIcon,
+  WordButtonContainer,
+  DifficultWordButton,
+  DifficultWordButtonActive,
+  LearnedWordButton,
+  WordPlayAudioButton,
 };

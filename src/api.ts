@@ -1,7 +1,11 @@
 import {
-  WordData, UserData, RegisteredUserData, LogInUserData, Statistics,
+  WordData,
+  UserData,
+  RegisteredUserData,
+  LogInUserData,
+  Statistics,
 } from '@/ts/interfaces';
-import StatusError from './ts/enums';
+import StatusError from '@/ts/enums';
 
 const baseUrl = 'https://lang-learnwords.herokuapp.com';
 
@@ -139,6 +143,11 @@ const loginUser = async (userData: UserData) => {
 };
 
 export {
-  baseUrl, endpoints, getWords, registerUser, loginUser,
-  updateUserStatistics, getUserStatistics,
+  baseUrl,
+  endpoints,
+  getWords,
+  registerUser,
+  loginUser,
+  updateUserStatistics,
+  getUserStatistics,
 };

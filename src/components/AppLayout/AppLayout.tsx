@@ -1,10 +1,14 @@
 import React from 'react';
-import { Outlet, useLocation } from 'react-router';
+import {
+  Outlet,
+  useLocation
+} from 'react-router';
 import { ThemeProvider } from 'styled-components';
-import Footer from '@/Footer';
-import Header from '@/Header';
 import defaultTheme from '@/styles/theme';
 import Global from '@/styles/Global';
+
+import Footer from '@/Footer';
+import Header from '@/Header';
 
 function AppLayout() {
   const location = useLocation();

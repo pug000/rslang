@@ -94,6 +94,16 @@ interface ColorProps {
 }
 
 export {
-  GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, GameStatistics, Statistics, ColorProps,
+  GroupButton,
+  NavItem,
+  WordData,
+  Track,
+  Games,
+  UserData,
+  RegisteredUserData,
+  LogInUserData,
+  SvgStyles,
+  GameStatistics,
+  Statistics,
+  ColorProps,
 };

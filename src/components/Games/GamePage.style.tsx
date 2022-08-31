@@ -1,6 +1,7 @@
-import defaultTheme from '@/styles/theme';
-import { ColorProps } from '@/ts/interfaces';
 import styled from 'styled-components';
+import defaultTheme from '@/styles/theme';
+
+import { ColorProps } from '@/ts/interfaces';
 
 interface GroupButtonProps extends ColorProps {
   active: boolean,
@@ -110,6 +111,15 @@ const Note = styled.p`
 `;
 
 export {
-  GamePageWrapper, BackgroundWrapper, BackgroundGamePageDiv, BackgroundBorderWrapper, GamePageTitle,
-  GamePageText, Group, GroupButton, GameControlButtons, IconWrapper, Note
+  GamePageWrapper,
+  BackgroundWrapper,
+  BackgroundGamePageDiv,
+  BackgroundBorderWrapper,
+  GamePageTitle,
+  GamePageText,
+  Group,
+  GroupButton,
+  GameControlButtons,
+  IconWrapper,
+  Note
 };

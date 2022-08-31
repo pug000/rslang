@@ -1,7 +1,11 @@
-import { ColorProps } from '@/ts/interfaces';
 import React from 'react';
+
+import { ColorProps } from '@/ts/interfaces';
+
 import {
-  BackgroundWrapper, BackgroundGamePageDiv, BackgroundBorderWrapper
+  BackgroundWrapper,
+  BackgroundGamePageDiv,
+  BackgroundBorderWrapper
 } from './GamePage.style';
 
 function BackgroundGamePageBorder({ $color }: ColorProps) {

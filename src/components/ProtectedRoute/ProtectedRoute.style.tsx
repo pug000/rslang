@@ -17,5 +17,6 @@ const ProtectedTitle = styled.h3`
 `;
 
 export {
-  Container, ProtectedTitle
+  Container,
+  ProtectedTitle
 };

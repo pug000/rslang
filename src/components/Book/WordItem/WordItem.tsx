@@ -1,16 +1,34 @@
-import { baseUrl } from '@/api';
-import defaultTheme from '@/styles/theme';
-import { Track, WordData } from '@/ts/interfaces';
-import SetState from '@/ts/types';
-import DOMPurify from 'dompurify';
 import React, {
-  useContext, useRef, useEffect,
+  useContext,
+  useRef,
+  useEffect,
 } from 'react';
-import WordItemContext from '@/contexts/WordItemContext';
+import DOMPurify from 'dompurify';
+import defaultTheme from '@/styles/theme';
+
+import BookContext from '@/contexts/BookContext';
+
+import { baseUrl } from '@/api';
+
 import {
-  DifficultWordButton, DifficultWordButtonActive, LearnedWordButton, Word, WordButtonContainer,
-  WordImage, WordInfoContainer, WordInfoWrapper, WordPlayAudioButton, WordPlayIcon,
-  WordText, WordTitle
+  Track,
+  WordData
+} from '@/ts/interfaces';
+import SetState from '@/ts/types';
+
+import {
+  DifficultWordButton,
+  DifficultWordButtonActive,
+  LearnedWordButton,
+  Word,
+  WordButtonContainer,
+  WordImage,
+  WordInfoContainer,
+  WordInfoWrapper,
+  WordPlayAudioButton,
+  WordPlayIcon,
+  WordText,
+  WordTitle
 } from './WordItem.style';
 
 interface WordItemProps {
@@ -31,7 +49,7 @@ function WordItem(
     learnedWords,
     setDifficultWords,
     setLearnedWords
-  } = useContext(WordItemContext);
+  } = useContext(BookContext);
   const audioWord = useRef(new Audio());
   const audioMeaning = useRef(new Audio());
   const audioExample = useRef(new Audio());

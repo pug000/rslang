@@ -5,4 +5,7 @@ const shuffleArray = <T,>(array: T[]) => array
   .sort((a, b) => a.sort - b.sort)
   .map(({ el }) => el);
 
-export { generateRandomNumber, shuffleArray };
+export {
+  generateRandomNumber,
+  shuffleArray
+};

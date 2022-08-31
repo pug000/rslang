@@ -1,7 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import BackgroundElement from '@/components/GamesContainer/GameElementBackground';
+import React, {
+  useState,
+  useEffect,
+  useContext
+} from 'react';
+
 import GameContext from '@/contexts/GameContext';
-import { Time, BackgroundDiv, TimerWrap } from './Timer.style';
+
+import BackgroundElement from '@/components/GamesContainer/GameElementBackground';
+
+import {
+  Time,
+  BackgroundDiv,
+  TimerWrap
+} from './Timer.style';
 
 interface TimerProps {
   mainColor: string,

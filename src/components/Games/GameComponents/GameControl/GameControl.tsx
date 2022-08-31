@@ -1,8 +1,18 @@
+import React, {
+  useContext,
+  useEffect,
+  useState
+} from 'react';
+
 import GameContext from '@/contexts/GameContext';
-import React, { useContext, useEffect, useState } from 'react';
+
 import {
-  CloseIconSvg, FullscreenExitIconSvg, FullscreenIconSvg, GameControlButton,
-  GameControls, Link
+  CloseIconSvg,
+  FullscreenExitIconSvg,
+  FullscreenIconSvg,
+  GameControlButton,
+  GameControls,
+  Link
 } from './GameControl.style';
 
 interface GameControlProps {

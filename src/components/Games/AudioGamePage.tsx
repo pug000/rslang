@@ -1,13 +1,21 @@
-import { WordData } from '@/ts/interfaces';
-import React, { useEffect, useState } from 'react';
-import { shuffleArray } from '@/utils/randomize';
+import React, {
+  useEffect,
+  useState
+} from 'react';
+
 import AudioGame from '@/AudioGame';
-import { getWords } from '@/api';
-import { games } from '@/utils/variables';
 import GameStart from '@/GameStart';
-import { GamePageWrapper } from './GamePage.style';
+
+import { shuffleArray } from '@/utils/randomize';
+import { games } from '@/utils/variables';
+import { getWords } from '@/api';
+
+import { WordData } from '@/ts/interfaces';
+
 import Loader from '../Loader/Loader';
 import GamePageBackground from './GamePageBackground';
+
+import { GamePageWrapper } from './GamePage.style';
 
 interface GamePageProps {
   isGameStarted: boolean,

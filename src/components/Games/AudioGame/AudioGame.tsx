@@ -1,15 +1,28 @@
-import { baseUrl } from '@/api';
-import { WordData } from '@/ts/interfaces';
-import { shuffleArray } from '@/utils/randomize';
 import React, {
-  useContext, useEffect, useState
+  useContext,
+  useEffect,
+  useState
 } from 'react';
-import GameControl from '@/GameControl';
+
 import GameContext from '@/contexts/GameContext';
+
+import GameControl from '@/GameControl';
 import GameResults from '@/GameResults';
+
+import { baseUrl } from '@/api';
+import { shuffleArray } from '@/utils/randomize';
+
+import { WordData } from '@/ts/interfaces';
+
 import {
-  AudioButton, AudioGameButton, AudioIcon, AudioGameOptions, AudioGameWrapper, AudioGameContainer,
-  Note, GameBlock,
+  AudioButton,
+  AudioGameButton,
+  AudioIcon,
+  AudioGameOptions,
+  AudioGameWrapper,
+  AudioGameContainer,
+  Note,
+  GameBlock,
 } from './AudioGame.style';
 
 interface AudioGameProps {
@@ -130,9 +143,7 @@ function AudioGame(
 
   return (
     <AudioGameContainer>
-      <GameControl
-        color={mainColor}
-      />
+      <GameControl color={mainColor} />
       {!isShowResult ? (
         <GameBlock>
           <AudioGameWrapper>

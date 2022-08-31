@@ -1,5 +1,6 @@
-import { ColorProps } from '@/ts/interfaces';
 import styled from 'styled-components';
+
+import { ColorProps } from '@/ts/interfaces';
 
 interface GroupButtonProps extends ColorProps {
   active: boolean,
@@ -106,6 +107,12 @@ const GroupButton = styled.button<GroupButtonProps>`
 `;
 
 export {
-  BookContainer, Title, Wrapper, GamesWrapper, Group, GroupButton,
-  WordsContainer, Note
+  BookContainer,
+  Title,
+  Wrapper,
+  GamesWrapper,
+  Group,
+  GroupButton,
+  WordsContainer,
+  Note
 };

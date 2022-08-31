@@ -1,5 +1,9 @@
 import React from 'react';
-import { DifficultWordsContainer, DifficultWordsTitle } from './DifficultWords.style';
+
+import {
+  DifficultWordsContainer,
+  DifficultWordsTitle
+} from './DifficultWords.style';
 
 interface DifficultWordsProps {
   isLoggedIn: boolean | null;

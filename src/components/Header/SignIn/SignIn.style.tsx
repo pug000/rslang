@@ -1,5 +1,5 @@
-import defaultTheme from '@/styles/theme';
 import styled from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 interface ModalProps {
   active: boolean,
@@ -109,6 +109,13 @@ const circularProgressStyle = {
 };
 
 export {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
-  SignInWelcome, SignInWelcomeContainer
+  Shadow,
+  Modal,
+  SignInTitle,
+  CloseBtn,
+  iconStyles,
+  circularProgressStyle,
+  StackStyle,
+  SignInWelcome,
+  SignInWelcomeContainer
 };

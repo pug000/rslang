@@ -1,16 +1,36 @@
-import { WordData } from '@/ts/interfaces';
-import { generateRandomNumber, shuffleArray } from '@/utils/randomize';
-import React, { useContext, useEffect, useState } from 'react';
-import Timer from '@/Timer';
+import React, {
+  useContext,
+  useEffect,
+  useState
+} from 'react';
+
 import GameContext from '@/contexts/GameContext';
+
 import GameResults from '@/GameResults';
 import GameControl from '@/GameControl';
 import Button from '@/Button';
-import { strikeMessages } from '@/utils/variables';
+import Timer from '@/Timer';
+
 import {
-  SprintGameContainer, SprintGameWrapper, Result,
-  TextBlock, Word, Translation, SprintButtons, Note,
-  StrikeBlock, Strike, StrikeMessage
+  generateRandomNumber,
+  shuffleArray
+} from '@/utils/randomize';
+import { strikeMessages } from '@/utils/variables';
+
+import { WordData } from '@/ts/interfaces';
+
+import {
+  SprintGameContainer,
+  SprintGameWrapper,
+  Result,
+  TextBlock,
+  Word,
+  Translation,
+  SprintButtons,
+  Note,
+  StrikeBlock,
+  Strike,
+  StrikeMessage
 } from './SprintGame.style';
 
 interface SprintGameProps {

@@ -1,8 +1,20 @@
+import React, {
+  useEffect,
+  useRef,
+  useState
+} from 'react';
+
 import { baseUrl } from '@/api';
+
 import { WordData } from '@/ts/interfaces';
-import React, { useEffect, useRef, useState } from 'react';
+
 import {
-  ResultContainer, ResultTitle, ResultWrapper, ResultItem, PlayAudioButton, PlayAudioIcon,
+  ResultContainer,
+  ResultTitle,
+  ResultWrapper,
+  ResultItem,
+  PlayAudioButton,
+  PlayAudioIcon,
   ResultText,
 } from './GameResults.style';
 

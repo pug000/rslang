@@ -1,5 +1,6 @@
-import { ColorProps } from '@/ts/interfaces';
 import React from 'react';
+
+import { ColorProps } from '@/ts/interfaces';
 
 function BackgroundElement({ $color }: ColorProps) {
   return (

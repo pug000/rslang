@@ -1,5 +1,5 @@
-import defaultTheme from '@/styles/theme';
 import styled, { keyframes } from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 const Time = styled.div`
   color: ${defaultTheme.colors.title};
@@ -46,5 +46,7 @@ const BackgroundDiv = styled.div`
 `;
 
 export {
-  Time, TimerWrap, BackgroundDiv
+  Time,
+  TimerWrap,
+  BackgroundDiv
 };

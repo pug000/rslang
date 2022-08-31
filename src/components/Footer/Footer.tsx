@@ -1,9 +1,18 @@
 import React from 'react';
-import {
-  FooterWrapper, FooterContainer, FooterBorderWrap, FooterTitleDiv, FooterTitle, SchoolLogo,
-  Copyright, Authors, Author
-} from './Footer.style';
+
 import FooterBorder from './FooterBorder';
+
+import {
+  FooterWrapper,
+  FooterContainer,
+  FooterBorderWrap,
+  FooterTitleDiv,
+  FooterTitle,
+  SchoolLogo,
+  Copyright,
+  Authors,
+  Author
+} from './Footer.style';
 
 function Footer() {
   return (

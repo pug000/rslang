@@ -1,13 +1,32 @@
+import React, {
+  useContext,
+  useEffect
+} from 'react';
 import defaultTheme from '@/styles/theme';
-import { Statistics, WordData } from '@/ts/interfaces';
-import React, { useContext, useEffect } from 'react';
+
 import GameContext from '@/contexts/GameContext';
-import { getUserStatistics, updateUserStatistics } from '@/api';
+
 import Button from '@/Button';
+
+import {
+  getUserStatistics,
+  updateUserStatistics
+} from '@/api';
+
+import {
+  Statistics,
+  WordData
+} from '@/ts/interfaces';
+
 import Result from './Result';
+
 import {
   ButtonContainer,
-  GameResultsContainer, GameResultsTitle, GameResultsWrapper, Line, Link
+  GameResultsContainer,
+  GameResultsTitle,
+  GameResultsWrapper,
+  Line,
+  Link
 } from './GameResults.style';
 
 interface GameResultsProps {

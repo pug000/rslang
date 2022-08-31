@@ -1,22 +1,46 @@
-import React, { useContext, useState } from 'react';
+import React, {
+  useContext,
+  useState
+} from 'react';
+
+import HeaderContext from '@/contexts/HeaderContext';
+
 import Input from '@/Input';
 import Button from '@/Button';
-import CloseIcon from '@mui/icons-material/Close';
-import { registerUser, loginUser } from '@/api';
+
+import {
+  registerUser,
+  loginUser
+} from '@/api';
+import {
+  defaultSingInData,
+  defaultToken,
+  defaultUser,
+  defaultUserID,
+  regex
+} from '@/utils/variables';
+
+import StatusError from '@/ts/enums';
 import { LogInUserData } from '@/ts/interfaces';
+
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
-import StatusError from '@/ts/enums';
-import {
-  defaultSingInData, defaultToken, defaultUser, defaultUserID, regex
-} from '@/utils/variables';
-import HeaderContext from '@/contexts/HeaderContext';
-import {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
-  SignInWelcome, SignInWelcomeContainer
-} from './SignIn.style';
+import CloseIcon from '@mui/icons-material/Close';
+
 import PopupMessage from './PopupMessage';
 import LogInIcon from '../LogInIcon';
+
+import {
+  Shadow,
+  Modal,
+  SignInTitle,
+  CloseBtn,
+  iconStyles,
+  circularProgressStyle,
+  StackStyle,
+  SignInWelcome,
+  SignInWelcomeContainer
+} from './SignIn.style';
 
 interface SignInProps {
   active: boolean;

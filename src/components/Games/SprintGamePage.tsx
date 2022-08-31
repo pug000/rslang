@@ -1,11 +1,18 @@
-import { WordData } from '@/ts/interfaces';
-import React, { useEffect, useState } from 'react';
-import { shuffleArray } from '@/utils/randomize';
-import { getWords } from '@/api';
-import { games } from '@/utils/variables';
+import React, {
+  useEffect,
+  useState
+} from 'react';
+
 import Loader from '@/Loader';
 import GameStart from '@/GameStart';
 import SprintGame from '@/SprintGame';
+
+import { shuffleArray } from '@/utils/randomize';
+import { games } from '@/utils/variables';
+import { getWords } from '@/api';
+
+import { WordData } from '@/ts/interfaces';
+
 import { GamePageWrapper } from './GamePage.style';
 import GamePageBackground from './GamePageBackground';
 

@@ -17,5 +17,6 @@ const DifficultWordsTitle = styled.h2`
 `;
 
 export {
-  DifficultWordsContainer, DifficultWordsTitle
+  DifficultWordsContainer,
+  DifficultWordsTitle
 };

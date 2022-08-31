@@ -1,5 +1,6 @@
-import SetState from '@/ts/types';
 import { createContext } from 'react';
+
+import SetState from '@/ts/types';
 
 interface HeaderContextValues {
   isLoggedIn: boolean,

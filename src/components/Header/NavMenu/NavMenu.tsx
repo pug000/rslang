@@ -1,8 +1,14 @@
 import React from 'react';
-import SetState from '@/ts/types';
+
 import { navItems } from '@/utils/variables';
+
+import SetState from '@/ts/types';
+
 import {
-  Shadow, NavLi, Link, NavUl
+  Shadow,
+  NavLi,
+  Link,
+  NavUl
 } from './NavMenu.style';
 
 interface NavMenuProps {
