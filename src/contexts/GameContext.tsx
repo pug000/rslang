@@ -6,6 +6,8 @@ import SetState from '@/ts/types';
 interface GameContextValues {
   correctAnswers: WordData[],
   incorrectAnswers: WordData[],
+  countCorrectAnswers: number,
+  maxCountCorrectAnswers: number,
   token: string,
   userId: string,
   isLoggedIn: boolean,
@@ -15,12 +17,16 @@ interface GameContextValues {
   setGameStarted: SetState<boolean>,
   setCorrectAnswers: SetState<WordData[]>,
   setIncorrectAnswers: SetState<WordData[]>,
+  setCountCorrectAnswers: SetState<number>,
+  setMaxCountCorrectAnswers: SetState<number>,
   clearGameState: () => void,
 }
 
 const defaultValue = {
   correctAnswers: [],
   incorrectAnswers: [],
+  countCorrectAnswers: 0,
+  maxCountCorrectAnswers: 0,
   token: '',
   userId: '',
   isLoggedIn: false,
@@ -30,6 +36,8 @@ const defaultValue = {
   setGameStarted: () => { },
   setCorrectAnswers: () => { },
   setIncorrectAnswers: () => { },
+  setCountCorrectAnswers: () => { },
+  setMaxCountCorrectAnswers: () => { },
   clearGameState: () => { },
 };
 

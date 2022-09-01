@@ -174,5 +174,5 @@ export {
   WordCreateProp,
   GetUserProp,
   FilteredWordData,
-  ErrMessageProps
+  ErrMessageProps,
 };
