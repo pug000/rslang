@@ -132,7 +132,10 @@ interface GameStatistics {
 interface Statistics {
   learnedWords: number,
   optional: {
-    [key: string]: GameStatistics,
+    date: string,
+    games: {
+      [key: string]: GameStatistics,
+    }
   }
 }
 interface ColorProps {

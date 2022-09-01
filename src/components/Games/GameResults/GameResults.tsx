@@ -72,18 +72,21 @@ function GameResults(
       (async () => {
         const data = await getUserStatistics(userId, token);
         const learnedWords = data.learnedWords + words.length;
-        const gameLearnedWords = data.optional[game].gameLearnedWords + words.length;
-        const correctAnswersCount = data.optional[game].correctAnswersCount + correctAnswers.length;
+        const gameLearnedWords = data.optional.games[game].gameLearnedWords + words.length;
+        const correctAnswersCount = data.optional.games[game].correctAnswersCount + correctAnswers.length;
         const percentCorrectWord = Math.round((correctAnswersCount * 100) / gameLearnedWords);
 
         const statistics: Statistics = {
           learnedWords,
           optional: {
             ...data.optional,
-            [game]: {
-              gameLearnedWords,
-              correctAnswersCount,
-              percentCorrectWord,
+            games: {
+              ...data.optional.games,
+              [game]: {
+                gameLearnedWords,
+                correctAnswersCount,
+                percentCorrectWord,
+              }
             }
           }
         };

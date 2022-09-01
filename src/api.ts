@@ -1,4 +1,9 @@
 import {
+  defaultStatistics,
+  todayDate
+} from '@/utils/variables';
+
+import {
   WordData,
   UserData,
   RegisteredUserData,
@@ -71,28 +76,23 @@ const getUserStatistics = async (userId: string, token: string) => {
       },
     });
     const { status } = response;
+    const data: Statistics = await response.json();
 
     if (status === ServerResponses.error404) {
-      const defaultData: Statistics = {
-        learnedWords: 0,
+      return defaultStatistics;
+    }
+
+    if (todayDate !== data.optional.date) {
+      const newStatistics: Statistics = {
+        ...data,
         optional: {
-          audio: {
-            gameLearnedWords: 0,
-            percentCorrectWord: 0,
-            correctAnswersCount: 0,
-          },
-          sprint: {
-            gameLearnedWords: 0,
-            percentCorrectWord: 0,
-            correctAnswersCount: 0,
-          }
+          ...defaultStatistics.optional,
         }
       };
 
-      return defaultData;
+      return newStatistics;
     }
 
-    const data: Statistics = await response.json();
     return data;
   } catch (err) {
     throw new Error(`${err}`);
