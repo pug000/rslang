@@ -15,7 +15,8 @@ import {
   TeammateLink,
   TeammateRole,
   AboutProjectText,
-  AboutProjectTitle
+  AboutProjectTitle,
+  AboutProjectWrapper
 } from './About.style';
 
 import {
@@ -62,10 +63,10 @@ function About() {
             text,
           }
         ) => (
-          <div key={descriptionId}>
+          <AboutProjectWrapper key={descriptionId}>
             <AboutProjectTitle>{title}</AboutProjectTitle>
             <AboutProjectText>{text}</AboutProjectText>
-          </div>
+          </AboutProjectWrapper>
         ))}
       </AboutProject>
       <AboutUsWrapper>
@@ -85,7 +86,11 @@ function About() {
               <TeammateIconWrapper>
                 {icon}
               </TeammateIconWrapper>
-              <TeammateLink href={link} title={title} target="_blank">
+              <TeammateLink
+                href={link}
+                title={title}
+                target="_blank"
+              >
                 {name}
               </TeammateLink>
               <TeammateRole>{role}</TeammateRole>

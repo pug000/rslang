@@ -1,27 +1,29 @@
 import React from 'react';
-import SetState from '@/ts/types';
+
 import { navItems } from '@/utils/variables';
+
+import SetState from '@/ts/types';
+
 import {
-  Shadow, NavLi, Link, NavUl
+  Shadow,
+  NavLi,
+  Link,
+  NavUl
 } from './NavMenu.style';
 
 interface NavMenuProps {
   isNavMenuOpen: boolean,
-  isGameStarted: boolean,
   setNavMenuOpen: SetState<boolean>,
   active: boolean,
   setActive: (arg0: boolean) => void,
-  setIsGameStarted: SetState<boolean>,
 }
 
 function NavMenu(
   {
     isNavMenuOpen,
-    isGameStarted,
     setNavMenuOpen,
     active,
     setActive,
-    setIsGameStarted,
   }: NavMenuProps
 ) {
   return (
@@ -36,10 +38,6 @@ function NavMenu(
               onClick={() => {
                 setActive(false);
                 setNavMenuOpen(false);
-
-                if (isGameStarted) {
-                  setIsGameStarted(false);
-                }
               }}
             >
               {icon}

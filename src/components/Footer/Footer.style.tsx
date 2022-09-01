@@ -1,5 +1,5 @@
-import defaultTheme from '@/styles/theme';
 import styled from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 const FooterWrapper = styled.div`
   width: 100%;
@@ -18,7 +18,7 @@ const FooterBorderWrap = styled.div`
 const FooterContainer = styled.div`
   min-height: 170px;
   width: 100%;
-  background-color: ${defaultTheme.colors.bgPurple};
+  background-color: ${defaultTheme.colors.backgroundPurple};
 `;
 
 const FooterTitleDiv = styled.div`
@@ -69,6 +69,13 @@ const Author = styled.a`
 `;
 
 export {
-  FooterWrapper, FooterBorderWrap, FooterContainer, FooterTitleDiv, FooterTitle, SchoolLogo,
-  Copyright, Authors, Author
+  FooterWrapper,
+  FooterBorderWrap,
+  FooterContainer,
+  FooterTitleDiv,
+  FooterTitle,
+  SchoolLogo,
+  Copyright,
+  Authors,
+  Author
 };

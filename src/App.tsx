@@ -1,34 +1,48 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import Book from '@/Book';
-import GameContainer from '@/GamesContainer';
-import { WordData } from '@/ts/interfaces';
-import WordItemContext from '@/contexts/WordItemContext';
-import ProtectedRoute from '@/ProtectedRoute';
-import DifficultWords from '@/DifficultWords';
+import React, {
+  useEffect,
+  useMemo,
+  useState
+} from 'react';
+import {
+  Route,
+  Routes
+} from 'react-router-dom';
+
+import HeaderContext from '@/contexts/HeaderContext';
+import WordItemContext from '@/contexts/BookContext';
+import GameContext from '@/contexts/GameContext';
+
 import AppLayout from '@/AppLayout';
 import Home from '@/Home';
-import useLocalStorage from '@/hooks/useLocalStorage';
-import HeaderContext from '@/contexts/HeaderContext';
+import Book from '@/Book';
+import ProtectedRoute from '@/ProtectedRoute';
+import DifficultWords from '@/DifficultWords';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
 import About from '@/About';
 import NotFound from '@/NotFound';
-import { getFilteredUserWords } from '@/api';
-import GameContext from './contexts/GameContext';
+import GameContainer from '@/GamesContainer';
+
 import {
-  defaultToken, defaultUserID, FILTER_DIFFICULT_WORDS, FILTER_LEARNED_WORDS
-} from './utils/variables';
-import { ChangeWordsDataKeyFromServer } from './utils/createCorrectPropResponse';
+  defaultToken,
+  defaultUserID,
+  FILTER_DIFFICULT_WORDS,
+  FILTER_LEARNED_WORDS,
+} from '@/utils/variables';
+import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
+import { getFilteredUserWords } from '@/api';
+import useLocalStorage from '@/hooks/useLocalStorage';
+
+import { WordData } from '@/ts/interfaces';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useLocalStorage('isLoggedIn', false);
+  const [isLoggedIn, setLoggedIn] = useLocalStorage('isLoggedIn', false);
   const [difficultWords, setDifficultWords] = useState<WordData[]>([]);
   const [learnedWords, setLearnedWords] = useState<WordData[]>([]);
-  const [isGameStarted, setIsGameStarted] = useState(false);
-  const [isShowResult, setIsShowResult] = useState(false);
+  const [isGameStarted, setGameStarted] = useState(false);
+  const [isShowResult, setShowResult] = useState(false);
   const [words, setWords] = useState<WordData[]>([]);
-  const [groupNumber, setGroupNumber] = useLocalStorage('bookGroupNumber', 0);
+  const [bookGroupNumber, setBookGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
   const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('CurrentPageDifficult', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
@@ -37,8 +51,8 @@ function App() {
   const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
 
   const clearGameState = () => {
-    setIsGameStarted(false);
-    setIsShowResult(false);
+    setGameStarted(false);
+    setShowResult(false);
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
   };
@@ -52,12 +66,6 @@ function App() {
       window.removeEventListener('popstate', clearGameState)
     );
   }, [isGameStarted]);
-
-  useEffect(() => (
-    isLoggedIn
-      ? setIsLoggedIn(true)
-      : (setIsLoggedIn(false), setDifficultWords([]), setLearnedWords([]))
-  ), [isLoggedIn]);
 
   const wordItemValue = useMemo(() => (
     {
@@ -73,9 +81,7 @@ function App() {
   const headerValue = useMemo(() => (
     {
       isLoggedIn,
-      isGameStarted,
-      setIsLoggedIn,
-      setIsGameStarted,
+      setLoggedIn,
       setToken,
       setUserId,
     }
@@ -88,12 +94,12 @@ function App() {
       const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
 
       if (difficultWordsData && typeof difficultWordsData !== 'number') {
-        const difficultWordsChangeKeys = ChangeWordsDataKeyFromServer([difficultWordsData[0]]);
+        const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
         setDifficultWords(difficultWordsChangeKeys);
       }
 
       if (learnedWordsData && typeof learnedWordsData !== 'number') {
-        const learnedWordsChangeKeys = ChangeWordsDataKeyFromServer([learnedWordsData[0]]);
+        const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
         setLearnedWords(learnedWordsChangeKeys);
       }
     })();
@@ -108,8 +114,8 @@ function App() {
       isLoggedIn,
       isGameStarted,
       isShowResult,
-      setIsShowResult,
-      setIsGameStarted,
+      setShowResult,
+      setGameStarted,
       setCorrectAnswers,
       setIncorrectAnswers,
       clearGameState,
@@ -141,12 +147,12 @@ function App() {
             <WordItemContext.Provider value={wordItemValue}>
               <Book
                 currentPage={currentPage}
-                groupNumber={groupNumber}
+                bookGroupNumber={bookGroupNumber}
                 words={words}
                 setWords={setWords}
                 setCurrentPage={setCurrentPage}
-                setGroupNumber={setGroupNumber}
-                setIsGameStarted={setIsGameStarted}
+                setBookGroupNumber={setBookGroupNumber}
+                setGameStarted={setGameStarted}
               />
             </WordItemContext.Provider>
           )}
@@ -173,7 +179,7 @@ function App() {
               <SprintGamePage
                 isGameStarted={isGameStarted}
                 defaultPage={currentPage}
-                defaultGroupNumber={groupNumber}
+                defaultGroupNumber={bookGroupNumber}
                 defaultWords={words}
               />
             </GameContext.Provider>
@@ -186,7 +192,7 @@ function App() {
               <AudioGamePage
                 isGameStarted={isGameStarted}
                 defaultPage={currentPage}
-                defaultGroupNumber={groupNumber}
+                defaultGroupNumber={bookGroupNumber}
                 defaultWords={words}
               />
             </GameContext.Provider>

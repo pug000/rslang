@@ -1,6 +1,7 @@
+import { createContext } from 'react';
+
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
-import { createContext } from 'react';
 
 interface GameContextValues {
   correctAnswers: WordData[],
@@ -10,8 +11,8 @@ interface GameContextValues {
   isLoggedIn: boolean,
   isGameStarted: boolean,
   isShowResult: boolean,
-  setIsShowResult: SetState<boolean>,
-  setIsGameStarted: SetState<boolean>,
+  setShowResult: SetState<boolean>,
+  setGameStarted: SetState<boolean>,
   setCorrectAnswers: SetState<WordData[]>,
   setIncorrectAnswers: SetState<WordData[]>,
   clearGameState: () => void,
@@ -25,8 +26,8 @@ const defaultValue = {
   isLoggedIn: false,
   isGameStarted: false,
   isShowResult: false,
-  setIsShowResult: () => { },
-  setIsGameStarted: () => { },
+  setShowResult: () => { },
+  setGameStarted: () => { },
   setCorrectAnswers: () => { },
   setIncorrectAnswers: () => { },
   clearGameState: () => { },

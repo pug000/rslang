@@ -1,8 +1,6 @@
 import React from 'react';
 import defaultTheme from '@/styles/theme';
-import {
-  Games, GroupButton, NavItem, ProjectDescription
-} from '@/ts/interfaces';
+
 import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import SpeedIcon from '@mui/icons-material/Speed';
 import HomeIcon from '@mui/icons-material/Home';
@@ -12,19 +10,12 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InfoIcon from '@mui/icons-material/Info';
 
-const defaultUser = { email: '', password: '' };
-const defaultSingInData = {
-  message: '',
-  token: '',
-  refreshToken: '',
-  userId: '',
-};
-const defaultToken = '';
-const defaultUserID = '';
-const defaultErrMessage = {
-  text: '',
-  activeErr: false,
-};
+import {
+  Games,
+  GroupButton,
+  NavItem,
+  ProjectDescription
+} from '@/ts/interfaces';
 
 const defaultUser = { email: '', password: '' };
 const defaultSingInData = {
@@ -67,22 +58,22 @@ const games: Games = {
   audio: {
     name: 'Аудиовызов',
     description: 'Вы слышите слово на английском языке и видите 5 вариантов перевода. Цель игры - выбрать правильный перевод озвученного слова.',
-    bgColor: `${defaultTheme.colors.bgPink}`,
-    btnColor: `${defaultTheme.colors.pink}`,
+    backgroundColor: `${defaultTheme.colors.backgroundPink}`,
+    buttonColor: `${defaultTheme.colors.pink}`,
     icon: <VolumeUpIcon />,
     note: '*не забудьте включить звук',
   },
   sprint: {
     name: 'Спринт',
     description: 'Спринт - это тренировка на скорость. Вам будет предложено слово и его перевод. Цель игры - выбрать как можно больше правильных переводов за 1 минуту.',
-    bgColor: `${defaultTheme.colors.bgBlue}`,
-    btnColor: `${defaultTheme.colors.blue}`,
+    backgroundColor: `${defaultTheme.colors.backgroundBlue}`,
+    buttonColor: `${defaultTheme.colors.blue}`,
     icon: <SpeedIcon />,
     note: '*будьте внимательны',
   }
 };
 
-const groupBtns: GroupButton[] = [
+const groupButtons: GroupButton[] = [
   {
     id: 1, value: 0, text: 'A1', color: `${defaultTheme.colors.beige}`
   },
@@ -137,12 +128,13 @@ const FILTER_LEARNED_WORDS = encodeURIComponent('{"userWord.optional.isDifficult
 export {
   navItems,
   games,
-  groupBtns,
+  groupButtons,
   totalCountPages,
   regex,
   strikeMessages,
   defaultSingInData,
-  defaultToken, defaultUser,
+  defaultToken,
+  defaultUser,
   defaultUserID,
   defaultErrMessage,
   FILTER_DIFFICULT_WORDS,

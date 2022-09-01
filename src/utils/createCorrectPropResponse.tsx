@@ -10,11 +10,10 @@ const createWordProp = (word: WordData, isDifficultWord: boolean) => {
   return currentWord;
 };
 
-const ChangeWordsDataKeyFromServer = (arr: FilteredWordData[]) => {
+const сhangeWordsDataKeyFromServer = (arr: FilteredWordData[]) => {
   const WordsDataNewKeyArr: WordData[] = [];
   for (let i = 0; i < arr[0].paginatedResults.length; i += 1) {
     const WordNewKey: WordData = {
-      // eslint-disable-next-line no-underscore-dangle
       id: String(arr[0].paginatedResults[i]._id),
       group: arr[0].paginatedResults[i].group,
       page: arr[0].paginatedResults[i].page,
@@ -36,5 +35,6 @@ const ChangeWordsDataKeyFromServer = (arr: FilteredWordData[]) => {
 };
 
 export {
-  createWordProp, ChangeWordsDataKeyFromServer
+  createWordProp,
+  сhangeWordsDataKeyFromServer
 };

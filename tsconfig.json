@@ -75,6 +75,9 @@
       "@/DifficultWords": [
         "components/DifficultWords/DifficultWords"
       ],
+      "@/DifficultWordItem": [
+        "components/DifficultWords/DifficultWordItem/DifficultWordItem"
+      ],
       "@/Timer": [
         "components/Games/GameComponents/Timer/Timer"
       ],

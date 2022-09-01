@@ -1,19 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { WordData } from '@/ts/interfaces';
-import Pagination from '@mui/material/Pagination';
-import SetState from '@/ts/types';
+import React, {
+  useContext,
+  useEffect,
+  useState
+} from 'react';
+
+import BookContext from '@/contexts/BookContext';
+
+import Loader from '@/Loader';
+import DifficultWordItem from '@/DifficultWordItem';
+
 import { FILTER_DIFFICULT_WORDS } from '@/utils/variables';
 import { getFilteredUserWordsByPage } from '@/api';
-import Loader from '@/Loader';
-import WordItemContext from '@/contexts/WordItemContext';
-import { ChangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
+import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
+
+import { WordData } from '@/ts/interfaces';
+import SetState from '@/ts/types';
+
+import Pagination from '@mui/material/Pagination';
+
 import {
   DifficultWordsWrapper,
   DifficultWordsContainer,
   DifficultWordsTitle,
   Note,
 } from './DifficultWords.style';
-import DifficultWordItem from './DifficultWordItem/DifficultWordItem';
 
 interface DifficultWordsProps {
   isLoggedIn: boolean | null;
@@ -27,15 +37,12 @@ function DifficultWords({
   setCurrentPageDifficult,
 }: DifficultWordsProps) {
   if (!isLoggedIn) return null;
-
   const {
     difficultWords,
     token,
     userId,
-  } = useContext(WordItemContext);
-
+  } = useContext(BookContext);
   const totalCountPagesDifficult = Math.floor(difficultWords.length / 20);
-
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [wordsDifficult, setWordsDifficult] = useState<WordData[]>([]);
@@ -48,7 +55,7 @@ function DifficultWords({
       setIsLoadingPage(true);
       const wordsDifficultData = await getFilteredUserWordsByPage(FILTER_DIFFICULT_WORDS, userId, token, currentPageDifficult);
       if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
-        const wordsDifficultDataChangeKeys = ChangeWordsDataKeyFromServer([wordsDifficultData[0]]);
+        const wordsDifficultDataChangeKeys = сhangeWordsDataKeyFromServer([wordsDifficultData[0]]);
         setWordsDifficult(wordsDifficultDataChangeKeys);
         setIsLoadingPage(false);
       }

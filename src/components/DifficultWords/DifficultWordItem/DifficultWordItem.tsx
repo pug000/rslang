@@ -1,20 +1,38 @@
-import {
-  baseUrl, createUserWord, deleteUserWord, getUserWord
-} from '@/api';
+import React, {
+  useContext,
+  useRef,
+  useEffect,
+} from 'react';
+import DOMPurify from 'dompurify';
 import defaultTheme from '@/styles/theme';
+
+import BookContext from '@/contexts/BookContext';
+
+import {
+  baseUrl,
+  createUserWord,
+  deleteUserWord,
+  getUserWord
+} from '@/api';
+import { createWordProp } from '@/utils/createCorrectPropResponse';
+
 import { Track, WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
-import DOMPurify from 'dompurify';
-import React, {
-  useContext, useRef, useEffect,
-} from 'react';
-import WordItemContext from '@/contexts/WordItemContext';
 import ServerResponses from '@/ts/enums';
-import { createWordProp } from '@/utils/createCorrectPropResponse';
+
 import {
-  DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn, Word, WordBtnContainer,
-  WordImg, WordInfoContainer, WordInfoWrapper, WordPlayAudioBtn, WordPlayIcon,
-  WordText, WordTitle
+  DifficultWordButton,
+  DifficultWordButtonActive,
+  LearnedWordButton,
+  Word,
+  WordButtonContainer,
+  WordImg,
+  WordInfoContainer,
+  WordInfoWrapper,
+  WordPlayAudioBtn,
+  WordPlayIcon,
+  WordText,
+  WordTitle
 } from './DifficultWordItem.style';
 
 interface WordItemProps {
@@ -37,7 +55,7 @@ function DifficultWordItem(
     setLearnedWords,
     token,
     userId,
-  } = useContext(WordItemContext);
+  } = useContext(BookContext);
   const audioWord = useRef(new Audio());
   const audioMeaning = useRef(new Audio());
   const audioExample = useRef(new Audio());
@@ -74,6 +92,7 @@ function DifficultWordItem(
     setState((prev) => prev.filter((el) => el.id !== item.id));
     deleteUserWord(item.id, userId, token);
   };
+
   const handleClick = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     arr: WordData[],
@@ -149,7 +168,7 @@ function DifficultWordItem(
                   __html: DOMPurify.sanitize(item.textMeaning)
                 }
               }
-              color={defaultTheme.colors.textBold}
+              $color={defaultTheme.colors.textBold}
               fontSize={defaultTheme.fontSizes.smallText}
             />
             <WordText
@@ -170,7 +189,7 @@ function DifficultWordItem(
                   __html: DOMPurify.sanitize(item.textExample)
                 }
               }
-              color={defaultTheme.colors.textBold}
+              $color={defaultTheme.colors.textBold}
               fontSize={defaultTheme.fontSizes.smallText}
             />
             <WordText
@@ -179,17 +198,17 @@ function DifficultWordItem(
                   __html: DOMPurify.sanitize(item.textExampleTranslate)
                 }
               }
-              color={defaultTheme.colors.text}
+              $color={defaultTheme.colors.text}
               fontSize={defaultTheme.fontSizes.smallText}
               opacity={defaultTheme.effects.hoverOpacity}
             />
           </WordInfoWrapper>
         </div>
       </WordInfoContainer>
-      <WordBtnContainer>
-        <LearnedWordBtn
+      <WordButtonContainer>
+        <LearnedWordButton
           id="learned"
-          colors={
+          $color={
             toggleActive(learnedWords)
               ? defaultTheme.colors.primaryColor
               : defaultTheme.colors.grey
@@ -199,17 +218,17 @@ function DifficultWordItem(
         {
           toggleActive(difficultWords)
             ? (
-              <DifficultWordBtnActive
+              <DifficultWordButtonActive
                 onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
               />
             )
             : (
-              <DifficultWordBtn
+              <DifficultWordButton
                 onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
               />
             )
         }
-      </WordBtnContainer>
+      </WordButtonContainer>
     </Word>
   );
 }

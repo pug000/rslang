@@ -1,20 +1,41 @@
-import {
-  baseUrl, createUserWord, deleteUserWord, getUserWord
-} from '@/api';
-import defaultTheme from '@/styles/theme';
-import { Track, WordData } from '@/ts/interfaces';
-import SetState from '@/ts/types';
-import DOMPurify from 'dompurify';
 import React, {
-  useContext, useRef, useEffect,
+  useContext,
+  useRef,
+  useEffect,
 } from 'react';
-import WordItemContext from '@/contexts/WordItemContext';
-import ServerResponses from '@/ts/enums';
-import { createWordProp } from '@/utils/createCorrectPropResponse';
+import DOMPurify from 'dompurify';
+import defaultTheme from '@/styles/theme';
+
+import BookContext from '@/contexts/BookContext';
+
 import {
-  DifficultWordBtn, DifficultWordBtnActive, LearnedWordBtn, Word, WordBtnContainer,
-  WordImg, WordInfoContainer, WordInfoWrapper, WordPlayAudioBtn, WordPlayIcon,
-  WordText, WordTitle
+  baseUrl,
+  createUserWord,
+  deleteUserWord,
+  getUserWord
+} from '@/api';
+import { createWordProp } from '@/utils/createCorrectPropResponse';
+
+import SetState from '@/ts/types';
+import ServerResponses from '@/ts/enums';
+import {
+  Track,
+  WordData
+} from '@/ts/interfaces';
+
+import {
+  DifficultWordButton,
+  DifficultWordButtonActive,
+  LearnedWordButton,
+  Word,
+  WordButtonContainer,
+  WordImage,
+  WordInfoContainer,
+  WordInfoWrapper,
+  WordPlayAudioButton,
+  WordPlayIcon,
+  WordText,
+  WordTitle
 } from './WordItem.style';
 
 interface WordItemProps {
@@ -37,7 +58,7 @@ function WordItem(
     setLearnedWords,
     token,
     userId,
-  } = useContext(WordItemContext);
+  } = useContext(BookContext);
   const audioWord = useRef(new Audio());
   const audioMeaning = useRef(new Audio());
   const audioExample = useRef(new Audio());
@@ -112,15 +133,13 @@ function WordItem(
 
   return (
     <Word>
-      <WordImg src={`${baseUrl}/${item.image}`} alt="word-img" />
+      <WordImage src={`${baseUrl}/${item.image}`} alt="word-img" />
       <WordInfoContainer>
         <div>
           <WordInfoWrapper>
             <WordTitle>
               {`${item.word} - ${item.transcription}`}
-              <WordPlayAudioBtn
-                onClick={() => playAudioOnClick()}
-              >
+              <WordPlayAudioButton onClick={() => playAudioOnClick()}>
                 <WordPlayIcon />
                 {tracks.map((el) => (
                   <audio
@@ -132,14 +151,14 @@ function WordItem(
                     <track kind="captions" />
                   </audio>
                 ))}
-              </WordPlayAudioBtn>
+              </WordPlayAudioButton>
             </WordTitle>
             <WordText
-              color={defaultTheme.colors.text}
+              $color={defaultTheme.colors.text}
               fontSize={defaultTheme.fontSizes.smallText}
               opacity={defaultTheme.effects.hoverOpacity}
             >
-              {`${item.wordTranslate}`}
+              {item.wordTranslate}
             </WordText>
           </WordInfoWrapper>
           <WordInfoWrapper>
@@ -149,7 +168,7 @@ function WordItem(
                   __html: DOMPurify.sanitize(item.textMeaning)
                 }
               }
-              color={defaultTheme.colors.textBold}
+              $color={defaultTheme.colors.textBold}
               fontSize={defaultTheme.fontSizes.smallText}
             />
             <WordText
@@ -179,17 +198,17 @@ function WordItem(
                   __html: DOMPurify.sanitize(item.textExampleTranslate)
                 }
               }
-              color={defaultTheme.colors.text}
+              $color={defaultTheme.colors.text}
               fontSize={defaultTheme.fontSizes.smallText}
               opacity={defaultTheme.effects.hoverOpacity}
             />
           </WordInfoWrapper>
         </div>
       </WordInfoContainer>
-      <WordBtnContainer>
-        <LearnedWordBtn
+      <WordButtonContainer>
+        <LearnedWordButton
           id="learned"
-          colors={
+          $color={
             toggleActive(learnedWords)
               ? defaultTheme.colors.primaryColor
               : defaultTheme.colors.grey
@@ -199,17 +218,17 @@ function WordItem(
         {
           toggleActive(difficultWords)
             ? (
-              <DifficultWordBtnActive
+              <DifficultWordButtonActive
                 onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
               />
             )
             : (
-              <DifficultWordBtn
+              <DifficultWordButton
                 onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
               />
             )
         }
-      </WordBtnContainer>
+      </WordButtonContainer>
     </Word>
   );
 }

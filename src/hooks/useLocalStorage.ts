@@ -1,5 +1,9 @@
+import {
+  useEffect,
+  useState
+} from 'react';
+
 import SetState from '@/ts/types';
-import { useEffect, useState } from 'react';
 
 type ReturnType<T> = [T, SetState<T>];
 

@@ -1,5 +1,9 @@
 import React from 'react';
-import { GameContainer, TitleGame } from './Games.style';
+
+import {
+  GameContainer,
+  TitleGame
+} from './Games.style';
 
 interface GameElementProps {
   title: string,

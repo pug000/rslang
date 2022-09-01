@@ -1,5 +1,5 @@
-import defaultTheme from '@/styles/theme';
 import styled, { keyframes } from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 const Time = styled.div`
   color: ${defaultTheme.colors.title};
@@ -12,7 +12,7 @@ const TimerWrap = styled.div`
   position: relative;
 `;
 
-const bgAnimation = keyframes`
+const backgroundAnimation = keyframes`
   0% {
     transform: rotate(0deg) scale(2, 2);
   };
@@ -33,18 +33,20 @@ const bgAnimation = keyframes`
   }
 `;
 
-const BgDiv = styled.div`
+const BackgroundDiv = styled.div`
   position: absolute;
   top: -35px;
   left: -35px;
   z-index: -1;
 
   svg {
-    animation: ${bgAnimation} 60s linear;
+    animation: ${backgroundAnimation} 60s linear;
     transform: rotate(0deg) scale(0, 0);
   }
 `;
 
 export {
-  Time, TimerWrap, BgDiv
+  Time,
+  TimerWrap,
+  BackgroundDiv
 };

@@ -41,5 +41,7 @@ function ArtemSvg() {
 }
 
 export {
-  RomaSvg, NastyaSvg, ArtemSvg
+  RomaSvg,
+  NastyaSvg,
+  ArtemSvg
 };

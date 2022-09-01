@@ -1,5 +1,5 @@
-import defaultTheme from '@/styles/theme';
 import styled, { keyframes } from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 const ringAnimation = keyframes`
   0% {
@@ -52,4 +52,7 @@ const LoadingText = styled.span`
   font-size: ${({ theme }) => theme.fontSizes.text};
 `;
 
-export { LoadingRing, LoadingText };
+export {
+  LoadingRing,
+  LoadingText
+};

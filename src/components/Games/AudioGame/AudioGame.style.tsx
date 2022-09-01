@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 import { NavLink } from 'react-router-dom';
 import defaultTheme from '@/styles/theme';
+
+import VolumeUpIcon from '@mui/icons-material/VolumeUp';
 
 interface AudioIconProps {
   $active: boolean,
@@ -32,7 +33,7 @@ const GameBlock = styled.div`
   justify-content: space-evenly;
 `;
 
-const AudioBtn = styled.button`
+const AudioButton = styled.button`
   border: 3px solid ${({ theme }) => theme.colors.text};
   border-radius: 50%;
   cursor: pointer;
@@ -74,7 +75,7 @@ const AudioGameControls = styled.div`
   padding: 0px 40px;
 `;
 
-const AudioGameControlBtn = styled.button`
+const AudioGameControlButton = styled.button`
   background-color: transparent;
   width: 50px;
   border: none;
@@ -99,7 +100,7 @@ const AudioGameOptions = styled.div`
   gap: 25px;
 `;
 
-const AudioGameBtn = styled.button`
+const AudioGameButton = styled.button`
   display: flex;
   align-items: center;
   padding: 10px 20px;
@@ -138,6 +139,15 @@ const Note = styled.p`
 `;
 
 export {
-  AudioGameWrapper, AudioBtn, AudioIcon, AudioGameOptions, AudioGameBtn,
-  AudioGameControls, AudioGameControlBtn, Link, AudioGameContainer, Note, GameBlock
+  AudioGameWrapper,
+  AudioButton,
+  AudioIcon,
+  AudioGameOptions,
+  AudioGameButton,
+  AudioGameControls,
+  AudioGameControlButton,
+  Link,
+  AudioGameContainer,
+  Note,
+  GameBlock
 };

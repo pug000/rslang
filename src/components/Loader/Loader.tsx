@@ -1,5 +1,9 @@
 import React from 'react';
-import { LoadingRing, LoadingText } from './Loader.style';
+
+import {
+  LoadingRing,
+  LoadingText
+} from './Loader.style';
 
 function Loader() {
   return (

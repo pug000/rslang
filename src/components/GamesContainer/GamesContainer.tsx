@@ -1,32 +1,39 @@
-import defaultTheme from '@/styles/theme';
 import React from 'react';
-import BgContainerIcon from './GameContainerBg';
+import defaultTheme from '@/styles/theme';
+
+import BgContainerIcon from './GameContainerBackground';
 import GameElement from './GameElement';
-import BgElement from './GameElementBg';
+import BackgroundElement from './GameElementBackground';
+
 import {
-  BgDiv, BgContainer, GamesMainContainer, GamesTitle, GamesWrapper, LinkGame
+  BackgroundDiv,
+  BackgroundContainer,
+  GamesMainContainer,
+  GamesTitle,
+  GamesWrapper,
+  LinkGame
 } from './Games.style';
 
 function GamesContainer() {
   return (
     <GamesMainContainer>
       <GamesTitle>Игры</GamesTitle>
-      <BgContainer>
+      <BackgroundContainer>
         <BgContainerIcon />
-      </BgContainer>
+      </BackgroundContainer>
       <GamesWrapper>
         <LinkGame to="/games/sprint">
           <GameElement title="Спринт">
-            <BgDiv>
-              <BgElement color={`${defaultTheme.colors.bgBlue}`} />
-            </BgDiv>
+            <BackgroundDiv>
+              <BackgroundElement $color={defaultTheme.colors.backgroundBlue} />
+            </BackgroundDiv>
           </GameElement>
         </LinkGame>
         <LinkGame to="/games/audio">
           <GameElement title="Аудиовызов">
-            <BgDiv>
-              <BgElement color={`${defaultTheme.colors.bgPink}`} />
-            </BgDiv>
+            <BackgroundDiv>
+              <BackgroundElement $color={defaultTheme.colors.backgroundPink} />
+            </BackgroundDiv>
           </GameElement>
         </LinkGame>
       </GamesWrapper>

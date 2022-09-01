@@ -1,13 +1,20 @@
-import { WordData } from '@/ts/interfaces';
-import React, { useEffect, useState } from 'react';
-import { shuffleArray } from '@/utils/randomize';
-import { getWords } from '@/api';
-import { games } from '@/utils/variables';
+import React, {
+  useEffect,
+  useState
+} from 'react';
+
 import Loader from '@/Loader';
 import GameStart from '@/GameStart';
 import SprintGame from '@/SprintGame';
+
+import { shuffleArray } from '@/utils/randomize';
+import { games } from '@/utils/variables';
+import { getWords } from '@/api';
+
+import { WordData } from '@/ts/interfaces';
+
 import { GamePageWrapper } from './GamePage.style';
-import GamePageBg from './GamePageBg';
+import GamePageBackground from './GamePageBackground';
 
 interface GamePageProps {
   isGameStarted: boolean,
@@ -27,7 +34,7 @@ function SprintGamePage(
   const [currentPage, setCurrentPage] = useState(defaultPage);
   const [currentGroupNumber, setCurrentGroupNumber] = useState(defaultGroupNumber);
   const [words, setWords] = useState<WordData[]>(defaultWords);
-  const [isLoadingGame, setIsLoadingGame] = useState(false);
+  const [isLoadingGame, setLoadingGame] = useState(false);
 
   useEffect(() => {
     if (isLoadingGame) {
@@ -35,7 +42,7 @@ function SprintGamePage(
         const data = await getWords(currentGroupNumber, currentPage);
         setTimeout(() => {
           setWords(shuffleArray(data));
-          setIsLoadingGame(false);
+          setLoadingGame(false);
         }, 500);
       })();
     }
@@ -44,7 +51,7 @@ function SprintGamePage(
   if (isLoadingGame) {
     return (
       <GamePageWrapper>
-        <GamePageBg color={games.sprint.bgColor} />
+        <GamePageBackground $color={games.sprint.backgroundColor} />
         <Loader />
       </GamePageWrapper>
     );
@@ -53,8 +60,8 @@ function SprintGamePage(
   if (!isGameStarted) {
     return (
       <GameStart
-        bgColor={games.sprint.bgColor}
-        elementColor={games.sprint.btnColor}
+        backgroundColor={games.sprint.backgroundColor}
+        elementColor={games.sprint.buttonColor}
         gameTitle={games.sprint.name}
         description={games.sprint.description}
         icon={games.sprint.icon}
@@ -62,17 +69,17 @@ function SprintGamePage(
         currentGroupNumber={currentGroupNumber}
         setCurrentGroupNumber={setCurrentGroupNumber}
         setCurrentPage={setCurrentPage}
-        setIsLoadingGame={setIsLoadingGame}
+        setLoadingGame={setLoadingGame}
       />
     );
   }
 
   return (
     <GamePageWrapper>
-      <GamePageBg color={games.sprint.bgColor} />
+      <GamePageBackground $color={games.sprint.backgroundColor} />
       <SprintGame
         words={words}
-        mainColor={games.sprint.btnColor}
+        mainColor={games.sprint.buttonColor}
       />
     </GamePageWrapper>
   );

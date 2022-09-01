@@ -1,12 +1,12 @@
-import defaultTheme from '@/styles/theme';
 import styled, { keyframes } from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 const HomeContainer = styled.div`
   position: relative;
   height: 50vh;
 `;
 
-const Bg = styled.div`
+const Background = styled.div`
   display: flex;
   justify-content: center;
   gap: 10%;
@@ -38,7 +38,7 @@ const animationRight = keyframes`
   }
 `;
 
-const BgLeft = styled.div`
+const BackgroundLeft = styled.div`
   width: 35%;
   animation: ${animationLeft} 1s;
 
@@ -48,7 +48,7 @@ const BgLeft = styled.div`
   }
 `;
 
-const BgRight = styled.div`
+const BackgroundRight = styled.div`
   width: 35%;
   animation: ${animationRight} 1s;
 
@@ -80,7 +80,7 @@ const HomeText = styled.p`
   margin: 50px auto;
 `;
 
-const HomeBtns = styled.div`
+const HomeButtons = styled.div`
   display: flex;
   margin: 0 auto;
   justify-content: center;
@@ -88,5 +88,12 @@ const HomeBtns = styled.div`
 `;
 
 export {
-  HomeContainer, Bg, BgLeft, BgRight, HomeTextContainer, HomeTitle, HomeText, HomeBtns
+  HomeContainer,
+  Background,
+  BackgroundLeft,
+  BackgroundRight,
+  HomeTextContainer,
+  HomeTitle,
+  HomeText,
+  HomeButtons
 };

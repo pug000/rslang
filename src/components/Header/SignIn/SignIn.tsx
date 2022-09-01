@@ -1,25 +1,51 @@
-import React, { useContext, useState } from 'react';
+import React, {
+  useContext,
+  useState
+} from 'react';
+
+import HeaderContext from '@/contexts/HeaderContext';
+
 import Input from '@/Input';
 import Button from '@/Button';
-import CloseIcon from '@mui/icons-material/Close';
+
 import {
-  registerUser, loginUser,
+  registerUser,
+  loginUser,
   // getUser, getUserWords, getNewToken
 } from '@/api';
-import { LogInUserData, ErrMessageProps } from '@/ts/interfaces';
-import CircularProgress from '@mui/material/CircularProgress';
-import Stack from '@mui/material/Stack';
+import {
+  defaultSingInData,
+  defaultToken,
+  defaultUser,
+  defaultUserID,
+  defaultErrMessage,
+  regex
+} from '@/utils/variables';
+
 import ServerResponses from '@/ts/enums';
 import {
-  defaultSingInData, defaultToken, defaultUser, defaultUserID, defaultErrMessage, regex
-} from '@/utils/variables';
-import HeaderContext from '@/contexts/HeaderContext';
-import {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
-  SignInWelcome, SignInWelcomeContainer
-} from './SignIn.style';
+  LogInUserData,
+  ErrMessageProps
+} from '@/ts/interfaces';
+
+import CircularProgress from '@mui/material/CircularProgress';
+import Stack from '@mui/material/Stack';
+import CloseIcon from '@mui/icons-material/Close';
+
 import PopupMessage from './PopupMessage';
 import LogInIcon from '../LogInIcon';
+
+import {
+  Shadow,
+  Modal,
+  SignInTitle,
+  CloseButton,
+  iconStyles,
+  circularProgressStyle,
+  StackStyle,
+  SignInWelcome,
+  SignInWelcomeContainer
+} from './SignIn.style';
 
 interface SignInProps {
   active: boolean;
@@ -115,9 +141,9 @@ function SignInModal({
   return (
     <Shadow onClick={() => setActive(false)} active={active}>
       <Modal onClick={(e) => e.stopPropagation()} active={active}>
-        <CloseBtn onClick={() => setActive(false)}>
+        <CloseButton onClick={() => setActive(false)}>
           <CloseIcon sx={iconStyles} />
-        </CloseBtn>
+        </CloseButton>
         {isLoggedIn
           ? <SignInTitle>Вы авторизованы!</SignInTitle>
           : <SignInTitle>Добро пожаловать!</SignInTitle>}

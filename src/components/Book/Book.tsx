@@ -1,39 +1,56 @@
-import { WordData } from '@/ts/interfaces';
-import React, { useEffect, useState } from 'react';
-import WordItem from '@/WordItem';
-import Pagination from '@mui/material/Pagination';
-import StarRateIcon from '@mui/icons-material/StarRate';
-import SetState from '@/ts/types';
-import { groupBtns, totalCountPages } from '@/utils/variables';
-import { getWords } from '@/api';
-import Loader from '@/Loader';
-import Button from '@/Button';
+import React, {
+  useEffect,
+  useState
+} from 'react';
 import { NavLink } from 'react-router-dom';
 import defaultTheme from '@/styles/theme';
+
+import Loader from '@/Loader';
+import Button from '@/Button';
+import WordItem from '@/WordItem';
+
+import Pagination from '@mui/material/Pagination';
+import StarRateIcon from '@mui/icons-material/StarRate';
+
 import {
-  BookContainer, Group, GroupBtn, Title, Wrapper, GamesWrapper,
-  WordsContainer, Note
+  groupButtons,
+  totalCountPages
+} from '@/utils/variables';
+import { getWords } from '@/api';
+
+import { WordData } from '@/ts/interfaces';
+import SetState from '@/ts/types';
+
+import {
+  BookContainer,
+  Group,
+  GroupButton,
+  Title,
+  Wrapper,
+  GamesWrapper,
+  WordsContainer,
+  Note
 } from './Book.style';
 
 interface BookProps {
   currentPage: number,
-  groupNumber: number,
+  bookGroupNumber: number,
   words: WordData[],
   setWords: SetState<WordData[]>,
   setCurrentPage: SetState<number>,
-  setGroupNumber: SetState<number>,
-  setIsGameStarted: SetState<boolean>,
+  setBookGroupNumber: SetState<number>,
+  setGameStarted: SetState<boolean>,
 }
 
 function Book(
   {
     currentPage,
-    groupNumber,
+    bookGroupNumber,
     words,
     setWords,
     setCurrentPage,
-    setGroupNumber,
-    setIsGameStarted,
+    setBookGroupNumber,
+    setGameStarted,
   }: BookProps,
 ) {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
@@ -45,13 +62,13 @@ function Book(
 
     (async () => {
       setIsLoadingPage(true);
-      const data = await getWords(groupNumber, currentPage);
+      const data = await getWords(bookGroupNumber, currentPage);
       setTimeout(() => {
         setWords(data);
         setIsLoadingPage(false);
       }, 500);
     })();
-  }, [groupNumber, currentPage]);
+  }, [bookGroupNumber, currentPage]);
 
   return (
     <BookContainer>
@@ -66,7 +83,7 @@ function Book(
           <Button
             id="sprint"
             title="Спринт"
-            callback={() => setIsGameStarted(true)}
+            callback={() => setGameStarted(true)}
             disabled={!!isLoadingPage}
           />
         </NavLink>
@@ -74,7 +91,7 @@ function Book(
           <Button
             id="audio"
             title="Аудиовызов"
-            callback={() => setIsGameStarted(true)}
+            callback={() => setGameStarted(true)}
             disabled={!!isLoadingPage}
           />
         </NavLink>
@@ -82,7 +99,7 @@ function Book(
       <Wrapper>
         <div>
           <Group>
-            {groupBtns.map((
+            {groupButtons.map((
               {
                 id,
                 value,
@@ -90,25 +107,25 @@ function Book(
                 color
               }
             ) => (
-              <GroupBtn
+              <GroupButton
                 key={id}
-                colors={color}
-                disabled={!!isLoadingPage}
-                active={groupNumber === value}
-                onClick={() => setGroupNumber(value)}
+                $color={color}
+                disabled={isLoadingPage}
+                active={bookGroupNumber === value}
+                onClick={() => setBookGroupNumber(value)}
               >
                 {text}
-              </GroupBtn>
+              </GroupButton>
             ))}
             <NavLink to="/difficult-words">
-              <GroupBtn
-                colors={defaultTheme.colors.primaryColor}
+              <GroupButton
+                $color={defaultTheme.colors.primaryColor}
                 active={false}
                 disabled={!!isLoadingPage}
                 title="Сложные слова"
               >
                 <StarRateIcon />
-              </GroupBtn>
+              </GroupButton>
             </NavLink>
           </Group>
         </div>
@@ -130,9 +147,8 @@ function Book(
         />
         <WordsContainer>
           {isLoadingPage
-            ? ((
-              <Loader />
-            )) : words.map((word) => (
+            ? (<Loader />)
+            : words.map((word) => (
               <WordItem
                 key={word.id}
                 item={word}

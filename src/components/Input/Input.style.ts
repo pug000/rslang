@@ -42,5 +42,8 @@ const TitleLabel = styled.p`
 `;
 
 export {
-  TitleLabel, Label, InputField, InputWrapper
+  TitleLabel,
+  Label,
+  InputField,
+  InputWrapper
 };

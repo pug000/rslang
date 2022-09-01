@@ -1,6 +1,8 @@
 import styled from 'styled-components';
 
-const ButtonElement = styled.button<{ $color?: string }>`
+import { ColorProps } from '@/ts/interfaces';
+
+const ButtonElement = styled.button<ColorProps>`
   min-width: 8rem;
   height: 3rem;
   padding: 0.3rem;

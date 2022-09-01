@@ -51,7 +51,7 @@ const TeammateIconWrapper = styled.div`
 
 const TeammateLink = styled.a`
   display: block;
-  width: 165px;
+  width: 160px;
   text-decoration: none;
   color: ${defaultTheme.colors.text};
   font-size: ${defaultTheme.fontSizes.h4};
@@ -76,6 +76,14 @@ const AboutProject = styled.div`
   align-items: center;
 `;
 
+const AboutProjectWrapper = styled.div`
+  &:not(:last-of-type) {
+    border-bottom: 1px solid ${defaultTheme.colors.grey};
+    margin-bottom: 4%;
+    padding-bottom: 4%;
+  }
+`;
+
 const AboutProjectTitle = styled.h3`
   color: ${defaultTheme.colors.title};
   font-size: ${defaultTheme.fontSizes.h5};
@@ -85,12 +93,6 @@ const AboutProjectTitle = styled.h3`
 
 const AboutProjectText = styled.p`
   margin: 0 auto;
-
-  &:not(:last-of-type) {
-    border-bottom: 1px solid ${defaultTheme.colors.grey};
-    margin-bottom: 4%;
-    padding-bottom: 4%;
-  }
 `;
 
 export {
@@ -104,5 +106,6 @@ export {
   TeammateRole,
   AboutProject,
   AboutProjectText,
-  AboutProjectTitle
+  AboutProjectTitle,
+  AboutProjectWrapper,
 };

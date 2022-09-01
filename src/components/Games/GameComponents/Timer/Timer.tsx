@@ -1,7 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
-import BgElement from '@/components/GamesContainer/GameElementBg';
+import React, {
+  useState,
+  useEffect,
+  useContext
+} from 'react';
+
 import GameContext from '@/contexts/GameContext';
-import { Time, BgDiv, TimerWrap } from './Timer.style';
+
+import BackgroundElement from '@/components/GamesContainer/GameElementBackground';
+
+import {
+  Time,
+  BackgroundDiv,
+  TimerWrap
+} from './Timer.style';
 
 interface TimerProps {
   mainColor: string,
@@ -12,7 +23,7 @@ function Timer(
     mainColor,
   }: TimerProps
 ) {
-  const { isGameStarted, setIsShowResult } = useContext(GameContext);
+  const { isGameStarted, setShowResult } = useContext(GameContext);
   const [timeLeft, setTimeLeft] = useState(60);
 
   const addZero = (time: number) => time.toString().padStart(2, '0');
@@ -24,7 +35,7 @@ function Timer(
         setTimeLeft(timeLeft >= 1 ? timeLeft - 1 : 0);
       }
     }, 1000);
-    if (timeLeft === 0) setIsShowResult(true);
+    if (timeLeft === 0) setShowResult(true);
     return () => {
       clearInterval(intervalId);
     };
@@ -33,9 +44,9 @@ function Timer(
   return (
     <TimerWrap>
       <Time>{seconds}</Time>
-      <BgDiv>
-        <BgElement color={mainColor} />
-      </BgDiv>
+      <BackgroundDiv>
+        <BackgroundElement $color={mainColor} />
+      </BackgroundDiv>
     </TimerWrap>
   );
 }

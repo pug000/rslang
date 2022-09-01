@@ -1,8 +1,20 @@
+import React, {
+  useEffect,
+  useRef,
+  useState
+} from 'react';
+
 import { baseUrl } from '@/api';
+
 import { WordData } from '@/ts/interfaces';
-import React, { useEffect, useRef, useState } from 'react';
+
 import {
-  ResultContainer, ResultTitle, ResultWrapper, ResultItem, PlayAudioBtn, PlayAudioIcon,
+  ResultContainer,
+  ResultTitle,
+  ResultWrapper,
+  ResultItem,
+  PlayAudioButton,
+  PlayAudioIcon,
   ResultText,
 } from './GameResults.style';
 
@@ -20,17 +32,17 @@ function Result(
   }: ResultProps
 ) {
   const audioRef = useRef(new Audio());
-  const [isPlayingAudio, setIsPlayingAudio] = useState(false);
+  const [isPlayingAudio, setPlayingAudio] = useState(false);
 
   const playOnClick = (url: string) => {
     audioRef.current.src = url;
-    setIsPlayingAudio(true);
+    setPlayingAudio(true);
   };
 
   useEffect(() => {
     if (isPlayingAudio) {
       audioRef.current.play();
-      setIsPlayingAudio(false);
+      setPlayingAudio(false);
     }
   }, [isPlayingAudio]);
 
@@ -51,11 +63,11 @@ function Result(
           }
         ) => (
           <ResultItem key={id}>
-            <PlayAudioBtn
+            <PlayAudioButton
               onClick={() => playOnClick(`${baseUrl}/${audio}`)}
             >
               <PlayAudioIcon $color={color} />
-            </PlayAudioBtn>
+            </PlayAudioButton>
             <ResultText>
               {`${word} - ${wordTranslate}`}
             </ResultText>

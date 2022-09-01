@@ -1,6 +1,6 @@
-import defaultTheme from '@/styles/theme';
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
+import { NavLink } from 'react-router-dom';
+import defaultTheme from '@/styles/theme';
 
 interface ShadowProps {
   active: boolean,

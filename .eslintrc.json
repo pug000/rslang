@@ -27,6 +27,7 @@
   "rules": {
     "@typescript-eslint/no-explicit-any": "error",
     "@typescript-eslint/comma-dangle": "off",
+    "no-underscore-dangle": "off",
     "max-len": [
       "error",
       {

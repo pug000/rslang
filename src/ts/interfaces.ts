@@ -38,16 +38,16 @@ interface Games {
   audio: {
     name: string,
     description: string,
-    bgColor: string,
-    btnColor: string,
+    backgroundColor: string,
+    buttonColor: string,
     icon: JSX.Element,
     note: string
   },
   sprint: {
     name: string,
     description: string,
-    bgColor: string,
-    btnColor: string,
+    backgroundColor: string,
+    buttonColor: string,
     icon: JSX.Element,
     note: string
   }
@@ -84,9 +84,6 @@ interface SvgStyles {
   width: string,
   height: string,
   transition: string,
-}
-interface Color {
-  $color?: string,
 }
 
 interface WordCreateProp {
@@ -138,7 +135,9 @@ interface Statistics {
     [key: string]: GameStatistics,
   }
 }
-
+interface ColorProps {
+  $color?: string,
+}
 interface Teammate {
   teammateId: number,
   name: string,
@@ -168,7 +167,7 @@ export {
   Statistics,
   Teammate,
   ProjectDescription,
-  Color,
+  ColorProps,
   WordCreateProp,
   GetUserProp,
   FilteredWordData,

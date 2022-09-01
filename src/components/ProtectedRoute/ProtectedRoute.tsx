@@ -1,5 +1,9 @@
 import React from 'react';
-import { Container, ProtectedTitle } from './ProtectedRoute.style';
+
+import {
+  Container,
+  ProtectedTitle
+} from './ProtectedRoute.style';
 
 interface ProtectedProps {
   conditionValue: boolean | null,

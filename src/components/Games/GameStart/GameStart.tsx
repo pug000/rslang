@@ -1,18 +1,33 @@
 import React, { useContext } from 'react';
-import Button from '@/Button';
 import { NavLink } from 'react-router-dom';
-import { groupBtns, totalCountPages } from '@/utils/variables';
-import SetState from '@/ts/types';
-import { generateRandomNumber } from '@/utils/randomize';
+
 import GameContext from '@/contexts/GameContext';
-import GamePageBg from '../GamePageBg';
+
+import Button from '@/Button';
+
 import {
-  GamePageWrapper, GamePageTitle, GamePageText, Group, GroupBtn,
-  GameControlBtns, IconWrapper, Note
+  groupButtons,
+  totalCountPages
+} from '@/utils/variables';
+import { generateRandomNumber } from '@/utils/randomize';
+
+import SetState from '@/ts/types';
+
+import GamePageBackground from '../GamePageBackground';
+
+import {
+  GamePageWrapper,
+  GamePageTitle,
+  GamePageText,
+  Group,
+  GroupButton,
+  GameControlButtons,
+  IconWrapper,
+  Note
 } from '../GamePage.style';
 
 interface GameStartPageProps {
-  bgColor: string,
+  backgroundColor: string,
   elementColor: string,
   gameTitle: string,
   description: string,
@@ -21,11 +36,11 @@ interface GameStartPageProps {
   currentGroupNumber: number,
   setCurrentGroupNumber: SetState<number>,
   setCurrentPage: SetState<number>,
-  setIsLoadingGame: SetState<boolean>,
+  setLoadingGame: SetState<boolean>,
 }
 
 function GameStartPage({
-  bgColor,
+  backgroundColor,
   elementColor,
   gameTitle,
   description,
@@ -34,16 +49,16 @@ function GameStartPage({
   currentGroupNumber,
   setCurrentGroupNumber,
   setCurrentPage,
-  setIsLoadingGame,
+  setLoadingGame,
 }: GameStartPageProps) {
-  const { setIsGameStarted } = useContext(GameContext);
+  const { setGameStarted } = useContext(GameContext);
   return (
     <GamePageWrapper>
-      <GamePageBg color={bgColor} />
+      <GamePageBackground $color={backgroundColor} />
       <GamePageTitle>{gameTitle}</GamePageTitle>
       <GamePageText>{description}</GamePageText>
       <Group>
-        {groupBtns.map((
+        {groupButtons.map((
           {
             id,
             value,
@@ -51,17 +66,17 @@ function GameStartPage({
             color
           }
         ) => (
-          <GroupBtn
+          <GroupButton
             key={id}
-            colors={color}
+            $color={color}
             active={currentGroupNumber === value}
             onClick={() => setCurrentGroupNumber(value)}
           >
             {text}
-          </GroupBtn>
+          </GroupButton>
         ))}
       </Group>
-      <GameControlBtns>
+      <GameControlButtons>
         <NavLink to="/games">
           <Button
             id="exit"
@@ -75,13 +90,13 @@ function GameStartPage({
           title="Играть"
           callback={() => {
             setCurrentPage(generateRandomNumber(totalCountPages - 1));
-            setIsLoadingGame(true);
-            setIsGameStarted(true);
+            setLoadingGame(true);
+            setGameStarted(true);
           }}
           color={elementColor}
         />
-      </GameControlBtns>
-      <IconWrapper iconColor={elementColor}>
+      </GameControlButtons>
+      <IconWrapper $color={elementColor}>
         {icon}
       </IconWrapper>
       <Note>{note}</Note>

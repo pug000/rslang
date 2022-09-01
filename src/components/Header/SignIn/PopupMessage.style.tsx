@@ -13,5 +13,3 @@ const Message = styled.div<MessageProps>`
 `;
 
 export default Message;
-
-export { Message };

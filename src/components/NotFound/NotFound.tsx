@@ -1,11 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-
-import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import defaultTheme from '@/styles/theme';
 
 import Button from '@/Button';
 
-import defaultTheme from '@/styles/theme';
+import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 
 import NotFoundPage from './NotFound.style';
 

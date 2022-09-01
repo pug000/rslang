@@ -1,5 +1,5 @@
-import defaultTheme from '@/styles/theme';
 import styled from 'styled-components';
+import defaultTheme from '@/styles/theme';
 
 interface ModalProps {
   active: boolean,
@@ -29,7 +29,7 @@ const Shadow = styled.div<ModalProps>`
 const Modal = styled.div<ModalProps>`
   padding: 20px;
   border-radius: 0.6rem;
-  background-color: ${defaultTheme.colors.bgWhite};
+  background-color: ${defaultTheme.colors.backgroundWhite};
   width: 400px;
   height: 450px;
   margin-top: -8%;
@@ -54,7 +54,7 @@ const Modal = styled.div<ModalProps>`
   Button#signUp,
   Button#cancel {
     color: ${defaultTheme.colors.primaryColor};
-    background-color: ${defaultTheme.colors.bgWhite};
+    background-color: ${defaultTheme.colors.backgroundWhite};
     border: solid 0.2rem ${defaultTheme.colors.primaryColor};
   }
 `;
@@ -79,7 +79,7 @@ const SignInWelcomeContainer = styled.div`
   flex-direction: column;
 `;
 
-const CloseBtn = styled.button`
+const CloseButton = styled.button`
   border: none;
   background-color: transparent;
   user-select: none;
@@ -109,6 +109,13 @@ const circularProgressStyle = {
 };
 
 export {
-  Shadow, Modal, SignInTitle, CloseBtn, iconStyles, circularProgressStyle, StackStyle,
-  SignInWelcome, SignInWelcomeContainer
+  Shadow,
+  Modal,
+  SignInTitle,
+  CloseButton,
+  iconStyles,
+  circularProgressStyle,
+  StackStyle,
+  SignInWelcome,
+  SignInWelcomeContainer
 };

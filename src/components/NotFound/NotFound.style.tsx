@@ -11,7 +11,7 @@ const NotFoundPage = styled.main`
 
   svg {
     transform: scale(2);
-    color: ${({ theme }) => theme.colors.bgPurple};
+    color: ${({ theme }) => theme.colors.backgroundPurple};
   }
 `;
 
