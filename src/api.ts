@@ -150,7 +150,7 @@ const loginUser = async (userData: UserData) => {
 const getUser = async (userId: string, token: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}`, {
-      method: 'GET',
+      method: methods.get,
       headers: {
         Authorization: `Bearer ${token}`,
         'Content-Type': 'application/json',
@@ -176,7 +176,7 @@ const getUser = async (userId: string, token: string) => {
 const getNewToken = async (userId: string, token: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.tokens}`, {
-      method: 'GET',
+      method: methods.get,
       headers: {
         Accept: 'application/json',
         Authorization: `Bearer ${token}`,
@@ -251,7 +251,7 @@ const deleteUserWord = async (wordId: string, userId: string, token: string) => 
 
 const getUserWords = async (userId: string, token: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}`, {
-    method: 'GET',
+    method: methods.get,
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',
@@ -270,7 +270,7 @@ const getUserWords = async (userId: string, token: string) => {
 
 const getUserWord = async (wordId: string, userId: string, token: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wordId}`, {
-    method: 'GET',
+    method: methods.get,
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',
@@ -295,8 +295,8 @@ const getUserWord = async (wordId: string, userId: string, token: string) => {
 };
 
 const getFilteredUserWords = async (filter: string, userId: string, token: string) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/aggregatedWords?wordsPerPage=6000&filter=${filter}`, {
-    method: 'GET',
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.aggregatedWords}?wordsPerPage=6000&filter=${filter}`, {
+    method: methods.get,
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',
@@ -319,7 +319,7 @@ const getFilteredUserWordsByPage = async (
   page = 0,
 ) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.aggregatedWords}?page=${page}&wordsPerPage=20&filter=${filter}`, {
-    method: 'GET',
+    method: methods.get,
     headers: {
       Authorization: `Bearer ${token}`,
       Accept: 'application/json',
