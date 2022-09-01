@@ -42,7 +42,7 @@ function DifficultWords({
     token,
     userId,
   } = useContext(BookContext);
-  const totalCountPagesDifficult = Math.floor(difficultWords.length / 20);
+  const totalCountPagesDifficult = Math.ceil(difficultWords.length / 20);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [wordsDifficult, setWordsDifficult] = useState<WordData[]>([]);
@@ -80,7 +80,7 @@ function DifficultWords({
               totalCountPagesDifficult >= 1
               && (
                 <Pagination
-                  count={totalCountPagesDifficult + 1}
+                  count={totalCountPagesDifficult}
                   page={currentPageDifficult + 1}
                   disabled={isLoadingPage}
                   variant="outlined"
@@ -114,7 +114,7 @@ function DifficultWords({
               totalCountPagesDifficult >= 1
               && (
                 <Pagination
-                  count={totalCountPagesDifficult + 1}
+                  count={totalCountPagesDifficult}
                   page={currentPageDifficult + 1}
                   disabled={isLoadingPage}
                   variant="outlined"
