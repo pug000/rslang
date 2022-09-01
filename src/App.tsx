@@ -19,12 +19,18 @@ import ProtectedRoute from '@/ProtectedRoute';
 import DifficultWords from '@/DifficultWords';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
+import About from '@/About';
+import NotFound from '@/NotFound';
 import GameContainer from '@/GamesContainer';
 
 import {
   defaultToken,
-  defaultUserID
+  defaultUserID,
+  FILTER_DIFFICULT_WORDS,
+  FILTER_LEARNED_WORDS,
 } from '@/utils/variables';
+import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
+import { getFilteredUserWords } from '@/api';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 import { WordData } from '@/ts/interfaces';
@@ -38,6 +44,7 @@ function App() {
   const [words, setWords] = useState<WordData[]>([]);
   const [bookGroupNumber, setBookGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
+  const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('CurrentPageDifficult', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
   const [token, setToken] = useLocalStorage('token', defaultToken);
@@ -66,6 +73,8 @@ function App() {
       learnedWords,
       setDifficultWords,
       setLearnedWords,
+      token,
+      userId,
     }
   ), [difficultWords, learnedWords]);
 
@@ -77,6 +86,24 @@ function App() {
       setUserId,
     }
   ), [isGameStarted, isLoggedIn]);
+
+  useEffect(() => {
+    (async () => {
+      const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
+
+      const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
+
+      if (difficultWordsData && typeof difficultWordsData !== 'number') {
+        const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
+        setDifficultWords(difficultWordsChangeKeys);
+      }
+
+      if (learnedWordsData && typeof learnedWordsData !== 'number') {
+        const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
+        setLearnedWords(learnedWordsChangeKeys);
+      }
+    })();
+  }, [isLoggedIn, currentPage]);
 
   const gameValue = useMemo(() => (
     {
@@ -133,9 +160,15 @@ function App() {
         <Route
           path="difficult-words"
           element={(
-            <ProtectedRoute conditionValue={isLoggedIn}>
-              <DifficultWords isLoggedIn={isLoggedIn} />
-            </ProtectedRoute>
+            <WordItemContext.Provider value={wordItemValue}>
+              <ProtectedRoute conditionValue={isLoggedIn}>
+                <DifficultWords
+                  isLoggedIn={isLoggedIn}
+                  currentPageDifficult={currentPageDifficult}
+                  setCurrentPageDifficult={setCurrentPageDifficult}
+                />
+              </ProtectedRoute>
+            </WordItemContext.Provider>
           )}
         />
         <Route path="games" element={<GameContainer />} />
@@ -173,8 +206,8 @@ function App() {
             </ProtectedRoute>
           )}
         />
-        <Route path="about-project" element={<p>About Project</p>} />
-        <Route path="about-team" element={<p>About Team</p>} />
+        <Route path="about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

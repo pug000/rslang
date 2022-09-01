@@ -3,12 +3,14 @@ import React, {
   useState
 } from 'react';
 import { NavLink } from 'react-router-dom';
+import defaultTheme from '@/styles/theme';
 
 import Loader from '@/Loader';
 import Button from '@/Button';
 import WordItem from '@/WordItem';
 
 import Pagination from '@mui/material/Pagination';
+import StarRateIcon from '@mui/icons-material/StarRate';
 
 import {
   groupButtons,
@@ -82,6 +84,7 @@ function Book(
             id="sprint"
             title="Спринт"
             callback={() => setGameStarted(true)}
+            disabled={!!isLoadingPage}
           />
         </NavLink>
         <NavLink to="/games/audio">
@@ -89,6 +92,7 @@ function Book(
             id="audio"
             title="Аудиовызов"
             callback={() => setGameStarted(true)}
+            disabled={!!isLoadingPage}
           />
         </NavLink>
       </GamesWrapper>
@@ -113,6 +117,16 @@ function Book(
                 {text}
               </GroupButton>
             ))}
+            <NavLink to="/difficult-words">
+              <GroupButton
+                $color={defaultTheme.colors.primaryColor}
+                active={false}
+                disabled={!!isLoadingPage}
+                title="Сложные слова"
+              >
+                <StarRateIcon />
+              </GroupButton>
+            </NavLink>
           </Group>
         </div>
         <Pagination

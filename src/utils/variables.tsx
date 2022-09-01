@@ -9,12 +9,12 @@ import StarIcon from '@mui/icons-material/Star';
 import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import InfoIcon from '@mui/icons-material/Info';
-import GroupsIcon from '@mui/icons-material/Groups';
 
 import {
   Games,
   GroupButton,
-  NavItem
+  NavItem,
+  ProjectDescription
 } from '@/ts/interfaces';
 
 const defaultUser = { email: '', password: '' };
@@ -26,6 +26,10 @@ const defaultSingInData = {
 };
 const defaultToken = '';
 const defaultUserID = '';
+const defaultErrMessage = {
+  text: '',
+  activeErr: false,
+};
 
 const navItems: NavItem[] = [
   {
@@ -44,10 +48,7 @@ const navItems: NavItem[] = [
     id: 5, value: 'Статистика', link: '/statistics', icon: <TrendingUpIcon />
   },
   {
-    id: 6, value: 'О проекте', link: '/about-project', icon: <InfoIcon />
-  },
-  {
-    id: 7, value: 'О команде', link: '/about-team', icon: <GroupsIcon />
+    id: 6, value: 'О нас', link: '/about', icon: <InfoIcon />
   },
 ];
 
@@ -103,6 +104,27 @@ const strikeMessages: string[] = [
 
 const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
+const projectDescription: ProjectDescription[] = [
+  {
+    descriptionId: 'd1',
+    title: 'Эффективность RS Lang',
+    text: 'Наша миссия — сделать обучение английскому языку доступным для всех. Начать учиться с RS Lang может каждый вне зависимости от его подготовки.'
+  },
+  {
+    descriptionId: 'd2',
+    title: 'Обучение в игре',
+    text: 'Игровая механика доказала свою эффективность для всех возрастов. В RS Lang вам будет предложено две игры на понимание английских слов на слух и чтение.'
+  },
+  {
+    descriptionId: 'd3',
+    title: 'Оценка эффективности',
+    text: 'Мы постоянно контролируем качество и прогресс обучения. Один из таких инструментов — статистика, где зарегистрированные пользователи могут отслеживать количество изученных слов, результаты игр и многое другое.'
+  },
+];
+
+const FILTER_DIFFICULT_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
+const FILTER_LEARNED_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"false"}');
+
 export {
   navItems,
   games,
@@ -113,5 +135,9 @@ export {
   defaultSingInData,
   defaultToken,
   defaultUser,
-  defaultUserID
+  defaultUserID,
+  defaultErrMessage,
+  FILTER_DIFFICULT_WORDS,
+  FILTER_LEARNED_WORDS,
+  projectDescription
 };

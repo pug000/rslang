@@ -4,8 +4,11 @@ import {
   RegisteredUserData,
   LogInUserData,
   Statistics,
+  WordCreateProp,
+  GetUserProp,
+  FilteredWordData,
 } from '@/ts/interfaces';
-import StatusError from '@/ts/enums';
+import ServerResponses from '@/ts/enums';
 
 const baseUrl = 'https://lang-learnwords.herokuapp.com';
 
@@ -14,7 +17,7 @@ const endpoints = {
   users: 'users',
   signin: 'signin',
   tokens: 'tokens',
-  aggreagatedWords: 'aggregatedWords',
+  aggregatedWords: 'aggregatedWords',
   statistics: 'statistics',
   settings: 'settings'
 };
@@ -69,7 +72,7 @@ const getUserStatistics = async (userId: string, token: string) => {
     });
     const { status } = response;
 
-    if (status === StatusError.error404) {
+    if (status === ServerResponses.error404) {
       const defaultData: Statistics = {
         learnedWords: 0,
         optional: {
@@ -108,7 +111,8 @@ const registerUser = async (userData: UserData) => {
     });
     const { status } = response;
 
-    if (status === StatusError.error417 || status === StatusError.error422) {
+    if (status === ServerResponses.error417
+      || status === ServerResponses.error422) {
       return status;
     }
 
@@ -131,7 +135,8 @@ const loginUser = async (userData: UserData) => {
     });
     const { status } = response;
 
-    if (status === StatusError.error403 || status === StatusError.error404) {
+    if (status === ServerResponses.error403
+      || status === ServerResponses.error404) {
       return status;
     }
 
@@ -142,6 +147,194 @@ const loginUser = async (userData: UserData) => {
   }
 };
 
+const getUser = async (userId: string, token: string) => {
+  try {
+    const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}`, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+    const { status } = res;
+
+    if (status === ServerResponses.error401) {
+      return status;
+    }
+
+    if (status === ServerResponses.error404) {
+      return status;
+    }
+
+    const data: GetUserProp = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(`${err}`);
+  }
+};
+
+const getNewToken = async (userId: string, token: string) => {
+  try {
+    const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.tokens}`, {
+      method: 'GET',
+      headers: {
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const { status } = res;
+
+    if (status === ServerResponses.error403) {
+      return status;
+    }
+
+    if (status === ServerResponses.error401) {
+      return status;
+    }
+
+    const data: LogInUserData = await res.json();
+    return data;
+  } catch (err) {
+    throw new Error(`${err}`);
+  }
+};
+
+const createUserWord = async (
+  wordId: string,
+  word: WordCreateProp,
+  userId: string,
+  token: string
+) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}/${wordId}`, {
+    method: methods.post,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(word)
+  });
+  const { status } = res;
+
+  if (status === ServerResponses.response200) {
+    return status;
+  }
+
+  if (status === ServerResponses.error417) {
+    return status;
+  }
+
+  return null;
+};
+
+const deleteUserWord = async (wordId: string, userId: string, token: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}/${wordId}`, {
+    method: methods.delete,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    },
+  });
+  const { status } = res;
+
+  if (status === ServerResponses.response204) {
+    return status;
+  }
+
+  if (status === ServerResponses.error401) {
+    return status;
+  }
+
+  return null;
+};
+
+const getUserWords = async (userId: string, token: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+      'Content-Type': 'application/json'
+    }
+  });
+  const { status } = res;
+
+  if (status === ServerResponses.error402) {
+    return status;
+  }
+
+  const data: WordCreateProp = await res.json();
+  return data;
+};
+
+const getUserWord = async (wordId: string, userId: string, token: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wordId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    }
+  });
+  const { status } = res;
+
+  if (status === ServerResponses.error402) {
+    return status;
+  }
+
+  if (status === ServerResponses.error404) {
+    return status;
+  }
+
+  if (status === ServerResponses.error417) {
+    return status;
+  }
+
+  const data: WordCreateProp = await res.json();
+  return data;
+};
+
+const getFilteredUserWords = async (filter: string, userId: string, token: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/aggregatedWords?wordsPerPage=6000&filter=${filter}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    }
+  });
+  const { status } = res;
+
+  if (status === ServerResponses.error402) {
+    return status;
+  }
+
+  const data: FilteredWordData[] = await res.json();
+  return data;
+};
+
+const getFilteredUserWordsByPage = async (
+  filter: string,
+  userId: string,
+  token: string,
+  page = 0,
+) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.aggregatedWords}?page=${page}&wordsPerPage=20&filter=${filter}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: 'application/json',
+    }
+  });
+  const { status } = res;
+
+  if (status === ServerResponses.error402) {
+    return status;
+  }
+
+  const data: FilteredWordData[] = await res.json();
+  return data;
+};
+
 export {
   baseUrl,
   endpoints,
@@ -150,4 +343,12 @@ export {
   loginUser,
   updateUserStatistics,
   getUserStatistics,
+  getUser,
+  getUserWords,
+  getNewToken,
+  createUserWord,
+  deleteUserWord,
+  getFilteredUserWords,
+  getUserWord,
+  getFilteredUserWordsByPage
 };

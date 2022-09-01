@@ -76,12 +76,13 @@ function GameStartPage({
           </GroupButton>
         ))}
       </Group>
-      <GameControlButtons btnColor={elementColor}>
+      <GameControlButtons>
         <NavLink to="/games">
           <Button
             id="exit"
             title="Выйти"
             callback={() => { }}
+            color={elementColor}
           />
         </NavLink>
         <Button
@@ -92,6 +93,7 @@ function GameStartPage({
             setLoadingGame(true);
             setGameStarted(true);
           }}
+          color={elementColor}
         />
       </GameControlButtons>
       <IconWrapper $color={elementColor}>

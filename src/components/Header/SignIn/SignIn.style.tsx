@@ -79,7 +79,7 @@ const SignInWelcomeContainer = styled.div`
   flex-direction: column;
 `;
 
-const CloseBtn = styled.button`
+const CloseButton = styled.button`
   border: none;
   background-color: transparent;
   user-select: none;
@@ -112,7 +112,7 @@ export {
   Shadow,
   Modal,
   SignInTitle,
-  CloseBtn,
+  CloseButton,
   iconStyles,
   circularProgressStyle,
   StackStyle,

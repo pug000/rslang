@@ -16,12 +16,9 @@ import {
 } from '@/api';
 import { createWordProp } from '@/utils/createCorrectPropResponse';
 
+import { Track, WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import ServerResponses from '@/ts/enums';
-import {
-  Track,
-  WordData
-} from '@/ts/interfaces';
 
 import {
   DifficultWordButton,
@@ -29,14 +26,14 @@ import {
   LearnedWordButton,
   Word,
   WordButtonContainer,
-  WordImage,
+  WordImg,
   WordInfoContainer,
   WordInfoWrapper,
-  WordPlayAudioButton,
+  WordPlayAudioBtn,
   WordPlayIcon,
   WordText,
   WordTitle
-} from './WordItem.style';
+} from './DifficultWordItem.style';
 
 interface WordItemProps {
   item: WordData,
@@ -44,7 +41,7 @@ interface WordItemProps {
   setNewAudio: (value: HTMLAudioElement | null) => void,
 }
 
-function WordItem(
+function DifficultWordItem(
   {
     item,
     audio,
@@ -102,6 +99,7 @@ function WordItem(
     setState: SetState<WordData[]>
   ) => {
     let isDifficultWord: boolean;
+
     if (e.currentTarget.id === 'learned') {
       isDifficultWord = false;
       setDifficultWords((prev) => prev.filter((el) => el.id !== item.id));
@@ -133,13 +131,15 @@ function WordItem(
 
   return (
     <Word>
-      <WordImage src={`${baseUrl}/${item.image}`} alt="word-img" />
+      <WordImg src={`${baseUrl}/${item.image}`} alt="word-img" />
       <WordInfoContainer>
         <div>
           <WordInfoWrapper>
             <WordTitle>
               {`${item.word} - ${item.transcription}`}
-              <WordPlayAudioButton onClick={() => playAudioOnClick()}>
+              <WordPlayAudioBtn
+                onClick={() => playAudioOnClick()}
+              >
                 <WordPlayIcon />
                 {tracks.map((el) => (
                   <audio
@@ -151,14 +151,14 @@ function WordItem(
                     <track kind="captions" />
                   </audio>
                 ))}
-              </WordPlayAudioButton>
+              </WordPlayAudioBtn>
             </WordTitle>
             <WordText
-              $color={defaultTheme.colors.text}
+              color={defaultTheme.colors.text}
               fontSize={defaultTheme.fontSizes.smallText}
               opacity={defaultTheme.effects.hoverOpacity}
             >
-              {item.wordTranslate}
+              {`${item.wordTranslate}`}
             </WordText>
           </WordInfoWrapper>
           <WordInfoWrapper>
@@ -189,7 +189,7 @@ function WordItem(
                   __html: DOMPurify.sanitize(item.textExample)
                 }
               }
-              color={defaultTheme.colors.textBold}
+              $color={defaultTheme.colors.textBold}
               fontSize={defaultTheme.fontSizes.smallText}
             />
             <WordText
@@ -233,4 +233,4 @@ function WordItem(
   );
 }
 
-export default WordItem;
+export default DifficultWordItem;
