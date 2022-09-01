@@ -58,6 +58,7 @@ function WordItem(
     setLearnedWords,
     token,
     userId,
+    isLoggedIn
   } = useContext(BookContext);
   const audioWord = useRef(new Audio());
   const audioMeaning = useRef(new Audio());
@@ -205,6 +206,7 @@ function WordItem(
           </WordInfoWrapper>
         </div>
       </WordInfoContainer>
+      {isLoggedIn && (
       <WordButtonContainer>
         <LearnedWordButton
           id="learned"
@@ -229,6 +231,7 @@ function WordItem(
             )
         }
       </WordButtonContainer>
+      )}
     </Word>
   );
 }

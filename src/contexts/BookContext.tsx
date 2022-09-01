@@ -10,6 +10,7 @@ interface BookContextValues {
   setLearnedWords: SetState<WordData[]>,
   token: string,
   userId: string,
+  isLoggedIn: boolean,
 }
 
 const defaultValue = {
@@ -19,6 +20,7 @@ const defaultValue = {
   setLearnedWords: () => { },
   token: '',
   userId: '',
+  isLoggedIn: false,
 };
 
 const BookContext = createContext<BookContextValues>(defaultValue);

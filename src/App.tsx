@@ -75,6 +75,7 @@ function App() {
       setLearnedWords,
       token,
       userId,
+      isLoggedIn
     }
   ), [difficultWords, learnedWords]);
 

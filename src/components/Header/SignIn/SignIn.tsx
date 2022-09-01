@@ -123,10 +123,10 @@ function SignInModal({
 
   const signOutUser = () => {
     errMessageShow('До новых встреч!', false);
+    changeLoggedInState();
     setUserData({ ...defaultUser });
     setToken(defaultToken);
     setUserId(defaultUserID);
-    changeLoggedInState();
   };
 
   // const getData = async () => {
