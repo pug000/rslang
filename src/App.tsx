@@ -12,6 +12,8 @@ import useLocalStorage from '@/hooks/useLocalStorage';
 import HeaderContext from '@/contexts/HeaderContext';
 import AudioGamePage from '@/AudioGamePage';
 import SprintGamePage from '@/SprintGamePage';
+import About from '@/About';
+import NotFound from '@/NotFound';
 import { getFilteredUserWords } from '@/api';
 import GameContext from './contexts/GameContext';
 import {
@@ -82,15 +84,17 @@ function App() {
   useEffect(() => {
     (async () => {
       const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
-      const lernedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
+
+      const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
 
       if (difficultWordsData && typeof difficultWordsData !== 'number') {
         const difficultWordsChangeKeys = ChangeWordsDataKeyFromServer([difficultWordsData[0]]);
         setDifficultWords(difficultWordsChangeKeys);
       }
-      if (lernedWordsData && typeof lernedWordsData !== 'number') {
-        const lernedWordsChangeKeys = ChangeWordsDataKeyFromServer([lernedWordsData[0]]);
-        setLearnedWords(lernedWordsChangeKeys);
+
+      if (learnedWordsData && typeof learnedWordsData !== 'number') {
+        const learnedWordsChangeKeys = ChangeWordsDataKeyFromServer([learnedWordsData[0]]);
+        setLearnedWords(learnedWordsChangeKeys);
       }
     })();
   }, [isLoggedIn, currentPage]);
@@ -196,8 +200,8 @@ function App() {
             </ProtectedRoute>
           )}
         />
-        <Route path="about-project" element={<p>About Project</p>} />
-        <Route path="about-team" element={<p>About Team</p>} />
+        <Route path="about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

@@ -8,7 +8,10 @@ import Loader from '@/Loader';
 import WordItemContext from '@/contexts/WordItemContext';
 import { ChangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
 import {
-  DifficultWordsWrapper, DifficultWordsContainer, DifficultWordsTitle
+  DifficultWordsWrapper,
+  DifficultWordsContainer,
+  DifficultWordsTitle,
+  Note,
 } from './DifficultWords.style';
 import DifficultWordItem from './DifficultWordItem/DifficultWordItem';
 
@@ -60,6 +63,12 @@ function DifficultWords({
             <DifficultWordsTitle>
               Сложные слова
             </DifficultWordsTitle>
+            {!wordsDifficult.length && !isLoadingPage
+              && (
+                <Note>
+                  Вы еще не добавили ни одного сложного слова. Сделать это можно из учебника.
+                </Note>
+              )}
             {
               totalCountPagesDifficult >= 1
               && (

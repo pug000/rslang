@@ -37,7 +37,6 @@ const Title = styled.h1`
 `;
 
 const Note = styled.p`
-  margin-top: -30px;
   font-size: 14px;
   color: rgba(0,0,0,0.4);
   font-style: italic;

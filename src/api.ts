@@ -11,7 +11,7 @@ const endpoints = {
   users: 'users',
   signin: 'signin',
   tokens: 'tokens',
-  aggreagatedWords: 'aggregatedWords',
+  aggregatedWords: 'aggregatedWords',
   statistics: 'statistics',
   settings: 'settings'
 };
@@ -243,8 +243,8 @@ const getUserWords = async (userId: string, token: string) => {
   return content;
 };
 
-const getUserWord = async (wirdId: string, userId: string, token: string) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wirdId}`, {
+const getUserWord = async (wordId: string, userId: string, token: string) => {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wordId}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${token}`,

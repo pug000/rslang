@@ -139,8 +139,38 @@ interface Statistics {
   }
 }
 
+interface Teammate {
+  teammateId: number,
+  name: string,
+  icon: JSX.Element,
+  role: string,
+  link: string,
+  title: string
+}
+
+interface ProjectDescription {
+  descriptionId: string,
+  title: string,
+  text: string
+}
+
 export {
-  GroupButton, NavItem, WordData, Track, Games, UserData, RegisteredUserData,
-  LogInUserData, SvgStyles, GameStatistics, Statistics, Color, WordCreateProp, GetUserProp,
-  FilteredWordData, ErrMessageProps
+  GroupButton,
+  NavItem,
+  WordData,
+  Track,
+  Games,
+  UserData,
+  RegisteredUserData,
+  LogInUserData,
+  SvgStyles,
+  GameStatistics,
+  Statistics,
+  Teammate,
+  ProjectDescription,
+  Color,
+  WordCreateProp,
+  GetUserProp,
+  FilteredWordData,
+  ErrMessageProps
 };

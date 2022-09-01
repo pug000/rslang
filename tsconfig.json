@@ -80,6 +80,12 @@
       ],
       "@/GameControl": [
         "components/Games/GameComponents/GameControl/GameControl"
+      ],
+      "@/About": [
+        "components/About/About"
+      ],
+      "@/NotFound": [
+        "components/NotFound/NotFound"
       ]
     }
   },

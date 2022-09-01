@@ -16,7 +16,6 @@ const DifficultWordsTitle = styled.h2`
   color: ${(props) => props.theme.colors.title};
   font-family: ${(props) => props.theme.fonts.title};
   font-size: ${(props) => props.theme.fontSizes.h2};
-  font-weight: 700;
   margin-top: 1.2rem;
   margin-bottom: 1.5rem;
 `;
@@ -26,16 +25,29 @@ width: 100%;
 display: flex;
 flex-direction: column;
 gap: 30px;
-grid-area: words;
 align-items: center;
 justify-content: center;
-min-height: 600px;
+min-height: 30vh;
+margin-left: -70px;
+
 
 @media (max-width: 950px) {
   align-items: center;
 }
 `;
 
+const Note = styled.p`
+  margin-top: -30px;
+  font-size: 14px;
+  color: rgba(0,0,0,0.4);
+  font-style: italic;
+  text-align: center;
+  max-width: 350px;
+`;
+
 export {
-  DifficultWordsWrapper, DifficultWordsTitle, DifficultWordsContainer
+  DifficultWordsWrapper,
+  DifficultWordsTitle,
+  DifficultWordsContainer,
+  Note
 };
