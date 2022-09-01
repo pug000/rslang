@@ -30,6 +30,7 @@ justify-content: center;
 min-height: 30vh;
 margin-left: -70px;
 
+
 @media (max-width: 950px) {
   align-items: center;
 }

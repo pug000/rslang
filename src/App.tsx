@@ -84,12 +84,14 @@ function App() {
   useEffect(() => {
     (async () => {
       const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
+
       const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
 
       if (difficultWordsData && typeof difficultWordsData !== 'number') {
         const difficultWordsChangeKeys = ChangeWordsDataKeyFromServer([difficultWordsData[0]]);
         setDifficultWords(difficultWordsChangeKeys);
       }
+
       if (learnedWordsData && typeof learnedWordsData !== 'number') {
         const learnedWordsChangeKeys = ChangeWordsDataKeyFromServer([learnedWordsData[0]]);
         setLearnedWords(learnedWordsChangeKeys);

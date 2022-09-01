@@ -26,6 +26,20 @@ const defaultErrMessage = {
   activeErr: false,
 };
 
+const defaultUser = { email: '', password: '' };
+const defaultSingInData = {
+  message: '',
+  token: '',
+  refreshToken: '',
+  userId: '',
+};
+const defaultToken = '';
+const defaultUserID = '';
+const defaultErrMessage = {
+  text: '',
+  activeErr: false,
+};
+
 const navItems: NavItem[] = [
   {
     id: 1, value: 'Главная', link: '/', icon: <HomeIcon />

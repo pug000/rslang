@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { useContext, useState } from 'react';
 import Input from '@/Input';
 import Button from '@/Button';
@@ -159,7 +158,8 @@ function SignInModal({
             ? (
               <>
                 <Button id="signOut" title="Выйти" callback={signOutUser} />
-                <Button id="cancel" title="Отмена" callback={() => setActive(false)} />
+                <Button id="signCancel" title="Отмена" callback={() => setActive(false)} />
+                {/* <Button id="signCancel" title="проба" callback={getData} /> */}
               </>
             )
             : (
