@@ -140,15 +140,16 @@ interface Statistics {
 }
 
 interface Teammate {
-  id: number,
+  teammateId: number,
   name: string,
   icon: JSX.Element,
   role: string,
-  link: string
+  link: string,
+  title: string
 }
 
 interface ProjectDescription {
-  id: number,
+  descriptionId: string,
   title: string,
   text: string
 }

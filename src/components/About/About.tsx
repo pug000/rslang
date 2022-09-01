@@ -27,25 +27,28 @@ import {
 function About() {
   const teammates: Teammate[] = [
     {
-      id: 1,
+      teammateId: 1,
       name: 'Роман Трошин',
       icon: <RomaSvg />,
       role: 'Разработчик',
-      link: 'https://github.com/pug000'
+      link: 'https://github.com/pug000',
+      title: 'Roman on GitHub'
     },
     {
-      id: 2,
+      teammateId: 2,
       name: 'Анастасия Сачко',
       icon: <NastyaSvg />,
       role: 'Разработчик',
-      link: 'https://github.com/saachko'
+      link: 'https://github.com/saachko',
+      title: 'Anastasiya on GitHub'
     },
     {
-      id: 3,
+      teammateId: 3,
       name: 'Артем Харитончик',
       icon: <ArtemSvg />,
       role: 'Разработчик',
-      link: 'https://github.com/aArt13'
+      link: 'https://github.com/aArt13',
+      title: 'Artsiom on GitHub'
     },
   ];
 
@@ -54,15 +57,15 @@ function About() {
       <AboutProject>
         {projectDescription.map((
           {
-            id,
+            descriptionId,
             title,
             text,
           }
         ) => (
-          <>
-            <AboutProjectTitle key={id}>{title}</AboutProjectTitle>
+          <div key={descriptionId}>
+            <AboutProjectTitle>{title}</AboutProjectTitle>
             <AboutProjectText>{text}</AboutProjectText>
-          </>
+          </div>
         ))}
       </AboutProject>
       <AboutUsWrapper>
@@ -70,18 +73,19 @@ function About() {
         <AboutTeam>
           {teammates.map((
             {
-              id,
+              teammateId,
               name,
               icon,
               role,
-              link
+              link,
+              title
             }
           ) => (
-            <TeammateWrapper key={id}>
+            <TeammateWrapper key={teammateId}>
               <TeammateIconWrapper>
                 {icon}
               </TeammateIconWrapper>
-              <TeammateLink href={link} target="_blank">
+              <TeammateLink href={link} title={title} target="_blank">
                 {name}
               </TeammateLink>
               <TeammateRole>{role}</TeammateRole>

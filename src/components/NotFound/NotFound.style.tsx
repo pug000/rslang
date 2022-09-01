@@ -7,6 +7,7 @@ const NotFoundPage = styled.main`
   justify-content: center;
   gap: 30px;
   margin-left: -70px;
+  text-align: center;
 
   svg {
     transform: scale(2);
