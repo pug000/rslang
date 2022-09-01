@@ -60,7 +60,7 @@ function DifficultWords({
         setIsLoadingPage(false);
       }
     })();
-  }, [currentPageDifficult]);
+  }, [currentPageDifficult, difficultWords]);
 
   return (
     <DifficultWordsWrapper>
