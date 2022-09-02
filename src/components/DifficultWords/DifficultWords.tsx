@@ -44,13 +44,12 @@ function DifficultWords({
   } = useContext(BookContext);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [wordsDifficult, setWordsDifficult] = useState<WordData[]>([]);
+  const [wordsDifficultPerPage, setWordsDifficultPerPage] = useState<WordData[]>([]);
 
   const calculationTotalCountPagesDifficult = () => {
     let countPage: number;
     if (difficultWords.length <= 20) {
       countPage = 1;
-      setCurrentPageDifficult(((prev) => prev = 0));
     } else {
       countPage = Math.ceil(difficultWords.length / 20);
     }
@@ -59,19 +58,29 @@ function DifficultWords({
   const totalCountPagesDifficult = calculationTotalCountPagesDifficult();
 
   useEffect(() => {
+    if (isLoggedIn) {
+      if (difficultWords.length <= 20) {
+        setCurrentPageDifficult(0);
+      }
+    }
+  }, [difficultWords]);
+
+  useEffect(() => {
     audio?.remove();
     setAudio(null);
 
-    (async () => {
-      setIsLoadingPage(true);
-      const wordsDifficultData = await getFilteredUserWordsByPage(FILTER_DIFFICULT_WORDS, userId, token, currentPageDifficult);
-      if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
-        const wordsDifficultDataChangeKeys = сhangeWordsDataKeyFromServer([wordsDifficultData[0]]);
-        setWordsDifficult(wordsDifficultDataChangeKeys);
-        setIsLoadingPage(false);
-      }
-    })();
-  }, [currentPageDifficult, difficultWords, totalCountPagesDifficult]);
+    if (isLoggedIn) {
+      (async () => {
+        setIsLoadingPage(true);
+        const wordsDifficultData = await getFilteredUserWordsByPage(FILTER_DIFFICULT_WORDS, userId, token, currentPageDifficult);
+        if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
+          const wordsDifficultDataChangeKeys = сhangeWordsDataKeyFromServer([wordsDifficultData[0]]);
+          setWordsDifficultPerPage(wordsDifficultDataChangeKeys);
+          setIsLoadingPage(false);
+        }
+      })();
+    }
+  }, [currentPageDifficult, difficultWords, totalCountPagesDifficult, token]);
 
   return (
     <DifficultWordsWrapper>
@@ -81,7 +90,7 @@ function DifficultWords({
             <DifficultWordsTitle>
               Сложные слова
             </DifficultWordsTitle>
-            {!wordsDifficult.length && !isLoadingPage
+            {!wordsDifficultPerPage.length && !isLoadingPage
               && (
                 <Note>
                   Вы еще не добавили ни одного сложного слова. Сделать это можно из учебника.
@@ -112,7 +121,7 @@ function DifficultWords({
               {isLoadingPage
                 ? ((
                   <Loader />
-                )) : wordsDifficult.map((word) => (
+                )) : wordsDifficultPerPage.map((word) => (
                   <DifficultWordItem
                     key={word.id}
                     item={word}

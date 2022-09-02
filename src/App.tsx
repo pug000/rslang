@@ -45,7 +45,7 @@ function App() {
   const [words, setWords] = useState<WordData[]>([]);
   const [bookGroupNumber, setBookGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
-  const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('CurrentPageDifficult', 0);
+  const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('difficultCurrentPage', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
   const [token, setToken] = useLocalStorage('token', defaultToken);
@@ -122,25 +122,26 @@ function App() {
   ), [isGameStarted, isLoggedIn]);
 
   useEffect(() => {
-    (async () => {
-      setTimeout(async () => {
+    if (isLoggedIn) {
+      (async () => {
+        setTimeout(async () => {
+          const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
 
-        const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
+          const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
 
-        const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
+          if (difficultWordsData && typeof difficultWordsData !== 'number') {
+            const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
+            setDifficultWords(difficultWordsChangeKeys);
+          }
 
-        if (difficultWordsData && typeof difficultWordsData !== 'number') {
-          const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
-          setDifficultWords(difficultWordsChangeKeys);
-        }
-
-        if (learnedWordsData && typeof learnedWordsData !== 'number') {
-          const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
-          setLearnedWords(learnedWordsChangeKeys);
-        }
-      }, 1000);
-    })();
-  }, [isLoggedIn, currentPage]);
+          if (learnedWordsData && typeof learnedWordsData !== 'number') {
+            const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
+            setLearnedWords(learnedWordsChangeKeys);
+          }
+        }, 500);
+      })();
+    }
+  }, [isLoggedIn, currentPage, token]);
 
   const gameValue = useMemo(() => (
     {
