@@ -11,7 +11,8 @@ import Button from '@/Button';
 import {
   registerUser,
   loginUser,
-  // getUser, getUserWords, getNewToken
+
+  getUser, getNewToken
 } from '@/api';
 import {
   defaultSingInData,
@@ -60,7 +61,7 @@ function SignInModal({
   changeLoggedInState,
   isLoggedIn
 }: SignInProps) {
-  const { setToken, setUserId } = useContext(HeaderContext);
+  const { setToken, setUserId, setRefreshToken } = useContext(HeaderContext);
   const [userData, setUserData] = useState(defaultUser);
   const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
   const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
@@ -85,6 +86,7 @@ function SignInModal({
         setLogInUserData(responseSignIn);
         setToken(responseSignIn.token);
         setUserId(responseSignIn.userId);
+        setRefreshToken(responseSignIn.refreshToken);
         errMessageShow('Вы авторизовались!', false);
         changeLoggedInState();
         setTimeout(changeActiveShadow, 3000);
@@ -107,6 +109,8 @@ function SignInModal({
       const responseCreateUser = await registerUser(userData);
       if (typeof responseCreateUser !== 'number') {
         errMessageShow('Вы зарегистрированы! Авторизуйтесь.', false);
+        // signInUser()
+        // setTimeout(changeActiveShadow, 3000);
         setUserData({ ...defaultUser });
       } else if (responseCreateUser === ServerResponses.error417) {
         errMessageShow('Пользователь уже зарегистрирован!', true);
@@ -127,16 +131,15 @@ function SignInModal({
     setUserData({ ...defaultUser });
     setToken(defaultToken);
     setUserId(defaultUserID);
+    setRefreshToken(defaultToken);
   };
 
-  // const getData = async () => {
-  //   const resGetUser = await getUser(logInUserData.userId, logInUserData.token);
-  //   console.log('getUser ', resGetUser);
-  //   const resWordsUser = await getUserWords(logInUserData.userId, logInUserData.token);
-  //   console.log('getUserWord ', resWordsUser);
-  //   const resNewToken = await getNewToken(logInUserData.userId, logInUserData.token);
-  //   console.log('getUser resNewToken ', resNewToken);
-  // };
+  const getData = async () => {
+    const resGetUser = await getUser(logInUserData.userId, logInUserData.token);
+    console.log('getUser ', resGetUser);
+    const resNewToken = await getNewToken(logInUserData.userId, logInUserData.refreshToken);
+    console.log('getUser resNewToken ', resNewToken);
+  };
 
   return (
     <Shadow onClick={() => setActive(false)} active={active}>
@@ -185,7 +188,7 @@ function SignInModal({
               <>
                 <Button id="signOut" title="Выйти" callback={signOutUser} />
                 <Button id="signCancel" title="Отмена" callback={() => setActive(false)} />
-                {/* <Button id="signCancel" title="проба" callback={getData} /> */}
+                <Button id="signCancel" title="проба" callback={getData} />
               </>
             )
             : (

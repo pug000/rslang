@@ -30,10 +30,11 @@ import {
   FILTER_LEARNED_WORDS,
 } from '@/utils/variables';
 import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
-import { getFilteredUserWords } from '@/api';
+import { getFilteredUserWords, getNewToken, getUser } from '@/api';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 import { WordData } from '@/ts/interfaces';
+import ServerResponses from './ts/enums';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -48,7 +49,38 @@ function App() {
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
   const [token, setToken] = useLocalStorage('token', defaultToken);
+  const [refreshToken, setRefreshToken] = useLocalStorage('refreshToken', defaultToken);
   const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
+
+  useEffect(() => {
+    (async () => {
+      if (isLoggedIn) {
+        console.log('пользователь авторизован');
+        console.log('before token', token);
+        console.log('before refreshToken', refreshToken);
+        console.log('before userId', userId);
+
+        const responseGetUser = await getUser(userId, token);
+        if (responseGetUser === ServerResponses.error401) {
+          console.log('пользователю нужен новый токен');
+          const responseNewToken = await getNewToken(userId, refreshToken);
+          if (responseNewToken && typeof responseNewToken !== 'number') {
+            console.log('пользователь получил новые данные');
+            setToken(responseNewToken.token);
+            setRefreshToken(responseNewToken.refreshToken);
+
+            console.log('after token', token);
+            console.log('after refreshToken', refreshToken);
+          }
+        } else {
+          console.log('пользователю НЕ!! нужен новый токен');
+        }
+      } else {
+        console.log('пользователь не авторизован 1');
+      }
+      console.log('пользователь не авторизован 2');
+    })();
+  }, []);
 
   const clearGameState = () => {
     setGameStarted(false);
@@ -75,7 +107,7 @@ function App() {
       setLearnedWords,
       token,
       userId,
-      isLoggedIn
+      isLoggedIn,
     }
   ), [difficultWords, learnedWords]);
 
@@ -85,24 +117,28 @@ function App() {
       setLoggedIn,
       setToken,
       setUserId,
+      setRefreshToken,
     }
   ), [isGameStarted, isLoggedIn]);
 
   useEffect(() => {
     (async () => {
-      const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
+      setTimeout(async () => {
 
-      const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
+        const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
 
-      if (difficultWordsData && typeof difficultWordsData !== 'number') {
-        const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
-        setDifficultWords(difficultWordsChangeKeys);
-      }
+        const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
 
-      if (learnedWordsData && typeof learnedWordsData !== 'number') {
-        const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
-        setLearnedWords(learnedWordsChangeKeys);
-      }
+        if (difficultWordsData && typeof difficultWordsData !== 'number') {
+          const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
+          setDifficultWords(difficultWordsChangeKeys);
+        }
+
+        if (learnedWordsData && typeof learnedWordsData !== 'number') {
+          const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
+          setLearnedWords(learnedWordsChangeKeys);
+        }
+      }, 1000);
     })();
   }, [isLoggedIn, currentPage]);
 

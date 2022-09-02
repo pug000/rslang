@@ -83,8 +83,8 @@ function WordItem(
   const addActiveWord = async (setState: SetState<WordData[]>, isDifficultWord: boolean) => {
     setState((prev) => [...prev, item]);
     const currentWord = createWordProp(item, isDifficultWord);
-    const resCreateUserWord = await getUserWord(item.id, userId, token);
-    if (resCreateUserWord === ServerResponses.error404) {
+    const responseCreateUserWord = await getUserWord(item.id, userId, token);
+    if (responseCreateUserWord === ServerResponses.error404) {
       await createUserWord(item.id, currentWord, userId, token);
     } else {
       await deleteUserWord(item.id, userId, token);
@@ -207,30 +207,30 @@ function WordItem(
         </div>
       </WordInfoContainer>
       {isLoggedIn && (
-      <WordButtonContainer>
-        <LearnedWordButton
-          id="learned"
-          $color={
-            toggleActive(learnedWords)
-              ? defaultTheme.colors.primaryColor
-              : defaultTheme.colors.grey
+        <WordButtonContainer>
+          <LearnedWordButton
+            id="learned"
+            $color={
+              toggleActive(learnedWords)
+                ? defaultTheme.colors.primaryColor
+                : defaultTheme.colors.grey
+            }
+            onClick={(e) => handleClick(e, learnedWords, setLearnedWords)}
+          />
+          {
+            toggleActive(difficultWords)
+              ? (
+                <DifficultWordButtonActive
+                  onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
+                />
+              )
+              : (
+                <DifficultWordButton
+                  onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
+                />
+              )
           }
-          onClick={(e) => handleClick(e, learnedWords, setLearnedWords)}
-        />
-        {
-          toggleActive(difficultWords)
-            ? (
-              <DifficultWordButtonActive
-                onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
-              />
-            )
-            : (
-              <DifficultWordButton
-                onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
-              />
-            )
-        }
-      </WordButtonContainer>
+        </WordButtonContainer>
       )}
     </Word>
   );

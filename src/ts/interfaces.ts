@@ -74,6 +74,11 @@ interface LogInUserData {
   name?: string;
 }
 
+interface GetNewTokenUserData {
+  token: string;
+  refreshToken: string;
+}
+
 interface GetUserProp {
   name: string,
   email: string,
@@ -171,5 +176,6 @@ export {
   WordCreateProp,
   GetUserProp,
   FilteredWordData,
-  ErrMessageProps
+  ErrMessageProps,
+  GetNewTokenUserData
 };

@@ -42,10 +42,21 @@ function DifficultWords({
     token,
     userId,
   } = useContext(BookContext);
-  const totalCountPagesDifficult = Math.ceil(difficultWords.length / 20);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [wordsDifficult, setWordsDifficult] = useState<WordData[]>([]);
+
+  const calculationTotalCountPagesDifficult = () => {
+    let countPage: number;
+    if (difficultWords.length <= 20) {
+      countPage = 1;
+      setCurrentPageDifficult(((prev) => prev = 0));
+    } else {
+      countPage = Math.ceil(difficultWords.length / 20);
+    }
+    return countPage;
+  };
+  const totalCountPagesDifficult = calculationTotalCountPagesDifficult();
 
   useEffect(() => {
     audio?.remove();
@@ -60,7 +71,7 @@ function DifficultWords({
         setIsLoadingPage(false);
       }
     })();
-  }, [currentPageDifficult, difficultWords]);
+  }, [currentPageDifficult, difficultWords, totalCountPagesDifficult]);
 
   return (
     <DifficultWordsWrapper>
@@ -77,7 +88,7 @@ function DifficultWords({
                 </Note>
               )}
             {
-              totalCountPagesDifficult >= 1
+              totalCountPagesDifficult > 1
               && (
                 <Pagination
                   count={totalCountPagesDifficult}
@@ -111,7 +122,7 @@ function DifficultWords({
                 ))}
             </DifficultWordsContainer>
             {
-              totalCountPagesDifficult >= 1
+              totalCountPagesDifficult > 1
               && (
                 <Pagination
                   count={totalCountPagesDifficult}

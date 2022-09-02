@@ -7,6 +7,7 @@ interface HeaderContextValues {
   setLoggedIn: SetState<boolean>,
   setToken: SetState<string>,
   setUserId: SetState<string>,
+  setRefreshToken: SetState<string>,
 }
 
 const defaultValue = {
@@ -14,6 +15,7 @@ const defaultValue = {
   setLoggedIn: () => { },
   setToken: () => { },
   setUserId: () => { },
+  setRefreshToken: () => { },
 };
 
 const HeaderContext = createContext<HeaderContextValues>(defaultValue);
