@@ -96,6 +96,7 @@ function GameResults(
             }
           }
         };
+
         await updateUserStatistics(userId, token, statistics);
       })();
     }
