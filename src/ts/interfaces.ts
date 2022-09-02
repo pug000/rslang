@@ -126,13 +126,17 @@ interface FilteredWordData {
 interface GameStatistics {
   gameLearnedWords: number,
   percentCorrectWord: number,
-  correctAnswersCount: number,
+  countCorrectAnswers: number,
+  maxCountCorrectAnswers: number,
 }
 
 interface Statistics {
   learnedWords: number,
   optional: {
-    [key: string]: GameStatistics,
+    date: string,
+    games: {
+      [key: string]: GameStatistics,
+    }
   }
 }
 interface ColorProps {
@@ -171,5 +175,5 @@ export {
   WordCreateProp,
   GetUserProp,
   FilteredWordData,
-  ErrMessageProps
+  ErrMessageProps,
 };

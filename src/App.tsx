@@ -47,6 +47,8 @@ function App() {
   const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('CurrentPageDifficult', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
+  const [countCorrectAnswers, setCountCorrectAnswers] = useState(0);
+  const [maxCountCorrectAnswers, setMaxCountCorrectAnswers] = useState(0);
   const [token, setToken] = useLocalStorage('token', defaultToken);
   const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
 
@@ -55,6 +57,8 @@ function App() {
     setShowResult(false);
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
+    setCountCorrectAnswers(0);
+    setMaxCountCorrectAnswers(0);
   };
 
   useEffect(() => {
@@ -114,15 +118,21 @@ function App() {
       isLoggedIn,
       isGameStarted,
       isShowResult,
+      countCorrectAnswers,
+      maxCountCorrectAnswers,
       setShowResult,
       setGameStarted,
       setCorrectAnswers,
       setIncorrectAnswers,
       clearGameState,
+      setCountCorrectAnswers,
+      setMaxCountCorrectAnswers,
     }
   ), [
     correctAnswers,
     incorrectAnswers,
+    countCorrectAnswers,
+    maxCountCorrectAnswers,
     token,
     userId,
     isLoggedIn,

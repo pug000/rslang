@@ -48,9 +48,13 @@ function SprintGame(
     correctAnswers,
     incorrectAnswers,
     isShowResult,
+    countCorrectAnswers,
+    maxCountCorrectAnswers,
     setCorrectAnswers,
     setIncorrectAnswers,
     setShowResult,
+    setCountCorrectAnswers,
+    setMaxCountCorrectAnswers,
   } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
@@ -59,12 +63,21 @@ function SprintGame(
   const [strike, setStrike] = useState(0);
   const [isCorrect, setCorrect] = useState(true);
 
+  const updateMaxCount = () => {
+    if (countCorrectAnswers > maxCountCorrectAnswers) {
+      setMaxCountCorrectAnswers(countCorrectAnswers);
+    }
+
+    setCountCorrectAnswers(0);
+  };
+
   useEffect(() => {
     if (step <= words.length - 1) {
       setCurrentWord(words[step]);
     }
 
     if (step === words.length) {
+      updateMaxCount();
       setShowResult(true);
     }
   }, [step]);
@@ -97,6 +110,7 @@ function SprintGame(
       setStrike(strike + 1);
     }
 
+    setCountCorrectAnswers(countCorrectAnswers + 1);
     setCorrect(true);
     setCorrectAnswers((prev) => [...prev, currentWord]);
   };
@@ -104,6 +118,7 @@ function SprintGame(
   const incorrectAnswer = () => {
     if (strike) setStrike(0);
     setCorrect(false);
+    updateMaxCount();
     setIncorrectAnswers((prev) => [...prev, currentWord]);
   };
 
@@ -188,6 +203,7 @@ function SprintGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
+            maxCount={maxCountCorrectAnswers}
             game="sprint"
             mainColor={mainColor}
             words={words}
