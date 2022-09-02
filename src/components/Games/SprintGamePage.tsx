@@ -5,6 +5,7 @@ import React, {
 
 import Loader from '@/Loader';
 import GameStart from '@/GameStart';
+import GameNotification from '@/GameNotification';
 import SprintGame from '@/SprintGame';
 
 import { shuffleArray } from '@/utils/randomize';
@@ -75,10 +76,20 @@ function SprintGamePage(
   return (
     <GamePageWrapper>
       <GamePageBackground $color={games.sprint.backgroundColor} />
-      <SprintGame
-        words={words}
-        mainColor={games.sprint.buttonColor}
-      />
+      {words.length < 10
+        ? (
+          <GameNotification
+            elementColor={games.sprint.buttonColor}
+            setLoadingGame={setLoadingGame}
+            setCurrentPage={setCurrentPage}
+          />
+        )
+        : (
+          <SprintGame
+            words={words}
+            mainColor={games.sprint.buttonColor}
+          />
+        )}
     </GamePageWrapper>
   );
 }

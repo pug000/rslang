@@ -87,6 +87,9 @@
       "@/About": [
         "components/About/About"
       ],
+      "@/GameNotification": [
+        "components/Games/GameNotification/GameNotification"
+      ],
       "@/NotFound": [
         "components/NotFound/NotFound"
       ]
