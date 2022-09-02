@@ -126,7 +126,8 @@ interface FilteredWordData {
 interface GameStatistics {
   gameLearnedWords: number,
   percentCorrectWord: number,
-  correctAnswersCount: number,
+  countCorrectAnswers: number,
+  maxCountCorrectAnswers: number,
 }
 
 interface Statistics {

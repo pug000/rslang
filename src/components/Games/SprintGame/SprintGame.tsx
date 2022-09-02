@@ -203,6 +203,7 @@ function SprintGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
+            maxCount={maxCountCorrectAnswers}
             game="sprint"
             mainColor={mainColor}
             words={words}

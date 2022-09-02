@@ -76,11 +76,12 @@ const getUserStatistics = async (userId: string, token: string) => {
       },
     });
     const { status } = response;
-    const data: Statistics = await response.json();
 
     if (status === ServerResponses.error404) {
       return defaultStatistics;
     }
+
+    const data: Statistics = await response.json();
 
     if (todayDate !== data.optional.date) {
       const newStatistics: Statistics = {

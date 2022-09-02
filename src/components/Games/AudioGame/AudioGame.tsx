@@ -216,6 +216,7 @@ function AudioGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
+            maxCount={maxCountCorrectAnswers}
             game="audio"
             mainColor={mainColor}
             words={words}

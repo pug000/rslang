@@ -33,7 +33,7 @@ const defaultErrMessage = {
 };
 
 const todayDate = new Date()
-  .toLocaleDateString('ru', { day: 'numeric', month: 'long', year: '2-digit' });
+  .toLocaleDateString('ru', { day: 'numeric', month: 'long', year: 'numeric' });
 
 const defaultStatistics: Statistics = {
   learnedWords: 0,
@@ -43,12 +43,14 @@ const defaultStatistics: Statistics = {
       audio: {
         gameLearnedWords: 0,
         percentCorrectWord: 0,
-        correctAnswersCount: 0,
+        countCorrectAnswers: 0,
+        maxCountCorrectAnswers: 0,
       },
       sprint: {
         gameLearnedWords: 0,
         percentCorrectWord: 0,
-        correctAnswersCount: 0,
+        countCorrectAnswers: 0,
+        maxCountCorrectAnswers: 0,
       }
     }
   }

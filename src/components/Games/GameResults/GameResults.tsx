@@ -32,6 +32,7 @@ import {
 interface GameResultsProps {
   correctAnswers: WordData[],
   incorrectAnswers: WordData[],
+  maxCount: number,
   game: string,
   mainColor: string,
   words: WordData[],
@@ -41,6 +42,7 @@ function GameResults(
   {
     correctAnswers,
     incorrectAnswers,
+    maxCount,
     game,
     mainColor,
     words,
@@ -73,8 +75,11 @@ function GameResults(
         const data = await getUserStatistics(userId, token);
         const learnedWords = data.learnedWords + words.length;
         const gameLearnedWords = data.optional.games[game].gameLearnedWords + words.length;
-        const correctAnswersCount = data.optional.games[game].correctAnswersCount + correctAnswers.length;
-        const percentCorrectWord = Math.round((correctAnswersCount * 100) / gameLearnedWords);
+        const countCorrectAnswers = data.optional.games[game].countCorrectAnswers + correctAnswers.length;
+        const percentCorrectWord = Math.round((countCorrectAnswers * 100) / gameLearnedWords);
+        const maxCountCorrectAnswers = maxCount > data.optional.games[game].maxCountCorrectAnswers
+          ? maxCount
+          : data.optional.games[game].maxCountCorrectAnswers;
 
         const statistics: Statistics = {
           learnedWords,
@@ -84,8 +89,9 @@ function GameResults(
               ...data.optional.games,
               [game]: {
                 gameLearnedWords,
-                correctAnswersCount,
+                countCorrectAnswers,
                 percentCorrectWord,
+                maxCountCorrectAnswers,
               }
             }
           }
