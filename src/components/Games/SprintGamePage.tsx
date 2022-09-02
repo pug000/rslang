@@ -40,10 +40,8 @@ function SprintGamePage(
     if (isLoadingGame) {
       (async () => {
         const data = await getWords(currentGroupNumber, currentPage);
-        setTimeout(() => {
-          setWords(shuffleArray(data));
-          setLoadingGame(false);
-        }, 500);
+        setWords(shuffleArray(data));
+        setLoadingGame(false);
       })();
     }
   }, [isLoadingGame]);
