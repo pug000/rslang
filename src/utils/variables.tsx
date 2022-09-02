@@ -14,7 +14,8 @@ import {
   Games,
   GroupButton,
   NavItem,
-  ProjectDescription
+  ProjectDescription,
+  Statistics
 } from '@/ts/interfaces';
 
 const defaultUser = { email: '', password: '' };
@@ -29,6 +30,30 @@ const defaultUserID = '';
 const defaultErrMessage = {
   text: '',
   activeErr: false,
+};
+
+const todayDate = new Date()
+  .toLocaleDateString('ru', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const defaultStatistics: Statistics = {
+  learnedWords: 0,
+  optional: {
+    date: todayDate,
+    games: {
+      audio: {
+        gameLearnedWords: 0,
+        percentCorrectWord: 0,
+        countCorrectAnswers: 0,
+        maxCountCorrectAnswers: 0,
+      },
+      sprint: {
+        gameLearnedWords: 0,
+        percentCorrectWord: 0,
+        countCorrectAnswers: 0,
+        maxCountCorrectAnswers: 0,
+      }
+    }
+  }
 };
 
 const navItems: NavItem[] = [
@@ -139,5 +164,7 @@ export {
   defaultErrMessage,
   FILTER_DIFFICULT_WORDS,
   FILTER_LEARNED_WORDS,
-  projectDescription
+  projectDescription,
+  defaultStatistics,
+  todayDate,
 };

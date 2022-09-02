@@ -48,6 +48,8 @@ function App() {
   const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('difficultCurrentPage', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
+  const [countCorrectAnswers, setCountCorrectAnswers] = useState(0);
+  const [maxCountCorrectAnswers, setMaxCountCorrectAnswers] = useState(0);
   const [token, setToken] = useLocalStorage('token', defaultToken);
   const [refreshToken, setRefreshToken] = useLocalStorage('refreshToken', defaultToken);
   const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
@@ -56,10 +58,6 @@ function App() {
     (async () => {
       if (isLoggedIn) {
         console.log('пользователь авторизован');
-        console.log('before token', token);
-        console.log('before refreshToken', refreshToken);
-        console.log('before userId', userId);
-
         const responseGetUser = await getUser(userId, token);
         if (responseGetUser === ServerResponses.error401) {
           console.log('пользователю нужен новый токен');
@@ -68,17 +66,10 @@ function App() {
             console.log('пользователь получил новые данные');
             setToken(responseNewToken.token);
             setRefreshToken(responseNewToken.refreshToken);
-
-            console.log('after token', token);
-            console.log('after refreshToken', refreshToken);
           }
-        } else {
-          console.log('пользователю НЕ!! нужен новый токен');
         }
-      } else {
-        console.log('пользователь не авторизован 1');
       }
-      console.log('пользователь не авторизован 2');
+      console.log('exit пользователь не авторизован');
     })();
   }, []);
 
@@ -87,6 +78,8 @@ function App() {
     setShowResult(false);
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
+    setCountCorrectAnswers(0);
+    setMaxCountCorrectAnswers(0);
   };
 
   useEffect(() => {
@@ -152,15 +145,21 @@ function App() {
       isLoggedIn,
       isGameStarted,
       isShowResult,
+      countCorrectAnswers,
+      maxCountCorrectAnswers,
       setShowResult,
       setGameStarted,
       setCorrectAnswers,
       setIncorrectAnswers,
       clearGameState,
+      setCountCorrectAnswers,
+      setMaxCountCorrectAnswers,
     }
   ), [
     correctAnswers,
     incorrectAnswers,
+    countCorrectAnswers,
+    maxCountCorrectAnswers,
     token,
     userId,
     isLoggedIn,

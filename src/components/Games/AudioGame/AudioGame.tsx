@@ -40,9 +40,13 @@ function AudioGame(
     correctAnswers,
     incorrectAnswers,
     isShowResult,
+    countCorrectAnswers,
+    maxCountCorrectAnswers,
     setShowResult,
     setCorrectAnswers,
     setIncorrectAnswers,
+    setCountCorrectAnswers,
+    setMaxCountCorrectAnswers,
   } = useContext(GameContext);
   const [step, setStep] = useState(0);
   const [currentWord, setCurrentWord] = useState<WordData>(words[step]);
@@ -51,19 +55,28 @@ function AudioGame(
   const [isPlayingAudio, setPlayingAudio] = useState(false);
   const audio = new Audio();
 
+  const updateMaxCount = () => {
+    if (countCorrectAnswers > maxCountCorrectAnswers) {
+      setMaxCountCorrectAnswers(countCorrectAnswers);
+    }
+
+    setCountCorrectAnswers(0);
+  };
+
   useEffect(() => {
     if (step <= words.length - 1) {
       setCurrentWord(words[step]);
     }
 
     if (step === words.length) {
+      updateMaxCount();
       setShowResult(true);
     }
   }, [step]);
 
   useEffect(() => {
     const wrongOptions = shuffleArray(words)
-      .filter((item) => item.id !== currentWord.id)
+      .filter((item) => item.wordTranslate !== currentWord.wordTranslate)
       .map((item) => item.wordTranslate)
       .slice(0, 4);
     setPlayingAudio(true);
@@ -101,8 +114,10 @@ function AudioGame(
   const handleEvent = (word: string) => {
     if (currentWord.wordTranslate === word) {
       setCorrectAnswers((prev) => [...prev, currentWord]);
+      setCountCorrectAnswers(countCorrectAnswers + 1);
     } else {
       setIncorrectAnswers((prev) => [...prev, currentWord]);
+      updateMaxCount();
     }
   };
 
@@ -166,7 +181,7 @@ function AudioGame(
                     handleEvent(el);
                   }}
                 >
-                  {`${i + 1} ${el}`}
+                  {`${i + 1}. ${el}`}
                 </AudioGameButton>
               ))}
             </AudioGameOptions>
@@ -201,6 +216,7 @@ function AudioGame(
           <GameResults
             correctAnswers={correctAnswers}
             incorrectAnswers={incorrectAnswers}
+            maxCount={maxCountCorrectAnswers}
             game="audio"
             mainColor={mainColor}
             words={words}

@@ -38,6 +38,7 @@ function DifficultWords({
 }: DifficultWordsProps) {
   if (!isLoggedIn) return null;
   const {
+    learnedWords,
     difficultWords,
     token,
     userId,

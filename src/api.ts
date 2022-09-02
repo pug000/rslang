@@ -1,4 +1,9 @@
 import {
+  defaultStatistics,
+  todayDate
+} from '@/utils/variables';
+
+import {
   WordData,
   UserData,
   RegisteredUserData,
@@ -74,26 +79,22 @@ const getUserStatistics = async (userId: string, token: string) => {
     const { status } = response;
 
     if (status === ServerResponses.error404) {
-      const defaultData: Statistics = {
-        learnedWords: 0,
-        optional: {
-          audio: {
-            gameLearnedWords: 0,
-            percentCorrectWord: 0,
-            correctAnswersCount: 0,
-          },
-          sprint: {
-            gameLearnedWords: 0,
-            percentCorrectWord: 0,
-            correctAnswersCount: 0,
-          }
-        }
-      };
-
-      return defaultData;
+      return defaultStatistics;
     }
 
     const data: Statistics = await response.json();
+
+    if (todayDate !== data.optional.date) {
+      const newStatistics: Statistics = {
+        ...data,
+        optional: {
+          ...defaultStatistics.optional,
+        }
+      };
+
+      return newStatistics;
+    }
+
     return data;
   } catch (err) {
     throw new Error(`${err}`);
@@ -161,11 +162,8 @@ const getUser = async (userId: string, token: string) => {
     });
     const { status } = res;
 
-    if (status === ServerResponses.error401) {
-      return status;
-    }
-
-    if (status === ServerResponses.error404) {
+    if (status === ServerResponses.error401
+      || status === ServerResponses.error404) {
       return status;
     }
 
@@ -190,13 +188,11 @@ const getNewToken = async (userId: string, refreshToken: string) => {
     });
     const { status } = res;
 
-    if (status === ServerResponses.error403) {
+    if (status === ServerResponses.error403
+      || status === ServerResponses.error401) {
       return status;
     }
 
-    if (status === ServerResponses.error401) {
-      return status;
-    }
     console.log('status', status);
     const data: GetNewTokenUserData = await res.json();
     console.log('data', data);
@@ -223,15 +219,9 @@ const createUserWord = async (
   });
   const { status } = res;
 
-  if (status === ServerResponses.response200) {
-    return status;
-  }
-
-  if (status === ServerResponses.error401) {
-    return status;
-  }
-
-  if (status === ServerResponses.error417) {
+  if (status === ServerResponses.response200
+    || status === ServerResponses.error401
+    || status === ServerResponses.error417) {
     return status;
   }
 
@@ -249,11 +239,8 @@ const deleteUserWord = async (wordId: string, userId: string, token: string) => 
   });
   const { status } = res;
 
-  if (status === ServerResponses.response204) {
-    return status;
-  }
-
-  if (status === ServerResponses.error401) {
+  if (status === ServerResponses.response204
+    || status === ServerResponses.error401) {
     return status;
   }
 
@@ -289,15 +276,9 @@ const getUserWord = async (wordId: string, userId: string, token: string) => {
   });
   const { status } = res;
 
-  if (status === ServerResponses.error402) {
-    return status;
-  }
-
-  if (status === ServerResponses.error404) {
-    return status;
-  }
-
-  if (status === ServerResponses.error417) {
+  if (status === ServerResponses.error402
+    || status === ServerResponses.error404
+    || status === ServerResponses.error417) {
     return status;
   }
 
