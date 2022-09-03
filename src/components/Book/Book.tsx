@@ -1,9 +1,12 @@
 import React, {
+  useContext,
   useEffect,
   useState
 } from 'react';
 import { NavLink } from 'react-router-dom';
 import defaultTheme from '@/styles/theme';
+
+import BookContext from '@/contexts/BookContext';
 
 import Loader from '@/Loader';
 import Button from '@/Button';
@@ -53,8 +56,17 @@ function Book(
     setGameStarted,
   }: BookProps,
 ) {
+  const { learnedWords } = useContext(BookContext);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+
+  const filterWords = () => {
+    const result = words
+      .filter((wordItem) => !learnedWords
+        .some((learnedWordItem) => learnedWordItem.id === wordItem.id));
+
+    setWords(result);
+  };
 
   useEffect(() => {
     audio?.remove();
@@ -83,7 +95,10 @@ function Book(
           <Button
             id="sprint"
             title="Спринт"
-            callback={() => setGameStarted(true)}
+            callback={() => {
+              filterWords();
+              setGameStarted(true);
+            }}
             disabled={!!isLoadingPage}
           />
         </NavLink>
@@ -91,7 +106,10 @@ function Book(
           <Button
             id="audio"
             title="Аудиовызов"
-            callback={() => setGameStarted(true)}
+            callback={() => {
+              filterWords();
+              setGameStarted(true);
+            }}
             disabled={!!isLoadingPage}
           />
         </NavLink>

@@ -54,10 +54,10 @@ function WordItem(
   const {
     difficultWords,
     learnedWords,
-    setDifficultWords,
-    setLearnedWords,
     token,
     userId,
+    setDifficultWords,
+    setLearnedWords,
   } = useContext(BookContext);
   const audioWord = useRef(new Audio());
   const audioMeaning = useRef(new Audio());

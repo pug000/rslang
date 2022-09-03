@@ -71,14 +71,14 @@ function App() {
     );
   }, [isGameStarted]);
 
-  const wordItemValue = useMemo(() => (
+  const bookValue = useMemo(() => (
     {
       difficultWords,
       learnedWords,
-      setDifficultWords,
-      setLearnedWords,
       token,
       userId,
+      setDifficultWords,
+      setLearnedWords,
     }
   ), [difficultWords, learnedWords]);
 
@@ -92,21 +92,22 @@ function App() {
   ), [isGameStarted, isLoggedIn]);
 
   useEffect(() => {
-    (async () => {
-      const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
+    if (isLoggedIn) {
+      (async () => {
+        const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
+        const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
 
-      const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
+        if (difficultWordsData && typeof difficultWordsData !== 'number') {
+          const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
+          setDifficultWords(difficultWordsChangeKeys);
+        }
 
-      if (difficultWordsData && typeof difficultWordsData !== 'number') {
-        const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
-        setDifficultWords(difficultWordsChangeKeys);
-      }
-
-      if (learnedWordsData && typeof learnedWordsData !== 'number') {
-        const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
-        setLearnedWords(learnedWordsChangeKeys);
-      }
-    })();
+        if (learnedWordsData && typeof learnedWordsData !== 'number') {
+          const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
+          setLearnedWords(learnedWordsChangeKeys);
+        }
+      })();
+    }
   }, [isLoggedIn, currentPage]);
 
   const gameValue = useMemo(() => (
@@ -154,7 +155,7 @@ function App() {
         <Route
           path="book"
           element={(
-            <WordItemContext.Provider value={wordItemValue}>
+            <WordItemContext.Provider value={bookValue}>
               <Book
                 currentPage={currentPage}
                 bookGroupNumber={bookGroupNumber}
@@ -170,7 +171,7 @@ function App() {
         <Route
           path="difficult-words"
           element={(
-            <WordItemContext.Provider value={wordItemValue}>
+            <WordItemContext.Provider value={bookValue}>
               <ProtectedRoute conditionValue={isLoggedIn}>
                 <DifficultWords
                   isLoggedIn={isLoggedIn}
