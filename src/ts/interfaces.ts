@@ -139,9 +139,23 @@ interface Statistics {
     }
   }
 }
+
+interface DataForCharts {
+  name: string,
+  sprint: number,
+  audio: number,
+}
+
+interface DataForTotalStatistics {
+  name: string,
+  total: number,
+  correct: number,
+}
+
 interface ColorProps {
   $color?: string,
 }
+
 interface Teammate {
   teammateId: number,
   name: string,
@@ -169,6 +183,8 @@ export {
   SvgStyles,
   GameStatistics,
   Statistics,
+  DataForCharts,
+  DataForTotalStatistics,
   Teammate,
   ProjectDescription,
   ColorProps,

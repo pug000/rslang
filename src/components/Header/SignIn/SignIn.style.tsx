@@ -52,7 +52,7 @@ const Modal = styled.div<ModalProps>`
   }
 
   Button#signUp,
-  Button#cancel {
+  Button#signCancel {
     color: ${defaultTheme.colors.primaryColor};
     background-color: ${defaultTheme.colors.backgroundWhite};
     border: solid 0.2rem ${defaultTheme.colors.primaryColor};

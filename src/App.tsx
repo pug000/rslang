@@ -22,6 +22,7 @@ import SprintGamePage from '@/SprintGamePage';
 import About from '@/About';
 import NotFound from '@/NotFound';
 import GameContainer from '@/GamesContainer';
+import Statistics from '@/Statistics';
 
 import {
   defaultToken,
@@ -213,7 +214,11 @@ function App() {
           path="statistics"
           element={(
             <ProtectedRoute conditionValue={isLoggedIn}>
-              <p>Statistics</p>
+              <Statistics
+                isLoggedIn={isLoggedIn}
+                token={token}
+                userId={userId}
+              />
             </ProtectedRoute>
           )}
         />
