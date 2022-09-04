@@ -147,7 +147,7 @@ function Statistics({
           <BarChart width={310} height={300} data={dataMaxCountCorrectAnswers}>
             <CartesianGrid strokeDasharray="1 1" />
             <XAxis dataKey="name" />
-            <YAxis />
+            <YAxis type="number" domain={[0, 20]} />
             <Tooltip />
             <Legend formatter={coloredLegend} />
             <Bar
