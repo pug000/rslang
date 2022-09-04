@@ -26,8 +26,10 @@ const ringAnimation = keyframes`
 
 const LoadingRing = styled.div`
   position: absolute;
-  width: 200px;
-  height: 200px;
+  max-width: 200px;
+  max-height: 200px;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   display: flex;
   justify-content: center;

@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useContext,
   useEffect,
   useState
@@ -83,14 +84,16 @@ function AudioGame(
     setWordsOptions(shuffleArray([currentWord.wordTranslate, ...wrongOptions]));
   }, [currentWord]);
 
-  const changePlayStatus = (value: boolean) => setPlayingAudio(value);
+  const changePlayStatus = useCallback((value: boolean) => (
+    setPlayingAudio(value)
+  ), [isPlayingAudio]);
 
   useEffect(() => {
     if (isPlayingAudio) {
       audio.src = `${baseUrl}/${currentWord.audio}`;
       audio.play();
 
-      audio.addEventListener(('ended'), () => changePlayStatus(false));
+      audio.addEventListener('ended', () => changePlayStatus(false));
     }
 
     return () => {
@@ -111,7 +114,7 @@ function AudioGame(
     return '';
   };
 
-  const handleEvent = (word: string) => {
+  const selectWordOption = (word: string) => {
     if (currentWord.wordTranslate === word) {
       setCorrectAnswers((prev) => [...prev, currentWord]);
       setCountCorrectAnswers(countCorrectAnswers + 1);
@@ -127,21 +130,21 @@ function AudioGame(
     setPlayingAudio(false);
   };
 
-  const handleKey = (e: KeyboardEvent) => {
+  const selectWordOptionOnKeyPress = (e: KeyboardEvent) => {
     if (!selectedAnswer) {
       const currentKey = Number(e.key) - 1;
       const word = wordsOptions[currentKey];
 
       if (word) {
         setSelectedAnswer(word);
-        handleEvent(word);
+        selectWordOption(word);
       }
     }
 
     if (e.code === 'Enter') {
       if (!selectedAnswer) {
         setSelectedAnswer('Incorrect');
-        handleEvent('Incorrect');
+        selectWordOption('Incorrect');
       } else {
         nextStep();
       }
@@ -150,10 +153,12 @@ function AudioGame(
 
   useEffect(() => {
     if (step < words.length) {
-      document.addEventListener('keypress', handleKey);
+      document.addEventListener('keypress', selectWordOptionOnKeyPress);
     }
 
-    return () => document.removeEventListener('keypress', handleKey);
+    return () => (
+      document.removeEventListener('keypress', selectWordOptionOnKeyPress)
+    );
   }, [wordsOptions, selectedAnswer, step]);
 
   return (
@@ -178,7 +183,7 @@ function AudioGame(
                   disabled={!!selectedAnswer}
                   onClick={() => {
                     setSelectedAnswer(el);
-                    handleEvent(el);
+                    selectWordOption(el);
                   }}
                 >
                   {`${i + 1}. ${el}`}
@@ -194,7 +199,7 @@ function AudioGame(
                   disabled={!!selectedAnswer}
                   onClick={() => {
                     setSelectedAnswer('Incorrect');
-                    handleEvent('Incorrect');
+                    selectWordOption('Incorrect');
                   }}
                 >
                   Не знаю

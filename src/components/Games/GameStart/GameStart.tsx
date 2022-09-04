@@ -81,7 +81,6 @@ function GameStartPage({
           <Button
             id="exit"
             title="Выйти"
-            callback={() => { }}
             color={elementColor}
           />
         </NavLink>

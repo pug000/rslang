@@ -8,7 +8,6 @@ import {
 } from './Input.style';
 
 interface InputProps {
-  title: string;
   type: string;
   id: string;
   placeholder: string;
@@ -19,7 +18,6 @@ interface InputProps {
 }
 
 function Input({
-  title,
   type,
   id,
   placeholder,
@@ -31,7 +29,7 @@ function Input({
   return (
     <InputWrapper>
       <Label htmlFor={name}>
-        <TitleLabel>{title}</TitleLabel>
+        <TitleLabel />
         <InputField
           type={type}
           id={id}

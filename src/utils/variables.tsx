@@ -19,12 +19,6 @@ import {
 } from '@/ts/interfaces';
 
 const defaultUser = { email: '', password: '' };
-const defaultSingInData = {
-  message: '',
-  token: '',
-  refreshToken: '',
-  userId: '',
-};
 const defaultToken = '';
 const defaultUserID = '';
 const defaultErrMessage = {
@@ -147,8 +141,8 @@ const projectDescription: ProjectDescription[] = [
   },
 ];
 
-const FILTER_DIFFICULT_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
-const FILTER_LEARNED_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"false"}');
+const filterDifficultWords = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
+const filterLearnedWords = encodeURIComponent('{"userWord.optional.isDifficultWord":"false"}');
 
 export {
   navItems,
@@ -157,13 +151,12 @@ export {
   totalCountPages,
   regex,
   strikeMessages,
-  defaultSingInData,
   defaultToken,
   defaultUser,
   defaultUserID,
   defaultErrMessage,
-  FILTER_DIFFICULT_WORDS,
-  FILTER_LEARNED_WORDS,
+  filterDifficultWords,
+  filterLearnedWords,
   projectDescription,
   defaultStatistics,
   todayDate,

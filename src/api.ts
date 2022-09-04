@@ -24,7 +24,6 @@ const endpoints = {
   tokens: 'tokens',
   aggregatedWords: 'aggregatedWords',
   statistics: 'statistics',
-  settings: 'settings'
 };
 
 const methods = {
@@ -33,6 +32,12 @@ const methods = {
   put: 'PUT',
   delete: 'DELETE',
 };
+
+const headers = (token: string) => ({
+  Authorization: `Bearer ${token}`,
+  Accept: 'application/json',
+  'Content-Type': 'application/json'
+});
 
 const getWords = async (group = 0, page = 0) => {
   try {
@@ -50,11 +55,7 @@ const updateUserStatistics = async (userId: string, token: string, body: Statist
   try {
     const response = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.statistics}`, {
       method: methods.put,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: headers(token),
       body: JSON.stringify(body)
     });
     const { status } = response;
@@ -69,11 +70,7 @@ const getUserStatistics = async (userId: string, token: string) => {
   try {
     const response = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.statistics}`, {
       method: methods.get,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: headers(token),
     });
     const { status } = response;
 
@@ -151,19 +148,13 @@ const loginUser = async (userData: UserData) => {
 const getUser = async (userId: string, token: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}`, {
-      method: 'GET',
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
+      method: methods.get,
+      headers: headers(token),
     });
     const { status } = res;
 
-    if (status === ServerResponses.error401) {
-      return status;
-    }
-
-    if (status === ServerResponses.error404) {
+    if (status === ServerResponses.error401
+      || status === ServerResponses.error404) {
       return status;
     }
 
@@ -177,19 +168,13 @@ const getUser = async (userId: string, token: string) => {
 const getNewToken = async (userId: string, token: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.tokens}`, {
-      method: 'GET',
-      headers: {
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
+      method: methods.get,
+      headers: headers(token),
     });
     const { status } = res;
 
-    if (status === ServerResponses.error403) {
-      return status;
-    }
-
-    if (status === ServerResponses.error401) {
+    if (status === ServerResponses.error403
+      || status === ServerResponses.error401) {
       return status;
     }
 
@@ -208,20 +193,13 @@ const createUserWord = async (
 ) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}/${wordId}`, {
     method: methods.post,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
+    headers: headers(token),
     body: JSON.stringify(word)
   });
   const { status } = res;
 
-  if (status === ServerResponses.response200) {
-    return status;
-  }
-
-  if (status === ServerResponses.error417) {
+  if (status === ServerResponses.response200
+    || status === ServerResponses.error417) {
     return status;
   }
 
@@ -231,19 +209,12 @@ const createUserWord = async (
 const deleteUserWord = async (wordId: string, userId: string, token: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}/${wordId}`, {
     method: methods.delete,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
+    headers: headers(token),
   });
   const { status } = res;
 
-  if (status === ServerResponses.response204) {
-    return status;
-  }
-
-  if (status === ServerResponses.error401) {
+  if (status === ServerResponses.response204
+    || status === ServerResponses.error401) {
     return status;
   }
 
@@ -252,12 +223,8 @@ const deleteUserWord = async (wordId: string, userId: string, token: string) => 
 
 const getUserWords = async (userId: string, token: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
+    method: methods.get,
+    headers: headers(token),
   });
   const { status } = res;
 
@@ -270,24 +237,15 @@ const getUserWords = async (userId: string, token: string) => {
 };
 
 const getUserWord = async (wordId: string, userId: string, token: string) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wordId}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    }
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}/${wordId}`, {
+    method: methods.get,
+    headers: headers(token),
   });
   const { status } = res;
 
-  if (status === ServerResponses.error402) {
-    return status;
-  }
-
-  if (status === ServerResponses.error404) {
-    return status;
-  }
-
-  if (status === ServerResponses.error417) {
+  if (status === ServerResponses.error402
+    || status === ServerResponses.error404
+    || status === ServerResponses.error417) {
     return status;
   }
 
@@ -296,12 +254,9 @@ const getUserWord = async (wordId: string, userId: string, token: string) => {
 };
 
 const getFilteredUserWords = async (filter: string, userId: string, token: string) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/aggregatedWords?wordsPerPage=6000&filter=${filter}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    }
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.aggregatedWords}?wordsPerPage=6000&filter=${filter}`, {
+    method: methods.get,
+    headers: headers(token),
   });
   const { status } = res;
 
@@ -320,11 +275,8 @@ const getFilteredUserWordsByPage = async (
   page = 0,
 ) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.aggregatedWords}?page=${page}&wordsPerPage=20&filter=${filter}`, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    }
+    method: methods.get,
+    headers: headers(token),
   });
   const { status } = res;
 

@@ -132,7 +132,7 @@ function SprintGame(
     nextStep();
   };
 
-  const clickInCorrectBtn = () => {
+  const clickIncorrectBtn = () => {
     if (currentWord.wordTranslate !== translation) {
       correctAnswer();
     } else {
@@ -144,20 +144,22 @@ function SprintGame(
 
   const strikeMessageText = strikeMessages[generateRandomNumber(strikeMessages.length - 1)];
 
-  const handleKey = (e: KeyboardEvent) => {
+  const selectAnswerOnKeyDown = (e: KeyboardEvent) => {
     if (e.code === 'ArrowLeft') {
       clickCorrectBtn();
     } else if (e.code === 'ArrowRight') {
-      clickInCorrectBtn();
+      clickIncorrectBtn();
     }
   };
 
   useEffect(() => {
     if (step < words.length) {
-      document.addEventListener('keydown', handleKey);
+      document.addEventListener('keydown', selectAnswerOnKeyDown);
     }
 
-    return () => document.removeEventListener('keydown', handleKey);
+    return () => (
+      document.removeEventListener('keydown', selectAnswerOnKeyDown)
+    );
   }, [step, translation, currentWord]);
 
   return (
@@ -193,7 +195,7 @@ function SprintGame(
               <Button
                 id="incorrect"
                 title="неверно →"
-                callback={clickInCorrectBtn}
+                callback={clickIncorrectBtn}
               />
             </SprintButtons>
             <Note>*можно использовать стрелки</Note>

@@ -9,7 +9,7 @@ import BookContext from '@/contexts/BookContext';
 import Loader from '@/Loader';
 import DifficultWordItem from '@/DifficultWordItem';
 
-import { FILTER_DIFFICULT_WORDS } from '@/utils/variables';
+import { filterDifficultWords } from '@/utils/variables';
 import { getFilteredUserWordsByPage } from '@/api';
 import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
 
@@ -31,12 +31,13 @@ interface DifficultWordsProps {
   setCurrentPageDifficult: SetState<number>,
 }
 
-function DifficultWords({
-  isLoggedIn,
-  currentPageDifficult,
-  setCurrentPageDifficult,
-}: DifficultWordsProps) {
-  if (!isLoggedIn) return null;
+function DifficultWords(
+  {
+    isLoggedIn,
+    currentPageDifficult,
+    setCurrentPageDifficult,
+  }: DifficultWordsProps
+) {
   const {
     difficultWords,
     token,
@@ -53,7 +54,13 @@ function DifficultWords({
 
     (async () => {
       setIsLoadingPage(true);
-      const wordsDifficultData = await getFilteredUserWordsByPage(FILTER_DIFFICULT_WORDS, userId, token, currentPageDifficult);
+      const wordsDifficultData = await getFilteredUserWordsByPage(
+        filterDifficultWords,
+        userId,
+        token,
+        currentPageDifficult
+      );
+
       if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
         const wordsDifficultDataChangeKeys = сhangeWordsDataKeyFromServer([wordsDifficultData[0]]);
         setWordsDifficult(wordsDifficultDataChangeKeys);
