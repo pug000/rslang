@@ -92,6 +92,9 @@
       ],
       "@/NotFound": [
         "components/NotFound/NotFound"
+      ],
+      "@/Statistics": [
+        "components/Statistics/Statistics"
       ]
     }
   },
