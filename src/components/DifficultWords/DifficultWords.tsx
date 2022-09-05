@@ -114,6 +114,7 @@ function DifficultWords(
                     item={word}
                     audio={audio}
                     setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
+                    removeWord={(id: string) => setWordsDifficult((prev) => prev.filter((el) => el.id !== id))}
                   />
                 ))}
             </DifficultWordsContainer>

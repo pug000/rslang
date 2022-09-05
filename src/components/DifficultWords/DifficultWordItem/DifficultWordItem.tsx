@@ -39,6 +39,7 @@ interface WordItemProps {
   item: WordData,
   audio: HTMLAudioElement | null,
   setNewAudio: (value: HTMLAudioElement | null) => void,
+  removeWord: (id: string) => void,
 }
 
 function DifficultWordItem(
@@ -46,6 +47,7 @@ function DifficultWordItem(
     item,
     audio,
     setNewAudio,
+    removeWord,
   }: WordItemProps
 ) {
   const {
@@ -90,10 +92,11 @@ function DifficultWordItem(
 
   const removeActiveWord = (setState: SetState<WordData[]>) => {
     setState((prev) => prev.filter((el) => el.id !== item.id));
+    removeWord(item.id);
     deleteUserWord(item.id, userId, token);
   };
 
-  const handleClick = (
+  const selectActiveOnClick = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     arr: WordData[],
     setState: SetState<WordData[]>
@@ -103,6 +106,7 @@ function DifficultWordItem(
     if (e.currentTarget.id === 'learned') {
       isDifficultWord = false;
       setDifficultWords((prev) => prev.filter((el) => el.id !== item.id));
+      removeWord(item.id);
     } else {
       isDifficultWord = true;
       setLearnedWords((prev) => prev.filter((el) => el.id !== item.id));
@@ -213,18 +217,18 @@ function DifficultWordItem(
               ? defaultTheme.colors.primaryColor
               : defaultTheme.colors.grey
           }
-          onClick={(e) => handleClick(e, learnedWords, setLearnedWords)}
+          onClick={(e) => selectActiveOnClick(e, learnedWords, setLearnedWords)}
         />
         {
           toggleActive(difficultWords)
             ? (
               <DifficultWordButtonActive
-                onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
+                onClick={(e) => selectActiveOnClick(e, difficultWords, setDifficultWords)}
               />
             )
             : (
               <DifficultWordButton
-                onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
+                onClick={(e) => selectActiveOnClick(e, difficultWords, setDifficultWords)}
               />
             )
         }
