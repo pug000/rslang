@@ -44,11 +44,21 @@ const Modal = styled.div<ModalProps>`
   Input {
     width: 280px;
     margin-left: 40px;
+
+    @media (max-width: 480px) {
+      width: 200px;
+      margin: 0px 15px;
+    }
   }
 
   Button {
     width: 280px;
     margin: 8px 40px;
+
+    @media (max-width: 480px) {
+      width: 200px;
+      margin: 8px 15px;
+    }
   }
 
   Button#signUp,
@@ -57,6 +67,14 @@ const Modal = styled.div<ModalProps>`
     background-color: ${defaultTheme.colors.backgroundWhite};
     border: solid 0.2rem ${defaultTheme.colors.primaryColor};
   }
+
+  @media (max-width: 480px) {
+    width: 270px;
+  }
+`;
+
+const InputsWrapper = styled.div`
+  margin-bottom: 50px;
 `;
 
 const SignInTitle = styled.h3`
@@ -64,6 +82,10 @@ const SignInTitle = styled.h3`
   font-size: ${defaultTheme.fontSizes.h3};
   color: ${defaultTheme.colors.title};
   padding: 20px;
+
+  @media (max-width: 480px) {
+    font-size: ${defaultTheme.fontSizes.h4};
+  }
 `;
 
 const SignInWelcome = styled.h3`
@@ -111,6 +133,7 @@ const circularProgressStyle = {
 export {
   Shadow,
   Modal,
+  InputsWrapper,
   SignInTitle,
   CloseButton,
   iconStyles,

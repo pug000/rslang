@@ -14,6 +14,7 @@ import WordItem from '@/WordItem';
 
 import Pagination from '@mui/material/Pagination';
 import StarRateIcon from '@mui/icons-material/StarRate';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import {
   groupButtons,
@@ -26,6 +27,7 @@ import SetState from '@/ts/types';
 
 import {
   BookContainer,
+  GroupWrapper,
   Group,
   GroupButton,
   Title,
@@ -82,6 +84,8 @@ function Book(
     })();
   }, [bookGroupNumber, currentPage]);
 
+  const matchesMediaQuery = useMediaQuery('(max-width:560px)');
+
   return (
     <BookContainer>
       <Title>Учебник</Title>
@@ -115,7 +119,7 @@ function Book(
         </NavLink>
       </GamesWrapper>
       <Wrapper>
-        <div>
+        <GroupWrapper>
           <Group>
             {groupButtons.map((
               {
@@ -146,14 +150,14 @@ function Book(
               </GroupButton>
             </NavLink>
           </Group>
-        </div>
+        </GroupWrapper>
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}
           disabled={isLoadingPage}
           variant="outlined"
           shape="rounded"
-          size="large"
+          size={matchesMediaQuery ? 'small' : 'large'}
           sx={
             {
               display: 'grid',
@@ -181,7 +185,7 @@ function Book(
           disabled={isLoadingPage}
           variant="outlined"
           shape="rounded"
-          size="large"
+          size={matchesMediaQuery ? 'small' : 'large'}
           sx={
             {
               justifySelf: 'center',

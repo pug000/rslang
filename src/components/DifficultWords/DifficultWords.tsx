@@ -23,6 +23,7 @@ import {
   DifficultWordsContainer,
   DifficultWordsTitle,
   Note,
+  LoaderWrapper
 } from './DifficultWords.style';
 
 interface DifficultWordsProps {
@@ -100,7 +101,9 @@ function DifficultWords({
             <DifficultWordsContainer>
               {isLoadingPage
                 ? ((
-                  <Loader />
+                  <LoaderWrapper>
+                    <Loader />
+                  </LoaderWrapper>
                 )) : wordsDifficult.map((word) => (
                   <DifficultWordItem
                     key={word.id}
