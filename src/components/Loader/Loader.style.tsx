@@ -36,6 +36,11 @@ const LoadingRing = styled.div`
   align-items: center;
   padding-left: 70px;
 
+  @media (max-width: 468px) {
+    padding-left: 0px;
+    transform: scale(0.75);
+  }
+
   &:before {
     position: absolute;
     content: '';

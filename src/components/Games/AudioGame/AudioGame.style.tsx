@@ -50,6 +50,11 @@ const AudioButton = styled.button`
   &:hover {
     opacity: ${({ theme }) => theme.effects.hoverOpacity};
   }
+
+  @media (max-width: 980px) {
+    transform: scale(0.8);
+    margin-top: 20px;
+  }
 `;
 
 const AudioIcon = styled(VolumeUpIcon).attrs({ className: 'AudioIcon' }) <AudioIconProps>`
@@ -96,8 +101,17 @@ const Link = styled(NavLink)`
 const AudioGameOptions = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   gap: 25px;
+
+  @media (max-width: 980px) {
+    flex-direction: column;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 650px) {
+    font-size: ${defaultTheme.fontSizes.h4};
+  }
 `;
 
 const AudioGameButton = styled.button`
@@ -136,6 +150,8 @@ const Note = styled.p`
   font-size: 14px;
   color: rgba(0,0,0,0.2);
   font-style: italic;
+  text-align: center;
+  margin-bottom: 20px;
 `;
 
 export {

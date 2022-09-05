@@ -28,10 +28,24 @@ const FooterTitleDiv = styled.div`
   justify-content: space-between;
   align-items: flex-end;
   border-bottom: 1px solid ${defaultTheme.colors.grey};
+
+  @media (max-width: 480px) {
+    flex-direction: column-reverse;
+    gap: 10px;
+    align-items: flex-start;
+  }
 `;
 
 const FooterTitle = styled.h3`
   font-size: ${defaultTheme.fontSizes.h3};
+
+  @media (max-width: 670px) {
+    font-size: ${defaultTheme.fontSizes.h4};
+  }
+
+  @media (max-width: 400px) {
+    font-size: ${defaultTheme.fontSizes.h5};
+  }
 `;
 
 const SchoolLogo = styled.a`
@@ -40,6 +54,11 @@ const SchoolLogo = styled.a`
   height: 55px;
   background: url(https://rs.school/images/rs_school_js.svg);
   background-size: cover;
+
+  @media (max-width: 670px) {
+    width: 108px;
+    height: 40px;
+  }
 `;
 
 const Copyright = styled.div`
@@ -47,6 +66,14 @@ const Copyright = styled.div`
   margin: 0 40px;
   display: flex;
   justify-content: space-between;
+
+  @media (max-width: 546px) {
+    font-size: ${defaultTheme.fontSizes.smallText};
+  }
+
+  @media (max-width: 400px) {
+    font-size: 12px;
+  }
 `;
 
 const Authors = styled.div`
@@ -59,9 +86,9 @@ const Author = styled.a`
   text-decoration: none;
   color: ${defaultTheme.colors.text};
   transition: ${defaultTheme.effects.transition};
+  padding-right: 5px;
   &:not(:last-child) {
     border-right: 1px solid grey;
-    padding-right: 5px;
   }
   &:hover {
     opacity: ${defaultTheme.effects.hoverOpacity};

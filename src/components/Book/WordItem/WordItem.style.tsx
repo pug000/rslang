@@ -32,6 +32,10 @@ const Word = styled.div`
     gap: 15px;
     padding: 20px;
   }
+
+  @media (max-width: 340px) {
+    width: 200px;
+  }
 `;
 
 const WordImage = styled.img`

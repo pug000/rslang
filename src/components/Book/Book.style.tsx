@@ -29,6 +29,15 @@ const Wrapper = styled.div`
   "paginationTop paginationTop"
   "words group" 
   "paginationBottom paginationBottom";
+
+  @media (max-width: 468px) {
+    grid-template-columns: 1fr;
+    grid-template-areas: 
+    "paginationTop"
+    "group" 
+    "words"
+    "paginationBottom";
+  }
 `;
 
 const Title = styled.h1`
@@ -36,6 +45,10 @@ const Title = styled.h1`
   font-size: ${({ theme }) => theme.fontSizes.h2};
   color: ${({ theme }) => theme.colors.title};
   margin-top: 20px;
+
+  @media (max-width: 560px) {
+    font-size: ${({ theme }) => theme.fontSizes.h3};
+  }
 `;
 
 const Note = styled.p`
@@ -67,12 +80,23 @@ const GamesWrapper = styled.div`
   padding: 20px;
   gap: 20px;
 
+  @media (max-width: 468px) {
+    flex-direction: column;
+    align-items: center;
+  }
+
   Button {
     width: 150px;
   }
 `;
 
-const GroupContainer = styled.div``;
+const GroupWrapper = styled.div`
+  grid-area: "group";
+
+  @media (max-width: 468px) {
+    justify-self: center;
+  }
+`;
 
 const Group = styled.div`
   display: flex;
@@ -84,7 +108,14 @@ const Group = styled.div`
   gap: 10px;
   position: sticky;
   top: 15px;
-  grid-area: group;
+
+  @media (max-width: 468px) {
+    flex-direction: row;  
+    gap: 0;
+    width: 200px;
+    flex-wrap: wrap;
+    margin-top: 15px;
+  }
 `;
 
 const GroupButton = styled.button<GroupButtonProps>`
@@ -106,6 +137,10 @@ const GroupButton = styled.button<GroupButtonProps>`
     background-color: transparent;
     color: ${props.$color};
   `}
+
+  @media (max-width: 468px) {
+    transform: scale(0.8);
+  }
 `;
 
 const Message = styled.h5`
@@ -114,15 +149,36 @@ const Message = styled.h5`
   color: ${({ theme }) => theme.colors.primaryColor};
   position: absolute;
   top: 45px;
-  left: 30%;
+  left: 50%;
+  width: 470px;
+  transform: translateX(-47%);
+
+  @media (max-width: 586px) {
+    font-size: ${({ theme }) => theme.fontSizes.smallText};
+    width: 360px;
+  }
+
+  @media (max-width: 560px) {
+    top: 35px;
+  }
+
+  @media (max-width: 468px) {
+    width: 250px;
+    text-align: center;
+    top: 55px;
+  }
+
+  @media (max-width: 370px) {
+    width: 210px;
+  }
 `;
 
 export {
   BookContainer,
   Title,
   Wrapper,
+  GroupWrapper,
   GamesWrapper,
-  GroupContainer,
   Group,
   GroupButton,
   WordsContainer,

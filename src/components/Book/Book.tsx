@@ -14,6 +14,7 @@ import WordItem from '@/WordItem';
 
 import Pagination from '@mui/material/Pagination';
 import StarRateIcon from '@mui/icons-material/StarRate';
+import useMediaQuery from '@mui/material/useMediaQuery';
 
 import {
   groupButtons,
@@ -26,6 +27,7 @@ import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import {
   BookContainer,
+  GroupWrapper,
   Group,
   GroupButton,
   Title,
@@ -34,7 +36,6 @@ import {
   WordsContainer,
   Note,
   Message,
-  GroupContainer
 } from './Book.style';
 
 interface BookProps {
@@ -98,6 +99,8 @@ function Book(
     setGameStarted(true);
   };
 
+  const matchesMediaQuery = useMediaQuery('(max-width:560px)');
+
   return (
     <BookContainer>
       <Title>Учебник</Title>
@@ -125,7 +128,7 @@ function Book(
         </NavLink>
       </GamesWrapper>
       <Wrapper>
-        <GroupContainer>
+        <GroupWrapper>
           <Group>
             {groupButtons.map((
               {
@@ -156,14 +159,14 @@ function Book(
               </GroupButton>
             </NavLink>
           </Group>
-        </GroupContainer>
+        </GroupWrapper>
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}
           disabled={isLoadingPage}
           variant="outlined"
           shape="rounded"
-          size="large"
+          size={matchesMediaQuery ? 'small' : 'large'}
           sx={
             {
               display: 'grid',
@@ -174,18 +177,22 @@ function Book(
           onChange={(_, value) => setCurrentPage(value - 1)}
         />
         <WordsContainer>
-          {(isLoggedIn && checkLearnedWordsOnPage() && !isLoadingPage)
-            && <Message>Отлично! На данной странице все слова изучены.</Message>}
-          {isLoadingPage
-            ? (<Loader />)
-            : words.map((word) => (
-              <WordItem
-                key={word.id}
-                item={word}
-                audio={audio}
-                setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
-              />
-            ))}
+          {
+            (isLoggedIn && checkLearnedWordsOnPage() && !isLoadingPage)
+            && <Message>Отлично! На данной странице все слова изучены.</Message>
+          }
+          {
+            isLoadingPage
+              ? (<Loader />)
+              : words.map((word) => (
+                <WordItem
+                  key={word.id}
+                  item={word}
+                  audio={audio}
+                  setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
+                />
+              ))
+          }
         </WordsContainer>
         <Pagination
           count={totalCountPages}
@@ -193,7 +200,7 @@ function Book(
           disabled={isLoadingPage}
           variant="outlined"
           shape="rounded"
-          size="large"
+          size={matchesMediaQuery ? 'small' : 'large'}
           sx={
             {
               justifySelf: 'center',

@@ -18,6 +18,7 @@ import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 
 import Pagination from '@mui/material/Pagination';
+import { useMediaQuery } from '@mui/material';
 
 import ServerResponses from '@/ts/enums';
 
@@ -26,6 +27,7 @@ import {
   DifficultWordsContainer,
   DifficultWordsTitle,
   Note,
+  LoaderWrapper
 } from './DifficultWords.style';
 
 interface DifficultWordsProps {
@@ -82,6 +84,8 @@ function DifficultWords(
     }
   }, [currentPageDifficult, totalCountPagesDifficult]);
 
+  const matchesMediaQuery = useMediaQuery('(max-width:560px)');
+
   return (
     <DifficultWordsWrapper>
       {isLoggedIn
@@ -105,7 +109,7 @@ function DifficultWords(
                   disabled={isLoadingPage}
                   variant="outlined"
                   shape="rounded"
-                  size="large"
+                  size={matchesMediaQuery ? 'small' : 'large'}
                   sx={
                     {
                       display: 'grid',
@@ -120,7 +124,9 @@ function DifficultWords(
             <DifficultWordsContainer>
               {isLoadingPage
                 ? ((
-                  <Loader />
+                  <LoaderWrapper>
+                    <Loader />
+                  </LoaderWrapper>
                 )) : wordsDifficultPerPage.map((word) => (
                   <DifficultWordItem
                     key={word.id}
@@ -140,7 +146,7 @@ function DifficultWords(
                   disabled={isLoadingPage}
                   variant="outlined"
                   shape="rounded"
-                  size="large"
+                  size={matchesMediaQuery ? 'small' : 'large'}
                   sx={
                     {
                       display: 'grid',
