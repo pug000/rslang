@@ -52,6 +52,13 @@ function GameStartPage({
   setLoadingGame,
 }: GameStartPageProps) {
   const { setGameStarted } = useContext(GameContext);
+
+  const startGameOnClick = () => {
+    setCurrentPage(generateRandomNumber(totalCountPages - 1));
+    setLoadingGame(true);
+    setGameStarted(true);
+  };
+
   return (
     <GamePageWrapper>
       <GamePageBackground $color={backgroundColor} />
@@ -81,18 +88,13 @@ function GameStartPage({
           <Button
             id="exit"
             title="Выйти"
-            callback={() => { }}
             color={elementColor}
           />
         </NavLink>
         <Button
           id="start"
           title="Играть"
-          callback={() => {
-            setCurrentPage(generateRandomNumber(totalCountPages - 1));
-            setLoadingGame(true);
-            setGameStarted(true);
-          }}
+          callback={startGameOnClick}
           color={elementColor}
         />
       </GameControlButtons>

@@ -5,24 +5,24 @@ import ButtonElement from './Button.style';
 interface ButtonProps {
   title: string;
   id: string;
-  callback: (id: string) => void;
   color?: string;
   disabled?: boolean;
+  callback?: (id: string) => void;
 }
 
 function Button({
   title,
   id,
   disabled,
-  callback,
   color,
+  callback,
 }: ButtonProps) {
   return (
     <ButtonElement
       type="button"
       id={id}
       disabled={disabled}
-      onClick={() => callback(id)}
+      onClick={() => (callback ? callback(id) : undefined)}
       $color={color}
     >
       {title}
@@ -33,6 +33,7 @@ function Button({
 Button.defaultProps = {
   disabled: false,
   color: '',
+  callback: undefined,
 };
 
 export default Button;

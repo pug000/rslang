@@ -20,6 +20,7 @@ import {
   groupButtons,
   totalCountPages
 } from '@/utils/variables';
+import { shuffleArray } from '@/utils/randomize';
 import { getWords } from '@/api';
 
 import { WordData } from '@/ts/interfaces';
@@ -34,7 +35,7 @@ import {
   GamesWrapper,
   WordsContainer,
   Note,
-  Message
+  Message,
 } from './Book.style';
 
 interface BookProps {
@@ -58,38 +59,25 @@ function Book(
     setGameStarted,
   }: BookProps,
 ) {
+  const {
+    isLoggedIn,
+    learnedWords,
+    difficultWords
+  } = useContext(BookContext);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const { isLoggedIn, learnedWords } = useContext(BookContext);
-  const [popupMessage, setPopupMessage] = useState<boolean>(false);
 
-  const checkWordsOnPage = () => {
-    const result = words
+  const filterWords = (userWords: WordData[]) => (
+    words
+      .filter((wordItem) => !userWords
+        .some((el) => el.id === wordItem.id))
+  );
+
+  const checkLearnedWordsOnPage = () => (
+    filterWords(difficultWords)
       .every((wordItem) => learnedWords
-        .some((learnedWordItem) => learnedWordItem.id === wordItem.id));
-
-    return result;
-  };
-  const showMessage = () => {
-    if (isLoggedIn) {
-      const allWordsLearned = checkWordsOnPage();
-      if (allWordsLearned === true) {
-        setPopupMessage(true);
-      } else {
-        setPopupMessage(false);
-      }
-    } else {
-      setPopupMessage(false);
-    }
-  };
-
-  const filterWords = () => {
-    const result = words
-      .filter((wordItem) => !learnedWords
-        .some((learnedWordItem) => learnedWordItem.id === wordItem.id));
-
-    setWords(result);
-  };
+        .some((learnedWordItem) => learnedWordItem.id === wordItem.id))
+  );
 
   useEffect(() => {
     audio?.remove();
@@ -103,11 +91,13 @@ function Book(
         setIsLoadingPage(false);
       }, 500);
     })();
-  }, [bookGroupNumber, currentPage, isLoggedIn]);
+  }, [bookGroupNumber, currentPage]);
 
-  useEffect(() => {
-    showMessage();
-  }, [learnedWords, isLoggedIn]);
+  const startGameOnClick = () => {
+    const filteredWord = filterWords(learnedWords);
+    setWords(shuffleArray(filteredWord));
+    setGameStarted(true);
+  };
 
   const matchesMediaQuery = useMediaQuery('(max-width:560px)');
 
@@ -124,22 +114,16 @@ function Book(
           <Button
             id="sprint"
             title="Спринт"
-            callback={() => {
-              filterWords();
-              setGameStarted(true);
-            }}
-            disabled={!!isLoadingPage || checkWordsOnPage()}
+            callback={startGameOnClick}
+            disabled={isLoadingPage || checkLearnedWordsOnPage()}
           />
         </NavLink>
         <NavLink to="/games/audio">
           <Button
             id="audio"
             title="Аудиовызов"
-            callback={() => {
-              filterWords();
-              setGameStarted(true);
-            }}
-            disabled={!!isLoadingPage || checkWordsOnPage()}
+            callback={startGameOnClick}
+            disabled={isLoadingPage || checkLearnedWordsOnPage()}
           />
         </NavLink>
       </GamesWrapper>
@@ -168,7 +152,7 @@ function Book(
               <GroupButton
                 $color={defaultTheme.colors.primaryColor}
                 active={false}
-                disabled={!!isLoadingPage}
+                disabled={isLoadingPage}
                 title="Сложные слова"
               >
                 <StarRateIcon />
@@ -193,17 +177,22 @@ function Book(
           onChange={(_, value) => setCurrentPage(value - 1)}
         />
         <WordsContainer>
-          {(isLoggedIn && popupMessage) && <Message>Отлично! На данной странице все слова изучены.</Message>}
-          {isLoadingPage
-            ? (<Loader />)
-            : words.map((word) => (
-              <WordItem
-                key={word.id}
-                item={word}
-                audio={audio}
-                setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
-              />
-            ))}
+          {
+            (isLoggedIn && checkLearnedWordsOnPage() && !isLoadingPage)
+            && <Message>Отлично! На данной странице все слова изучены.</Message>
+          }
+          {
+            isLoadingPage
+              ? (<Loader />)
+              : words.map((word) => (
+                <WordItem
+                  key={word.id}
+                  item={word}
+                  audio={audio}
+                  setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
+                />
+              ))
+          }
         </WordsContainer>
         <Pagination
           count={totalCountPages}

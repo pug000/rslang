@@ -15,7 +15,7 @@ interface NavMenuProps {
   isNavMenuOpen: boolean,
   setNavMenuOpen: SetState<boolean>,
   active: boolean,
-  setActive: (arg0: boolean) => void,
+  setActive: SetState<boolean>,
 }
 
 function NavMenu(
@@ -26,6 +26,11 @@ function NavMenu(
     setActive,
   }: NavMenuProps
 ) {
+  const closeModal = () => {
+    setActive(false);
+    setNavMenuOpen(false);
+  };
+
   return (
     <>
       <NavUl isOpen={isNavMenuOpen}>
@@ -35,10 +40,7 @@ function NavMenu(
           <NavLi key={id}>
             <Link
               to={link}
-              onClick={() => {
-                setActive(false);
-                setNavMenuOpen(false);
-              }}
+              onClick={closeModal}
             >
               {icon}
               <p>{value}</p>
@@ -47,10 +49,7 @@ function NavMenu(
         ))}
       </NavUl>
       <Shadow
-        onClick={() => {
-          setActive(false);
-          setNavMenuOpen(false);
-        }}
+        onClick={closeModal}
         active={active}
       />
     </>

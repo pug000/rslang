@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useState
@@ -9,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 import HeaderContext from '@/contexts/HeaderContext';
-import WordItemContext from '@/contexts/BookContext';
+import BookContext from '@/contexts/BookContext';
 import GameContext from '@/contexts/GameContext';
 
 import AppLayout from '@/AppLayout';
@@ -75,14 +76,14 @@ function App() {
     }
   }, []);
 
-  const clearGameState = () => {
+  const clearGameState = useCallback(() => {
     setGameStarted(false);
     setShowResult(false);
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
     setCountCorrectAnswers(0);
     setMaxCountCorrectAnswers(0);
-  };
+  }, [isGameStarted]);
 
   useEffect(() => {
     if (isGameStarted) {
@@ -94,7 +95,7 @@ function App() {
     );
   }, [isGameStarted]);
 
-  const wordItemValue = useMemo(() => (
+  const bookValue = useMemo(() => (
     {
       difficultWords,
       learnedWords,
@@ -104,7 +105,13 @@ function App() {
       userId,
       isLoggedIn,
     }
-  ), [difficultWords, learnedWords]);
+  ), [
+    difficultWords,
+    learnedWords,
+    token,
+    userId,
+    isLoggedIn
+  ]);
 
   const headerValue = useMemo(() => (
     {
@@ -167,89 +174,85 @@ function App() {
   ]);
 
   return (
-    <Routes>
-      <Route
-        path="/"
-        element={(
-          <HeaderContext.Provider value={headerValue}>
-            <AppLayout />
-          </HeaderContext.Provider>
-        )}
-      >
-        <Route index element={<Home />} />
-        <Route
-          path="book"
-          element={(
-            <WordItemContext.Provider value={wordItemValue}>
-              <Book
-                currentPage={currentPage}
-                bookGroupNumber={bookGroupNumber}
-                words={words}
-                setWords={setWords}
-                setCurrentPage={setCurrentPage}
-                setBookGroupNumber={setBookGroupNumber}
-                setGameStarted={setGameStarted}
-              />
-            </WordItemContext.Provider>
-          )}
-        />
-        <Route
-          path="difficult-words"
-          element={(
-            <WordItemContext.Provider value={wordItemValue}>
-              <ProtectedRoute conditionValue={isLoggedIn}>
-                <DifficultWords
-                  isLoggedIn={isLoggedIn}
-                  currentPageDifficult={currentPageDifficult}
-                  setCurrentPageDifficult={setCurrentPageDifficult}
+    <BookContext.Provider value={bookValue}>
+      <GameContext.Provider value={gameValue}>
+        <Routes>
+          <Route
+            path="/"
+            element={(
+              <HeaderContext.Provider value={headerValue}>
+                <AppLayout />
+              </HeaderContext.Provider>
+            )}
+          >
+            <Route index element={<Home />} />
+            <Route
+              path="book"
+              element={(
+                <Book
+                  currentPage={currentPage}
+                  bookGroupNumber={bookGroupNumber}
+                  words={words}
+                  setWords={setWords}
+                  setCurrentPage={setCurrentPage}
+                  setBookGroupNumber={setBookGroupNumber}
+                  setGameStarted={setGameStarted}
                 />
-              </ProtectedRoute>
-            </WordItemContext.Provider>
-          )}
-        />
-        <Route path="games" element={<GameContainer />} />
-        <Route
-          path="games/sprint"
-          element={(
-            <GameContext.Provider value={gameValue}>
-              <SprintGamePage
-                isGameStarted={isGameStarted}
-                defaultPage={currentPage}
-                defaultGroupNumber={bookGroupNumber}
-                defaultWords={words}
-              />
-            </GameContext.Provider>
-          )}
-        />
-        <Route
-          path="games/audio"
-          element={(
-            <GameContext.Provider value={gameValue}>
-              <AudioGamePage
-                isGameStarted={isGameStarted}
-                defaultPage={currentPage}
-                defaultGroupNumber={bookGroupNumber}
-                defaultWords={words}
-              />
-            </GameContext.Provider>
-          )}
-        />
-        <Route
-          path="statistics"
-          element={(
-            <ProtectedRoute conditionValue={isLoggedIn}>
-              <Statistics
-                isLoggedIn={isLoggedIn}
-                token={token}
-                userId={userId}
-              />
-            </ProtectedRoute>
-          )}
-        />
-        <Route path="about" element={<About />} />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+              )}
+            />
+            <Route
+              path="difficult-words"
+              element={(
+                <ProtectedRoute conditionValue={isLoggedIn}>
+                  <DifficultWords
+                    isLoggedIn={isLoggedIn}
+                    currentPageDifficult={currentPageDifficult}
+                    setCurrentPageDifficult={setCurrentPageDifficult}
+                  />
+                </ProtectedRoute>
+              )}
+            />
+            <Route path="games" element={<GameContainer />} />
+            <Route
+              path="games/sprint"
+              element={(
+                <SprintGamePage
+                  isGameStarted={isGameStarted}
+                  defaultPage={currentPage}
+                  defaultGroupNumber={bookGroupNumber}
+                  defaultWords={words}
+                />
+              )}
+            />
+            <Route
+              path="games/audio"
+              element={(
+                <AudioGamePage
+                  isGameStarted={isGameStarted}
+                  defaultPage={currentPage}
+                  defaultGroupNumber={bookGroupNumber}
+                  defaultWords={words}
+                />
+              )}
+            />
+            <Route
+              path="statistics"
+              element={(
+                <ProtectedRoute conditionValue={isLoggedIn}>
+                  <Statistics
+                    isLoggedIn={isLoggedIn}
+                    token={token}
+                    userId={userId}
+                  />
+                </ProtectedRoute>
+              )}
+            />
+            <Route path="about" element={<About />} />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+      </GameContext.Provider>
+    </BookContext.Provider>
   );
 }
 

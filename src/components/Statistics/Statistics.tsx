@@ -63,27 +63,32 @@ function Statistics({
       (async () => {
         setIsLoadingPage(true);
         const data = await getUserStatistics(userId, token);
-        if (data.optional.games.sprint.gameLearnedWords
-          || data.optional.games.audio.gameLearnedWords) setIsStatisticsShown(true);
+        const { sprint, audio } = data.optional.games;
+
+        if (sprint.gameLearnedWords
+          || audio.gameLearnedWords) {
+          setIsStatisticsShown(true);
+        }
+
         setDate(data.optional.date);
         setDataGameLearnedWords([{
           name: 'Новые слова за день',
-          sprint: data.optional.games.sprint.gameLearnedWords,
-          audio: data.optional.games.audio.gameLearnedWords
+          sprint: sprint.gameLearnedWords,
+          audio: audio.gameLearnedWords
         }]);
         setDataPercentCorrectAnswers([{
           name: 'Процент правильных ответов',
-          sprint: data.optional.games.sprint.percentCorrectWord,
-          audio: data.optional.games.audio.percentCorrectWord
+          sprint: sprint.percentCorrectWord,
+          audio: audio.percentCorrectWord
         }]);
         setDataMaxCountCorrectAnswers([{
           name: 'Серия правильных ответов',
-          sprint: data.optional.games.sprint.maxCountCorrectAnswers,
-          audio: data.optional.games.audio.maxCountCorrectAnswers
+          sprint: sprint.maxCountCorrectAnswers,
+          audio: audio.maxCountCorrectAnswers
         }]);
 
-        const totalWords = data.optional.games.audio.gameLearnedWords + data.optional.games.sprint.gameLearnedWords;
-        const totalCorrectWords = data.optional.games.audio.countCorrectAnswers + data.optional.games.sprint.countCorrectAnswers;
+        const totalWords = audio.gameLearnedWords + sprint.gameLearnedWords;
+        const totalCorrectWords = audio.countCorrectAnswers + sprint.countCorrectAnswers;
 
         setDataTotalStatistics([{
           name: 'Общая дневная статистика',
@@ -101,10 +106,7 @@ function Statistics({
   if (isStatisticsShown) {
     return (
       <>
-        <StatisticsTitle>
-          {'Дневная статистика на '}
-          {date}
-        </StatisticsTitle>
+        <StatisticsTitle>{`Дневная статистика на ${date}`}</StatisticsTitle>
         <GameCharts>
           <BarChart width={310} height={300} data={dataGameLearnedWords}>
             <CartesianGrid strokeDasharray="1 1" />

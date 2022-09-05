@@ -97,7 +97,7 @@ function WordItem(
     deleteUserWord(item.id, userId, token);
   };
 
-  const handleClick = (
+  const selectActiveOnClick = (
     e: React.MouseEvent<SVGSVGElement, MouseEvent>,
     arr: WordData[],
     setState: SetState<WordData[]>
@@ -206,7 +206,7 @@ function WordItem(
           </WordInfoWrapper>
         </div>
       </WordInfoContainer>
-      {isLoggedIn && (
+      {!!isLoggedIn && (
         <WordButtonContainer>
           <LearnedWordButton
             id="learned"
@@ -215,18 +215,18 @@ function WordItem(
                 ? defaultTheme.colors.primaryColor
                 : defaultTheme.colors.grey
             }
-            onClick={(e) => handleClick(e, learnedWords, setLearnedWords)}
+            onClick={(e) => selectActiveOnClick(e, learnedWords, setLearnedWords)}
           />
           {
             toggleActive(difficultWords)
               ? (
                 <DifficultWordButtonActive
-                  onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
+                  onClick={(e) => selectActiveOnClick(e, difficultWords, setDifficultWords)}
                 />
               )
               : (
                 <DifficultWordButton
-                  onClick={(e) => handleClick(e, difficultWords, setDifficultWords)}
+                  onClick={(e) => selectActiveOnClick(e, difficultWords, setDifficultWords)}
                 />
               )
           }

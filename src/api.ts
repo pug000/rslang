@@ -24,7 +24,6 @@ const endpoints = {
   tokens: 'tokens',
   aggregatedWords: 'aggregatedWords',
   statistics: 'statistics',
-  settings: 'settings'
 };
 
 const methods = {
@@ -33,6 +32,12 @@ const methods = {
   put: 'PUT',
   delete: 'DELETE',
 };
+
+const headers = (token: string) => ({
+  Authorization: `Bearer ${token}`,
+  Accept: 'application/json',
+  'Content-Type': 'application/json'
+});
 
 const getWords = async (group = 0, page = 0) => {
   try {
@@ -50,11 +55,7 @@ const updateUserStatistics = async (userId: string, token: string, body: Statist
   try {
     const response = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.statistics}`, {
       method: methods.put,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: headers(token),
       body: JSON.stringify(body)
     });
     const { status } = response;
@@ -69,11 +70,7 @@ const getUserStatistics = async (userId: string, token: string) => {
   try {
     const response = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.statistics}`, {
       method: methods.get,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: headers(token),
     });
     const { status } = response;
 
@@ -152,10 +149,7 @@ const getUser = async (userId: string, token: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}`, {
       method: methods.get,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        'Content-Type': 'application/json',
-      },
+      headers: headers(token),
     });
     const { status } = res;
 
@@ -175,11 +169,7 @@ const getNewToken = async (userId: string, refreshToken: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.tokens}`, {
       method: methods.get,
-      headers: {
-        Authorization: `Bearer ${refreshToken}`,
-        Accept: 'application/json',
-        'Content-Type': 'application/json'
-      },
+      headers: headers(refreshToken),
     });
     const { status } = res;
 
@@ -187,6 +177,7 @@ const getNewToken = async (userId: string, refreshToken: string) => {
       || status === ServerResponses.error401) {
       return status;
     }
+
     const data: LogInUserData = await res.json();
     return data;
   } catch (err) {
@@ -202,11 +193,7 @@ const createUserWord = async (
 ) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}/${wordId}`, {
     method: methods.post,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
+    headers: headers(token),
     body: JSON.stringify(word)
   });
   const { status } = res;
@@ -223,11 +210,7 @@ const createUserWord = async (
 const deleteUserWord = async (wordId: string, userId: string, token: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}/${wordId}`, {
     method: methods.delete,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    },
+    headers: headers(token),
   });
   const { status } = res;
 
@@ -242,11 +225,7 @@ const deleteUserWord = async (wordId: string, userId: string, token: string) => 
 const getUserWords = async (userId: string, token: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}`, {
     method: methods.get,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json'
-    }
+    headers: headers(token),
   });
   const { status } = res;
 
@@ -259,12 +238,9 @@ const getUserWords = async (userId: string, token: string) => {
 };
 
 const getUserWord = async (wordId: string, userId: string, token: string) => {
-  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/words/${wordId}`, {
+  const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.words}/${wordId}`, {
     method: methods.get,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    }
+    headers: headers(token),
   });
   const { status } = res;
 
@@ -281,10 +257,7 @@ const getUserWord = async (wordId: string, userId: string, token: string) => {
 const getFilteredUserWords = async (filter: string, userId: string, token: string) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.aggregatedWords}?wordsPerPage=6000&filter=${filter}`, {
     method: methods.get,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    }
+    headers: headers(token),
   });
   const { status } = res;
 
@@ -303,10 +276,7 @@ const getFilteredUserWordsByPage = async (
 ) => {
   const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.aggregatedWords}?page=${page}&wordsPerPage=20&filter=${filter}`, {
     method: methods.get,
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-    }
+    headers: headers(token),
   });
   const { status } = res;
 

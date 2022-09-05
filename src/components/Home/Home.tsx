@@ -38,10 +38,10 @@ function Home() {
         </HomeText>
         <HomeButtons>
           <Link to="/book">
-            <Button id="toBook" title="Учебник" callback={() => { }} />
+            <Button id="toBook" title="Учебник" />
           </Link>
           <Link to="/games">
-            <Button id="toGames" title="Игры" callback={() => { }} />
+            <Button id="toGames" title="Игры" />
           </Link>
         </HomeButtons>
       </HomeTextContainer>

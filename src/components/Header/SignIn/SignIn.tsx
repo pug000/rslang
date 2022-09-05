@@ -22,7 +22,7 @@ import {
 
 import ServerResponses from '@/ts/enums';
 import {
-  ErrMessageProps
+  ErrorMessageProps
 } from '@/ts/interfaces';
 
 import CircularProgress from '@mui/material/CircularProgress';
@@ -65,17 +65,29 @@ function SignInModal({
   } = useContext(HeaderContext);
   const [userData, setUserData] = useState(defaultUser);
   const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
-  const [errShow, setErrShow] = useState<boolean>(false);
+  const [isErrorShown, setErrorShown] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<ErrorMessageProps>(defaultErrMessage);
 
-  const [errMessage, setErrMessage] = useState<ErrMessageProps>(defaultErrMessage);
-
-  const changeErrShow = () => setErrShow(((prev) => !prev));
+  const changeErrorShown = () => setErrorShown(((prev) => !prev));
   const changeWaitingData = () => setIsWaitingData(((prev) => !prev));
   const changeActiveShadow = () => setActive(false);
-  const errMessageShow = (text: string, activeErr: boolean) => {
-    setErrMessage({ ...errMessage, text, activeErr });
-    changeErrShow();
-    setTimeout(changeErrShow, 3000);
+  const errorMessageShown = (text: string, activeErr: boolean) => {
+    setErrorMessage({ ...errorMessage, text, activeErr });
+    changeErrorShown();
+    setTimeout(changeErrorShown, 3000);
+  };
+
+  const changeUserState = (
+    token: string,
+    userId: string,
+    refreshToken: string,
+    message: string,
+  ) => {
+    errorMessageShown(message, false);
+    setToken(token);
+    setRefreshToken(refreshToken);
+    setUserId(userId);
+    changeLoggedInState();
   };
 
   const signInUser = async () => {
@@ -83,22 +95,23 @@ function SignInModal({
       changeWaitingData();
       const responseSignIn = await loginUser(userData);
       if (responseSignIn && typeof responseSignIn !== 'number') {
-        setToken(responseSignIn.token);
-        setUserId(responseSignIn.userId);
-        setRefreshToken(responseSignIn.refreshToken);
-        errMessageShow('Вы авторизовались!', false);
-        changeLoggedInState();
+        changeUserState(
+          responseSignIn.token,
+          responseSignIn.userId,
+          responseSignIn.refreshToken,
+          'Вы авторизовались!'
+        );
         setTimeout(changeActiveShadow, 3000);
       } else if (responseSignIn === ServerResponses.error403) {
-        errMessageShow('Неправильный e-mail или пароль!', true);
+        errorMessageShown('Неправильный e-mail или пароль!', true);
       } else if (responseSignIn === ServerResponses.error404) {
-        errMessageShow('Пользователь не найден. Зарегистрируйтесь.', true);
+        errorMessageShown('Пользователь не найден. Зарегистрируйтесь.', true);
       }
       changeWaitingData();
     } else if (userData.password.length < 8) {
-      errMessageShow('Некорректный пароль! Минимум 8 символов.', true);
+      errorMessageShown('Некорректный пароль! Минимум 8 символов.', true);
     } else {
-      errMessageShow('Некорректный e-mail!', true);
+      errorMessageShown('Некорректный e-mail!', true);
     }
   };
 
@@ -107,30 +120,26 @@ function SignInModal({
       changeWaitingData();
       const responseCreateUser = await registerUser(userData);
       if (typeof responseCreateUser !== 'number') {
-        errMessageShow('Вы зарегистрированы!', false);
+        errorMessageShown('Вы зарегистрированы! Авторизуйтесь.', false);
         signInUser();
         setTimeout(changeActiveShadow, 3000);
         setUserData({ ...defaultUser });
       } else if (responseCreateUser === ServerResponses.error417) {
-        errMessageShow('Пользователь уже зарегистрирован!', true);
+        errorMessageShown('Пользователь уже зарегистрирован!', true);
       } else if (responseCreateUser === ServerResponses.error422) {
-        errMessageShow('Неправильный e-mail или пароль!', true);
+        errorMessageShown('Неправильный e-mail или пароль!', true);
       }
       changeWaitingData();
     } else if (userData.password.length < 8) {
-      errMessageShow('Некорректный пароль! Минимум 8 символов.', true);
+      errorMessageShown('Некорректный пароль! Минимум 8 символов.', true);
     } else {
-      errMessageShow('Некорректный e-mail!', true);
+      errorMessageShown('Некорректный e-mail!', true);
     }
   };
 
   const signOutUser = () => {
-    errMessageShow('До новых встреч!', false);
-    changeLoggedInState();
+    changeUserState(defaultToken, defaultUserID, defaultToken, 'До новых встреч!');
     setUserData({ ...defaultUser });
-    setToken(defaultToken);
-    setUserId(defaultUserID);
-    setRefreshToken(defaultToken);
   };
 
   return (
@@ -142,7 +151,7 @@ function SignInModal({
         {isLoggedIn
           ? <SignInTitle>Вы авторизованы!</SignInTitle>
           : <SignInTitle>Добро пожаловать!</SignInTitle>}
-        {errShow && <PopupMessage statusErr={errMessage.activeErr} text={errMessage.text} />}
+        {isErrorShown && <PopupMessage statusErr={errorMessage.activeErr} text={errorMessage.text} />}
         <form>
           {isLoggedIn
             ? (
@@ -155,7 +164,6 @@ function SignInModal({
               <InputsWrapper>
                 <Input
                   type="email"
-                  title=""
                   id="login"
                   placeholder="Введите Ваш e-mail"
                   name="login"
@@ -165,7 +173,6 @@ function SignInModal({
                 />
                 <Input
                   type="password"
-                  title=""
                   id="pass"
                   placeholder="Введите Ваш пароль"
                   name="pass"

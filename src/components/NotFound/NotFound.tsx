@@ -17,7 +17,6 @@ function NotFound() {
         <Button
           id="home"
           title="На главную"
-          callback={() => { }}
           color={defaultTheme.colors.primaryColor}
         />
       </NavLink>

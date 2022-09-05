@@ -19,12 +19,6 @@ import {
 } from '@/ts/interfaces';
 
 const defaultUser = { email: '', password: '' };
-const defaultSingInData = {
-  message: '',
-  token: '',
-  refreshToken: '',
-  userId: '',
-};
 const defaultToken = '';
 const defaultUserID = '';
 const defaultErrMessage = {
@@ -157,7 +151,6 @@ export {
   totalCountPages,
   checkEmail,
   strikeMessages,
-  defaultSingInData,
   defaultToken,
   defaultUser,
   defaultUserID,
