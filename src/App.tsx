@@ -31,10 +31,14 @@ import {
   filterLearnedWords,
 } from '@/utils/variables';
 import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
-import { getFilteredUserWords } from '@/api';
+import {
+  getFilteredUserWords,
+  getNewToken
+} from '@/api';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 import { WordData } from '@/ts/interfaces';
+import ServerResponses from './ts/enums';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useLocalStorage('isLoggedIn', false);
@@ -45,13 +49,31 @@ function App() {
   const [words, setWords] = useState<WordData[]>([]);
   const [bookGroupNumber, setBookGroupNumber] = useLocalStorage('bookGroupNumber', 0);
   const [currentPage, setCurrentPage] = useLocalStorage('bookCurrentPage', 0);
-  const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('CurrentPageDifficult', 0);
+  const [currentPageDifficult, setCurrentPageDifficult] = useLocalStorage('difficultCurrentPage', 0);
   const [incorrectAnswers, setIncorrectAnswers] = useState<WordData[]>([]);
   const [correctAnswers, setCorrectAnswers] = useState<WordData[]>([]);
   const [countCorrectAnswers, setCountCorrectAnswers] = useState(0);
   const [maxCountCorrectAnswers, setMaxCountCorrectAnswers] = useState(0);
   const [token, setToken] = useLocalStorage('token', defaultToken);
+  const [refreshToken, setRefreshToken] = useLocalStorage('refreshToken', defaultToken);
   const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      (async () => {
+        const responseNewToken = await getNewToken(userId, refreshToken);
+        if (responseNewToken && typeof responseNewToken !== 'number') {
+          setToken(responseNewToken.token);
+          setRefreshToken(responseNewToken.refreshToken);
+        } else if (responseNewToken === ServerResponses.error401) {
+          setLoggedIn(false);
+          setToken(defaultToken);
+          setRefreshToken(defaultToken);
+          setUserId(defaultUserID);
+        }
+      })();
+    }
+  }, []);
 
   const clearGameState = () => {
     setGameStarted(false);
@@ -76,12 +98,19 @@ function App() {
     {
       difficultWords,
       learnedWords,
-      token,
-      userId,
       setDifficultWords,
       setLearnedWords,
+      token,
+      userId,
+      isLoggedIn,
     }
-  ), [difficultWords, learnedWords]);
+  ), [
+    difficultWords,
+    learnedWords,
+    token,
+    userId,
+    isLoggedIn
+  ]);
 
   const headerValue = useMemo(() => (
     {
@@ -89,6 +118,7 @@ function App() {
       setLoggedIn,
       setToken,
       setUserId,
+      setRefreshToken,
     }
   ), [isGameStarted, isLoggedIn]);
 

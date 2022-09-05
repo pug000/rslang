@@ -56,6 +56,7 @@ function WordItem(
     learnedWords,
     token,
     userId,
+    isLoggedIn,
     setDifficultWords,
     setLearnedWords,
   } = useContext(BookContext);
@@ -82,8 +83,8 @@ function WordItem(
   const addActiveWord = async (setState: SetState<WordData[]>, isDifficultWord: boolean) => {
     setState((prev) => [...prev, item]);
     const currentWord = createWordProp(item, isDifficultWord);
-    const resCreateUserWord = await getUserWord(item.id, userId, token);
-    if (resCreateUserWord === ServerResponses.error404) {
+    const responseCreateUserWord = await getUserWord(item.id, userId, token);
+    if (responseCreateUserWord === ServerResponses.error404) {
       await createUserWord(item.id, currentWord, userId, token);
     } else {
       await deleteUserWord(item.id, userId, token);
@@ -205,30 +206,32 @@ function WordItem(
           </WordInfoWrapper>
         </div>
       </WordInfoContainer>
-      <WordButtonContainer>
-        <LearnedWordButton
-          id="learned"
-          $color={
-            toggleActive(learnedWords)
-              ? defaultTheme.colors.primaryColor
-              : defaultTheme.colors.grey
+      {!!isLoggedIn && (
+        <WordButtonContainer>
+          <LearnedWordButton
+            id="learned"
+            $color={
+              toggleActive(learnedWords)
+                ? defaultTheme.colors.primaryColor
+                : defaultTheme.colors.grey
+            }
+            onClick={(e) => selectActiveOnClick(e, learnedWords, setLearnedWords)}
+          />
+          {
+            toggleActive(difficultWords)
+              ? (
+                <DifficultWordButtonActive
+                  onClick={(e) => selectActiveOnClick(e, difficultWords, setDifficultWords)}
+                />
+              )
+              : (
+                <DifficultWordButton
+                  onClick={(e) => selectActiveOnClick(e, difficultWords, setDifficultWords)}
+                />
+              )
           }
-          onClick={(e) => selectActiveOnClick(e, learnedWords, setLearnedWords)}
-        />
-        {
-          toggleActive(difficultWords)
-            ? (
-              <DifficultWordButtonActive
-                onClick={(e) => selectActiveOnClick(e, difficultWords, setDifficultWords)}
-              />
-            )
-            : (
-              <DifficultWordButton
-                onClick={(e) => selectActiveOnClick(e, difficultWords, setDifficultWords)}
-              />
-            )
-        }
-      </WordButtonContainer>
+        </WordButtonContainer>
+      )}
     </Word>
   );
 }

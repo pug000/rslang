@@ -165,11 +165,11 @@ const getUser = async (userId: string, token: string) => {
   }
 };
 
-const getNewToken = async (userId: string, token: string) => {
+const getNewToken = async (userId: string, refreshToken: string) => {
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.tokens}`, {
       method: methods.get,
-      headers: headers(token),
+      headers: headers(refreshToken),
     });
     const { status } = res;
 
@@ -199,6 +199,7 @@ const createUserWord = async (
   const { status } = res;
 
   if (status === ServerResponses.response200
+    || status === ServerResponses.error401
     || status === ServerResponses.error417) {
     return status;
   }
@@ -263,7 +264,6 @@ const getFilteredUserWords = async (filter: string, userId: string, token: strin
   if (status === ServerResponses.error402) {
     return status;
   }
-
   const data: FilteredWordData[] = await res.json();
   return data;
 };
@@ -280,7 +280,8 @@ const getFilteredUserWordsByPage = async (
   });
   const { status } = res;
 
-  if (status === ServerResponses.error402) {
+  if (status === ServerResponses.error402
+    || status === ServerResponses.error401) {
     return status;
   }
 

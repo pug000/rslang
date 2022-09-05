@@ -57,7 +57,7 @@ interface UserData {
   email: string;
   password: string;
 }
-interface ErrMessageProps {
+interface ErrorMessageProps {
   text: string;
   activeErr: boolean;
 }
@@ -93,29 +93,13 @@ interface WordCreateProp {
   }
 }
 
+interface UserWordData extends Omit<WordData, 'id'> {
+  _id: string,
+  userWord?: WordCreateProp,
+}
+
 interface FilteredWordData {
-  paginatedResults: [{
-    _id: string;
-    group: number,
-    page: number,
-    word: string,
-    image: string,
-    audio: string,
-    audioMeaning: string,
-    audioExample: string,
-    textMeaning: string,
-    textExample: string,
-    transcription: string,
-    wordTranslate: string,
-    textMeaningTranslate: string,
-    textExampleTranslate: string,
-    userWord?: {
-      difficulty?: number,
-      optional?: {
-        isDifficultWord?: boolean
-      }
-    }
-  }]
+  paginatedResults: UserWordData[],
   totalCount: [
     {
       count: number
@@ -191,5 +175,5 @@ export {
   WordCreateProp,
   GetUserProp,
   FilteredWordData,
-  ErrMessageProps,
+  ErrorMessageProps,
 };

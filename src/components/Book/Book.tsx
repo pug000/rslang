@@ -23,7 +23,6 @@ import { getWords } from '@/api';
 
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
-
 import {
   BookContainer,
   Group,
@@ -32,7 +31,8 @@ import {
   Wrapper,
   GamesWrapper,
   WordsContainer,
-  Note
+  Note,
+  Message
 } from './Book.style';
 
 interface BookProps {
@@ -56,9 +56,15 @@ function Book(
     setGameStarted,
   }: BookProps,
 ) {
-  const { learnedWords } = useContext(BookContext);
+  const { isLoggedIn, learnedWords } = useContext(BookContext);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+
+  const checkLearnedWordsOnPage = () => (
+    words
+      .every((wordItem) => learnedWords
+        .some((learnedWordItem) => learnedWordItem.id === wordItem.id))
+  );
 
   const filterWords = () => {
     const result = words
@@ -80,7 +86,7 @@ function Book(
         setIsLoadingPage(false);
       }, 500);
     })();
-  }, [bookGroupNumber, currentPage]);
+  }, [bookGroupNumber, currentPage, isLoggedIn]);
 
   return (
     <BookContainer>
@@ -99,7 +105,7 @@ function Book(
               filterWords();
               setGameStarted(true);
             }}
-            disabled={!!isLoadingPage}
+            disabled={isLoadingPage || checkLearnedWordsOnPage()}
           />
         </NavLink>
         <NavLink to="/games/audio">
@@ -110,7 +116,7 @@ function Book(
               filterWords();
               setGameStarted(true);
             }}
-            disabled={!!isLoadingPage}
+            disabled={isLoadingPage || checkLearnedWordsOnPage()}
           />
         </NavLink>
       </GamesWrapper>
@@ -164,6 +170,8 @@ function Book(
           onChange={(_, value) => setCurrentPage(value - 1)}
         />
         <WordsContainer>
+          {(checkLearnedWordsOnPage() && !isLoadingPage)
+            && <Message>Отлично! На данной странице все слова изучены.</Message>}
           {isLoadingPage
             ? (<Loader />)
             : words.map((word) => (

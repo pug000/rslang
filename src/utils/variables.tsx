@@ -121,7 +121,7 @@ const strikeMessages: string[] = [
   'И снова без ошибок!'
 ];
 
-const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const checkEmail = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const projectDescription: ProjectDescription[] = [
   {
@@ -149,7 +149,7 @@ export {
   games,
   groupButtons,
   totalCountPages,
-  regex,
+  checkEmail,
   strikeMessages,
   defaultToken,
   defaultUser,

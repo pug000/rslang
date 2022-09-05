@@ -18,6 +18,8 @@ import SetState from '@/ts/types';
 
 import Pagination from '@mui/material/Pagination';
 
+import ServerResponses from '@/ts/enums';
+
 import {
   DifficultWordsWrapper,
   DifficultWordsContainer,
@@ -43,31 +45,47 @@ function DifficultWords(
     token,
     userId,
   } = useContext(BookContext);
-  const totalCountPagesDifficult = Math.floor(difficultWords.length / 20);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
-  const [wordsDifficult, setWordsDifficult] = useState<WordData[]>([]);
+  const [wordsDifficultPerPage, setWordsDifficultPerPage] = useState<WordData[]>([]);
+
+  const calculationTotalCountPagesDifficult = () => {
+    let countPage: number;
+    if (difficultWords.length <= 20) {
+      countPage = 1;
+    } else {
+      countPage = Math.ceil(difficultWords.length / 20);
+    }
+    return countPage;
+  };
+  const totalCountPagesDifficult = calculationTotalCountPagesDifficult();
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      if (difficultWords.length <= 20) {
+        setCurrentPageDifficult(0);
+      }
+    }
+  }, [difficultWords]);
 
   useEffect(() => {
     audio?.remove();
     setAudio(null);
 
-    (async () => {
-      setIsLoadingPage(true);
-      const wordsDifficultData = await getFilteredUserWordsByPage(
-        filterDifficultWords,
-        userId,
-        token,
-        currentPageDifficult
-      );
-
-      if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
-        const wordsDifficultDataChangeKeys = сhangeWordsDataKeyFromServer([wordsDifficultData[0]]);
-        setWordsDifficult(wordsDifficultDataChangeKeys);
-        setIsLoadingPage(false);
-      }
-    })();
-  }, [currentPageDifficult]);
+    if (isLoggedIn) {
+      (async () => {
+        setIsLoadingPage(true);
+        const wordsDifficultData = await getFilteredUserWordsByPage(filterDifficultWords, userId, token, currentPageDifficult);
+        if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
+          const wordsDifficultDataChangeKeys = сhangeWordsDataKeyFromServer([wordsDifficultData[0]]);
+          setWordsDifficultPerPage(wordsDifficultDataChangeKeys);
+          setIsLoadingPage(false);
+        } else if (wordsDifficultData === ServerResponses.error401) {
+          window.location.reload();
+        }
+      })();
+    }
+  }, [currentPageDifficult, totalCountPagesDifficult]);
 
   return (
     <DifficultWordsWrapper>
@@ -77,17 +95,17 @@ function DifficultWords(
             <DifficultWordsTitle>
               Сложные слова
             </DifficultWordsTitle>
-            {!wordsDifficult.length && !isLoadingPage
+            {!wordsDifficultPerPage.length && !isLoadingPage
               && (
                 <Note>
                   Вы еще не добавили ни одного сложного слова. Сделать это можно из учебника.
                 </Note>
               )}
             {
-              totalCountPagesDifficult >= 1
+              totalCountPagesDifficult > 1
               && (
                 <Pagination
-                  count={totalCountPagesDifficult + 1}
+                  count={totalCountPagesDifficult}
                   page={currentPageDifficult + 1}
                   disabled={isLoadingPage}
                   variant="outlined"
@@ -108,21 +126,21 @@ function DifficultWords(
               {isLoadingPage
                 ? ((
                   <Loader />
-                )) : wordsDifficult.map((word) => (
+                )) : wordsDifficultPerPage.map((word) => (
                   <DifficultWordItem
                     key={word.id}
                     item={word}
                     audio={audio}
                     setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
-                    removeWord={(id: string) => setWordsDifficult((prev) => prev.filter((el) => el.id !== id))}
+                    removeWord={(id: string) => setWordsDifficultPerPage((prev) => prev.filter((el) => el.id !== id))}
                   />
                 ))}
             </DifficultWordsContainer>
             {
-              totalCountPagesDifficult >= 1
+              totalCountPagesDifficult > 1
               && (
                 <Pagination
-                  count={totalCountPagesDifficult + 1}
+                  count={totalCountPagesDifficult}
                   page={currentPageDifficult + 1}
                   disabled={isLoadingPage}
                   variant="outlined"

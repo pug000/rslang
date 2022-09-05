@@ -17,11 +17,13 @@ import {
   defaultUser,
   defaultUserID,
   defaultErrMessage,
-  regex
+  checkEmail
 } from '@/utils/variables';
 
 import ServerResponses from '@/ts/enums';
-import { ErrMessageProps } from '@/ts/interfaces';
+import {
+  ErrorMessageProps
+} from '@/ts/interfaces';
 
 import CircularProgress from '@mui/material/CircularProgress';
 import Stack from '@mui/material/Stack';
@@ -49,43 +51,55 @@ interface SignInProps {
   isLoggedIn: boolean;
 }
 
-function SignInModal(
-  {
-    active,
-    setActive,
-    changeLoggedInState,
-    isLoggedIn
-  }: SignInProps
-) {
-  const { setToken, setUserId } = useContext(HeaderContext);
+function SignInModal({
+  active,
+  setActive,
+  changeLoggedInState,
+  isLoggedIn,
+}: SignInProps) {
+  const {
+    setToken,
+    setUserId,
+    setRefreshToken,
+  } = useContext(HeaderContext);
   const [userData, setUserData] = useState(defaultUser);
   const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
   const [isErrorShown, setErrorShown] = useState<boolean>(false);
-
-  const [errMessage, setErrMessage] = useState<ErrMessageProps>(defaultErrMessage);
+  const [errorMessage, setErrorMessage] = useState<ErrorMessageProps>(defaultErrMessage);
 
   const changeErrorShown = () => setErrorShown(((prev) => !prev));
   const changeWaitingData = () => setIsWaitingData(((prev) => !prev));
   const changeActiveShadow = () => setActive(false);
   const errorMessageShown = (text: string, activeErr: boolean) => {
-    setErrMessage({ ...errMessage, text, activeErr });
+    setErrorMessage({ ...errorMessage, text, activeErr });
     changeErrorShown();
     setTimeout(changeErrorShown, 3000);
   };
 
-  const changeUserState = (token: string, userId: string, message: string) => {
+  const changeUserState = (
+    token: string,
+    userId: string,
+    refreshToken: string,
+    message: string,
+  ) => {
     errorMessageShown(message, false);
     setToken(token);
+    setRefreshToken(refreshToken);
     setUserId(userId);
     changeLoggedInState();
   };
 
   const signInUser = async () => {
-    if (userData.password.length >= 8 && regex.test(userData.email)) {
+    if (userData.password.length >= 8 && checkEmail.test(userData.email)) {
       changeWaitingData();
       const responseSignIn = await loginUser(userData);
       if (responseSignIn && typeof responseSignIn !== 'number') {
-        changeUserState(responseSignIn.token, responseSignIn.userId, 'Вы авторизовались!');
+        changeUserState(
+          responseSignIn.token,
+          responseSignIn.userId,
+          responseSignIn.refreshToken,
+          'Вы авторизовались!'
+        );
         setTimeout(changeActiveShadow, 3000);
       } else if (responseSignIn === ServerResponses.error403) {
         errorMessageShown('Неправильный e-mail или пароль!', true);
@@ -101,11 +115,13 @@ function SignInModal(
   };
 
   const createNewUser = async () => {
-    if (userData.password.length >= 8 && regex.test(userData.email)) {
+    if (userData.password.length >= 8 && checkEmail.test(userData.email)) {
       changeWaitingData();
       const responseCreateUser = await registerUser(userData);
       if (typeof responseCreateUser !== 'number') {
         errorMessageShown('Вы зарегистрированы! Авторизуйтесь.', false);
+        signInUser();
+        setTimeout(changeActiveShadow, 3000);
         setUserData({ ...defaultUser });
       } else if (responseCreateUser === ServerResponses.error417) {
         errorMessageShown('Пользователь уже зарегистрирован!', true);
@@ -121,7 +137,7 @@ function SignInModal(
   };
 
   const signOutUser = () => {
-    changeUserState(defaultToken, defaultUserID, 'До новых встреч!');
+    changeUserState(defaultToken, defaultUserID, defaultToken, 'До новых встреч!');
     setUserData({ ...defaultUser });
   };
 
@@ -134,7 +150,7 @@ function SignInModal(
         {isLoggedIn
           ? <SignInTitle>Вы авторизованы!</SignInTitle>
           : <SignInTitle>Добро пожаловать!</SignInTitle>}
-        {isErrorShown && <PopupMessage statusErr={errMessage.activeErr} text={errMessage.text} />}
+        {isErrorShown && <PopupMessage statusErr={errorMessage.activeErr} text={errorMessage.text} />}
         <form>
           {isLoggedIn
             ? (

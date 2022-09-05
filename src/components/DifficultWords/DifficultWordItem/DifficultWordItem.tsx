@@ -16,9 +16,12 @@ import {
 } from '@/api';
 import { createWordProp } from '@/utils/createCorrectPropResponse';
 
-import { Track, WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import ServerResponses from '@/ts/enums';
+import {
+  Track,
+  WordData
+} from '@/ts/interfaces';
 
 import {
   DifficultWordButton,
@@ -47,7 +50,7 @@ function DifficultWordItem(
     item,
     audio,
     setNewAudio,
-    removeWord,
+    removeWord
   }: WordItemProps
 ) {
   const {
@@ -77,7 +80,6 @@ function DifficultWordItem(
   const toggleActive = (arr: WordData[]) => (
     arr.some((el) => el.id === item.id)
   );
-
   const addActiveWord = async (setState: SetState<WordData[]>, isDifficultWord: boolean) => {
     setState((prev) => [...prev, item]);
     const currentWord = createWordProp(item, isDifficultWord);
