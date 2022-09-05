@@ -56,23 +56,21 @@ function Book(
     setGameStarted,
   }: BookProps,
 ) {
-  const { isLoggedIn, learnedWords } = useContext(BookContext);
+  const { isLoggedIn, learnedWords, difficultWords } = useContext(BookContext);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
-  const checkLearnedWordsOnPage = () => (
+  const filterWords = (userWords: WordData[]) => (
     words
+      .filter((wordItem) => !userWords
+        .some((el) => el.id === wordItem.id))
+  );
+
+  const checkLearnedWordsOnPage = () => (
+    filterWords(difficultWords)
       .every((wordItem) => learnedWords
         .some((learnedWordItem) => learnedWordItem.id === wordItem.id))
   );
-
-  const filterWords = () => {
-    const result = words
-      .filter((wordItem) => !learnedWords
-        .some((learnedWordItem) => learnedWordItem.id === wordItem.id));
-
-    setWords(result);
-  };
 
   useEffect(() => {
     audio?.remove();
@@ -86,7 +84,7 @@ function Book(
         setIsLoadingPage(false);
       }, 500);
     })();
-  }, [bookGroupNumber, currentPage, isLoggedIn]);
+  }, [bookGroupNumber, currentPage]);
 
   return (
     <BookContainer>
@@ -102,10 +100,10 @@ function Book(
             id="sprint"
             title="Спринт"
             callback={() => {
-              filterWords();
+              setWords(filterWords(learnedWords));
               setGameStarted(true);
             }}
-            disabled={isLoadingPage || checkLearnedWordsOnPage()}
+            disabled={!!isLoadingPage || checkLearnedWordsOnPage()}
           />
         </NavLink>
         <NavLink to="/games/audio">
@@ -113,10 +111,10 @@ function Book(
             id="audio"
             title="Аудиовызов"
             callback={() => {
-              filterWords();
+              setWords(filterWords(learnedWords));
               setGameStarted(true);
             }}
-            disabled={isLoadingPage || checkLearnedWordsOnPage()}
+            disabled={!!isLoadingPage || checkLearnedWordsOnPage()}
           />
         </NavLink>
       </GamesWrapper>
@@ -170,7 +168,7 @@ function Book(
           onChange={(_, value) => setCurrentPage(value - 1)}
         />
         <WordsContainer>
-          {(checkLearnedWordsOnPage() && !isLoadingPage)
+          {(isLoggedIn && checkLearnedWordsOnPage() && !isLoadingPage)
             && <Message>Отлично! На данной странице все слова изучены.</Message>}
           {isLoadingPage
             ? (<Loader />)
