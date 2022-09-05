@@ -10,6 +10,7 @@ import Loader from '@/Loader';
 import DifficultWordItem from '@/DifficultWordItem';
 
 import { filterDifficultWords } from '@/utils/variables';
+import calculationTotalCountPages from '@/utils/calculationTotalCountPages';
 import { getFilteredUserWordsByPage } from '@/api';
 import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
 
@@ -48,23 +49,11 @@ function DifficultWords(
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
   const [wordsDifficultPerPage, setWordsDifficultPerPage] = useState<WordData[]>([]);
-
-  const calculationTotalCountPagesDifficult = () => {
-    let countPage: number;
-    if (difficultWords.length <= 20) {
-      countPage = 1;
-    } else {
-      countPage = Math.ceil(difficultWords.length / 20);
-    }
-    return countPage;
-  };
-  const totalCountPagesDifficult = calculationTotalCountPagesDifficult();
+  const totalCountPagesDifficult = calculationTotalCountPages(difficultWords);
 
   useEffect(() => {
-    if (isLoggedIn) {
-      if (difficultWords.length <= 20) {
-        setCurrentPageDifficult(0);
-      }
+    if (isLoggedIn && difficultWords.length <= 20) {
+      setCurrentPageDifficult(0);
     }
   }, [difficultWords]);
 
@@ -75,7 +64,13 @@ function DifficultWords(
     if (isLoggedIn) {
       (async () => {
         setIsLoadingPage(true);
-        const wordsDifficultData = await getFilteredUserWordsByPage(filterDifficultWords, userId, token, currentPageDifficult);
+        const wordsDifficultData = await getFilteredUserWordsByPage(
+          filterDifficultWords,
+          userId,
+          token,
+          currentPageDifficult
+        );
+
         if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
           const wordsDifficultDataChangeKeys = сhangeWordsDataKeyFromServer([wordsDifficultData[0]]);
           setWordsDifficultPerPage(wordsDifficultDataChangeKeys);

@@ -72,6 +72,8 @@ const GamesWrapper = styled.div`
   }
 `;
 
+const GroupContainer = styled.div``;
+
 const Group = styled.div`
   display: flex;
   flex-direction: column;
@@ -120,6 +122,7 @@ export {
   Title,
   Wrapper,
   GamesWrapper,
+  GroupContainer,
   Group,
   GroupButton,
   WordsContainer,

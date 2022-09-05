@@ -1,4 +1,8 @@
-import { WordData, WordCreateProp, FilteredWordData } from '@/ts/interfaces';
+import {
+  WordData,
+  WordCreateProp,
+  FilteredWordData
+} from '@/ts/interfaces';
 
 const createWordProp = (word: WordData, isDifficultWord: boolean) => {
   const currentWord: WordCreateProp = {

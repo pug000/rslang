@@ -19,6 +19,7 @@ import {
   groupButtons,
   totalCountPages
 } from '@/utils/variables';
+import { shuffleArray } from '@/utils/randomize';
 import { getWords } from '@/api';
 
 import { WordData } from '@/ts/interfaces';
@@ -32,7 +33,8 @@ import {
   GamesWrapper,
   WordsContainer,
   Note,
-  Message
+  Message,
+  GroupContainer
 } from './Book.style';
 
 interface BookProps {
@@ -56,7 +58,11 @@ function Book(
     setGameStarted,
   }: BookProps,
 ) {
-  const { isLoggedIn, learnedWords, difficultWords } = useContext(BookContext);
+  const {
+    isLoggedIn,
+    learnedWords,
+    difficultWords
+  } = useContext(BookContext);
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
 
@@ -86,6 +92,12 @@ function Book(
     })();
   }, [bookGroupNumber, currentPage]);
 
+  const startGameOnClick = () => {
+    const filteredWord = filterWords(learnedWords);
+    setWords(shuffleArray(filteredWord));
+    setGameStarted(true);
+  };
+
   return (
     <BookContainer>
       <Title>Учебник</Title>
@@ -99,27 +111,21 @@ function Book(
           <Button
             id="sprint"
             title="Спринт"
-            callback={() => {
-              setWords(filterWords(learnedWords));
-              setGameStarted(true);
-            }}
-            disabled={!!isLoadingPage || checkLearnedWordsOnPage()}
+            callback={startGameOnClick}
+            disabled={isLoadingPage || checkLearnedWordsOnPage()}
           />
         </NavLink>
         <NavLink to="/games/audio">
           <Button
             id="audio"
             title="Аудиовызов"
-            callback={() => {
-              setWords(filterWords(learnedWords));
-              setGameStarted(true);
-            }}
-            disabled={!!isLoadingPage || checkLearnedWordsOnPage()}
+            callback={startGameOnClick}
+            disabled={isLoadingPage || checkLearnedWordsOnPage()}
           />
         </NavLink>
       </GamesWrapper>
       <Wrapper>
-        <div>
+        <GroupContainer>
           <Group>
             {groupButtons.map((
               {
@@ -143,14 +149,14 @@ function Book(
               <GroupButton
                 $color={defaultTheme.colors.primaryColor}
                 active={false}
-                disabled={!!isLoadingPage}
+                disabled={isLoadingPage}
                 title="Сложные слова"
               >
                 <StarRateIcon />
               </GroupButton>
             </NavLink>
           </Group>
-        </div>
+        </GroupContainer>
         <Pagination
           count={totalCountPages}
           page={currentPage + 1}

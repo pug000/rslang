@@ -115,6 +115,8 @@ function AudioGame(
   };
 
   const selectWordOption = (word: string) => {
+    setSelectedAnswer(word);
+
     if (currentWord.wordTranslate === word) {
       setCorrectAnswers((prev) => [...prev, currentWord]);
       setCountCorrectAnswers(countCorrectAnswers + 1);
@@ -143,7 +145,6 @@ function AudioGame(
 
     if (e.code === 'Enter') {
       if (!selectedAnswer) {
-        setSelectedAnswer('Incorrect');
         selectWordOption('Incorrect');
       } else {
         nextStep();
@@ -181,10 +182,7 @@ function AudioGame(
                   tabIndex={-1}
                   className={toggleCorrect(el)}
                   disabled={!!selectedAnswer}
-                  onClick={() => {
-                    setSelectedAnswer(el);
-                    selectWordOption(el);
-                  }}
+                  onClick={() => selectWordOption(el)}
                 >
                   {`${i + 1}. ${el}`}
                 </AudioGameButton>
@@ -197,10 +195,7 @@ function AudioGame(
                 <AudioGameButton
                   tabIndex={-1}
                   disabled={!!selectedAnswer}
-                  onClick={() => {
-                    setSelectedAnswer('Incorrect');
-                    selectWordOption('Incorrect');
-                  }}
+                  onClick={() => selectWordOption('Incorrect')}
                 >
                   Не знаю
                 </AudioGameButton>

@@ -80,6 +80,7 @@ function DifficultWordItem(
   const toggleActive = (arr: WordData[]) => (
     arr.some((el) => el.id === item.id)
   );
+
   const addActiveWord = async (setState: SetState<WordData[]>, isDifficultWord: boolean) => {
     setState((prev) => [...prev, item]);
     const currentWord = createWordProp(item, isDifficultWord);
@@ -143,9 +144,7 @@ function DifficultWordItem(
           <WordInfoWrapper>
             <WordTitle>
               {`${item.word} - ${item.transcription}`}
-              <WordPlayAudioBtn
-                onClick={() => playAudioOnClick()}
-              >
+              <WordPlayAudioBtn onClick={() => playAudioOnClick()}>
                 <WordPlayIcon />
                 {tracks.map((el) => (
                   <audio

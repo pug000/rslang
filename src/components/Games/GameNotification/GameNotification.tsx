@@ -31,6 +31,11 @@ function GameNotification(
 ) {
   const { clearGameState } = useContext(GameContext);
 
+  const startGameOnClick = () => {
+    setCurrentPage(generateRandomNumber(totalCountPages - 1));
+    setLoadingGame(true);
+  };
+
   return (
     <>
       <GamePageText $fontSize={defaultTheme.fontSizes.h3}>
@@ -49,10 +54,7 @@ function GameNotification(
         <Button
           id="start"
           title="Играть"
-          callback={() => {
-            setCurrentPage(generateRandomNumber(totalCountPages - 1));
-            setLoadingGame(true);
-          }}
+          callback={startGameOnClick}
           color={elementColor}
         />
       </GameControlButtons>

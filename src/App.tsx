@@ -1,4 +1,5 @@
 import React, {
+  useCallback,
   useEffect,
   useMemo,
   useState
@@ -75,14 +76,14 @@ function App() {
     }
   }, []);
 
-  const clearGameState = () => {
+  const clearGameState = useCallback(() => {
     setGameStarted(false);
     setShowResult(false);
     setCorrectAnswers([]);
     setIncorrectAnswers([]);
     setCountCorrectAnswers(0);
     setMaxCountCorrectAnswers(0);
-  };
+  }, [isGameStarted]);
 
   useEffect(() => {
     if (isGameStarted) {
