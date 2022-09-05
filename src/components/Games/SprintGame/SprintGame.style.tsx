@@ -32,6 +32,7 @@ const Result = styled.p<ResultProps>`
   font-style: italic;
   color: rgba(0,0,0,0.4);
   transition: ${defaultTheme.effects.transition};
+  text-align: center;
 
   span {
     ${({ isCorrect }) => !isCorrect && `
@@ -75,6 +76,8 @@ const Note = styled.p`
   font-size: 14px;
   color: rgba(0,0,0,0.2);
   font-style: italic;
+  text-align: center;
+  margin-bottom: 20px;
 `;
 
 const StrikeBlock = styled.div`

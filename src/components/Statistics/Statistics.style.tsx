@@ -6,6 +6,10 @@ const StatisticsTitle = styled.h1`
   font-size: ${(props) => props.theme.fontSizes.h3};
   text-align: center;
   margin-bottom: 20px;
+
+  @media (max-width: 468px) {
+    font-size: ${(props) => props.theme.fontSizes.h4};
+  }
 `;
 
 const GameCharts = styled.div`
@@ -16,6 +20,20 @@ const GameCharts = styled.div`
   .coloredText {
     color: ${(props) => props.theme.colors.text};
     padding-left: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 404px) {
+    transform: scale(0.8);
+    margin: -80px 0 -80px -30px;
+  }
+
+  @media (max-width: 340px) {
+    transform: scale(0.73);
+    margin: -100px 0 -100px -30px;
   }
 `;
 
@@ -28,6 +46,20 @@ const TotalCharts = styled.div`
     color: ${(props) => props.theme.colors.text};
     position: relative;
     left: 20px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-wrap: wrap;
+  }
+
+  @media (max-width: 404px) {
+    transform: scale(0.8);
+    margin: -80px 0 -80px -30px;
+  }
+
+  @media (max-width: 340px) {
+    transform: scale(0.73);
+    margin: -100px 0 -100px -30px;
   }
 `;
 
@@ -68,6 +100,10 @@ const NoStatisticsWrapper = styled.div`
 
 const LoaderWrapper = styled.div`
   margin-left: -300px;
+
+  @media (max-width: 468px) {
+    padding-left: 90px;
+  }
 `;
 
 const NoStatisticsTitle = styled.h1`
@@ -77,6 +113,9 @@ const NoStatisticsTitle = styled.h1`
   text-align: center;
   margin-bottom: 20px;
 
+  @media (max-width: 560px) {
+    font-size: ${({ theme }) => theme.fontSizes.h3};
+  }
 `;
 
 const Note = styled.p`

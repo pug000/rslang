@@ -192,8 +192,8 @@ function Book(
           }
           onChange={(_, value) => setCurrentPage(value - 1)}
         />
-        {(isLoggedIn && popupMessage) && <Message>Отлично! На данной странице все слова изучены.</Message>}
         <WordsContainer>
+          {(isLoggedIn && popupMessage) && <Message>Отлично! На данной странице все слова изучены.</Message>}
           {isLoadingPage
             ? (<Loader />)
             : words.map((word) => (

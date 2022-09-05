@@ -114,6 +114,7 @@ const Group = styled.div`
     gap: 0;
     width: 200px;
     flex-wrap: wrap;
+    margin-top: 15px;
   }
 `;
 
@@ -148,7 +149,28 @@ const Message = styled.h5`
   color: ${({ theme }) => theme.colors.primaryColor};
   position: absolute;
   top: 45px;
-  left: 30%;
+  left: 50%;
+  width: 470px;
+  transform: translateX(-47%);
+
+  @media (max-width: 586px) {
+    font-size: ${({ theme }) => theme.fontSizes.smallText};
+    width: 360px;
+  }
+
+  @media (max-width: 560px) {
+    top: 35px;
+  }
+
+  @media (max-width: 468px) {
+    width: 250px;
+    text-align: center;
+    top: 55px;
+  }
+
+  @media (max-width: 370px) {
+    width: 210px;
+  }
 `;
 
 export {

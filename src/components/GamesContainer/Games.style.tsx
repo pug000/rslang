@@ -111,6 +111,10 @@ const BackgroundDiv = styled.div`
   top: 4rem;
   left: 5rem;
   z-index: -1;
+
+  @media (max-width: 350px) {
+    left: 3rem;
+  }
 `;
 
 const BackgroundContainer = styled.div`
