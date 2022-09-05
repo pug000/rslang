@@ -35,6 +35,7 @@ import LogInIcon from '../LogInIcon';
 import {
   Shadow,
   Modal,
+  InputsWrapper,
   SignInTitle,
   CloseButton,
   iconStyles,
@@ -151,7 +152,7 @@ function SignInModal({
               </SignInWelcomeContainer>
             )
             : (
-              <>
+              <InputsWrapper>
                 <Input
                   type="email"
                   title=""
@@ -172,7 +173,7 @@ function SignInModal({
                   onChange={({ target }) => setUserData({ ...userData, password: target.value })}
                   minlength={8}
                 />
-              </>
+              </InputsWrapper>
             )}
           {isLoggedIn
             ? (

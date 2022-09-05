@@ -7,6 +7,13 @@ const AboutWrapper = styled.div`
   justify-content: center;
   gap: 5%;
   margin: 0 5%; 
+
+  @media (max-width: 915px) {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    margin-top: 20px;
+  }
 `;
 
 const AboutUsWrapper = styled.section`
@@ -22,12 +29,33 @@ const AboutUsTitle = styled.h1`
   color: ${defaultTheme.colors.title};
   text-align: center;
   font-size: ${defaultTheme.fontSizes.h3};
+
+  @media (max-width: 615px) {
+    font-size: ${defaultTheme.fontSizes.h4};
+  }
 `;
 
 const AboutTeam = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 30px;
+
+  @media (max-width: 615px) {
+    transform: scale(0.8);
+  }
+
+  @media (max-width: 500px) {
+    transform: scale(0.7);
+    margin: -30px 0 -30px;
+  }
+
+  @media (max-width: 456px) {
+    transform: scale(0.8);
+    flex-direction: column;
+    gap: 15px;
+    margin: -120px 0 -120px -100px;
+  }
 `;
 
 const TeammateWrapper = styled.div`
@@ -74,6 +102,10 @@ const AboutProject = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 915px) {
+    width: 80%;
+  }
 `;
 
 const AboutProjectWrapper = styled.div`

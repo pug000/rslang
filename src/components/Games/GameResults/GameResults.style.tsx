@@ -23,6 +23,10 @@ const GameResultsWrapper = styled.div`
   background-color: #fff;
   border-radius: 15px;
   box-shadow: rgb(0 0 0 / 10%) 0px 0px 8px;
+
+  @media (max-width: 550px) {
+    width: 300px;
+  }
 `;
 
 const GameResultsTitle = styled.h2`
@@ -51,6 +55,10 @@ const ResultContainer = styled.div`
 const ResultTitle = styled.h3<{ $color: string }>`
   font-size: ${({ theme }) => theme.fontSizes.h4};
   color: ${({ $color }) => $color};
+
+  @media (max-width: 550px) {
+    font-size: ${({ theme }) => theme.fontSizes.h5};
+  }
 `;
 
 const ResultWrapper = styled.div`
@@ -94,6 +102,14 @@ const ButtonContainer = styled.div`
   display: flex;
   justify-content: space-evenly;
   width: 70%;
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin: 15px 0;
+  }
 `;
 
 const Link = styled(NavLink)`

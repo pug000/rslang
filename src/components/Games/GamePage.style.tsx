@@ -43,6 +43,14 @@ const GamePageTitle = styled.h1`
   color: ${defaultTheme.colors.title};
   font-size: ${defaultTheme.fontSizes.h1};
   font-family: ${defaultTheme.fonts.title};
+
+  @media (max-width: 630px) {
+    font-size: ${defaultTheme.fontSizes.h2};
+  }
+
+  @media (max-width: 456px) {
+    font-size: ${defaultTheme.fontSizes.h3};
+  }
 `;
 
 const GamePageText = styled.p<{ $fontSize?: string }>`
@@ -58,6 +66,10 @@ const Group = styled.div`
   padding: 7px;
   border-radius: 5px;
   gap: 20px;
+
+  @media (max-width: 456px) {
+    transform: scale(0.7);
+  }
 `;
 
 const GroupButton = styled.button<GroupButtonProps>`
@@ -84,6 +96,10 @@ const GroupButton = styled.button<GroupButtonProps>`
 const GameControlButtons = styled.div`
   display: flex;
   gap: 40px;
+
+  @media (max-width: 456px) {
+    flex-direction: column;
+  }
 `;
 
 const IconWrapper = styled.div<ColorProps>`

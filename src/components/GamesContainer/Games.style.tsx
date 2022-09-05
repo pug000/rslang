@@ -17,6 +17,10 @@ const GamesTitle = styled.h2`
   font-size: ${(props) => props.theme.fontSizes.h2};
   font-weight: 700;
   margin-bottom: 3rem;
+
+  @media (max-width: 460px) {
+    font-size: ${(props) => props.theme.fontSizes.h3};
+  }
 `;
 
 const GamesWrapper = styled.div`
@@ -82,12 +86,24 @@ const GameContainer = styled.div`
     transform: scale(2);
     animation: ${backgroundAnimation} 8s infinite 0.2s linear
   }
+
+  @media (max-width: 560px) {
+    width: 20rem;
+  }
+
+  @media (max-width: 460px) {
+    width: 13rem;
+  }
 `;
 
 const TitleGame = styled.h3`
   font-size: ${(props) => props.theme.fontSizes.h3};
   text-decoration: none;
   transition: ${(props) => props.theme.effects.transition};
+
+  @media (max-width: 460px) {
+    font-size: ${(props) => props.theme.fontSizes.h4};
+  }
 `;
 
 const BackgroundDiv = styled.div`
@@ -95,6 +111,10 @@ const BackgroundDiv = styled.div`
   top: 4rem;
   left: 5rem;
   z-index: -1;
+
+  @media (max-width: 350px) {
+    left: 3rem;
+  }
 `;
 
 const BackgroundContainer = styled.div`
@@ -106,6 +126,10 @@ const BackgroundContainer = styled.div`
 
   @media (max-width: 980px) {
     top: -10%;
+  }
+
+  @media (max-width: 560px) {
+    display: none;
   }
 `;
 

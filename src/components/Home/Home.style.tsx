@@ -4,6 +4,18 @@ import defaultTheme from '@/styles/theme';
 const HomeContainer = styled.div`
   position: relative;
   height: 50vh;
+
+  @media (max-width: 360px) {
+    max-width: 300px;
+  }
+
+  @media (max-width: 350px) {
+    max-width: 240px;
+  }
+
+  @media (max-width: 333px) {
+    max-width: 215px;
+  }
 `;
 
 const Background = styled.div`
@@ -14,6 +26,14 @@ const Background = styled.div`
   z-index: -1;
   width: 100%;
   height: 100%;
+
+  @media (max-width: 430px) {
+    top: 45%;
+  }
+
+  @media (max-width: 360px) {
+    display: none;
+  }
 `;
 
 const animationLeft = keyframes`
@@ -44,7 +64,7 @@ const BackgroundLeft = styled.div`
 
   svg {
     width: 100%;
-    height: 100%
+    height: 100%;
   }
 `;
 
@@ -63,6 +83,16 @@ const HomeTextContainer = styled.div`
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
+
+  @media (max-width: 768px) {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  @media (max-width: 546px) {
+    gap: 0px;
+  }
 `;
 
 const HomeTitle = styled.h1`
@@ -72,12 +102,37 @@ const HomeTitle = styled.h1`
   color: ${defaultTheme.colors.title};
   font-size: ${defaultTheme.fontSizes.h2};
   padding: 0 30px;
+
+  @media (max-width: 1000px) {
+    margin-top: -80px;
+  }
+
+  @media (max-width: 546px) {
+    font-size: ${defaultTheme.fontSizes.h3};
+  }
 `;
 
 const HomeText = styled.p`
   max-width: 300px; 
   text-align: justify;
   margin: 50px auto;
+
+  @media (max-width: 1000px) {
+    font-size: ${(props) => props.theme.fontSizes.smallText};
+    max-width: 250px; 
+  }
+
+  @media (max-width: 768px) {
+    max-width: 170px; 
+  }
+
+  @media (max-width: 546px) {
+    max-width: 120px; 
+  }
+
+  @media (max-width: 430px) {
+    max-width: 200px;
+  }
 `;
 
 const HomeButtons = styled.div`
@@ -85,6 +140,10 @@ const HomeButtons = styled.div`
   margin: 0 auto;
   justify-content: center;
   gap: 10px;
+
+  @media (max-width: 360px) {
+    flex-direction: column;
+  }
 `;
 
 export {
