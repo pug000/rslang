@@ -45,8 +45,8 @@ const GamePageTitle = styled.h1`
   font-family: ${defaultTheme.fonts.title};
 `;
 
-const GamePageText = styled.p`
-  font-size: ${defaultTheme.fontSizes.text};
+const GamePageText = styled.p<{ $fontSize?: string }>`
+  font-size: ${({ theme, $fontSize }) => $fontSize ?? theme.fontSizes.text};
   max-width: 630px;
   text-align: center;
 `;

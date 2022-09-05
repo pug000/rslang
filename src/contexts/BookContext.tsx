@@ -6,21 +6,21 @@ import SetState from '@/ts/types';
 interface BookContextValues {
   difficultWords: WordData[],
   learnedWords: WordData[],
-  setDifficultWords: SetState<WordData[]>,
-  setLearnedWords: SetState<WordData[]>,
   token: string,
   userId: string,
   isLoggedIn: boolean,
+  setDifficultWords: SetState<WordData[]>,
+  setLearnedWords: SetState<WordData[]>,
 }
 
 const defaultValue = {
   difficultWords: [],
   learnedWords: [],
-  setDifficultWords: () => { },
-  setLearnedWords: () => { },
   token: '',
   userId: '',
   isLoggedIn: false,
+  setDifficultWords: () => { },
+  setLearnedWords: () => { },
 };
 
 const BookContext = createContext<BookContextValues>(defaultValue);

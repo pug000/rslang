@@ -22,6 +22,7 @@ import SprintGamePage from '@/SprintGamePage';
 import About from '@/About';
 import NotFound from '@/NotFound';
 import GameContainer from '@/GamesContainer';
+import Statistics from '@/Statistics';
 
 import {
   defaultToken,
@@ -64,7 +65,6 @@ function App() {
         if (responseNewToken && typeof responseNewToken !== 'number') {
           setToken(responseNewToken.token);
           setRefreshToken(responseNewToken.refreshToken);
-          // window.location.reload();
         } else if (responseNewToken === ServerResponses.error401) {
           setLoggedIn(false);
           setToken(defaultToken);
@@ -238,7 +238,11 @@ function App() {
           path="statistics"
           element={(
             <ProtectedRoute conditionValue={isLoggedIn}>
-              <p>Statistics</p>
+              <Statistics
+                isLoggedIn={isLoggedIn}
+                token={token}
+                userId={userId}
+              />
             </ProtectedRoute>
           )}
         />

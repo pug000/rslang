@@ -6,6 +6,8 @@ import React, {
 import { NavLink } from 'react-router-dom';
 import defaultTheme from '@/styles/theme';
 
+import BookContext from '@/contexts/BookContext';
+
 import Loader from '@/Loader';
 import Button from '@/Button';
 import WordItem from '@/WordItem';
@@ -21,7 +23,6 @@ import { getWords } from '@/api';
 
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
-import BookContext from '@/contexts/BookContext';
 import {
   BookContainer,
   Group,
@@ -80,6 +81,14 @@ function Book(
     }
   };
 
+  const filterWords = () => {
+    const result = words
+      .filter((wordItem) => !learnedWords
+        .some((learnedWordItem) => learnedWordItem.id === wordItem.id));
+
+    setWords(result);
+  };
+
   useEffect(() => {
     audio?.remove();
     setAudio(null);
@@ -111,7 +120,10 @@ function Book(
           <Button
             id="sprint"
             title="Спринт"
-            callback={() => setGameStarted(true)}
+            callback={() => {
+              filterWords();
+              setGameStarted(true);
+            }}
             disabled={!!isLoadingPage || checkWordsOnPage()}
           />
         </NavLink>
@@ -119,7 +131,10 @@ function Book(
           <Button
             id="audio"
             title="Аудиовызов"
-            callback={() => setGameStarted(true)}
+            callback={() => {
+              filterWords();
+              setGameStarted(true);
+            }}
             disabled={!!isLoadingPage || checkWordsOnPage()}
           />
         </NavLink>

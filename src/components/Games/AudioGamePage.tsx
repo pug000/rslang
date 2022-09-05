@@ -16,6 +16,7 @@ import Loader from '../Loader/Loader';
 import GamePageBackground from './GamePageBackground';
 
 import { GamePageWrapper } from './GamePage.style';
+import GameNotification from './GameNotification/GameNotification';
 
 interface GamePageProps {
   isGameStarted: boolean,
@@ -78,10 +79,20 @@ function AudioGamePage(
   return (
     <GamePageWrapper>
       <GamePageBackground $color={games.audio.backgroundColor} />
-      <AudioGame
-        words={words}
-        mainColor={games.audio.buttonColor}
-      />
+      {words.length < 10
+        ? (
+          <GameNotification
+            elementColor={games.audio.buttonColor}
+            setLoadingGame={setLoadingGame}
+            setCurrentPage={setCurrentPage}
+          />
+        )
+        : (
+          <AudioGame
+            words={words}
+            mainColor={games.audio.buttonColor}
+          />
+        )}
     </GamePageWrapper>
   );
 }
