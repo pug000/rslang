@@ -8,6 +8,7 @@ interface BookContextValues {
   learnedWords: WordData[],
   token: string,
   userId: string,
+  isLoggedIn: boolean,
   setDifficultWords: SetState<WordData[]>,
   setLearnedWords: SetState<WordData[]>,
 }
@@ -17,6 +18,7 @@ const defaultValue = {
   learnedWords: [],
   token: '',
   userId: '',
+  isLoggedIn: false,
   setDifficultWords: () => { },
   setLearnedWords: () => { },
 };

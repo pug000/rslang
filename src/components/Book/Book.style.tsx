@@ -19,6 +19,7 @@ const BookContainer = styled.div`
 `;
 
 const Wrapper = styled.div`
+  position: relative;
   width: 100%;
   gap: 35px;
   display: grid;
@@ -105,6 +106,15 @@ const GroupButton = styled.button<GroupButtonProps>`
   `}
 `;
 
+const Message = styled.h5`
+  font-size: ${({ theme }) => theme.fontSizes.h5};
+  font-weight: ${({ theme }) => theme.fontSizes.smallText};
+  color: ${({ theme }) => theme.colors.primaryColor};
+  position: absolute;
+  top: 45px;
+  left: 30%;
+`;
+
 export {
   BookContainer,
   Title,
@@ -113,5 +123,6 @@ export {
   Group,
   GroupButton,
   WordsContainer,
-  Note
+  Note,
+  Message
 };
