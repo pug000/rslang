@@ -127,7 +127,7 @@ const strikeMessages: string[] = [
   'И снова без ошибок!'
 ];
 
-const regex = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+const checkEmail = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const projectDescription: ProjectDescription[] = [
   {
@@ -147,23 +147,23 @@ const projectDescription: ProjectDescription[] = [
   },
 ];
 
-const FILTER_DIFFICULT_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
-const FILTER_LEARNED_WORDS = encodeURIComponent('{"userWord.optional.isDifficultWord":"false"}');
+const filterDifficultWords = encodeURIComponent('{"userWord.optional.isDifficultWord":"true"}');
+const filterLearnedWords = encodeURIComponent('{"userWord.optional.isDifficultWord":"false"}');
 
 export {
   navItems,
   games,
   groupButtons,
   totalCountPages,
-  regex,
+  checkEmail,
   strikeMessages,
   defaultSingInData,
   defaultToken,
   defaultUser,
   defaultUserID,
   defaultErrMessage,
-  FILTER_DIFFICULT_WORDS,
-  FILTER_LEARNED_WORDS,
+  filterDifficultWords,
+  filterLearnedWords,
   projectDescription,
   defaultStatistics,
   todayDate,

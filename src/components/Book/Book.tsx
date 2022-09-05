@@ -1,4 +1,5 @@
 import React, {
+  useContext,
   useEffect,
   useState
 } from 'react';
@@ -20,7 +21,7 @@ import { getWords } from '@/api';
 
 import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
-
+import BookContext from '@/contexts/BookContext';
 import {
   BookContainer,
   Group,
@@ -29,7 +30,8 @@ import {
   Wrapper,
   GamesWrapper,
   WordsContainer,
-  Note
+  Note,
+  Message
 } from './Book.style';
 
 interface BookProps {
@@ -55,6 +57,28 @@ function Book(
 ) {
   const [audio, setAudio] = useState<HTMLAudioElement | null>(null);
   const [isLoadingPage, setIsLoadingPage] = useState(false);
+  const { isLoggedIn, learnedWords } = useContext(BookContext);
+  const [popupMessage, setPopupMessage] = useState<boolean>(false);
+
+  const checkWordsOnPage = () => {
+    const result = words
+      .every((wordItem) => learnedWords
+        .some((learnedWordItem) => learnedWordItem.id === wordItem.id));
+
+    return result;
+  };
+  const showMessage = () => {
+    if (isLoggedIn) {
+      const allWordsLearned = checkWordsOnPage();
+      if (allWordsLearned === true) {
+        setPopupMessage(true);
+      } else {
+        setPopupMessage(false);
+      }
+    } else {
+      setPopupMessage(false);
+    }
+  };
 
   useEffect(() => {
     audio?.remove();
@@ -68,7 +92,11 @@ function Book(
         setIsLoadingPage(false);
       }, 500);
     })();
-  }, [bookGroupNumber, currentPage]);
+  }, [bookGroupNumber, currentPage, isLoggedIn]);
+
+  useEffect(() => {
+    showMessage();
+  }, [learnedWords, isLoggedIn]);
 
   return (
     <BookContainer>
@@ -84,7 +112,7 @@ function Book(
             id="sprint"
             title="Спринт"
             callback={() => setGameStarted(true)}
-            disabled={!!isLoadingPage}
+            disabled={!!isLoadingPage || checkWordsOnPage()}
           />
         </NavLink>
         <NavLink to="/games/audio">
@@ -92,7 +120,7 @@ function Book(
             id="audio"
             title="Аудиовызов"
             callback={() => setGameStarted(true)}
-            disabled={!!isLoadingPage}
+            disabled={!!isLoadingPage || checkWordsOnPage()}
           />
         </NavLink>
       </GamesWrapper>
@@ -145,6 +173,7 @@ function Book(
           }
           onChange={(_, value) => setCurrentPage(value - 1)}
         />
+        {(isLoggedIn && popupMessage) && <Message>Отлично! На данной странице все слова изучены.</Message>}
         <WordsContainer>
           {isLoadingPage
             ? (<Loader />)

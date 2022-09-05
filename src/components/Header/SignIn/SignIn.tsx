@@ -11,21 +11,17 @@ import Button from '@/Button';
 import {
   registerUser,
   loginUser,
-
-  getUser, getNewToken
 } from '@/api';
 import {
-  defaultSingInData,
   defaultToken,
   defaultUser,
   defaultUserID,
   defaultErrMessage,
-  regex
+  checkEmail
 } from '@/utils/variables';
 
 import ServerResponses from '@/ts/enums';
 import {
-  LogInUserData,
   ErrMessageProps
 } from '@/ts/interfaces';
 
@@ -59,12 +55,15 @@ function SignInModal({
   active,
   setActive,
   changeLoggedInState,
-  isLoggedIn
+  isLoggedIn,
 }: SignInProps) {
-  const { setToken, setUserId, setRefreshToken } = useContext(HeaderContext);
+  const {
+    setToken,
+    setUserId,
+    setRefreshToken,
+  } = useContext(HeaderContext);
   const [userData, setUserData] = useState(defaultUser);
   const [isWaitingData, setIsWaitingData] = useState<boolean>(false);
-  const [logInUserData, setLogInUserData] = useState<LogInUserData>(defaultSingInData);
   const [errShow, setErrShow] = useState<boolean>(false);
 
   const [errMessage, setErrMessage] = useState<ErrMessageProps>(defaultErrMessage);
@@ -79,11 +78,10 @@ function SignInModal({
   };
 
   const signInUser = async () => {
-    if (userData.password.length >= 8 && regex.test(userData.email)) {
+    if (userData.password.length >= 8 && checkEmail.test(userData.email)) {
       changeWaitingData();
       const responseSignIn = await loginUser(userData);
       if (responseSignIn && typeof responseSignIn !== 'number') {
-        setLogInUserData(responseSignIn);
         setToken(responseSignIn.token);
         setUserId(responseSignIn.userId);
         setRefreshToken(responseSignIn.refreshToken);
@@ -104,13 +102,13 @@ function SignInModal({
   };
 
   const createNewUser = async () => {
-    if (userData.password.length >= 8 && regex.test(userData.email)) {
+    if (userData.password.length >= 8 && checkEmail.test(userData.email)) {
       changeWaitingData();
       const responseCreateUser = await registerUser(userData);
       if (typeof responseCreateUser !== 'number') {
-        errMessageShow('Вы зарегистрированы! Авторизуйтесь.', false);
-        // signInUser()
-        // setTimeout(changeActiveShadow, 3000);
+        errMessageShow('Вы зарегистрированы!', false);
+        signInUser();
+        setTimeout(changeActiveShadow, 3000);
         setUserData({ ...defaultUser });
       } else if (responseCreateUser === ServerResponses.error417) {
         errMessageShow('Пользователь уже зарегистрирован!', true);
@@ -132,13 +130,6 @@ function SignInModal({
     setToken(defaultToken);
     setUserId(defaultUserID);
     setRefreshToken(defaultToken);
-  };
-
-  const getData = async () => {
-    const resGetUser = await getUser(logInUserData.userId, logInUserData.token);
-    console.log('getUser ', resGetUser);
-    const resNewToken = await getNewToken(logInUserData.userId, logInUserData.refreshToken);
-    console.log('getUser resNewToken ', resNewToken);
   };
 
   return (
@@ -188,7 +179,6 @@ function SignInModal({
               <>
                 <Button id="signOut" title="Выйти" callback={signOutUser} />
                 <Button id="signCancel" title="Отмена" callback={() => setActive(false)} />
-                <Button id="signCancel" title="проба" callback={getData} />
               </>
             )
             : (

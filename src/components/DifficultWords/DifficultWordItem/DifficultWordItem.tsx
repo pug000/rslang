@@ -16,9 +16,12 @@ import {
 } from '@/api';
 import { createWordProp } from '@/utils/createCorrectPropResponse';
 
-import { Track, WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 import ServerResponses from '@/ts/enums';
+import {
+  Track,
+  WordData
+} from '@/ts/interfaces';
 
 import {
   DifficultWordButton,
@@ -39,6 +42,7 @@ interface WordItemProps {
   item: WordData,
   audio: HTMLAudioElement | null,
   setNewAudio: (value: HTMLAudioElement | null) => void,
+  removeWord: (id: string) => void,
 }
 
 function DifficultWordItem(
@@ -46,6 +50,7 @@ function DifficultWordItem(
     item,
     audio,
     setNewAudio,
+    removeWord
   }: WordItemProps
 ) {
   const {
@@ -75,7 +80,6 @@ function DifficultWordItem(
   const toggleActive = (arr: WordData[]) => (
     arr.some((el) => el.id === item.id)
   );
-
   const addActiveWord = async (setState: SetState<WordData[]>, isDifficultWord: boolean) => {
     setState((prev) => [...prev, item]);
     const currentWord = createWordProp(item, isDifficultWord);
@@ -90,6 +94,7 @@ function DifficultWordItem(
 
   const removeActiveWord = (setState: SetState<WordData[]>) => {
     setState((prev) => prev.filter((el) => el.id !== item.id));
+    removeWord(item.id);
     deleteUserWord(item.id, userId, token);
   };
 
@@ -103,6 +108,7 @@ function DifficultWordItem(
     if (e.currentTarget.id === 'learned') {
       isDifficultWord = false;
       setDifficultWords((prev) => prev.filter((el) => el.id !== item.id));
+      removeWord(item.id);
     } else {
       isDifficultWord = true;
       setLearnedWords((prev) => prev.filter((el) => el.id !== item.id));

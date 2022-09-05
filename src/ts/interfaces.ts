@@ -74,11 +74,6 @@ interface LogInUserData {
   name?: string;
 }
 
-interface GetNewTokenUserData {
-  token: string;
-  refreshToken: string;
-}
-
 interface GetUserProp {
   name: string,
   email: string,
@@ -181,5 +176,4 @@ export {
   GetUserProp,
   FilteredWordData,
   ErrMessageProps,
-  GetNewTokenUserData
 };

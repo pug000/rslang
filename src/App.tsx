@@ -26,11 +26,14 @@ import GameContainer from '@/GamesContainer';
 import {
   defaultToken,
   defaultUserID,
-  FILTER_DIFFICULT_WORDS,
-  FILTER_LEARNED_WORDS,
+  filterDifficultWords,
+  filterLearnedWords,
 } from '@/utils/variables';
 import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
-import { getFilteredUserWords, getNewToken, getUser } from '@/api';
+import {
+  getFilteredUserWords,
+  getNewToken
+} from '@/api';
 import useLocalStorage from '@/hooks/useLocalStorage';
 
 import { WordData } from '@/ts/interfaces';
@@ -55,22 +58,21 @@ function App() {
   const [userId, setUserId] = useLocalStorage('userId', defaultUserID);
 
   useEffect(() => {
-    (async () => {
-      if (isLoggedIn) {
-        console.log('пользователь авторизован');
-        const responseGetUser = await getUser(userId, token);
-        if (responseGetUser === ServerResponses.error401) {
-          console.log('пользователю нужен новый токен');
-          const responseNewToken = await getNewToken(userId, refreshToken);
-          if (responseNewToken && typeof responseNewToken !== 'number') {
-            console.log('пользователь получил новые данные');
-            setToken(responseNewToken.token);
-            setRefreshToken(responseNewToken.refreshToken);
-          }
+    if (isLoggedIn) {
+      (async () => {
+        const responseNewToken = await getNewToken(userId, refreshToken);
+        if (responseNewToken && typeof responseNewToken !== 'number') {
+          setToken(responseNewToken.token);
+          setRefreshToken(responseNewToken.refreshToken);
+          // window.location.reload();
+        } else if (responseNewToken === ServerResponses.error401) {
+          setLoggedIn(false);
+          setToken(defaultToken);
+          setRefreshToken(defaultToken);
+          setUserId(defaultUserID);
         }
-      }
-      console.log('exit пользователь не авторизован');
-    })();
+      })();
+    }
   }, []);
 
   const clearGameState = () => {
@@ -117,24 +119,21 @@ function App() {
   useEffect(() => {
     if (isLoggedIn) {
       (async () => {
-        setTimeout(async () => {
-          const difficultWordsData = await getFilteredUserWords(FILTER_DIFFICULT_WORDS, userId, token);
+        const difficultWordsData = await getFilteredUserWords(filterDifficultWords, userId, token);
+        const learnedWordsData = await getFilteredUserWords(filterLearnedWords, userId, token);
 
-          const learnedWordsData = await getFilteredUserWords(FILTER_LEARNED_WORDS, userId, token);
+        if (difficultWordsData && typeof difficultWordsData !== 'number') {
+          const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
+          setDifficultWords(difficultWordsChangeKeys);
+        }
 
-          if (difficultWordsData && typeof difficultWordsData !== 'number') {
-            const difficultWordsChangeKeys = сhangeWordsDataKeyFromServer([difficultWordsData[0]]);
-            setDifficultWords(difficultWordsChangeKeys);
-          }
-
-          if (learnedWordsData && typeof learnedWordsData !== 'number') {
-            const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
-            setLearnedWords(learnedWordsChangeKeys);
-          }
-        }, 500);
+        if (learnedWordsData && typeof learnedWordsData !== 'number') {
+          const learnedWordsChangeKeys = сhangeWordsDataKeyFromServer([learnedWordsData[0]]);
+          setLearnedWords(learnedWordsChangeKeys);
+        }
       })();
     }
-  }, [isLoggedIn, currentPage, token]);
+  }, [isLoggedIn, currentPage]);
 
   const gameValue = useMemo(() => (
     {

@@ -12,7 +12,6 @@ import {
   WordCreateProp,
   GetUserProp,
   FilteredWordData,
-  GetNewTokenUserData,
 } from '@/ts/interfaces';
 import ServerResponses from '@/ts/enums';
 
@@ -150,8 +149,6 @@ const loginUser = async (userData: UserData) => {
 };
 
 const getUser = async (userId: string, token: string) => {
-  console.log('getUser before userId', userId);
-  console.log('getUser before token', token);
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}`, {
       method: methods.get,
@@ -175,8 +172,6 @@ const getUser = async (userId: string, token: string) => {
 };
 
 const getNewToken = async (userId: string, refreshToken: string) => {
-  console.log('getNewToken before userId', userId);
-  console.log('getNewToken before refreshToken', refreshToken);
   try {
     const res = await fetch(`${baseUrl}/${endpoints.users}/${userId}/${endpoints.tokens}`, {
       method: methods.get,
@@ -192,10 +187,7 @@ const getNewToken = async (userId: string, refreshToken: string) => {
       || status === ServerResponses.error401) {
       return status;
     }
-
-    console.log('status', status);
-    const data: GetNewTokenUserData = await res.json();
-    console.log('data', data);
+    const data: LogInUserData = await res.json();
     return data;
   } catch (err) {
     throw new Error(`${err}`);
@@ -299,7 +291,6 @@ const getFilteredUserWords = async (filter: string, userId: string, token: strin
   if (status === ServerResponses.error402) {
     return status;
   }
-
   const data: FilteredWordData[] = await res.json();
   return data;
 };
@@ -319,7 +310,8 @@ const getFilteredUserWordsByPage = async (
   });
   const { status } = res;
 
-  if (status === ServerResponses.error402) {
+  if (status === ServerResponses.error402
+    || status === ServerResponses.error401) {
     return status;
   }
 

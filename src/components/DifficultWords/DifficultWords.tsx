@@ -9,7 +9,7 @@ import BookContext from '@/contexts/BookContext';
 import Loader from '@/Loader';
 import DifficultWordItem from '@/DifficultWordItem';
 
-import { FILTER_DIFFICULT_WORDS } from '@/utils/variables';
+import { filterDifficultWords } from '@/utils/variables';
 import { getFilteredUserWordsByPage } from '@/api';
 import { сhangeWordsDataKeyFromServer } from '@/utils/createCorrectPropResponse';
 
@@ -17,6 +17,8 @@ import { WordData } from '@/ts/interfaces';
 import SetState from '@/ts/types';
 
 import Pagination from '@mui/material/Pagination';
+
+import ServerResponses from '@/ts/enums';
 
 import {
   DifficultWordsWrapper,
@@ -38,7 +40,6 @@ function DifficultWords({
 }: DifficultWordsProps) {
   if (!isLoggedIn) return null;
   const {
-    learnedWords,
     difficultWords,
     token,
     userId,
@@ -73,15 +74,17 @@ function DifficultWords({
     if (isLoggedIn) {
       (async () => {
         setIsLoadingPage(true);
-        const wordsDifficultData = await getFilteredUserWordsByPage(FILTER_DIFFICULT_WORDS, userId, token, currentPageDifficult);
+        const wordsDifficultData = await getFilteredUserWordsByPage(filterDifficultWords, userId, token, currentPageDifficult);
         if (wordsDifficultData && typeof wordsDifficultData !== 'number') {
           const wordsDifficultDataChangeKeys = сhangeWordsDataKeyFromServer([wordsDifficultData[0]]);
           setWordsDifficultPerPage(wordsDifficultDataChangeKeys);
           setIsLoadingPage(false);
+        } else if (wordsDifficultData === ServerResponses.error401) {
+          window.location.reload();
         }
       })();
     }
-  }, [currentPageDifficult, difficultWords, totalCountPagesDifficult, token]);
+  }, [currentPageDifficult, totalCountPagesDifficult]);
 
   return (
     <DifficultWordsWrapper>
@@ -128,6 +131,7 @@ function DifficultWords({
                     item={word}
                     audio={audio}
                     setNewAudio={(value: HTMLAudioElement | null) => setAudio(value)}
+                    removeWord={(id: string) => setWordsDifficultPerPage((prev) => prev.filter((el) => el.id !== id))}
                   />
                 ))}
             </DifficultWordsContainer>
