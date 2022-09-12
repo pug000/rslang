@@ -45,7 +45,6 @@ The application was developed in 3 weeks.
 
 - webpack
 - eslint
-- prettier
 - recharts
 
 
