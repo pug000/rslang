@@ -1,28 +1,28 @@
 # RS Lang
 
-_**RS Lang** - it is an effective service for an exciting practice of English with mini-games._
+_**RS Lang** is an effective service for an exciting English practice with mini-games._
 
 [Link to the deploy](https://pug000.github.io/rslang/ "RsLang")
 
 ## Usage
 
 #### Textbook
-In the textbook you are presented with a collection that contains 3600 frequently used English words. The words in the collection are sorted by difficulty levels. The first 400 most frequently used words were not included in the collection. It is believed that this is the basic stock of an adult, left over from previous attempts to learn the language.
+In the textbook there is a words collection that contains 3600 frequently used English words. The words in the textbook are sorted by difficulty levels. The first 400 most frequently used words are not included, because it is believed that this is the basic stock of knowledges, which has left from the previous attempts of studying.
 
-In the textbook, you have collections of words that are divided into pages, for each word there is a translation, an example sentence and the ability to listen to an audio recording.
+In the textbook there are groups of words divided into pages. There is a translation, a sentence example and an ability to listen to an audio recording for each word.
 
-You can also add a word to the dictionary in the compound words section to create a collection of compound words.
+You can also add a word to the Difficult words section to create a collection of difficult words.
 
 #### Dictionary
-The dictionary consists of 2 sections: compound words and learned words. Gather a collection of words that are difficult for you, practice, and once you have learned the word, you can move it to the learned words
+The dictionary consists of 2 sections: difficult words and learned words. Make a collection of words that are difficult for you, practise, and once you have learned the word you can add it to the learned words.
 
 > Available for registered users
 
 #### Mini-games
-There are currently two mini-games in the app: sprint and audio challenge. In the sprint game, you need to guess the largest number of words in a specified period of time. At the end of the time, you will be presented with the result of the game. The audio challenge game will allow you to train English words by ear. Listen to the words and choose the correct answer. At the end of the game, you will be presented with the result.
+There are currently two mini-games in the app: sprint and audio challenge. In the sprint game you need to choose the right translation for the largest number of words in a specified period of time. At the end of the game the results will be shown. The audio challenge game allows you to train your listening skills. Listen to the words and choose the correct translation for them. At the end of the game the results will be shown.
 
 #### Statistics
-Well the statistics page contains the results of your games: sprint and audio challenge.
+The statistics page contains daily results of your games: sprint and audio challenge, as well as the total daily statistics.
 
 > Available for registered users
 
@@ -59,9 +59,9 @@ The application was developed in 3 weeks.
 5. npm run start
 ```
 
-### Code quality control.
+### Code quality control:
 
-To ensure quality control, software tools (linter, prettier) were used and development was divided into different branches using the Git version control system. The main, working application is located in the develop branch, into which development participants make a pull request. Rule for checking PR: mandatory checking by all project participants.
+To ensure quality control software tools (linter, prettier) were used and development was divided into different branches using the Git version control system. The  working application is located in the `develop` branch, into which development participants made pull requests. The main rule for checking PR: checking by all project participants is necessary.
 
 ### Developers:
 
