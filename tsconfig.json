@@ -1,0 +1,109 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ESNext"
+    ],
+    "moduleResolution": "Node",
+    "module": "ESNext",
+    "target": "ESNext",
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "paths": {
+      "@/*": [
+        "*"
+      ],
+      "@/AppLayout": [
+        "components/AppLayout/AppLayout"
+      ],
+      "@/Home": [
+        "components/Home/Home"
+      ],
+      "@/Header": [
+        "components/Header/Header"
+      ],
+      "@/AudioGamePage": [
+        "components/Games/AudioGamePage"
+      ],
+      "@/GameStart": [
+        "components/Games/GameStart/GameStart"
+      ],
+      "@/GameResults": [
+        "components/Games/GameResults/GameResults"
+      ],
+      "@/AudioGame": [
+        "components/Games/AudioGame/AudioGame"
+      ],
+      "@/SprintGamePage": [
+        "components/Games/SprintGamePage"
+      ],
+      "@/SprintGame": [
+        "components/Games/SprintGame/SprintGame"
+      ],
+      "@/Footer": [
+        "components/Footer/Footer"
+      ],
+      "@/Button": [
+        "components/Button/Button"
+      ],
+      "@/NavMenu": [
+        "components/Header/NavMenu/NavMenu"
+      ],
+      "@/Book": [
+        "components/Book/Book"
+      ],
+      "@/Loader": [
+        "components/Loader/Loader"
+      ],
+      "@/SignIn": [
+        "components/Header/SignIn/SignIn"
+      ],
+      "@/GamesContainer": [
+        "components/GamesContainer/GamesContainer"
+      ],
+      "@/Input": [
+        "components/Input/Input"
+      ],
+      "@/WordItem": [
+        "components/Book/WordItem/WordItem"
+      ],
+      "@/ProtectedRoute": [
+        "components/ProtectedRoute/ProtectedRoute"
+      ],
+      "@/DifficultWords": [
+        "components/DifficultWords/DifficultWords"
+      ],
+      "@/DifficultWordItem": [
+        "components/DifficultWords/DifficultWordItem/DifficultWordItem"
+      ],
+      "@/Timer": [
+        "components/Games/GameComponents/Timer/Timer"
+      ],
+      "@/GameControl": [
+        "components/Games/GameComponents/GameControl/GameControl"
+      ],
+      "@/About": [
+        "components/About/About"
+      ],
+      "@/GameNotification": [
+        "components/Games/GameNotification/GameNotification"
+      ],
+      "@/NotFound": [
+        "components/NotFound/NotFound"
+      ],
+      "@/Statistics": [
+        "components/Statistics/Statistics"
+      ]
+    }
+  },
+  "files": [
+    "src/index.tsx"
+  ],
+  "include": [
+    "src",
+    "src/**/*.ts",
+    ".eslintrc.json",
+  ],
+}
