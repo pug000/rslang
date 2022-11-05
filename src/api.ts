@@ -15,7 +15,7 @@ import {
 } from '@/ts/interfaces';
 import ServerResponses from '@/ts/enums';
 
-const baseUrl = 'https://lang-learnwords.herokuapp.com';
+const baseUrl = 'https://lang-learnwords.onrender.com';
 
 const endpoints = {
   words: 'words',
